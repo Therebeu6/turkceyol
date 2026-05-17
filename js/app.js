@@ -193,15 +193,8 @@ const App = {
   playTTS(text) {
     if (!text) return;
 
-    // Méthode 1 : speechSynthesis (toujours essayer en premier)
+    // 1. Chercher une VRAIE voix turque native sur l'appareil
     if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'tr-TR';
-      u.rate = 0.9;
-      
-      // Chercher une voix turque spécifique
       if (this._voices.length === 0) this._voices = window.speechSynthesis.getVoices();
       const turkishVoice = this._voices.find(v => 
         v.lang === 'tr-TR' || v.lang === 'tr_TR' || v.lang === 'tr' ||
@@ -209,31 +202,27 @@ const App = {
         v.name.toLowerCase().includes('türkçe')
       );
       
+      // Utiliser speechSynthesis UNIQUEMENT si on a trouvé une vraie voix turque
       if (turkishVoice) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'tr-TR';
         u.voice = turkishVoice;
+        u.rate = 0.9;
+        window.speechSynthesis.speak(u);
+        return;
       }
-      
-      // On parle même sans voix turque explicite : le navigateur
-      // utilisera ses voix réseau (Google Online voices sur Chrome)
-      u.onerror = () => {
-        // Si speechSynthesis échoue, on tente Google TTS en backup
-        this._playGoogleTTS(text);
-      };
-      
-      window.speechSynthesis.speak(u);
-      return;
     }
     
-    // Méthode 2 (fallback) : Google Translate TTS via élément <audio>
+    // 2. Sinon → Google Translate TTS (accent turc parfait)
+    // Fonctionne grâce au <meta name="referrer" content="no-referrer"> dans le HTML
     this._playGoogleTTS(text);
   },
 
   _playGoogleTTS(text) {
     const audio = document.createElement('audio');
     audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&q=${encodeURIComponent(text)}`;
-    audio.play().catch(() => {
-      // Silencieux - pas de toast d'erreur pour ne pas gêner
-    });
+    audio.play().catch(() => {});
   },
 
   // ── Effets visuels (XP, Confetti) ──
