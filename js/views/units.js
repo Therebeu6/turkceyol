@@ -87,6 +87,6 @@ window.Units = {
 
   startChapter(unitId, chapterId) {
     State.setCurrentChapter(unitId, chapterId);
-    App.navigate(`#lesson/${unitId}_${chapterId}`);
+    App.navigate(`#lesson/${chapterId}`);
   }
 };

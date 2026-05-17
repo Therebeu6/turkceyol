@@ -251,9 +251,8 @@ const App = {
 
   // ── Actions métiers transverses ──
   startCurrentLesson() {
-    const unit = State.data.currentUnit;
     const chapter = State.data.currentChapter;
-    this.navigate(`#lesson/${unit}_${chapter}`);
+    this.navigate(`#lesson/${chapter}`);
   },
 
   quitLesson() {
