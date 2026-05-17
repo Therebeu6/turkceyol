@@ -200,15 +200,24 @@ const App = {
       }
     }
 
-    // 2. FALLBACK VIA CLOUDFLARE WORKER (Proxy)
-    // Contournement des sécurités CORS de Google depuis GitHub Pages.
-    const proxyUrl = `https://calm-frog-ab7f.therebeu62.workers.dev/tts?text=${encodeURIComponent(text)}&lang=tr`;
-    const audio = new Audio(proxyUrl);
-    audio.crossOrigin = "anonymous";
-    audio.play().catch(err => {
-      console.warn("Erreur audio:", err);
-      this.showToast("Lecture audio impossible sur cet appareil", "error");
-    });
+    // 2. FALLBACK GOOGLE TRANSLATE DIRECT (Sans Proxy)
+    // On utilise fetch() pour cacher le 'Referer' et éviter le blocage 403 de Google sur GitHub Pages.
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&q=${encodeURIComponent(text)}`;
+    
+    fetch(url, { referrerPolicy: "no-referrer" })
+      .then(response => {
+        if (!response.ok) throw new Error("Google TTS bloqué");
+        return response.blob();
+      })
+      .then(blob => {
+        const audioUrl = URL.createObjectURL(blob);
+        const audio = new Audio(audioUrl);
+        audio.play().catch(e => console.warn("Erreur Play() :", e));
+      })
+      .catch(err => {
+        console.warn("Erreur fetch TTS :", err);
+        this.showToast("Lecture audio impossible sur cet appareil", "error");
+      });
   },
 
   // ── Effets visuels (XP, Confetti) ──
