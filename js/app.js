@@ -200,14 +200,15 @@ const App = {
       }
     }
 
-    // 2. FALLBACK GOOGLE TRANSLATE
-    // Si on arrive ici, c'est que l'appareil (ex: PC Windows) n'a PAS de voix turque installée.
-    // On utilise alors secrètement l'API audio de Google Translate pour avoir un accent parfait.
-    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&q=${encodeURIComponent(text)}`;
-    const audio = new Audio(url);
+    // 2. FALLBACK VIA CLOUDFLARE WORKER (Proxy)
+    // Contournement des sécurités CORS de Google depuis GitHub Pages.
+    // IMPORTANT : Remplace cette URL par la tienne une fois le Worker créé !
+    const proxyUrl = `https://turkceyol-tts.therebeu6.workers.dev/tts?text=${encodeURIComponent(text)}&lang=tr`;
+    const audio = new Audio(proxyUrl);
+    audio.crossOrigin = "anonymous";
     audio.play().catch(err => {
       console.warn("Erreur audio:", err);
-      this.showToast("Erreur de lecture audio", "error");
+      this.showToast("Lecture audio impossible sur cet appareil", "error");
     });
   },
 
