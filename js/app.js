@@ -220,9 +220,11 @@ const App = {
   },
 
   _playGoogleTTS(text) {
-    const audio = document.createElement('audio');
+    const audio = new Audio();
+    audio.oncanplaythrough = () => { audio.play(); };
+    audio.onerror = () => { /* silencieux */ };
     audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&q=${encodeURIComponent(text)}`;
-    audio.play().catch(() => {});
+    audio.load();
   },
 
   // ── Effets visuels (XP, Confetti) ──
