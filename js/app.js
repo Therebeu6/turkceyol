@@ -202,8 +202,7 @@ const App = {
 
     // 2. FALLBACK VIA CLOUDFLARE WORKER (Proxy)
     // Contournement des sécurités CORS de Google depuis GitHub Pages.
-    // IMPORTANT : Remplace cette URL par la tienne une fois le Worker créé !
-    const proxyUrl = `https://turkceyol-tts.therebeu6.workers.dev/tts?text=${encodeURIComponent(text)}&lang=tr`;
+    const proxyUrl = `https://calm-frog-ab7f.therebeu62.workers.dev/tts?text=${encodeURIComponent(text)}&lang=tr`;
     const audio = new Audio(proxyUrl);
     audio.crossOrigin = "anonymous";
     audio.play().catch(err => {
