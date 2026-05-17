@@ -35,6 +35,9 @@ const App = {
     
     // Header UI init
     this.updateHeaderUI();
+    
+    // Pré-charger les voix TTS
+    this.loadVoices();
 
     // Init modules (s'ils existent / sont chargés)
     // C'est ici qu'on appellerait Dashboard.init(), Units.init() etc.
@@ -178,46 +181,59 @@ const App = {
   },
 
   // ── Text-To-Speech (Prononciation Turque) ──
+  _voices: [],
+  
+  loadVoices() {
+    this._voices = window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => {
+      this._voices = window.speechSynthesis.getVoices();
+    };
+  },
+
   playTTS(text) {
-    // 1. On vérifie si l'appareil possède une "vraie" voix turque
+    if (!text) return;
+
+    // Méthode 1 : speechSynthesis (toujours essayer en premier)
     if ('speechSynthesis' in window) {
-      const voices = window.speechSynthesis.getVoices();
-      const turkishVoice = voices.find(v => 
-        v.lang === 'tr-TR' || 
-        v.lang === 'tr_TR' || 
-        v.lang === 'tr' || 
+      window.speechSynthesis.cancel();
+      
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'tr-TR';
+      u.rate = 0.9;
+      
+      // Chercher une voix turque spécifique
+      if (this._voices.length === 0) this._voices = window.speechSynthesis.getVoices();
+      const turkishVoice = this._voices.find(v => 
+        v.lang === 'tr-TR' || v.lang === 'tr_TR' || v.lang === 'tr' ||
         v.name.toLowerCase().includes('turkish') || 
         v.name.toLowerCase().includes('türkçe')
       );
       
       if (turkishVoice) {
-        window.speechSynthesis.cancel(); // Coupe l'audio en cours
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = 'tr-TR';
         u.voice = turkishVoice;
-        window.speechSynthesis.speak(u);
-        return; // Succès natif
       }
+      
+      // On parle même sans voix turque explicite : le navigateur
+      // utilisera ses voix réseau (Google Online voices sur Chrome)
+      u.onerror = () => {
+        // Si speechSynthesis échoue, on tente Google TTS en backup
+        this._playGoogleTTS(text);
+      };
+      
+      window.speechSynthesis.speak(u);
+      return;
     }
-
-    // 2. FALLBACK GOOGLE TRANSLATE DIRECT (Sans Proxy)
-    // On utilise fetch() pour cacher le 'Referer' et éviter le blocage 403 de Google sur GitHub Pages.
-    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&q=${encodeURIComponent(text)}`;
     
-    fetch(url, { referrerPolicy: "no-referrer" })
-      .then(response => {
-        if (!response.ok) throw new Error("Google TTS bloqué");
-        return response.blob();
-      })
-      .then(blob => {
-        const audioUrl = URL.createObjectURL(blob);
-        const audio = new Audio(audioUrl);
-        audio.play().catch(e => console.warn("Erreur Play() :", e));
-      })
-      .catch(err => {
-        console.warn("Erreur fetch TTS :", err);
-        this.showToast("Lecture audio impossible sur cet appareil", "error");
-      });
+    // Méthode 2 (fallback) : Google Translate TTS via élément <audio>
+    this._playGoogleTTS(text);
+  },
+
+  _playGoogleTTS(text) {
+    const audio = document.createElement('audio');
+    audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&q=${encodeURIComponent(text)}`;
+    audio.play().catch(() => {
+      // Silencieux - pas de toast d'erreur pour ne pas gêner
+    });
   },
 
   // ── Effets visuels (XP, Confetti) ──
