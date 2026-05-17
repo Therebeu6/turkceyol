@@ -177,6 +177,24 @@ const App = {
     }, 3000);
   },
 
+  // ── Text-To-Speech (Prononciation Turque) ──
+  playTTS(text) {
+    if ('speechSynthesis' in window) {
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'tr-TR'; // Demande le turc par défaut
+      
+      // On cherche agressivement une voix turque installée sur le système
+      const voices = window.speechSynthesis.getVoices();
+      const turkishVoice = voices.find(v => v.lang === 'tr-TR' || v.lang === 'tr_TR' || v.lang.includes('tr'));
+      
+      if (turkishVoice) {
+        u.voice = turkishVoice;
+      }
+      
+      window.speechSynthesis.speak(u);
+    }
+  },
+
   // ── Effets visuels (XP, Confetti) ──
   showXPFloat(amount) {
     this.els.xpFloat.textContent = `+${amount} XP`;

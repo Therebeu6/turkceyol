@@ -156,10 +156,8 @@ window.Lesson = {
     document.getElementById('fb-fr').textContent = exo.data.fr;
 
     // TTS Auto (Optionnel, simule la prononciation)
-    if (exo.data.tr && 'speechSynthesis' in window) {
-       const u = new SpeechSynthesisUtterance(exo.data.tr);
-       u.lang = 'tr-TR';
-       window.speechSynthesis.speak(u);
+    if (exo.data.tr) {
+       App.playTTS(exo.data.tr);
     }
 
     // Mise à jour SRS

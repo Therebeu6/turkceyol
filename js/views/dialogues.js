@@ -22,7 +22,7 @@ window.Dialogues = {
               <div class="text-xs font-bold text-primary mb-1">${t.speaker}</div>
               <div class="font-semibold text-md flex justify-between items-center">
                 <span>${t.tr}</span>
-                <button class="btn-tts" onclick="event.stopPropagation(); Phrases.playTTS('${t.tr.replace(/'/g, "\\'")}')">🔊</button>
+                <button class="btn-tts" onclick="event.stopPropagation(); App.playTTS('${t.tr.replace(/'/g, "\\'")}')">🔊</button>
               </div>
               <div class="text-sm text-muted">${t.fr}</div>
             </div>

@@ -35,17 +35,9 @@ window.Phrases = {
           <div class="li-fr">${p.fr}</div>
         </div>
         <div class="li-right">
-           <button class="btn-tts" onclick="event.stopPropagation(); Phrases.playTTS('${p.tr.replace(/'/g, "\\'")}')">🔊</button>
+           <button class="btn-tts" onclick="event.stopPropagation(); App.playTTS('${p.tr.replace(/'/g, "\\'")}')">🔊</button>
         </div>
       </div>
     `).join('');
-  },
-
-  playTTS(text) {
-    if ('speechSynthesis' in window) {
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'tr-TR';
-      window.speechSynthesis.speak(u);
-    }
   }
 };
