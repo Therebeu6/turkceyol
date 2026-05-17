@@ -113,8 +113,8 @@ window.Lesson = {
 
   checkAnswer(selected) {
     const exo = this.exercises[this.currentIndex];
-    // Nettoyage intelligent : casse turque (İ/ı), ponctuation, espaces multiples
-    const clean = (s) => s.toLocaleLowerCase('tr-TR').replace(/[.!?,;:'"]/g, '').replace(/\s+/g, ' ').trim();
+    // Nettoyage intelligent : Unicode, casse turque (İ/ı), ponctuation, espaces
+    const clean = (s) => s.normalize('NFC').toLocaleLowerCase('tr-TR').replace(/[.!?,;:'"]/g, '').replace(/\s+/g, ' ').trim();
     
     const isCorrect = clean(selected) === clean(exo.answer);
     
