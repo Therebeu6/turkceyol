@@ -179,20 +179,36 @@ const App = {
 
   // ── Text-To-Speech (Prononciation Turque) ──
   playTTS(text) {
+    // 1. On vérifie si l'appareil possède une "vraie" voix turque
     if ('speechSynthesis' in window) {
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'tr-TR'; // Demande le turc par défaut
-      
-      // On cherche agressivement une voix turque installée sur le système
       const voices = window.speechSynthesis.getVoices();
-      const turkishVoice = voices.find(v => v.lang === 'tr-TR' || v.lang === 'tr_TR' || v.lang.includes('tr'));
+      const turkishVoice = voices.find(v => 
+        v.lang === 'tr-TR' || 
+        v.lang === 'tr_TR' || 
+        v.lang === 'tr' || 
+        v.name.toLowerCase().includes('turkish') || 
+        v.name.toLowerCase().includes('türkçe')
+      );
       
       if (turkishVoice) {
+        window.speechSynthesis.cancel(); // Coupe l'audio en cours
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'tr-TR';
         u.voice = turkishVoice;
+        window.speechSynthesis.speak(u);
+        return; // Succès natif
       }
-      
-      window.speechSynthesis.speak(u);
     }
+
+    // 2. FALLBACK GOOGLE TRANSLATE
+    // Si on arrive ici, c'est que l'appareil (ex: PC Windows) n'a PAS de voix turque installée.
+    // On utilise alors secrètement l'API audio de Google Translate pour avoir un accent parfait.
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&q=${encodeURIComponent(text)}`;
+    const audio = new Audio(url);
+    audio.play().catch(err => {
+      console.warn("Erreur audio:", err);
+      this.showToast("Erreur de lecture audio", "error");
+    });
   },
 
   // ── Effets visuels (XP, Confetti) ──
