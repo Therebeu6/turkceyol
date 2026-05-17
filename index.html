@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="TürkçeYol — Apprenez le turc progressivement.">
+  <meta name="theme-color" content="#0D0D14">
+  <title>TürkçeYol — Apprendre le turc</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+<div id="app">
+
+  <header id="app-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <button id="btn-back" class="btn-icon hidden" onclick="App.goBack()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        </button>
+        <div id="header-logo" class="header-logo">
+          <span>🇹🇷</span><span class="logo-text">TürkçeYol</span>
+        </div>
+        <div id="header-title" class="header-title hidden"></div>
+      </div>
+      <div class="header-right">
+        <div class="streak-pill" id="header-streak"><span>🔥</span><span id="header-streak-val">0</span></div>
+        <div class="xp-pill" id="header-xp"><span>⚡</span><span id="header-xp-val">0</span><span class="pill-unit">XP</span></div>
+        <button class="btn-icon" onclick="App.navigate('#settings')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="app-main">
+
+    <!-- DASHBOARD -->
+    <section id="view-dashboard" class="view active" data-nav="dashboard">
+      <div class="view-scroll">
+        <div class="dash-greeting">
+          <div class="greeting-text" id="greeting-text">Bonsoir ! 🌙</div>
+          <div class="greeting-sub">Votre prochain objectif vous attend</div>
+        </div>
+        <div class="goal-card">
+          <div class="goal-left">
+            <div class="goal-label">Objectif du jour</div>
+            <div class="goal-xp-row">
+              <span id="goal-xp-cur" class="goal-xp-cur">0</span>
+              <span class="goal-sep">/</span>
+              <span id="goal-xp-target" class="goal-xp-target">50</span>
+              <span class="goal-unit">XP</span>
+            </div>
+            <div class="goal-bar-track"><div class="goal-bar-fill" id="goal-bar-fill" style="width:0%"></div></div>
+            <div class="goal-status" id="goal-status">Commencez une leçon !</div>
+          </div>
+          <div class="goal-right">
+            <svg class="ring-svg" viewBox="0 0 72 72" width="72" height="72">
+              <circle class="ring-track" cx="36" cy="36" r="28" stroke-width="6"/>
+              <circle class="ring-prog" id="ring-prog" cx="36" cy="36" r="28" stroke-width="6" stroke-dasharray="176" stroke-dashoffset="176"/>
+              <text x="36" y="37" class="ring-pct" text-anchor="middle" dominant-baseline="middle" id="ring-pct">0%</text>
+            </svg>
+          </div>
+        </div>
+        <div class="quick-stats-row">
+          <div class="qs-card" onclick="App.navigate('#stats')"><div class="qs-icon">🔥</div><div class="qs-val" id="qs-streak">0</div><div class="qs-lbl">Jours</div></div>
+          <div class="qs-card" onclick="App.navigate('#stats')"><div class="qs-icon">⚡</div><div class="qs-val" id="qs-xp">0</div><div class="qs-lbl">XP total</div></div>
+          <div class="qs-card" onclick="App.navigate('#vocabulary')"><div class="qs-icon">📚</div><div class="qs-val" id="qs-words">0</div><div class="qs-lbl">Mots</div></div>
+          <div class="qs-card" onclick="App.navigate('#stats')"><div class="qs-icon">✅</div><div class="qs-val" id="qs-chapters">0</div><div class="qs-lbl">Chapitres</div></div>
+        </div>
+        <div class="section-row"><span class="section-lbl">Continuer</span></div>
+        <div class="continue-card" id="continue-card" onclick="App.startCurrentLesson()">
+          <div class="cc-meta">
+            <span class="cc-unit-tag" id="cc-unit-tag">Unité 1</span>
+            <span class="cc-time" id="cc-time">~5 min</span>
+          </div>
+          <div class="cc-title" id="cc-title">Premiers pas en turc</div>
+          <div class="cc-chapter" id="cc-chapter">Chapitre 1.1 — Sons et lettres clés</div>
+          <div class="cc-bar-track"><div class="cc-bar-fill" id="cc-bar-fill" style="width:0%"></div></div>
+          <button class="btn btn-primary btn-sm">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>
+            Commencer
+          </button>
+        </div>
+        <div class="section-row"><span class="section-lbl">À réviser</span><button class="section-link" onclick="App.navigate('#review')">Tout voir →</button></div>
+        <div id="dash-review-preview" class="dash-review-preview">
+          <div class="empty-state-sm"><span>🎯</span> Aucune révision pour l'instant — continuez les leçons !</div>
+        </div>
+        <div class="section-row"><span class="section-lbl">Défi du jour</span></div>
+        <div class="daily-chal-card" onclick="App.navigate('#daily')">
+          <div class="dc-ico">⚡</div>
+          <div class="dc-body"><div class="dc-name" id="dc-name">Défi du jour</div><div class="dc-desc" id="dc-desc">5 questions · ~3 min</div></div>
+          <div class="dc-arr">›</div>
+        </div>
+        <div class="section-row"><span class="section-lbl">Verbes à renforcer</span><button class="section-link" onclick="App.navigate('#verbs')">Module →</button></div>
+        <div id="dash-weak-verbs" class="dash-weak-verbs">
+          <div class="empty-state-sm"><span>💪</span> Commencez les leçons pour identifier vos points faibles.</div>
+        </div>
+        <div class="spacer-nav"></div>
+      </div>
+    </section>
+
+    <!-- PARCOURS -->
+    <section id="view-units" class="view" data-nav="units">
+      <div class="view-scroll">
+        <div class="view-hero">
+          <h1 class="view-h1">Mon parcours</h1>
+          <p class="view-sub">12 unités · du zéro à A1 solide</p>
+          <div class="global-prog-track"><div class="global-prog-fill" id="global-prog-fill" style="width:0%"></div></div>
+          <div class="global-prog-label" id="global-prog-label">0 / 50 chapitres</div>
+        </div>
+        <div id="units-list" class="units-list"><div class="loading-spin-wrap"><div class="spin"></div><p>Chargement…</p></div></div>
+        <div class="spacer-nav"></div>
+      </div>
+    </section>
+
+    <!-- LEÇON -->
+    <section id="view-lesson" class="view no-header" data-nav="none">
+      <div class="lesson-top-bar">
+        <button class="btn-icon" onclick="App.quitLesson()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        <div class="lesson-prog-track"><div class="lesson-prog-fill" id="lesson-prog-fill" style="width:0%"></div></div>
+        <div class="lesson-xp-live" id="lesson-xp-live">0 XP</div>
+      </div>
+      <div id="lesson-body" class="lesson-body"></div>
+      <div id="session-modal" class="session-modal hidden">
+        <div class="session-card">
+          <div class="sm-emoji" id="sm-emoji">🎉</div>
+          <h2 class="sm-title" id="sm-title">Chapitre terminé !</h2>
+          <div class="sm-stats">
+            <div class="sm-stat"><div class="sm-val" id="sm-xp">+0</div><div class="sm-lbl">XP</div></div>
+            <div class="sm-stat"><div class="sm-val" id="sm-acc">0%</div><div class="sm-lbl">Précision</div></div>
+            <div class="sm-stat"><div class="sm-val" id="sm-learned">0</div><div class="sm-lbl">Appris</div></div>
+          </div>
+          <button class="btn btn-primary btn-full" onclick="App.navigate('#units')">Continuer le parcours</button>
+          <button class="btn btn-ghost btn-full" style="margin-top:8px" onclick="App.navigate('#dashboard')">Accueil</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERBES -->
+    <section id="view-verbs" class="view" data-nav="verbs">
+      <div class="view-scroll">
+        <div class="view-hero"><h1 class="view-h1">Verbes & Conjugaison</h1><p class="view-sub">40 verbes essentiels · 3 temps</p></div>
+        <div class="filter-chips-row" id="verbs-filters">
+          <button class="chip active" data-filter="all">Tous</button>
+          <button class="chip" data-filter="frequent">Fréquents</button>
+          <button class="chip" data-filter="weak">À travailler</button>
+          <button class="chip" data-filter="mastered">Maîtrisés</button>
+        </div>
+        <div class="search-wrap">
+          <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="search" id="verbs-search" class="search-input" placeholder="Chercher un verbe…">
+        </div>
+        <div id="verbs-list" class="verbs-list"><div class="loading-spin-wrap"><div class="spin"></div></div></div>
+        <div class="spacer-nav"></div>
+      </div>
+    </section>
+
+    <!-- VOCABULAIRE -->
+    <section id="view-vocabulary" class="view" data-nav="none">
+      <div class="view-scroll">
+        <div class="view-hero"><h1 class="view-h1">Vocabulaire</h1><p class="view-sub">300+ mots par thème</p></div>
+        <div class="filter-chips-row" id="vocab-filters">
+          <button class="chip active" data-filter="all">Tous</button>
+          <button class="chip" data-filter="salutations">Salutations</button>
+          <button class="chip" data-filter="famille">Famille</button>
+          <button class="chip" data-filter="nourriture">Nourriture</button>
+          <button class="chip" data-filter="ville">Ville</button>
+          <button class="chip" data-filter="nombres">Nombres</button>
+        </div>
+        <div class="search-wrap">
+          <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="search" id="vocab-search" class="search-input" placeholder="Chercher un mot…">
+        </div>
+        <div id="vocab-list" class="vocab-list"><div class="loading-spin-wrap"><div class="spin"></div></div></div>
+        <div class="spacer-nav"></div>
+      </div>
+    </section>
+
+    <!-- PHRASES -->
+    <section id="view-phrases" class="view" data-nav="none">
+      <div class="view-scroll">
+        <div class="view-hero"><h1 class="view-h1">Phrases utiles</h1><p class="view-sub">150+ expressions du quotidien</p></div>
+        <div class="filter-chips-row">
+          <button class="chip active" data-filter="all">Toutes</button>
+          <button class="chip" data-filter="salutations">Salutations</button>
+          <button class="chip" data-filter="voyage">Voyage</button>
+          <button class="chip" data-filter="restaurant">Restaurant</button>
+          <button class="chip" data-filter="aide">Aide</button>
+        </div>
+        <div id="phrases-list" class="phrases-list"><div class="loading-spin-wrap"><div class="spin"></div></div></div>
+        <div class="spacer-nav"></div>
+      </div>
+    </section>
+
+    <!-- DIALOGUES -->
+    <section id="view-dialogues" class="view" data-nav="none">
+      <div class="view-scroll">
+        <div class="view-hero"><h1 class="view-h1">Mini-dialogues</h1><p class="view-sub">Situations réelles de A à Z</p></div>
+        <div id="dialogues-list" class="dialogues-list"><div class="loading-spin-wrap"><div class="spin"></div></div></div>
+        <div class="spacer-nav"></div>
+      </div>
+    </section>
+
+    <!-- RÉVISIONS -->
+    <section id="view-review" class="view" data-nav="none">
+      <div class="view-scroll">
+        <div class="view-hero"><h1 class="view-h1">Révisions</h1><p class="view-sub">Répétition espacée intelligente</p></div>
+        <div id="review-body" class="review-body">
+          <div class="center-state"><div class="cs-icon">🧠</div><h2>Aucune révision en attente</h2><p>Revenez après vos premières leçons.</p><button class="btn btn-primary" onclick="App.navigate('#units')">Commencer les leçons</button></div>
+        </div>
+        <div class="spacer-nav"></div>
+      </div>
+    </section>
+
+    <!-- DÉFI -->
+    <section id="view-daily" class="view" data-nav="none">
+      <div class="view-scroll">
+        <div class="view-hero"><h1 class="view-h1">Défi du jour ⚡</h1><p class="view-sub" id="daily-subtitle">Un nouveau défi chaque jour</p></div>
+        <div id="daily-body" class="daily-body"><div class="loading-spin-wrap"><div class="spin"></div></div></div>
+        <div class="spacer-nav"></div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section id="view-stats" class="view" data-nav="stats">
+      <div class="view-scroll">
+        <div class="view-hero"><h1 class="view-h1">Mes statistiques</h1><p class="view-sub">Votre progression en détail</p></div>
+        <div id="stats-body" class="stats-body"><div class="loading-spin-wrap"><div class="spin"></div></div></div>
+        <div class="spacer-nav"></div>
+      </div>
+    </section>
+
+    <!-- PARAMÈTRES -->
+    <section id="view-settings" class="view" data-nav="none">
+      <div class="view-scroll">
+        <div class="view-hero"><h1 class="view-h1">Paramètres</h1></div>
+        <div id="settings-body" class="settings-body"><div class="loading-spin-wrap"><div class="spin"></div></div></div>
+        <div class="spacer-nav"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <nav id="bottom-nav" class="bottom-nav">
+    <button class="nav-btn active" data-view="dashboard" onclick="App.navigate('#dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Accueil</span>
+    </button>
+    <button class="nav-btn" data-view="units" onclick="App.navigate('#units')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      <span>Parcours</span>
+    </button>
+    <button class="nav-btn" data-view="verbs" onclick="App.navigate('#verbs')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+      <span>Verbes</span>
+    </button>
+    <button class="nav-btn" data-view="review" onclick="App.navigate('#review')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.8"/></svg>
+      <span>Réviser</span>
+    </button>
+    <button class="nav-btn" data-view="stats" onclick="App.navigate('#stats')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <span>Stats</span>
+    </button>
+  </nav>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+  <div id="xp-float" class="xp-float hidden"></div>
+  <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
+  <!-- MODAL VERBES -->
+  <div id="verb-modal" class="session-modal hidden">
+    <div class="session-card" style="padding: 24px; text-align: left;">
+      <div class="flex justify-between items-center mb-4">
+        <div>
+          <h2 id="vm-title" class="text-2xl font-bold text-primary">Olmak</h2>
+          <div id="vm-fr" class="text-sm text-muted">Être / Devenir</div>
+        </div>
+        <button class="btn-icon" onclick="document.getElementById('verb-modal').classList.add('hidden')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      
+      <div id="vm-note" class="text-xs text-warning bg-warning-bg p-2 rounded mb-4 hidden"></div>
+
+      <div class="mb-4">
+        <h3 class="text-xs font-bold text-muted uppercase mb-2">Présent (-iyor)</h3>
+        <div id="vm-pres" class="grid grid-cols-2 gap-2 text-sm"></div>
+      </div>
+      
+      <div class="mb-4">
+        <h3 class="text-xs font-bold text-muted uppercase mb-2">Passé (-di)</h3>
+        <div id="vm-past" class="grid grid-cols-2 gap-2 text-sm"></div>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-bold text-muted uppercase mb-2">Futur (-ecek)</h3>
+        <div id="vm-fut" class="grid grid-cols-2 gap-2 text-sm"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/data/vocabulary.js"></script>
+<script src="js/data/verbs.js"></script>
+<script src="js/data/phrases.js"></script>
+<script src="js/data/dialogues.js"></script>
+<script src="js/data/grammar.js"></script>
+<script src="js/data/achievements.js"></script>
+<script src="js/data/units.js"></script>
+<script src="js/engine/srs.js"></script>
+<script src="js/engine/exercises.js"></script>
+<script src="js/engine/gamification.js"></script>
+<script src="js/views/dashboard.js"></script>
+<script src="js/views/units.js"></script>
+<script src="js/views/lesson.js"></script>
+<script src="js/views/verbs.js"></script>
+<script src="js/views/vocabulary.js"></script>
+<script src="js/views/phrases.js"></script>
+<script src="js/views/dialogues.js"></script>
+<script src="js/views/review.js"></script>
+<script src="js/views/daily.js"></script>
+<script src="js/views/stats.js"></script>
+<script src="js/views/settings.js"></script>
+<script src="js/state.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
