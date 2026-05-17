@@ -1,55 +1,77 @@
 /* ═══════════════════════════════════════════════
    TürkçeYol — srs.js
-   Spaced Repetition System (Répétition Espacée)
+   Répétition Espacée (algorithme Leitner amélioré)
    ═══════════════════════════════════════════════ */
 
 window.SRS = {
-  // ── Algorithme simplifié basé sur Leitner / SuperMemo ──
-  // Si success = true : l'intervalle augmente (ex: 1j -> 3j -> 7j)
-  // Si success = false : l'intervalle retombe à 0 (à revoir aujourd'hui)
+  intervals: [1, 3, 7, 14, 30, 90],
 
-  intervals: [1, 3, 7, 14, 30, 90], // jours
-  
-  // Mettre à jour le statut d'un mot après une révision
-  // itemType = 'vocabulary', 'verb', 'phrase'
-  updateItem(itemId, itemType, success) {
-    let itemData = State.data.reviewQueue.find(i => i.id === itemId && i.type === itemType);
-    
-    if (!itemData) {
-      // Premier ajout au SRS
-      itemData = {
-        id: itemId,
-        type: itemType,
+  updateItem(itemId, itemType, success, tense) {
+    let item = State.data.reviewQueue.find(i => i.id === itemId && i.type === itemType);
+    const today = new Date().toISOString().split('T')[0];
+
+    if (!item) {
+      item = {
+        id: itemId, type: itemType,
         step: 0,
         nextReview: this.addDays(new Date(), success ? 1 : 0).toISOString().split('T')[0],
         successes: success ? 1 : 0,
-        failures: success ? 0 : 1
+        failures: success ? 0 : 1,
+        lastSeen: today
       };
-      State.data.reviewQueue.push(itemData);
+      State.data.reviewQueue.push(item);
     } else {
-      // Mise à jour
       if (success) {
-        itemData.step = Math.min(itemData.step + 1, this.intervals.length - 1);
-        itemData.successes += 1;
+        item.step = Math.min(item.step + 1, this.intervals.length - 1);
+        item.successes = (item.successes || 0) + 1;
       } else {
-        itemData.step = 0; // On recommence du début
-        itemData.failures += 1;
+        // Régression partielle (pas retour à 0) pour ne pas trop décourager
+        item.step = Math.max(0, item.step - 1);
+        item.failures = (item.failures || 0) + 1;
       }
-      const daysToAdd = this.intervals[itemData.step];
-      itemData.nextReview = this.addDays(new Date(), daysToAdd).toISOString().split('T')[0];
+      item.nextReview = this.addDays(new Date(), this.intervals[item.step]).toISOString().split('T')[0];
+      item.lastSeen = today;
     }
-    
+
+    // Stats par temps verbal
+    if (itemType === 'verb' && tense) {
+      if (!State.data.tenseStats) State.data.tenseStats = {};
+      if (!State.data.tenseStats[tense]) State.data.tenseStats[tense] = { correct: 0, total: 0 };
+      State.data.tenseStats[tense].total++;
+      if (success) State.data.tenseStats[tense].correct++;
+    }
+
     State.save();
-    return itemData;
+    return item;
   },
 
-  // Récupérer les items à réviser aujourd'hui
   getDueItems() {
     const today = new Date().toISOString().split('T')[0];
-    return State.data.reviewQueue.filter(item => item.nextReview <= today);
+    return State.data.reviewQueue.filter(i => i.nextReview <= today);
   },
 
-  // Helper pour ajouter des jours à une date
+  // Items les plus fragiles (taux d'échec élevé)
+  getWeakItems(limit = 6) {
+    return [...State.data.reviewQueue]
+      .filter(i => (i.failures || 0) > 0)
+      .sort((a, b) => {
+        const rateA = (a.failures || 0) / Math.max(1, (a.successes || 0) + (a.failures || 0));
+        const rateB = (b.failures || 0) / Math.max(1, (b.successes || 0) + (b.failures || 0));
+        return rateB - rateA;
+      })
+      .slice(0, limit);
+  },
+
+  // Niveau de maîtrise 0-5
+  getMasteryLevel(item) {
+    if (!item) return 0;
+    return Math.round((item.step / (this.intervals.length - 1)) * 5);
+  },
+
+  getTenseStats() {
+    return State.data.tenseStats || {};
+  },
+
   addDays(date, days) {
     const result = new Date(date);
     result.setDate(result.getDate() + days);

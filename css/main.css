@@ -553,3 +553,37 @@ svg { flex-shrink: 0; }
   :root { --header-h: 64px; --nav-h: 76px; }
   .view-h1 { font-size: var(--text-3xl); }
 }
+
+/* ── Utility classes supplémentaires ── */
+.grid { display: grid; }
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.gap-2 { gap: var(--s2); }
+.gap-3 { gap: var(--s3); }
+.gap-4 { gap: var(--s4); }
+.mb-2 { margin-bottom: var(--s2); }
+.mb-6 { margin-bottom: var(--s6); }
+.p-2 { padding: var(--s2); }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-gold { color: var(--gold); }
+.text-secondary { color: var(--secondary); }
+.text-warning { color: var(--warning); }
+.text-2xl { font-size: var(--text-2xl); }
+.text-3xl { font-size: var(--text-3xl); }
+.opacity-50 { opacity: 0.5; }
+.grayscale { filter: grayscale(1); }
+.border-primary { border-color: var(--primary) !important; }
+.text-bold { font-weight: 700; }
+.mt-2 { margin-top: var(--s2); }
+
+/* ── Bouton succès ── */
+.btn-success {
+  background: var(--success);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(34,197,94,0.3);
+}
+.btn-success:hover { background: #16a34a; transform: translateY(-1px); }
+
+/* ── Bouton retour ── */
+.mb-2 { margin-bottom: var(--s2); }
