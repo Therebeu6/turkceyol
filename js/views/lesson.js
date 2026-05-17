@@ -113,8 +113,8 @@ window.Lesson = {
 
   checkAnswer(selected) {
     const exo = this.exercises[this.currentIndex];
-    // Nettoyage basique pour tolérer la casse et la ponctuation finale
-    const clean = (s) => s.toLowerCase().replace(/[.!?]/g, '').trim();
+    // Nettoyage intelligent : casse turque (İ/ı), ponctuation, espaces multiples
+    const clean = (s) => s.toLocaleLowerCase('tr-TR').replace(/[.!?,;:'"]/g, '').replace(/\s+/g, ' ').trim();
     
     const isCorrect = clean(selected) === clean(exo.answer);
     
