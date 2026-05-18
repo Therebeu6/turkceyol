@@ -12,21 +12,23 @@ window.Exercises = {
       if (c) { chapter = c; unit = u; break; }
     }
 
-    // Vocab du chapitre
+    const hasExplicitVocab = chapter && chapter.vocabIds && chapter.vocabIds.length > 0;
+
+    // Vocab du chapitre — fallback seulement si le chapitre a du vocab explicite
     let vocab = [];
-    if (chapter && chapter.vocabIds && chapter.vocabIds.length > 0) {
+    if (hasExplicitVocab) {
       vocab = chapter.vocabIds.map(id => AppVocabulary.find(w => w.id === id)).filter(Boolean);
-    }
-    // Complément depuis l'unité
-    if (vocab.length < 5 && unit) {
-      const unitIds = new Set(unit.chapters.flatMap(c => c.vocabIds || []));
-      const extra = AppVocabulary.filter(w => unitIds.has(w.id) && !vocab.find(v => v.id === w.id));
-      vocab.push(...this._shuffle(extra));
-    }
-    // Fallback global
-    if (vocab.length < 5) {
-      const extra = AppVocabulary.filter(w => !vocab.find(v => v.id === w.id));
-      vocab.push(...this._shuffle(extra).slice(0, 5 - vocab.length));
+      // Complément depuis l'unité
+      if (vocab.length < 5 && unit) {
+        const unitIds = new Set(unit.chapters.flatMap(c => c.vocabIds || []));
+        const extra = AppVocabulary.filter(w => unitIds.has(w.id) && !vocab.find(v => v.id === w.id));
+        vocab.push(...this._shuffle(extra));
+      }
+      // Fallback global minimal
+      if (vocab.length < 4) {
+        const extra = AppVocabulary.filter(w => !vocab.find(v => v.id === w.id));
+        vocab.push(...this._shuffle(extra).slice(0, 4 - vocab.length));
+      }
     }
 
     // Verbes du chapitre
@@ -35,26 +37,41 @@ window.Exercises = {
       verbs = chapter.verbIds.map(id => window.AppVerbs && AppVerbs.find(v => v.id === id)).filter(Boolean);
     }
 
-    const exercises = [];
-    const vocabSample = this._shuffle(vocab).slice(0, 5);
+    // Temps autorisés (présent_neg inclus pour u10_c3)
+    const allowedTenses = (chapter && chapter.tenses) || ['present', 'past', 'future'];
 
-    vocabSample.forEach((word, i) => {
-      if (i % 3 === 0) exercises.push(this.createQCMTrFr(word));
-      else if (i % 3 === 1) exercises.push(this.createQCMFrTr(word));
-      else exercises.push(this.createInputTr(word));
-    });
+    const exercises = [];
+
+    // Exercices de vocabulaire (seulement si vocab explicite)
+    if (vocab.length > 0) {
+      const vocabSample = this._shuffle(vocab).slice(0, 5);
+      vocabSample.forEach((word, i) => {
+        if (i % 3 === 0) exercises.push(this.createQCMTrFr(word));
+        else if (i % 3 === 1) exercises.push(this.createQCMFrTr(word));
+        else exercises.push(this.createInputTr(word));
+      });
+    }
 
     // Exercices de conjugaison
     if (verbs.length > 0) {
-      const tenses = ['present', 'past', 'future'];
-      const persons = ['ben', 'sen', 'o', 'biz'];
-      const count = Math.min(3, verbs.length + 1);
+      const persons = ['ben', 'sen', 'o', 'biz', 'siz', 'onlar'];
+      // Chapitre grammaire pure (pas de vocab) → plus d'exercices de conjugaison
+      const count = !hasExplicitVocab ? Math.min(8, verbs.length * 2 + 1) : Math.min(3, verbs.length + 1);
       for (let i = 0; i < count; i++) {
         const verb = verbs[i % verbs.length];
         const person = persons[i % persons.length];
-        const tense = tenses[i % tenses.length];
-        exercises.push(this.createVerbFill(verb, person, tense));
+        const tense = allowedTenses[i % allowedTenses.length];
+        const ex = this.createVerbFill(verb, person, tense);
+        if (ex) exercises.push(ex);
       }
+    }
+
+    // Fallback si aucun exercice généré
+    if (exercises.length === 0) {
+      const fallback = this._shuffle(AppVocabulary).slice(0, 5);
+      fallback.forEach((word, i) => {
+        exercises.push(i % 2 === 0 ? this.createQCMTrFr(word) : this.createQCMFrTr(word));
+      });
     }
 
     return this._shuffle(exercises);
@@ -75,7 +92,8 @@ window.Exercises = {
           const tenses = ['present', 'past', 'future'];
           const person = persons[Math.floor(Math.random() * persons.length)];
           const tense = tenses[Math.floor(Math.random() * tenses.length)];
-          exercises.push(this.createVerbFill(verb, person, tense));
+          const ex = this.createVerbFill(verb, person, tense);
+          if (ex) exercises.push(ex);
         }
       }
     }
@@ -115,21 +133,53 @@ window.Exercises = {
 
   createVerbFill(verb, person, tense) {
     const personFr = { ben: 'Je', sen: 'Tu', o: 'Il / Elle', biz: 'Nous', siz: 'Vous', onlar: 'Ils / Elles' };
-    const tenseLabel = { present: 'présent', past: 'passé', future: 'futur' };
-    const correct = verb.conjugations[tense][person];
+    const tenseLabel = {
+      present: 'présent',
+      past: 'passé',
+      future: 'futur',
+      present_neg: 'présent négatif'
+    };
 
-    // Distracteurs : mauvaises personnes + mauvais temps (erreurs réelles d'apprenants)
+    // Résoudre la table de conjugaison (normale ou négative)
+    let conjugTable;
+    if (tense === 'present_neg') {
+      conjugTable = verb.negations && verb.negations.present;
+    } else {
+      conjugTable = verb.conjugations && verb.conjugations[tense];
+    }
+    if (!conjugTable || !conjugTable[person]) return null;
+
+    const correct = conjugTable[person];
     const allPersons = ['ben', 'sen', 'o', 'biz', 'siz', 'onlar'];
+
+    // Distracteurs : mauvaises personnes dans la même forme (même temps/mode)
     const wrongByPerson = allPersons
       .filter(p => p !== person)
-      .map(p => verb.conjugations[tense][p])
+      .map(p => conjugTable[p])
       .filter(f => f && f !== correct);
 
-    const otherTenses = Object.keys(verb.conjugations).filter(t => t !== tense);
-    const wrongByTense = otherTenses.map(t => verb.conjugations[t][person]).filter(f => f && f !== correct);
+    // Distracteurs : même personne, autre temps (confusion temps/mode)
+    const otherTenses = tense === 'present_neg'
+      ? ['present', 'past']
+      : Object.keys(verb.conjugations).filter(t => t !== tense);
+    const wrongByTense = otherTenses
+      .map(t => {
+        const tbl = verb.conjugations && verb.conjugations[t];
+        return tbl && tbl[person];
+      })
+      .filter(f => f && f !== correct);
+
+    // Pour le présent négatif : ajouter la forme affirmative du même temps comme distractor clé
+    if (tense === 'present_neg' && verb.conjugations && verb.conjugations.present) {
+      const affirmatif = verb.conjugations.present[person];
+      if (affirmatif && affirmatif !== correct && !wrongByTense.includes(affirmatif)) {
+        wrongByTense.unshift(affirmatif);
+      }
+    }
 
     const candidates = [...new Set([...wrongByPerson, ...wrongByTense])];
     const distractors = this._shuffle(candidates).slice(0, 3);
+    if (distractors.length === 0) return null;
 
     return {
       type: 'qcm',
@@ -143,7 +193,7 @@ window.Exercises = {
         tr: `${personFr[person]} ${correct}`,
         fr: `${personFr[person]} ${verb.fr}`,
         type: 'verb',
-        tense
+        tense: tense === 'present_neg' ? 'present' : tense
       }
     };
   },
@@ -158,7 +208,7 @@ window.Exercises = {
       w.id !== targetWord.id && w.type === targetWord.type &&
       w.topic !== targetWord.topic && w[field] !== targetWord[field]
     );
-    // P3 : difficulté similaire (fallback)
+    // P3 : fallback difficulté similaire
     const similar = AppVocabulary.filter(w =>
       w.id !== targetWord.id && !sameTopic.find(s => s.id === w.id) &&
       !sameType.find(s => s.id === w.id) && w[field] !== targetWord[field]

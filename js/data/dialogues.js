@@ -172,5 +172,38 @@ window.AppDialogues = [
       { speaker: 'Müdür', tr: 'Öğle yemeğinde tanışacaksınız. Saat bire kadar çalışıyoruz.', fr: 'Vous vous rencontrerez au déjeuner. On travaille jusqu\'à une heure.' },
       { speaker: 'Sophie', tr: 'Anladım. Çalışmaya hazırım!', fr: 'Je comprends. Je suis prête à travailler !' }
     ]
+  },
+  {
+    id: 'd_nationalite',
+    title: 'D\'où venez-vous ?',
+    scenario: 'Deux voyageurs font connaissance dans un hostel d\'Istanbul.',
+    level: 1,
+    tags: ['Identité', 'Nationalité', 'A1'],
+    turns: [
+      { speaker: 'Kemal', tr: 'Merhaba! Ben Kemal. Siz nerelisiniz?', fr: 'Bonjour ! Je suis Kemal. D\'où êtes-vous ?' },
+      { speaker: 'Marie', tr: 'Merhaba! Ben Marie. Fransızım. Siz?', fr: 'Bonjour ! Je suis Marie. Je suis française. Et vous ?' },
+      { speaker: 'Kemal', tr: 'Ben Türküm, İstanbulluyum. Kaç yaşındasınız?', fr: 'Je suis turc, je suis d\'Istanbul. Quel âge avez-vous ?' },
+      { speaker: 'Marie', tr: 'Yirmi sekiz yaşındayım. Türkçe konuşuyor musunuz?', fr: 'J\'ai vingt-huit ans. Parlez-vous turc ?' },
+      { speaker: 'Kemal', tr: 'Evet, tabii! Türkçe ve İngilizce konuşuyorum.', fr: 'Oui, bien sûr ! Je parle turc et anglais.' },
+      { speaker: 'Marie', tr: 'Harika! Ben Fransızca ve biraz Türkçe konuşuyorum.', fr: 'Super ! Moi je parle français et un peu turc.' },
+      { speaker: 'Kemal', tr: 'Türkçeniz çok iyi! Hoş geldiniz Türkiye\'ye.', fr: 'Votre turc est très bien ! Bienvenue en Turquie.' }
+    ]
+  },
+  {
+    id: 'd_kiyafet',
+    title: 'Les courses de vêtements',
+    scenario: 'Dans une boutique de vêtements au Grand Bazar d\'Istanbul.',
+    level: 2,
+    tags: ['Vêtements', 'Shopping', 'A2'],
+    turns: [
+      { speaker: 'Satıcı', tr: 'Hoş geldiniz! Size yardımcı olabilir miyim?', fr: 'Bienvenue ! Puis-je vous aider ?' },
+      { speaker: 'Müşteri', tr: 'Evet, bir gömlek arıyorum.', fr: 'Oui, je cherche une chemise.' },
+      { speaker: 'Satıcı', tr: 'Hangi renk istiyorsunuz? Mavi, kırmızı veya beyaz?', fr: 'Quelle couleur voulez-vous ? Bleu, rouge ou blanc ?' },
+      { speaker: 'Müşteri', tr: 'Mavi istiyorum. Büyük beden var mı?', fr: 'Je voudrais bleu. Avez-vous en grande taille ?' },
+      { speaker: 'Satıcı', tr: 'Evet, buyurun. Bu gömlek çok güzel.', fr: 'Oui, voilà. Cette chemise est très belle.' },
+      { speaker: 'Müşteri', tr: 'Teşekkürler. Fiyatı ne kadar?', fr: 'Merci. Quel est le prix ?' },
+      { speaker: 'Satıcı', tr: 'Yüz elli lira. Ucuz!', fr: 'Cent cinquante lires. Pas cher !' },
+      { speaker: 'Müşteri', tr: 'Tamam, alıyorum.', fr: 'D\'accord, je la prends.' }
+    ]
   }
 ];

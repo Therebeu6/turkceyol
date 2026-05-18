@@ -175,5 +175,70 @@ window.AppVocabulary = [
   { id: 'v_sut', tr: 'Süt', fr: 'Lait', topic: 'nourriture', type: 'nom', difficulty: 1 },
   { id: 'v_yumurta', tr: 'Yumurta', fr: 'Œuf', topic: 'nourriture', type: 'nom', difficulty: 1 },
   { id: 'v_meyve', tr: 'Meyve', fr: 'Fruit', topic: 'nourriture', type: 'nom', difficulty: 1 },
-  { id: 'v_sebze', tr: 'Sebze', fr: 'Légume', topic: 'nourriture', type: 'nom', difficulty: 2 }
+  { id: 'v_sebze', tr: 'Sebze', fr: 'Légume', topic: 'nourriture', type: 'nom', difficulty: 2 },
+
+  // ── Nationalités & Pays ──
+  { id: 'v_fransiz', tr: 'Fransız', fr: 'Français(e)', topic: 'nationalites', type: 'adjectif', difficulty: 1 },
+  { id: 'v_turk', tr: 'Türk', fr: 'Turc / Turque', topic: 'nationalites', type: 'adjectif', difficulty: 1 },
+  { id: 'v_ingiliz', tr: 'İngiliz', fr: 'Anglais(e)', topic: 'nationalites', type: 'adjectif', difficulty: 2 },
+  { id: 'v_alman', tr: 'Alman', fr: 'Allemand(e)', topic: 'nationalites', type: 'adjectif', difficulty: 2 },
+  { id: 'v_italyan', tr: 'İtalyan', fr: 'Italien(ne)', topic: 'nationalites', type: 'adjectif', difficulty: 2 },
+  { id: 'v_ispanyol', tr: 'İspanyol', fr: 'Espagnol(e)', topic: 'nationalites', type: 'adjectif', difficulty: 2 },
+  { id: 'v_fransa', tr: 'Fransa', fr: 'France', topic: 'nationalites', type: 'nom', difficulty: 1 },
+  { id: 'v_turkiye', tr: 'Türkiye', fr: 'Turquie', topic: 'nationalites', type: 'nom', difficulty: 1 },
+  { id: 'v_ingiltere', tr: 'İngiltere', fr: 'Angleterre', topic: 'nationalites', type: 'nom', difficulty: 2 },
+  { id: 'v_almanya', tr: 'Almanya', fr: 'Allemagne', topic: 'nationalites', type: 'nom', difficulty: 2 },
+  { id: 'v_dil', tr: 'Dil', fr: 'Langue', topic: 'identite', type: 'nom', difficulty: 2 },
+  { id: 'v_ulke', tr: 'Ülke', fr: 'Pays', topic: 'identite', type: 'nom', difficulty: 2 },
+  { id: 'v_nerelisiniz', tr: 'Nerelisiniz?', fr: 'D\'où êtes-vous ?', topic: 'nationalites', type: 'expression', difficulty: 2 },
+
+  // ── Nombres complémentaires (30–1000) ──
+  { id: 'v_otuz', tr: 'Otuz', fr: 'Trente (30)', topic: 'nombres', type: 'nombre', difficulty: 2 },
+  { id: 'v_kirk', tr: 'Kırk', fr: 'Quarante (40)', topic: 'nombres', type: 'nombre', difficulty: 2 },
+  { id: 'v_altmis', tr: 'Altmış', fr: 'Soixante (60)', topic: 'nombres', type: 'nombre', difficulty: 2 },
+  { id: 'v_yetmis', tr: 'Yetmiş', fr: 'Soixante-dix (70)', topic: 'nombres', type: 'nombre', difficulty: 2 },
+  { id: 'v_seksen', tr: 'Seksen', fr: 'Quatre-vingts (80)', topic: 'nombres', type: 'nombre', difficulty: 3 },
+  { id: 'v_doksan', tr: 'Doksan', fr: 'Quatre-vingt-dix (90)', topic: 'nombres', type: 'nombre', difficulty: 3 },
+  { id: 'v_bin', tr: 'Bin', fr: 'Mille (1000)', topic: 'nombres', type: 'nombre', difficulty: 3 },
+
+  // ── Descriptions de personnes ──
+  { id: 'v_genc', tr: 'Genç', fr: 'Jeune', topic: 'adjectifs', type: 'adjectif', difficulty: 1 },
+  { id: 'v_yasli', tr: 'Yaşlı', fr: 'Âgé(e)', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
+  { id: 'v_uzun', tr: 'Uzun', fr: 'Grand(e) / Long(ue)', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
+  { id: 'v_kisa', tr: 'Kısa', fr: 'Petit(e) / Court(e)', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
+  { id: 'v_zeki', tr: 'Zeki', fr: 'Intelligent(e)', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
+
+  // ── Directions ──
+  { id: 'v_sag', tr: 'Sağ', fr: 'Droite', topic: 'directions', type: 'mot', difficulty: 1 },
+  { id: 'v_sol', tr: 'Sol', fr: 'Gauche', topic: 'directions', type: 'mot', difficulty: 1 },
+  { id: 'v_duz', tr: 'Dümdüz', fr: 'Tout droit', topic: 'directions', type: 'mot', difficulty: 2 },
+  { id: 'v_kose', tr: 'Köşe', fr: 'Coin / Angle', topic: 'directions', type: 'nom', difficulty: 2 },
+  { id: 'v_yakin', tr: 'Yakın', fr: 'Proche / Près', topic: 'directions', type: 'adjectif', difficulty: 1 },
+  { id: 'v_uzak', tr: 'Uzak', fr: 'Loin / Éloigné(e)', topic: 'directions', type: 'adjectif', difficulty: 1 },
+  { id: 'v_karsisinda', tr: 'Karşısında', fr: 'En face de', topic: 'directions', type: 'expression', difficulty: 3 },
+
+  // ── Vêtements ──
+  { id: 'v_gomlek', tr: 'Gömlek', fr: 'Chemise', topic: 'vetements', type: 'nom', difficulty: 2 },
+  { id: 'v_pantolon', tr: 'Pantolon', fr: 'Pantalon', topic: 'vetements', type: 'nom', difficulty: 2 },
+  { id: 'v_elbise', tr: 'Elbise', fr: 'Robe', topic: 'vetements', type: 'nom', difficulty: 2 },
+  { id: 'v_ayakkabi', tr: 'Ayakkabı', fr: 'Chaussures', topic: 'vetements', type: 'nom', difficulty: 2 },
+  { id: 'v_kazak', tr: 'Kazak', fr: 'Pull / Sweat', topic: 'vetements', type: 'nom', difficulty: 2 },
+  { id: 'v_canta', tr: 'Çanta', fr: 'Sac', topic: 'vetements', type: 'nom', difficulty: 2 },
+
+  // ── Urgences ──
+  { id: 'v_yardim', tr: 'Yardım', fr: 'Aide / Au secours', topic: 'urgences', type: 'nom', difficulty: 1 },
+  { id: 'v_acil', tr: 'Acil', fr: 'Urgent(e) / Urgence', topic: 'urgences', type: 'adjectif', difficulty: 2 },
+
+  // ── Communication ──
+  { id: 'v_anlamiyorum', tr: 'Anlamıyorum', fr: 'Je ne comprends pas', topic: 'communication', type: 'expression', difficulty: 2 },
+  { id: 'v_bilmiyorum', tr: 'Bilmiyorum', fr: 'Je ne sais pas', topic: 'communication', type: 'expression', difficulty: 2 },
+  { id: 'v_tekrar', tr: 'Tekrar', fr: 'De nouveau / Encore', topic: 'communication', type: 'mot', difficulty: 2 },
+  { id: 'v_yavas_konusun', tr: 'Yavaş konuşun', fr: 'Parlez plus lentement', topic: 'communication', type: 'expression', difficulty: 3 },
+
+  // ── Goûts alimentaires ──
+  { id: 'v_lezzetli', tr: 'Lezzetli', fr: 'Délicieux / Savoureux', topic: 'nourriture', type: 'adjectif', difficulty: 2 },
+  { id: 'v_tatli', tr: 'Tatlı', fr: 'Sucré(e) / Doux', topic: 'nourriture', type: 'adjectif', difficulty: 2 },
+  { id: 'v_aci', tr: 'Acı', fr: 'Épicé(e) / Amer', topic: 'nourriture', type: 'adjectif', difficulty: 2 },
+  { id: 'v_meyve_suyu', tr: 'Meyve suyu', fr: 'Jus de fruit', topic: 'nourriture', type: 'nom', difficulty: 2 },
+  { id: 'v_ayran', tr: 'Ayran', fr: 'Ayran (boisson au yaourt)', topic: 'nourriture', type: 'nom', difficulty: 2 }
 ];
