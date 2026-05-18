@@ -184,14 +184,22 @@ window.Exercises = {
     return {
       type: 'qcm',
       subtype: 'verb_fill',
-      question: `<span class="verb-person-label">${personFr[person]}</span> _______ <span class="verb-tense-label">(${verb.infinitive} · ${tenseLabel[tense]})</span>`,
+      question: `${personFr[person]} _______`,
+      verbMeta: {
+        infinitive: verb.infinitive,
+        fr: verb.fr,
+        person,
+        personLabel: personFr[person],
+        tense,
+        tenseLabel: tenseLabel[tense]
+      },
       hint: verb.fr,
       options: this._shuffle([correct, ...distractors]),
       answer: correct,
       data: {
         id: verb.id,
-        tr: `${personFr[person]} ${correct}`,
-        fr: `${personFr[person]} ${verb.fr}`,
+        tr: correct,
+        fr: verb.fr,
         type: 'verb',
         tense: tense === 'present_neg' ? 'present' : tense
       }

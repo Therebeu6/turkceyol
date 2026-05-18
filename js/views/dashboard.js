@@ -47,10 +47,13 @@ window.Dashboard = {
     // 4. Continuer la leçon en cours
     this.renderContinueCard();
 
-    // 5. Révisions en attente
+    // 5. Parcours actuel
+    this.renderParcoursCard();
+
+    // 6. Révisions en attente
     this.renderReviewPreview();
 
-    // 6. Verbes faibles
+    // 7. Verbes faibles
     this.renderWeakVerbs();
   },
 
@@ -71,6 +74,49 @@ window.Dashboard = {
         document.getElementById('cc-bar-fill').style.width = progress + '%';
       }
     }
+  },
+
+  renderParcoursCard() {
+    const container = document.getElementById('dash-parcours');
+    if (!container) return;
+
+    const currUId = State.data.currentUnit;
+    const unit = AppUnits.find(u => u.id === currUId);
+    if (!unit) { container.innerHTML = ''; return; }
+
+    const completedInUnit = unit.chapters.filter(c => State.isChapterCompleted(c.id)).length;
+    const totalInUnit = unit.chapters.length;
+    const pct = Math.round((completedInUnit / totalInUnit) * 100);
+    const pendingChapters = unit.chapters.filter(c => !State.isChapterCompleted(c.id)).slice(0, 3);
+
+    const chapList = pendingChapters.map((ch, i) => {
+      const isNext = i === 0;
+      return `
+        <div class="parc-chap-item${isNext ? ' parc-chap-next' : ''}" onclick="event.stopPropagation();App.navigate('#lesson/${ch.id}')">
+          <span class="parc-chap-dot${isNext ? ' dot-active' : ''}"></span>
+          <span class="parc-chap-title">${ch.title}</span>
+          ${isNext ? '<span class="parc-chap-badge">Commencer →</span>' : ''}
+        </div>
+      `;
+    }).join('');
+
+    const unitNum = unit.id.replace('u', '');
+    container.innerHTML = `
+      <div class="parc-unit-card" onclick="App.navigate('#units')" style="--unit-color:${unit.color || 'var(--primary)'}">
+        <div class="parc-unit-header">
+          <div class="parc-unit-icon">${unit.icon || '📘'}</div>
+          <div class="parc-unit-info">
+            <div class="parc-unit-num">Unité ${unitNum}</div>
+            <div class="parc-unit-title">${unit.title}</div>
+          </div>
+          <div class="parc-unit-pct">${pct}%</div>
+        </div>
+        <div class="parc-prog-track"><div class="parc-prog-fill" style="width:${pct}%"></div></div>
+        ${pendingChapters.length > 0
+          ? `<div class="parc-chapters-list">${chapList}</div>`
+          : '<div class="parc-all-done">Unité complétée !</div>'}
+      </div>
+    `;
   },
 
   renderWeakVerbs() {

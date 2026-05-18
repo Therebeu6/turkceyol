@@ -80,6 +80,46 @@
 .dash-weak-verbs { margin-bottom: var(--s4); }
 .dash-review-preview { margin-bottom: var(--s2); }
 
+/* ── Dashboard Parcours ── */
+.dash-parcours { margin-bottom: var(--s6); }
+.parc-unit-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-top: 3px solid var(--unit-color, var(--primary));
+  border-radius: var(--r-xl); overflow: hidden;
+  cursor: pointer; transition: all 0.2s;
+}
+.parc-unit-card:hover { transform: translateY(-2px); box-shadow: var(--sh-md); }
+.parc-unit-header {
+  display: flex; align-items: center; gap: var(--s3);
+  padding: var(--s4);
+}
+.parc-unit-icon {
+  width: 44px; height: 44px; border-radius: var(--r-lg);
+  background: var(--surface-2); display: flex; align-items: center;
+  justify-content: center; font-size: 1.5rem; flex-shrink: 0;
+}
+.parc-unit-info { flex: 1; min-width: 0; }
+.parc-unit-num { font-size: var(--text-xs); font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.5px; }
+.parc-unit-title { font-size: var(--text-md); font-weight: 800; color: var(--text); }
+.parc-unit-pct { font-size: var(--text-xl); font-weight: 800; color: var(--unit-color, var(--primary)); flex-shrink: 0; }
+.parc-prog-track { height: 4px; background: var(--surface-3); margin: 0 var(--s4) var(--s3); border-radius: var(--r-full); overflow: hidden; }
+.parc-prog-fill { height: 100%; background: var(--unit-color, var(--primary)); border-radius: var(--r-full); transition: width 0.5s ease; }
+.parc-chapters-list { border-top: 1px solid var(--border); padding: var(--s1) 0; }
+.parc-chap-item {
+  display: flex; align-items: center; gap: var(--s3);
+  padding: 8px var(--s4); transition: background 0.15s; cursor: pointer;
+}
+.parc-chap-item:hover { background: var(--surface-2); }
+.parc-chap-next { background: rgba(232,87,26,0.04); }
+.parc-chap-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border); flex-shrink: 0;
+}
+.dot-active { background: var(--primary); box-shadow: 0 0 6px rgba(232,87,26,0.4); }
+.parc-chap-title { flex: 1; font-size: var(--text-sm); font-weight: 600; color: var(--text); }
+.parc-chap-badge { font-size: var(--text-xs); font-weight: 700; color: var(--primary); white-space: nowrap; }
+.parc-all-done { padding: var(--s3) var(--s4); font-size: var(--text-sm); color: var(--success); font-weight: 600; }
+
 /* ── Global Progress (vue Units) ── */
 .global-prog-track { height: 8px; background: var(--surface-3); border-radius: var(--r-full); margin-bottom: var(--s2); overflow: hidden; }
 .global-prog-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--gold)); border-radius: var(--r-full); transition: width 1s ease; }
@@ -210,6 +250,23 @@
 .exo-fr { font-size: 1.05em; font-weight: 700; color: var(--text-2); }
 .verb-person-label { font-size: 1.1em; font-weight: 700; color: var(--text); }
 .verb-tense-label { font-size: 0.8em; font-weight: 600; color: var(--text-3); }
+
+/* Verb exercise card */
+.verb-exo-card {
+  background: var(--surface-2); border: 1px solid var(--border-light);
+  border-left: 3px solid var(--primary); border-radius: var(--r-lg);
+  padding: var(--s3) var(--s4); margin-bottom: var(--s4);
+}
+.verb-exo-row { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s3); }
+.verb-exo-name { font-size: var(--text-xl); font-weight: 800; color: var(--primary-light); margin-bottom: 2px; }
+.verb-exo-meaning { font-size: var(--text-sm); color: var(--text-2); font-style: italic; }
+.verb-exo-tense {
+  font-size: var(--text-xs); font-weight: 700; color: var(--primary);
+  background: var(--primary-glow); padding: 4px 10px; border-radius: var(--r-full);
+  text-transform: capitalize; flex-shrink: 0; align-self: center;
+}
+.exo-person { color: var(--text-2); font-weight: 600; }
+.exo-blank { color: var(--primary); font-weight: 800; letter-spacing: 2px; }
 
 .exercise-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
 

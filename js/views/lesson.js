@@ -49,7 +49,6 @@ window.Lesson = {
     let exoHtml = '';
     if (exo.type === 'qcm') {
       const isVerb = exo.subtype === 'verb_fill';
-      const hintHtml = exo.hint ? `<div class="exo-hint">${exo.hint}</div>` : '';
       const optsHtml = exo.options.map((opt, i) => `
         <button class="option-btn" onclick="Lesson.checkAnswer('${this._escape(opt)}')">
           <span class="opt-key">${i + 1}</span>
@@ -57,12 +56,33 @@ window.Lesson = {
         </button>
       `).join('');
 
+      let headerContent;
+      if (isVerb && exo.verbMeta) {
+        const vm = exo.verbMeta;
+        headerContent = `
+          <div class="verb-exo-card">
+            <div class="verb-exo-row">
+              <div>
+                <div class="verb-exo-name">${vm.infinitive}</div>
+                <div class="verb-exo-meaning">${vm.fr}</div>
+              </div>
+              <span class="verb-exo-tense">${vm.tenseLabel}</span>
+            </div>
+          </div>
+          <h2 class="exercise-prompt">
+            <span class="exo-person">${vm.personLabel}</span><span class="exo-blank"> _______</span>
+          </h2>
+        `;
+      } else {
+        const hintHtml = exo.hint ? `<div class="exo-hint">${exo.hint}</div>` : '';
+        headerContent = `<h2 class="exercise-prompt">${exo.question}</h2>${hintHtml}`;
+      }
+
       exoHtml = `
         <div class="exercise-container animate-fade-in">
           <div class="exercise-header">
             <div class="exo-type-label">${isVerb ? '⚡ Conjugaison' : '🎯 Choix multiple'}</div>
-            <h2 class="exercise-prompt">${exo.question}</h2>
-            ${hintHtml}
+            ${headerContent}
           </div>
           <div class="exercise-content">
             <div class="options-grid" id="options-container">${optsHtml}</div>
@@ -159,7 +179,11 @@ window.Lesson = {
     } else {
       fbBar.classList.add('wrong');
       document.getElementById('fb-icon').textContent = '✕';
-      document.getElementById('fb-title').textContent = 'Pas tout à fait…';
+      if (exo.subtype === 'verb_fill') {
+        document.getElementById('fb-title').textContent = `La bonne forme :`;
+      } else {
+        document.getElementById('fb-title').textContent = 'Pas tout à fait…';
+      }
       // Shake sur QCM
       if (exo.type === 'qcm') {
         const wrongBtn = document.querySelector('.option-btn.wrong');
@@ -168,7 +192,13 @@ window.Lesson = {
     }
 
     document.getElementById('fb-tr').textContent = exo.data.tr || '';
-    document.getElementById('fb-fr').textContent = exo.data.fr || '';
+    if (exo.subtype === 'verb_fill' && exo.verbMeta) {
+      const vm = exo.verbMeta;
+      document.getElementById('fb-fr').textContent =
+        `${vm.personLabel} — ${vm.fr} (${vm.tenseLabel})`;
+    } else {
+      document.getElementById('fb-fr').textContent = exo.data.fr || '';
+    }
 
     // Bouton TTS dans le feedback
     if (exo.data.tr) {
