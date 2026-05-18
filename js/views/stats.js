@@ -14,6 +14,10 @@ window.Stats = {
     // Items SRS par niveau de maîtrise
     const masteryHtml = this._buildMasteryBreakdown();
 
+    const fragileItems = window.SRS ? SRS.getFragileItems(5) : [];
+    const topicHtml = this._buildTopicRetention();
+    const fragileHtml = fragileItems.length > 0 ? this._buildFragileWarning(fragileItems) : '';
+
     container.innerHTML = `
       <!-- Chiffres clés -->
       <div class="stats-grid">
@@ -35,6 +39,9 @@ window.Stats = {
         </div>
       </div>
 
+      <!-- Alerte items fragiles -->
+      ${fragileHtml}
+
       <!-- Activité -->
       <div class="section-row"><span class="section-lbl">Activité (7 jours)</span></div>
       <div class="card mb-4">${activityHtml}</div>
@@ -44,6 +51,9 @@ window.Stats = {
 
       <!-- Maîtrise du vocabulaire -->
       ${masteryHtml}
+
+      <!-- Rétention par thème -->
+      ${topicHtml}
 
       <!-- Badges -->
       <div class="section-row"><span class="section-lbl">Badges</span></div>
@@ -115,6 +125,57 @@ window.Stats = {
 
     return `
       <div class="section-row"><span class="section-lbl">Conjugaison</span></div>
+      <div class="card mb-4">${rows}</div>
+    `;
+  },
+
+  _buildFragileWarning(items) {
+    const rows = items.map(item => {
+      const word = window.AppVocabulary && AppVocabulary.find(w => w.id === item.id);
+      const verb = window.AppVerbs && AppVerbs.find(v => v.id === item.id);
+      const label = word ? `${word.tr} — ${word.fr}` : (verb ? `${verb.infinitive}` : item.id);
+      const fails = item.consecutiveFails || 0;
+      return `<div class="fragile-row"><span class="fragile-label">${label}</span><span class="fragile-fails">${fails}✗</span></div>`;
+    }).join('');
+    return `
+      <div class="section-row"><span class="section-lbl" style="color:var(--warning)">⚠ À retravailler</span></div>
+      <div class="card mb-4" style="border-color:rgba(245,158,11,0.3)">${rows}</div>
+    `;
+  },
+
+  _buildTopicRetention() {
+    if (!window.SRS) return '';
+    const stats = SRS.getVocabTopicStats();
+    const entries = Object.entries(stats).filter(([, s]) => s.total >= 3);
+    if (entries.length === 0) return '';
+
+    const labels = {
+      base: 'Base', salutations: 'Salutations', famille: 'Famille', nourriture: 'Nourriture',
+      lieux: 'Lieux', transport: 'Transport', couleurs: 'Couleurs', metiers: 'Métiers',
+      temps: 'Temps', nombres: 'Nombres', nationalites: 'Nationalités', directions: 'Directions',
+      vetements: 'Vêtements', urgences: 'Urgences', communication: 'Communication',
+      meteo: 'Météo', corps: 'Corps', sante: 'Santé', locatifs: 'Locatifs', chunks: 'Expressions'
+    };
+
+    const rows = entries
+      .sort((a, b) => b[1].total - a[1].total)
+      .map(([topic, s]) => {
+        const pct = Math.round((s.mastered / s.total) * 100);
+        const color = pct >= 70 ? 'var(--success)' : pct >= 40 ? 'var(--primary)' : 'var(--warning)';
+        return `
+          <div class="tense-stat-row">
+            <div class="tense-stat-label">${labels[topic] || topic}</div>
+            <div class="tense-stat-bar-wrap">
+              <div class="tense-stat-bar" style="width:${pct}%;background:${color}"></div>
+            </div>
+            <div class="tense-stat-pct" style="color:${color}">${pct}%</div>
+            <div class="tense-stat-count">${s.mastered}/${s.total}</div>
+          </div>
+        `;
+      }).join('');
+
+    return `
+      <div class="section-row"><span class="section-lbl">Vocabulaire par thème</span></div>
       <div class="card mb-4">${rows}</div>
     `;
   },

@@ -601,5 +601,93 @@ window.AppUnits = [
         verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_olmak', 'vb_yapmak', 'vb_istemek', 'vb_sevmek']
       }
     ]
+  },
+  {
+    id: 'u13',
+    title: 'Santé et météo',
+    description: 'Parler du temps, du corps et de la santé.',
+    icon: '🏥',
+    color: '#06B6D4',
+    chapters: [
+      {
+        id: 'u13_c1',
+        title: 'La météo',
+        goal: 'Parler du temps qu\'il fait',
+        xpReward: 70,
+        time: 8,
+        tags: ['Météo', 'A2'],
+        vocabIds: ['v_hava', 'v_gunes', 'v_yagmur', 'v_kar', 'v_ruzgar', 'v_bulutlu', 'v_gunesli', 'v_yagmurlu', 'v_hava_sicak', 'v_hava_soguk', 'v_hava_guzel', 'v_sicak', 'v_soguk'],
+        verbIds: []
+      },
+      {
+        id: 'u13_c2',
+        title: 'Mon corps',
+        goal: 'Nommer les parties du corps',
+        xpReward: 70,
+        time: 8,
+        tags: ['Corps', 'A2'],
+        vocabIds: ['v_bas', 'v_el', 'v_goz', 'v_kulak', 'v_agiz', 'v_ayak', 'v_kol', 'v_dis', 'v_sirt', 'v_karin'],
+        verbIds: []
+      },
+      {
+        id: 'u13_c3',
+        title: 'Je ne me sens pas bien',
+        goal: 'Décrire un symptôme chez le médecin',
+        xpReward: 90,
+        time: 10,
+        tags: ['Santé', 'A2'],
+        vocabIds: ['v_hasta', 'v_ilac', 'v_agri', 'v_ates', 'v_bas_agrisi', 'v_karin_agrisi', 'v_iyi_degilim', 'v_yardim', 'v_doktor', 'v_eczane', 'v_hastane'],
+        verbIds: ['vb_istemek', 'vb_anlamak']
+      }
+    ]
+  },
+  {
+    id: 'u14',
+    title: 'Expressions du quotidien',
+    description: 'Questions essentielles, salutations et expressions courantes.',
+    icon: '💬',
+    color: '#A855F7',
+    chapters: [
+      {
+        id: 'u14_c1',
+        title: 'Questions essentielles',
+        goal: 'Poser les 5 grandes questions en turc',
+        xpReward: 80,
+        time: 9,
+        tags: ['Expressions', 'A2'],
+        vocabIds: ['v_nasil', 'v_ne_kadar', 'v_ne_zaman', 'v_neden', 'v_nerede', 'v_nasilsiniz', 'v_var', 'v_yok'],
+        verbIds: ['vb_gitmek', 'vb_olmak']
+      },
+      {
+        id: 'u14_c2',
+        title: 'Comment ça va ?',
+        goal: 'Saluer, demander et répondre sur l\'état',
+        xpReward: 70,
+        time: 7,
+        tags: ['Salutations', 'A2'],
+        vocabIds: ['v_nasilsiniz', 'v_iyiyim', 'v_cok_iyi', 'v_fena_degil', 'v_tesekkurler', 'v_iyi_degilim', 'v_hasta'],
+        verbIds: ['vb_olmak', 'vb_hissetmek']
+      },
+      {
+        id: 'u14_c3',
+        title: 'Exprimer l\'opinion',
+        goal: 'Dire ce qu\'on aime, pense, veut',
+        xpReward: 90,
+        time: 10,
+        tags: ['Expressions', 'A2'],
+        vocabIds: ['v_cok', 'v_az', 'v_biraz', 'v_elbette', 'v_dogru', 'v_yanlis', 'v_gercekten', 'v_hic', 'v_bazen', 'v_hep'],
+        verbIds: ['vb_sevmek', 'vb_istemek', 'vb_bilmek']
+      },
+      {
+        id: 'u14_c4',
+        title: 'Avant et après',
+        goal: 'Situer des actions dans le temps',
+        xpReward: 80,
+        time: 9,
+        tags: ['Temps', 'A2'],
+        vocabIds: ['v_once', 'v_sonra', 'v_simdi', 'v_bugun', 'v_yarin', 'v_dun', 'v_hemen', 'v_bir_dakika', 'v_sabah', 'v_aksam'],
+        verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_yapmak']
+      }
+    ]
   }
 ];
