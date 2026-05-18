@@ -146,6 +146,15 @@ window.Verbs = {
     document.getElementById('vm-past').innerHTML = renderTenseSimple(verb.conjugations.past);
     document.getElementById('vm-fut').innerHTML = renderTenseSimple(verb.conjugations.future);
 
+    const negSection = document.getElementById('vm-neg-section');
+    const negEl = document.getElementById('vm-neg');
+    if (verb.negations && verb.negations.present) {
+      negEl.innerHTML = renderTenseSimple(verb.negations.present);
+      negSection.classList.remove('hidden');
+    } else {
+      negSection.classList.add('hidden');
+    }
+
     document.getElementById('verb-modal').classList.remove('hidden');
   }
 };
