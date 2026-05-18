@@ -90,6 +90,8 @@
             Commencer
           </button>
         </div>
+        <div class="section-row"><span class="section-lbl">Mon parcours</span><button class="section-link" onclick="App.navigate('#units')">Tout voir →</button></div>
+        <div id="dash-parcours" class="dash-parcours"></div>
         <div class="section-row"><span class="section-lbl">À réviser</span><button class="section-link" onclick="App.navigate('#review')">Tout voir →</button></div>
         <div id="dash-review-preview" class="dash-review-preview">
           <div class="empty-state-sm"><span>🎯</span> Aucune révision pour l'instant — continuez les leçons !</div>
@@ -150,7 +152,7 @@
     <!-- VERBES -->
     <section id="view-verbs" class="view" data-nav="verbs">
       <div class="view-scroll">
-        <div class="view-hero"><h1 class="view-h1">Verbes & Conjugaison</h1><p class="view-sub">40 verbes essentiels · 3 temps</p></div>
+        <div class="view-hero"><h1 class="view-h1">Verbes & Conjugaison</h1><p class="view-sub">14 verbes essentiels · 3 temps · formes négatives</p></div>
         <div class="filter-chips-row" id="verbs-filters">
           <button class="chip active" data-filter="all">Tous</button>
           <button class="chip" data-filter="frequent">Fréquents</button>
@@ -175,8 +177,17 @@
           <button class="chip" data-filter="salutations">Salutations</button>
           <button class="chip" data-filter="famille">Famille</button>
           <button class="chip" data-filter="nourriture">Nourriture</button>
-          <button class="chip" data-filter="ville">Ville</button>
+          <button class="chip" data-filter="lieux">Lieux</button>
+          <button class="chip" data-filter="transport">Transport</button>
+          <button class="chip" data-filter="couleurs">Couleurs</button>
+          <button class="chip" data-filter="metiers">Métiers</button>
+          <button class="chip" data-filter="temps">Temps</button>
           <button class="chip" data-filter="nombres">Nombres</button>
+          <button class="chip" data-filter="nationalites">Nationalités</button>
+          <button class="chip" data-filter="directions">Directions</button>
+          <button class="chip" data-filter="vetements">Vêtements</button>
+          <button class="chip" data-filter="urgences">Urgences</button>
+          <button class="chip" data-filter="communication">Communication</button>
         </div>
         <div class="search-wrap">
           <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -304,37 +315,39 @@
         <div id="vm-past" class="grid grid-cols-2 gap-2 text-sm"></div>
       </div>
 
-      <div>
+      <div class="mb-4">
         <h3 class="text-xs font-bold text-muted uppercase mb-2">Futur (-ecek)</h3>
         <div id="vm-fut" class="grid grid-cols-2 gap-2 text-sm"></div>
+      </div>
+      <div id="vm-neg-section" class="hidden">
+        <h3 class="text-xs font-bold text-muted uppercase mb-2" style="color:var(--error)">Négatif présent (-miyor)</h3>
+        <div id="vm-neg" class="grid grid-cols-2 gap-2 text-sm"></div>
       </div>
     </div>
   </div>
 
 </div>
 
-<script src="js/data/vocabulary.js"></script>
-<script src="js/data/verbs.js"></script>
-<script src="js/data/phrases.js"></script>
-<script src="js/data/dialogues.js"></script>
-<script src="js/data/grammar.js"></script>
-<script src="js/data/achievements.js"></script>
-<script src="js/data/units.js"></script>
-<script src="js/engine/srs.js"></script>
-<script src="js/engine/exercises.js"></script>
-<script src="js/engine/gamification.js"></script>
-<script src="js/views/dashboard.js"></script>
-<script src="js/views/units.js?v=5"></script>
-<script src="js/views/lesson.js"></script>
-<script src="js/views/verbs.js"></script>
-<script src="js/views/vocabulary.js"></script>
-<script src="js/views/phrases.js"></script>
-<script src="js/views/dialogues.js"></script>
-<script src="js/views/review.js"></script>
-<script src="js/views/daily.js"></script>
-<script src="js/views/stats.js"></script>
-<script src="js/views/settings.js"></script>
-<script src="js/state.js"></script>
-<script src="js/app.js?v=5"></script>
+<script src="js/data/vocabulary.js?v=7"></script>
+<script src="js/data/verbs.js?v=7"></script>
+<script src="js/data/phrases.js?v=7"></script>
+<script src="js/data/dialogues.js?v=7"></script>
+<script src="js/data/grammar.js?v=7"></script>
+<script src="js/data/achievements.js?v=7"></script>
+<script src="js/data/units.js?v=7"></script>
+<script src="js/engine/srs.js?v=7"></script>
+<script src="js/engine/exercises.js?v=7"></script>
+<script src="js/engine/gamification.js?v=7"></script>
+<script src="js/views/dashboard.js?v=7"></script>
+<script src="js/views/units.js?v=7"></script>
+<script src="js/views/lesson.js?v=7"></script>
+<script src="js/views/verbs.js?v=7"></script>
+<script src="js/views/vocabulary.js?v=7"></script>
+<script src="js/views/phrases.js?v=7"></script>
+<script src="js/views/dialogues.js?v=7"></script>
+<script src="js/views/review.js?v=7"></script>
+<script src="js/views/stats.js?v=7"></script>
+<script src="js/state.js?v=7"></script>
+<script src="js/app.js?v=7"></script>
 </body>
 </html>

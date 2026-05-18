@@ -80,5 +80,165 @@ window.AppVocabulary = [
   { id: 'v_sicak', tr: 'Sıcak', fr: 'Chaud', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
   { id: 'v_soguk', tr: 'Soğuk', fr: 'Froid', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
   { id: 'v_yeni', tr: 'Yeni', fr: 'Nouveau', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
-  { id: 'v_eski', tr: 'Eski', fr: 'Vieux / Ancien', topic: 'adjectifs', type: 'adjectif', difficulty: 2 }
+  { id: 'v_eski', tr: 'Eski', fr: 'Vieux / Ancien', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
+
+  // ── Politesse extra ──
+  { id: 'v_rica_ederim', tr: 'Rica ederim', fr: 'Je vous en prie / De rien', topic: 'salutations', type: 'expression', difficulty: 2 },
+  { id: 'v_ozur_dilerim', tr: 'Özür dilerim', fr: 'Je suis désolé(e)', topic: 'salutations', type: 'expression', difficulty: 2 },
+  { id: 'v_belki', tr: 'Belki', fr: 'Peut-être', topic: 'base', type: 'mot', difficulty: 1 },
+  { id: 'v_tabii', tr: 'Tabii', fr: 'Bien sûr', topic: 'base', type: 'mot', difficulty: 1 },
+
+  // ── Temps ──
+  { id: 'v_bugun', tr: 'Bugün', fr: 'Aujourd\'hui', topic: 'temps', type: 'mot', difficulty: 1 },
+  { id: 'v_yarin', tr: 'Yarın', fr: 'Demain', topic: 'temps', type: 'mot', difficulty: 1 },
+  { id: 'v_dun', tr: 'Dün', fr: 'Hier', topic: 'temps', type: 'mot', difficulty: 1 },
+  { id: 'v_simdi', tr: 'Şimdi', fr: 'Maintenant', topic: 'temps', type: 'mot', difficulty: 1 },
+  { id: 'v_sabah', tr: 'Sabah', fr: 'Matin', topic: 'temps', type: 'mot', difficulty: 1 },
+  { id: 'v_aksam', tr: 'Akşam', fr: 'Soir', topic: 'temps', type: 'mot', difficulty: 1 },
+  { id: 'v_gece', tr: 'Gece', fr: 'Nuit', topic: 'temps', type: 'mot', difficulty: 1 },
+  { id: 'v_saat', tr: 'Saat', fr: 'Heure / Horloge', topic: 'temps', type: 'nom', difficulty: 1 },
+  { id: 'v_gun', tr: 'Gün', fr: 'Jour', topic: 'temps', type: 'nom', difficulty: 1 },
+  { id: 'v_hafta', tr: 'Hafta', fr: 'Semaine', topic: 'temps', type: 'nom', difficulty: 2 },
+  { id: 'v_ay', tr: 'Ay', fr: 'Mois / Lune', topic: 'temps', type: 'nom', difficulty: 2 },
+  { id: 'v_yil', tr: 'Yıl', fr: 'Année', topic: 'temps', type: 'nom', difficulty: 2 },
+
+  // ── Jours ──
+  { id: 'v_pazartesi', tr: 'Pazartesi', fr: 'Lundi', topic: 'jours', type: 'nom', difficulty: 2 },
+  { id: 'v_sali', tr: 'Salı', fr: 'Mardi', topic: 'jours', type: 'nom', difficulty: 2 },
+  { id: 'v_carsamba', tr: 'Çarşamba', fr: 'Mercredi', topic: 'jours', type: 'nom', difficulty: 2 },
+  { id: 'v_persembe', tr: 'Perşembe', fr: 'Jeudi', topic: 'jours', type: 'nom', difficulty: 2 },
+  { id: 'v_cuma', tr: 'Cuma', fr: 'Vendredi', topic: 'jours', type: 'nom', difficulty: 2 },
+  { id: 'v_cumartesi', tr: 'Cumartesi', fr: 'Samedi', topic: 'jours', type: 'nom', difficulty: 2 },
+  { id: 'v_pazar', tr: 'Pazar', fr: 'Dimanche', topic: 'jours', type: 'nom', difficulty: 2 },
+
+  // ── Couleurs ──
+  { id: 'v_kirmizi', tr: 'Kırmızı', fr: 'Rouge', topic: 'couleurs', type: 'adjectif', difficulty: 1 },
+  { id: 'v_mavi', tr: 'Mavi', fr: 'Bleu', topic: 'couleurs', type: 'adjectif', difficulty: 1 },
+  { id: 'v_yesil', tr: 'Yeşil', fr: 'Vert', topic: 'couleurs', type: 'adjectif', difficulty: 1 },
+  { id: 'v_sari', tr: 'Sarı', fr: 'Jaune', topic: 'couleurs', type: 'adjectif', difficulty: 1 },
+  { id: 'v_siyah', tr: 'Siyah', fr: 'Noir', topic: 'couleurs', type: 'adjectif', difficulty: 1 },
+  { id: 'v_beyaz', tr: 'Beyaz', fr: 'Blanc', topic: 'couleurs', type: 'adjectif', difficulty: 1 },
+
+  // ── Transport ──
+  { id: 'v_otobus', tr: 'Otobüs', fr: 'Bus', topic: 'transport', type: 'nom', difficulty: 1 },
+  { id: 'v_metro', tr: 'Metro', fr: 'Métro', topic: 'transport', type: 'nom', difficulty: 1 },
+  { id: 'v_araba', tr: 'Araba', fr: 'Voiture', topic: 'transport', type: 'nom', difficulty: 1 },
+  { id: 'v_taksi', tr: 'Taksi', fr: 'Taxi', topic: 'transport', type: 'nom', difficulty: 1 },
+  { id: 'v_tren', tr: 'Tren', fr: 'Train', topic: 'transport', type: 'nom', difficulty: 1 },
+  { id: 'v_ucak', tr: 'Uçak', fr: 'Avion', topic: 'transport', type: 'nom', difficulty: 2 },
+
+  // ── Métiers ──
+  { id: 'v_doktor', tr: 'Doktor', fr: 'Médecin', topic: 'metiers', type: 'nom', difficulty: 1 },
+  { id: 'v_ogretmen', tr: 'Öğretmen', fr: 'Professeur', topic: 'metiers', type: 'nom', difficulty: 2 },
+  { id: 'v_ogrenci', tr: 'Öğrenci', fr: 'Étudiant(e)', topic: 'metiers', type: 'nom', difficulty: 2 },
+  { id: 'v_muhendis', tr: 'Mühendis', fr: 'Ingénieur', topic: 'metiers', type: 'nom', difficulty: 2 },
+  { id: 'v_avukat', tr: 'Avukat', fr: 'Avocat(e)', topic: 'metiers', type: 'nom', difficulty: 2 },
+  { id: 'v_asci', tr: 'Aşçı', fr: 'Cuisinier/Cuisinière', topic: 'metiers', type: 'nom', difficulty: 2 },
+
+  // ── Lieux supplémentaires ──
+  { id: 'v_otel', tr: 'Otel', fr: 'Hôtel', topic: 'lieux', type: 'nom', difficulty: 1 },
+  { id: 'v_restoran', tr: 'Restoran', fr: 'Restaurant', topic: 'lieux', type: 'nom', difficulty: 1 },
+  { id: 'v_banka', tr: 'Banka', fr: 'Banque', topic: 'lieux', type: 'nom', difficulty: 2 },
+  { id: 'v_eczane', tr: 'Eczane', fr: 'Pharmacie', topic: 'lieux', type: 'nom', difficulty: 2 },
+  { id: 'v_polis', tr: 'Polis', fr: 'Police', topic: 'lieux', type: 'nom', difficulty: 1 },
+
+  // ── Maison ──
+  { id: 'v_kapi', tr: 'Kapı', fr: 'Porte', topic: 'maison', type: 'nom', difficulty: 1 },
+  { id: 'v_pencere', tr: 'Pencere', fr: 'Fenêtre', topic: 'maison', type: 'nom', difficulty: 2 },
+  { id: 'v_masa', tr: 'Masa', fr: 'Table', topic: 'maison', type: 'nom', difficulty: 1 },
+  { id: 'v_sandalye', tr: 'Sandalye', fr: 'Chaise', topic: 'maison', type: 'nom', difficulty: 2 },
+  { id: 'v_yatak', tr: 'Yatak', fr: 'Lit', topic: 'maison', type: 'nom', difficulty: 2 },
+  { id: 'v_mutfak', tr: 'Mutfak', fr: 'Cuisine (pièce)', topic: 'maison', type: 'nom', difficulty: 2 },
+  { id: 'v_banyo', tr: 'Banyo', fr: 'Salle de bain', topic: 'maison', type: 'nom', difficulty: 1 },
+
+  // ── Adjectifs supplémentaires ──
+  { id: 'v_ucuz', tr: 'Ucuz', fr: 'Pas cher', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
+  { id: 'v_pahali', tr: 'Pahalı', fr: 'Cher / Coûteux', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
+  { id: 'v_hizli', tr: 'Hızlı', fr: 'Rapide', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
+  { id: 'v_yavas', tr: 'Yavaş', fr: 'Lent(e)', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
+
+  // ── Commerce & argent ──
+  { id: 'v_para', tr: 'Para', fr: 'Argent', topic: 'commerce', type: 'nom', difficulty: 1 },
+  { id: 'v_fiyat', tr: 'Fiyat', fr: 'Prix', topic: 'commerce', type: 'nom', difficulty: 2 },
+  { id: 'v_hesap', tr: 'Hesap', fr: 'Addition / Compte', topic: 'commerce', type: 'nom', difficulty: 2 },
+
+  // ── Voyage ──
+  { id: 'v_pasaport', tr: 'Pasaport', fr: 'Passeport', topic: 'voyage', type: 'nom', difficulty: 2 },
+  { id: 'v_bilet', tr: 'Bilet', fr: 'Billet', topic: 'voyage', type: 'nom', difficulty: 1 },
+  { id: 'v_bagaj', tr: 'Bagaj', fr: 'Bagage', topic: 'voyage', type: 'nom', difficulty: 2 },
+
+  // ── Nourriture supplémentaire ──
+  { id: 'v_elma', tr: 'Elma', fr: 'Pomme', topic: 'nourriture', type: 'nom', difficulty: 1 },
+  { id: 'v_domates', tr: 'Domates', fr: 'Tomate', topic: 'nourriture', type: 'nom', difficulty: 1 },
+  { id: 'v_pirinc', tr: 'Pirinç', fr: 'Riz', topic: 'nourriture', type: 'nom', difficulty: 2 },
+  { id: 'v_seker', tr: 'Şeker', fr: 'Sucre', topic: 'nourriture', type: 'nom', difficulty: 1 },
+  { id: 'v_sut', tr: 'Süt', fr: 'Lait', topic: 'nourriture', type: 'nom', difficulty: 1 },
+  { id: 'v_yumurta', tr: 'Yumurta', fr: 'Œuf', topic: 'nourriture', type: 'nom', difficulty: 1 },
+  { id: 'v_meyve', tr: 'Meyve', fr: 'Fruit', topic: 'nourriture', type: 'nom', difficulty: 1 },
+  { id: 'v_sebze', tr: 'Sebze', fr: 'Légume', topic: 'nourriture', type: 'nom', difficulty: 2 },
+
+  // ── Nationalités & Pays ──
+  { id: 'v_fransiz', tr: 'Fransız', fr: 'Français(e)', topic: 'nationalites', type: 'adjectif', difficulty: 1 },
+  { id: 'v_turk', tr: 'Türk', fr: 'Turc / Turque', topic: 'nationalites', type: 'adjectif', difficulty: 1 },
+  { id: 'v_ingiliz', tr: 'İngiliz', fr: 'Anglais(e)', topic: 'nationalites', type: 'adjectif', difficulty: 2 },
+  { id: 'v_alman', tr: 'Alman', fr: 'Allemand(e)', topic: 'nationalites', type: 'adjectif', difficulty: 2 },
+  { id: 'v_italyan', tr: 'İtalyan', fr: 'Italien(ne)', topic: 'nationalites', type: 'adjectif', difficulty: 2 },
+  { id: 'v_ispanyol', tr: 'İspanyol', fr: 'Espagnol(e)', topic: 'nationalites', type: 'adjectif', difficulty: 2 },
+  { id: 'v_fransa', tr: 'Fransa', fr: 'France', topic: 'nationalites', type: 'nom', difficulty: 1 },
+  { id: 'v_turkiye', tr: 'Türkiye', fr: 'Turquie', topic: 'nationalites', type: 'nom', difficulty: 1 },
+  { id: 'v_ingiltere', tr: 'İngiltere', fr: 'Angleterre', topic: 'nationalites', type: 'nom', difficulty: 2 },
+  { id: 'v_almanya', tr: 'Almanya', fr: 'Allemagne', topic: 'nationalites', type: 'nom', difficulty: 2 },
+  { id: 'v_dil', tr: 'Dil', fr: 'Langue', topic: 'identite', type: 'nom', difficulty: 2 },
+  { id: 'v_ulke', tr: 'Ülke', fr: 'Pays', topic: 'identite', type: 'nom', difficulty: 2 },
+  { id: 'v_nerelisiniz', tr: 'Nerelisiniz?', fr: 'D\'où êtes-vous ?', topic: 'nationalites', type: 'expression', difficulty: 2 },
+
+  // ── Nombres complémentaires (30–1000) ──
+  { id: 'v_otuz', tr: 'Otuz', fr: 'Trente (30)', topic: 'nombres', type: 'nombre', difficulty: 2 },
+  { id: 'v_kirk', tr: 'Kırk', fr: 'Quarante (40)', topic: 'nombres', type: 'nombre', difficulty: 2 },
+  { id: 'v_altmis', tr: 'Altmış', fr: 'Soixante (60)', topic: 'nombres', type: 'nombre', difficulty: 2 },
+  { id: 'v_yetmis', tr: 'Yetmiş', fr: 'Soixante-dix (70)', topic: 'nombres', type: 'nombre', difficulty: 2 },
+  { id: 'v_seksen', tr: 'Seksen', fr: 'Quatre-vingts (80)', topic: 'nombres', type: 'nombre', difficulty: 3 },
+  { id: 'v_doksan', tr: 'Doksan', fr: 'Quatre-vingt-dix (90)', topic: 'nombres', type: 'nombre', difficulty: 3 },
+  { id: 'v_bin', tr: 'Bin', fr: 'Mille (1000)', topic: 'nombres', type: 'nombre', difficulty: 3 },
+
+  // ── Descriptions de personnes ──
+  { id: 'v_genc', tr: 'Genç', fr: 'Jeune', topic: 'adjectifs', type: 'adjectif', difficulty: 1 },
+  { id: 'v_yasli', tr: 'Yaşlı', fr: 'Âgé(e)', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
+  { id: 'v_uzun', tr: 'Uzun', fr: 'Grand(e) / Long(ue)', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
+  { id: 'v_kisa', tr: 'Kısa', fr: 'Petit(e) / Court(e)', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
+  { id: 'v_zeki', tr: 'Zeki', fr: 'Intelligent(e)', topic: 'adjectifs', type: 'adjectif', difficulty: 2 },
+
+  // ── Directions ──
+  { id: 'v_sag', tr: 'Sağ', fr: 'Droite', topic: 'directions', type: 'mot', difficulty: 1 },
+  { id: 'v_sol', tr: 'Sol', fr: 'Gauche', topic: 'directions', type: 'mot', difficulty: 1 },
+  { id: 'v_duz', tr: 'Dümdüz', fr: 'Tout droit', topic: 'directions', type: 'mot', difficulty: 2 },
+  { id: 'v_kose', tr: 'Köşe', fr: 'Coin / Angle', topic: 'directions', type: 'nom', difficulty: 2 },
+  { id: 'v_yakin', tr: 'Yakın', fr: 'Proche / Près', topic: 'directions', type: 'adjectif', difficulty: 1 },
+  { id: 'v_uzak', tr: 'Uzak', fr: 'Loin / Éloigné(e)', topic: 'directions', type: 'adjectif', difficulty: 1 },
+  { id: 'v_karsisinda', tr: 'Karşısında', fr: 'En face de', topic: 'directions', type: 'expression', difficulty: 3 },
+
+  // ── Vêtements ──
+  { id: 'v_gomlek', tr: 'Gömlek', fr: 'Chemise', topic: 'vetements', type: 'nom', difficulty: 2 },
+  { id: 'v_pantolon', tr: 'Pantolon', fr: 'Pantalon', topic: 'vetements', type: 'nom', difficulty: 2 },
+  { id: 'v_elbise', tr: 'Elbise', fr: 'Robe', topic: 'vetements', type: 'nom', difficulty: 2 },
+  { id: 'v_ayakkabi', tr: 'Ayakkabı', fr: 'Chaussures', topic: 'vetements', type: 'nom', difficulty: 2 },
+  { id: 'v_kazak', tr: 'Kazak', fr: 'Pull / Sweat', topic: 'vetements', type: 'nom', difficulty: 2 },
+  { id: 'v_canta', tr: 'Çanta', fr: 'Sac', topic: 'vetements', type: 'nom', difficulty: 2 },
+
+  // ── Urgences ──
+  { id: 'v_yardim', tr: 'Yardım', fr: 'Aide / Au secours', topic: 'urgences', type: 'nom', difficulty: 1 },
+  { id: 'v_acil', tr: 'Acil', fr: 'Urgent(e) / Urgence', topic: 'urgences', type: 'adjectif', difficulty: 2 },
+
+  // ── Communication ──
+  { id: 'v_anlamiyorum', tr: 'Anlamıyorum', fr: 'Je ne comprends pas', topic: 'communication', type: 'expression', difficulty: 2 },
+  { id: 'v_bilmiyorum', tr: 'Bilmiyorum', fr: 'Je ne sais pas', topic: 'communication', type: 'expression', difficulty: 2 },
+  { id: 'v_tekrar', tr: 'Tekrar', fr: 'De nouveau / Encore', topic: 'communication', type: 'mot', difficulty: 2 },
+  { id: 'v_yavas_konusun', tr: 'Yavaş konuşun', fr: 'Parlez plus lentement', topic: 'communication', type: 'expression', difficulty: 3 },
+
+  // ── Goûts alimentaires ──
+  { id: 'v_lezzetli', tr: 'Lezzetli', fr: 'Délicieux / Savoureux', topic: 'nourriture', type: 'adjectif', difficulty: 2 },
+  { id: 'v_tatli', tr: 'Tatlı', fr: 'Sucré(e) / Doux', topic: 'nourriture', type: 'adjectif', difficulty: 2 },
+  { id: 'v_aci', tr: 'Acı', fr: 'Épicé(e) / Amer', topic: 'nourriture', type: 'adjectif', difficulty: 2 },
+  { id: 'v_meyve_suyu', tr: 'Meyve suyu', fr: 'Jus de fruit', topic: 'nourriture', type: 'nom', difficulty: 2 },
+  { id: 'v_ayran', tr: 'Ayran', fr: 'Ayran (boisson au yaourt)', topic: 'nourriture', type: 'nom', difficulty: 2 }
 ];

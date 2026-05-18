@@ -46,9 +46,15 @@ window.Dashboard = {
 
     // 4. Continuer la leçon en cours
     this.renderContinueCard();
-    
-    // 5. Révisions en attente
+
+    // 5. Parcours actuel
+    this.renderParcoursCard();
+
+    // 6. Révisions en attente
     this.renderReviewPreview();
+
+    // 7. Verbes faibles
+    this.renderWeakVerbs();
   },
 
   renderContinueCard() {
@@ -68,6 +74,73 @@ window.Dashboard = {
         document.getElementById('cc-bar-fill').style.width = progress + '%';
       }
     }
+  },
+
+  renderParcoursCard() {
+    const container = document.getElementById('dash-parcours');
+    if (!container) return;
+
+    const currUId = State.data.currentUnit;
+    const unit = AppUnits.find(u => u.id === currUId);
+    if (!unit) { container.innerHTML = ''; return; }
+
+    const completedInUnit = unit.chapters.filter(c => State.isChapterCompleted(c.id)).length;
+    const totalInUnit = unit.chapters.length;
+    const pct = Math.round((completedInUnit / totalInUnit) * 100);
+    const pendingChapters = unit.chapters.filter(c => !State.isChapterCompleted(c.id)).slice(0, 3);
+
+    const chapList = pendingChapters.map((ch, i) => {
+      const isNext = i === 0;
+      return `
+        <div class="parc-chap-item${isNext ? ' parc-chap-next' : ''}" onclick="event.stopPropagation();App.navigate('#lesson/${ch.id}')">
+          <span class="parc-chap-dot${isNext ? ' dot-active' : ''}"></span>
+          <span class="parc-chap-title">${ch.title}</span>
+          ${isNext ? '<span class="parc-chap-badge">Commencer →</span>' : ''}
+        </div>
+      `;
+    }).join('');
+
+    const unitNum = unit.id.replace('u', '');
+    container.innerHTML = `
+      <div class="parc-unit-card" onclick="App.navigate('#units')" style="--unit-color:${unit.color || 'var(--primary)'}">
+        <div class="parc-unit-header">
+          <div class="parc-unit-icon">${unit.icon || '📘'}</div>
+          <div class="parc-unit-info">
+            <div class="parc-unit-num">Unité ${unitNum}</div>
+            <div class="parc-unit-title">${unit.title}</div>
+          </div>
+          <div class="parc-unit-pct">${pct}%</div>
+        </div>
+        <div class="parc-prog-track"><div class="parc-prog-fill" style="width:${pct}%"></div></div>
+        ${pendingChapters.length > 0
+          ? `<div class="parc-chapters-list">${chapList}</div>`
+          : '<div class="parc-all-done">Unité complétée !</div>'}
+      </div>
+    `;
+  },
+
+  renderWeakVerbs() {
+    const container = document.getElementById('dash-weak-verbs');
+    if (!container || !window.SRS) return;
+    const weakItems = SRS.getWeakItems(3).filter(i => i.type === 'verb');
+    if (weakItems.length === 0) {
+      container.innerHTML = `<div class="empty-state-sm"><span>💪</span>Continuez les leçons pour identifier vos points faibles.</div>`;
+      return;
+    }
+    container.innerHTML = weakItems.map(item => {
+      const verb = window.AppVerbs && AppVerbs.find(v => v.id === item.id);
+      if (!verb) return '';
+      const rate = Math.round(((item.failures || 0) / Math.max(1, (item.successes || 0) + (item.failures || 0))) * 100);
+      return `
+        <div class="list-item" onclick="App.navigate('#verbs')">
+          <div class="li-left">
+            <div class="li-tr">${verb.infinitive}</div>
+            <div class="li-fr">${verb.fr}</div>
+          </div>
+          <div style="font-size:11px;font-weight:700;color:var(--error)">${rate}% erreur</div>
+        </div>
+      `;
+    }).join('');
   },
 
   renderReviewPreview() {

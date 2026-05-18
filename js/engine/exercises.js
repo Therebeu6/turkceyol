@@ -1,71 +1,242 @@
 /* ═══════════════════════════════════════════════
    TürkçeYol — exercises.js
-   Générateur d'exercices dynamiques
+   Générateur d'exercices avec distracteurs intelligents
    ═══════════════════════════════════════════════ */
 
 window.Exercises = {
-  // Types : 'qcm_tr_fr', 'qcm_fr_tr', 'input_tr', 'order_words', 'verb_conj'
-  
+
   generateForChapter(chapterId) {
-    // Pour l'instant, on simule une génération en piochant aléatoirement dans le vocabulaire
-    // Dans une app complète, on filtrerait le vocabulaire lié au chapitre
-    
-    const vocab = AppVocabulary.sort(() => 0.5 - Math.random()).slice(0, 5); // Prendre 5 mots au hasard
-    let exercises = [];
-    
-    vocab.forEach((word, index) => {
-      // Alterne entre différents types d'exercices pour varier
-      if (index % 3 === 0) {
-        exercises.push(this.createQCMTrFr(word));
-      } else if (index % 3 === 1) {
-        exercises.push(this.createQCMFrTr(word));
-      } else {
-        exercises.push(this.createInputTr(word));
+    let chapter = null, unit = null;
+    for (const u of AppUnits) {
+      const c = u.chapters.find(ch => ch.id === chapterId);
+      if (c) { chapter = c; unit = u; break; }
+    }
+
+    const hasExplicitVocab = chapter && chapter.vocabIds && chapter.vocabIds.length > 0;
+
+    // Vocab du chapitre — fallback seulement si le chapitre a du vocab explicite
+    let vocab = [];
+    if (hasExplicitVocab) {
+      vocab = chapter.vocabIds.map(id => AppVocabulary.find(w => w.id === id)).filter(Boolean);
+      // Complément depuis l'unité
+      if (vocab.length < 5 && unit) {
+        const unitIds = new Set(unit.chapters.flatMap(c => c.vocabIds || []));
+        const extra = AppVocabulary.filter(w => unitIds.has(w.id) && !vocab.find(v => v.id === w.id));
+        vocab.push(...this._shuffle(extra));
       }
-    });
+      // Fallback global minimal
+      if (vocab.length < 4) {
+        const extra = AppVocabulary.filter(w => !vocab.find(v => v.id === w.id));
+        vocab.push(...this._shuffle(extra).slice(0, 4 - vocab.length));
+      }
+    }
 
-    return exercises;
+    // Verbes du chapitre
+    let verbs = [];
+    if (chapter && chapter.verbIds && chapter.verbIds.length > 0) {
+      verbs = chapter.verbIds.map(id => window.AppVerbs && AppVerbs.find(v => v.id === id)).filter(Boolean);
+    }
+
+    // Temps autorisés (présent_neg inclus pour u10_c3)
+    const allowedTenses = (chapter && chapter.tenses) || ['present', 'past', 'future'];
+
+    const exercises = [];
+
+    // Exercices de vocabulaire (seulement si vocab explicite)
+    if (vocab.length > 0) {
+      const vocabSample = this._shuffle(vocab).slice(0, 5);
+      vocabSample.forEach((word, i) => {
+        if (i % 3 === 0) exercises.push(this.createQCMTrFr(word));
+        else if (i % 3 === 1) exercises.push(this.createQCMFrTr(word));
+        else exercises.push(this.createInputTr(word));
+      });
+    }
+
+    // Exercices de conjugaison
+    if (verbs.length > 0) {
+      const persons = ['ben', 'sen', 'o', 'biz', 'siz', 'onlar'];
+      // Chapitre grammaire pure (pas de vocab) → plus d'exercices de conjugaison
+      const count = !hasExplicitVocab ? Math.min(8, verbs.length * 2 + 1) : Math.min(3, verbs.length + 1);
+      for (let i = 0; i < count; i++) {
+        const verb = verbs[i % verbs.length];
+        const person = persons[i % persons.length];
+        const tense = allowedTenses[i % allowedTenses.length];
+        const ex = this.createVerbFill(verb, person, tense);
+        if (ex) exercises.push(ex);
+      }
+    }
+
+    // Fallback si aucun exercice généré
+    if (exercises.length === 0) {
+      const fallback = this._shuffle(AppVocabulary).slice(0, 5);
+      fallback.forEach((word, i) => {
+        exercises.push(i % 2 === 0 ? this.createQCMTrFr(word) : this.createQCMFrTr(word));
+      });
+    }
+
+    return this._shuffle(exercises);
   },
 
-  createQCMTrFr(targetWord) {
-    // Trouver 3 distracteurs
-    const distractors = this.getDistractors(targetWord, 3).map(w => w.fr);
-    const options = [targetWord.fr, ...distractors].sort(() => 0.5 - Math.random());
-    
+  generateForReview(reviewItems) {
+    const exercises = [];
+    for (const item of reviewItems) {
+      const word = AppVocabulary.find(w => w.id === item.id);
+      if (word) {
+        exercises.push(Math.random() > 0.5 ? this.createQCMTrFr(word) : this.createQCMFrTr(word));
+        continue;
+      }
+      if (window.AppVerbs) {
+        const verb = AppVerbs.find(v => v.id === item.id);
+        if (verb) {
+          const persons = ['ben', 'sen', 'o', 'biz'];
+          const tenses = ['present', 'past', 'future'];
+          const person = persons[Math.floor(Math.random() * persons.length)];
+          const tense = tenses[Math.floor(Math.random() * tenses.length)];
+          const ex = this.createVerbFill(verb, person, tense);
+          if (ex) exercises.push(ex);
+        }
+      }
+    }
+    return this._shuffle(exercises);
+  },
+
+  createQCMTrFr(word) {
+    const distractors = this.getSmartDistractors(word, 3, 'fr');
     return {
       type: 'qcm',
-      question: `Que signifie "<b>${targetWord.tr}</b>" ?`,
-      options: options,
-      answer: targetWord.fr,
-      data: targetWord
+      question: `Que signifie <span class="exo-tr">${word.tr}</span> ?`,
+      options: this._shuffle([word.fr, ...distractors]),
+      answer: word.fr,
+      data: { id: word.id, tr: word.tr, fr: word.fr, type: 'vocabulary' }
     };
   },
 
-  createQCMFrTr(targetWord) {
-    const distractors = this.getDistractors(targetWord, 3).map(w => w.tr);
-    const options = [targetWord.tr, ...distractors].sort(() => 0.5 - Math.random());
-    
+  createQCMFrTr(word) {
+    const distractors = this.getSmartDistractors(word, 3, 'tr');
     return {
       type: 'qcm',
-      question: `Comment dit-on "<b>${targetWord.fr}</b>" ?`,
-      options: options,
-      answer: targetWord.tr,
-      data: targetWord
+      question: `Comment dit-on <span class="exo-fr">${word.fr}</span> en turc ?`,
+      options: this._shuffle([word.tr, ...distractors]),
+      answer: word.tr,
+      data: { id: word.id, tr: word.tr, fr: word.fr, type: 'vocabulary' }
     };
   },
-  
-  createInputTr(targetWord) {
+
+  createInputTr(word) {
     return {
       type: 'input',
-      question: `Traduisez en turc : "<b>${targetWord.fr}</b>"`,
-      answer: targetWord.tr,
-      data: targetWord
+      question: `Traduisez en turc : <span class="exo-fr">${word.fr}</span>`,
+      answer: word.tr,
+      data: { id: word.id, tr: word.tr, fr: word.fr, type: 'vocabulary' }
     };
   },
 
-  getDistractors(targetWord, count) {
-    // Prendre des mots au hasard qui ne sont pas le mot cible
-    const pool = AppVocabulary.filter(w => w.id !== targetWord.id);
-    return pool.sort(() => 0.5 - Math.random()).slice(0, count);
+  createVerbFill(verb, person, tense) {
+    const personFr = { ben: 'Je', sen: 'Tu', o: 'Il / Elle', biz: 'Nous', siz: 'Vous', onlar: 'Ils / Elles' };
+    const tenseLabel = {
+      present: 'présent',
+      past: 'passé',
+      future: 'futur',
+      present_neg: 'présent négatif'
+    };
+
+    // Résoudre la table de conjugaison (normale ou négative)
+    let conjugTable;
+    if (tense === 'present_neg') {
+      conjugTable = verb.negations && verb.negations.present;
+    } else {
+      conjugTable = verb.conjugations && verb.conjugations[tense];
+    }
+    if (!conjugTable || !conjugTable[person]) return null;
+
+    const correct = conjugTable[person];
+    const allPersons = ['ben', 'sen', 'o', 'biz', 'siz', 'onlar'];
+
+    // Distracteurs : mauvaises personnes dans la même forme (même temps/mode)
+    const wrongByPerson = allPersons
+      .filter(p => p !== person)
+      .map(p => conjugTable[p])
+      .filter(f => f && f !== correct);
+
+    // Distracteurs : même personne, autre temps (confusion temps/mode)
+    const otherTenses = tense === 'present_neg'
+      ? ['present', 'past']
+      : Object.keys(verb.conjugations).filter(t => t !== tense);
+    const wrongByTense = otherTenses
+      .map(t => {
+        const tbl = verb.conjugations && verb.conjugations[t];
+        return tbl && tbl[person];
+      })
+      .filter(f => f && f !== correct);
+
+    // Pour le présent négatif : ajouter la forme affirmative du même temps comme distractor clé
+    if (tense === 'present_neg' && verb.conjugations && verb.conjugations.present) {
+      const affirmatif = verb.conjugations.present[person];
+      if (affirmatif && affirmatif !== correct && !wrongByTense.includes(affirmatif)) {
+        wrongByTense.unshift(affirmatif);
+      }
+    }
+
+    const candidates = [...new Set([...wrongByPerson, ...wrongByTense])];
+    const distractors = this._shuffle(candidates).slice(0, 3);
+    if (distractors.length === 0) return null;
+
+    return {
+      type: 'qcm',
+      subtype: 'verb_fill',
+      question: `${personFr[person]} _______`,
+      verbMeta: {
+        infinitive: verb.infinitive,
+        fr: verb.fr,
+        person,
+        personLabel: personFr[person],
+        tense,
+        tenseLabel: tenseLabel[tense]
+      },
+      hint: verb.fr,
+      options: this._shuffle([correct, ...distractors]),
+      answer: correct,
+      data: {
+        id: verb.id,
+        tr: correct,
+        fr: verb.fr,
+        type: 'verb',
+        tense: tense === 'present_neg' ? 'present' : tense
+      }
+    };
+  },
+
+  getSmartDistractors(targetWord, count, field) {
+    // P1 : même topic (confusion sémantique réelle)
+    const sameTopic = AppVocabulary.filter(w =>
+      w.id !== targetWord.id && w.topic === targetWord.topic && w[field] !== targetWord[field]
+    );
+    // P2 : même type grammatical
+    const sameType = AppVocabulary.filter(w =>
+      w.id !== targetWord.id && w.type === targetWord.type &&
+      w.topic !== targetWord.topic && w[field] !== targetWord[field]
+    );
+    // P3 : fallback difficulté similaire
+    const similar = AppVocabulary.filter(w =>
+      w.id !== targetWord.id && !sameTopic.find(s => s.id === w.id) &&
+      !sameType.find(s => s.id === w.id) && w[field] !== targetWord[field]
+    );
+
+    const result = [];
+    const addUnique = (arr) => {
+      for (const w of this._shuffle(arr)) {
+        if (result.length >= count) break;
+        if (!result.includes(w[field])) result.push(w[field]);
+      }
+    };
+    addUnique(sameTopic);
+    if (result.length < count) addUnique(sameType);
+    if (result.length < count) addUnique(similar);
+
+    return result.slice(0, count);
+  },
+
+  _shuffle(arr) {
+    return [...arr].sort(() => 0.5 - Math.random());
   }
 };

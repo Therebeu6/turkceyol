@@ -7,6 +7,7 @@ const App = {
   // ── Propriétés ──
   currentView: '',
   history: [],
+  _isGoingBack: false,
   views: {}, // stocke les modules de vue (ex: Dashboard, Lesson, etc.)
 
   // ── Initialisation ──
@@ -69,12 +70,13 @@ const App = {
     }
 
     // Gestion de l'historique
-    if (this.currentView && this.currentView !== path) {
+    if (!this._isGoingBack && this.currentView && this.currentView !== path) {
       if (this.history[this.history.length - 1] !== this.currentView) {
         this.history.push(this.currentView);
       }
     }
-    
+    this._isGoingBack = false;
+
     this.currentView = path;
 
     // Transition UI
@@ -142,6 +144,7 @@ const App = {
   goBack() {
     if (this.history.length > 0) {
       const prev = this.history.pop();
+      this._isGoingBack = true;
       window.location.hash = '#' + prev;
     } else {
       this.navigate('#dashboard');
