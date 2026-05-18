@@ -399,5 +399,203 @@ window.AppVerbs = [
         biz: 'bilmiyoruz', siz: 'bilmiyorsunuz', onlar: 'bilmiyorlar'
       }
     }
+  },
+  {
+    id: 'vb_almak',
+    infinitive: 'Almak',
+    stem: 'Al',
+    fr: 'Prendre / Acheter',
+    difficulty: 1,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'alıyorum', sen: 'alıyorsun', o: 'alıyor',
+        biz: 'alıyoruz', siz: 'alıyorsunuz', onlar: 'alıyorlar'
+      },
+      past: {
+        ben: 'aldım', sen: 'aldın', o: 'aldı',
+        biz: 'aldık', siz: 'aldınız', onlar: 'aldılar'
+      },
+      future: {
+        ben: 'alacağım', sen: 'alacaksın', o: 'alacak',
+        biz: 'alacağız', siz: 'alacaksınız', onlar: 'alacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'almıyorum', sen: 'almıyorsun', o: 'almıyor',
+        biz: 'almıyoruz', siz: 'almıyorsunuz', onlar: 'almıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Her gün gazete alıyorum.', fr: 'J\'achète le journal tous les jours.' },
+      { tr: 'Dün marketten ekmek aldım.', fr: 'Hier j\'ai acheté du pain au supermarché.' },
+      { tr: 'Yarın yeni bir kitap alacağım.', fr: 'Demain j\'achèterai un nouveau livre.' }
+    ]
+  },
+  {
+    id: 'vb_vermek',
+    infinitive: 'Vermek',
+    stem: 'Ver',
+    fr: 'Donner',
+    difficulty: 1,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'veriyorum', sen: 'veriyorsun', o: 'veriyor',
+        biz: 'veriyoruz', siz: 'veriyorsunuz', onlar: 'veriyorlar'
+      },
+      past: {
+        ben: 'verdim', sen: 'verdin', o: 'verdi',
+        biz: 'verdik', siz: 'verdiniz', onlar: 'verdiler'
+      },
+      future: {
+        ben: 'vereceğim', sen: 'vereceksin', o: 'verecek',
+        biz: 'vereceğiz', siz: 'vereceksiniz', onlar: 'verecekler'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'vermiyorum', sen: 'vermiyorsun', o: 'vermiyor',
+        biz: 'vermiyoruz', siz: 'vermiyorsunuz', onlar: 'vermiyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Sana bir şey veriyorum.', fr: 'Je te donne quelque chose.' },
+      { tr: 'Ona hediye verdim.', fr: 'Je lui ai offert un cadeau.' },
+      { tr: 'Yarın sana kitabı vereceğim.', fr: 'Demain je te donnerai le livre.' }
+    ]
+  },
+  {
+    id: 'vb_bakmak',
+    infinitive: 'Bakmak',
+    stem: 'Bak',
+    fr: 'Regarder / Chercher',
+    difficulty: 2,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'bakıyorum', sen: 'bakıyorsun', o: 'bakıyor',
+        biz: 'bakıyoruz', siz: 'bakıyorsunuz', onlar: 'bakıyorlar'
+      },
+      past: {
+        ben: 'baktım', sen: 'baktın', o: 'baktı',
+        biz: 'baktık', siz: 'baktınız', onlar: 'baktılar'
+      },
+      future: {
+        ben: 'bakacağım', sen: 'bakacaksın', o: 'bakacak',
+        biz: 'bakacağız', siz: 'bakacaksınız', onlar: 'bakacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'bakmıyorum', sen: 'bakmıyorsun', o: 'bakmıyor',
+        biz: 'bakmıyoruz', siz: 'bakmıyorsunuz', onlar: 'bakmıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Pencereden dışarı bakıyorum.', fr: 'Je regarde dehors par la fenêtre.' },
+      { tr: 'Ona baktım ama göremedim.', fr: 'Je l\'ai regardé mais je n\'ai pas pu voir.' },
+      { tr: 'Yarın çocuğa bakacağım.', fr: 'Demain je garderai l\'enfant.' }
+    ]
+  },
+  {
+    id: 'vb_beklemek',
+    infinitive: 'Beklemek',
+    stem: 'Bekle',
+    fr: 'Attendre',
+    difficulty: 2,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'bekliyorum', sen: 'bekliyorsun', o: 'bekliyor',
+        biz: 'bekliyoruz', siz: 'bekliyorsunuz', onlar: 'bekliyorlar'
+      },
+      past: {
+        ben: 'bekledim', sen: 'bekledin', o: 'bekledi',
+        biz: 'bekledik', siz: 'beklediniz', onlar: 'beklediler'
+      },
+      future: {
+        ben: 'bekleyeceğim', sen: 'bekleyeceksin', o: 'bekleyecek',
+        biz: 'bekleyeceğiz', siz: 'bekleyeceksiniz', onlar: 'bekleyecekler'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'beklemiyorum', sen: 'beklemiyorsun', o: 'beklemiyor',
+        biz: 'beklemiyoruz', siz: 'beklemiyorsunuz', onlar: 'beklemiyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Seni otobüs durağında bekliyorum.', fr: 'Je t\'attends à l\'arrêt de bus.' },
+      { tr: 'Bir saat bekledim.', fr: 'J\'ai attendu une heure.' },
+      { tr: 'Yarın sizi burada bekleyeceğim.', fr: 'Demain je vous attendrai ici.' }
+    ]
+  },
+  {
+    id: 'vb_okumak',
+    infinitive: 'Okumak',
+    stem: 'Oku',
+    fr: 'Lire / Étudier',
+    difficulty: 1,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'okuyorum', sen: 'okuyorsun', o: 'okuyor',
+        biz: 'okuyoruz', siz: 'okuyorsunuz', onlar: 'okuyorlar'
+      },
+      past: {
+        ben: 'okudum', sen: 'okudun', o: 'okudu',
+        biz: 'okuduk', siz: 'okudunuz', onlar: 'okudular'
+      },
+      future: {
+        ben: 'okuyacağım', sen: 'okuyacaksın', o: 'okuyacak',
+        biz: 'okuyacağız', siz: 'okuyacaksınız', onlar: 'okuyacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'okumuyorum', sen: 'okumuyorsun', o: 'okumuyor',
+        biz: 'okumuyoruz', siz: 'okumuyorsunuz', onlar: 'okumuyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Akşamları kitap okuyorum.', fr: 'Je lis un livre le soir.' },
+      { tr: 'Dün iki saat ders çalıştım.', fr: 'Hier j\'ai étudié pendant deux heures.' },
+      { tr: 'Yarın gazete okuyacağım.', fr: 'Demain je lirai le journal.' }
+    ]
+  },
+  {
+    id: 'vb_yazmak',
+    infinitive: 'Yazmak',
+    stem: 'Yaz',
+    fr: 'Écrire',
+    difficulty: 1,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'yazıyorum', sen: 'yazıyorsun', o: 'yazıyor',
+        biz: 'yazıyoruz', siz: 'yazıyorsunuz', onlar: 'yazıyorlar'
+      },
+      past: {
+        ben: 'yazdım', sen: 'yazdın', o: 'yazdı',
+        biz: 'yazdık', siz: 'yazdınız', onlar: 'yazdılar'
+      },
+      future: {
+        ben: 'yazacağım', sen: 'yazacaksın', o: 'yazacak',
+        biz: 'yazacağız', siz: 'yazacaksınız', onlar: 'yazacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'yazmıyorum', sen: 'yazmıyorsun', o: 'yazmıyor',
+        biz: 'yazmıyoruz', siz: 'yazmıyorsunuz', onlar: 'yazmıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Her gün günlük yazıyorum.', fr: 'J\'écris un journal tous les jours.' },
+      { tr: 'Sana bir mektup yazdım.', fr: 'Je t\'ai écrit une lettre.' },
+      { tr: 'Yarın raporu yazacağım.', fr: 'Demain j\'écrirai le rapport.' }
+    ]
   }
 ];

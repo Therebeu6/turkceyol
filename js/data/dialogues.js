@@ -205,5 +205,69 @@ window.AppDialogues = [
       { speaker: 'Satıcı', tr: 'Yüz elli lira. Ucuz!', fr: 'Cent cinquante lires. Pas cher !' },
       { speaker: 'Müşteri', tr: 'Tamam, alıyorum.', fr: 'D\'accord, je la prends.' }
     ]
+  },
+  {
+    id: 'd_meteo',
+    title: 'Quel temps fait-il ?',
+    scenario: 'Deux collègues parlent de la météo à Istanbul.',
+    level: 1,
+    tags: ['Météo', 'A1'],
+    turns: [
+      { speaker: 'Ayşe', tr: 'Bugün hava çok soğuk, değil mi?', fr: 'Il fait très froid aujourd\'hui, non ?' },
+      { speaker: 'Kemal', tr: 'Evet, çok soğuk. Yağmur da yağıyor.', fr: 'Oui, très froid. Il pleut aussi.' },
+      { speaker: 'Ayşe', tr: 'Paltomu getirmedim. Çok üşüyorum.', fr: 'Je n\'ai pas apporté mon manteau. J\'ai très froid.' },
+      { speaker: 'Kemal', tr: 'Yarın hava güneşli olacak.', fr: 'Demain il fera beau.' },
+      { speaker: 'Ayşe', tr: 'Gerçekten mi? Hava sıcak olacak mı?', fr: 'Vraiment ? Il fera chaud ?' },
+      { speaker: 'Kemal', tr: 'Evet, hava tahminine göre yirmi derece olacak.', fr: 'Oui, selon la météo il fera vingt degrés.' }
+    ]
+  },
+  {
+    id: 'd_saglik',
+    title: 'Chez le médecin',
+    scenario: 'Un patient consulte le médecin à Istanbul.',
+    level: 2,
+    tags: ['Santé', 'A2'],
+    turns: [
+      { speaker: 'Hasta', tr: 'Doktor bey, iyi hissetmiyorum.', fr: 'Docteur, je ne me sens pas bien.' },
+      { speaker: 'Doktor', tr: 'Neden? Ne şikayetiniz var?', fr: 'Pourquoi ? Qu\'est-ce qui ne va pas ?' },
+      { speaker: 'Hasta', tr: 'Baş ağrım var ve ateşim var.', fr: 'J\'ai mal à la tête et j\'ai de la fièvre.' },
+      { speaker: 'Doktor', tr: 'Ne zamandır böyle hissediyorsunuz?', fr: 'Depuis quand vous sentez-vous ainsi ?' },
+      { speaker: 'Hasta', tr: 'İki gündür. Çok yorgunum da.', fr: 'Depuis deux jours. Je suis aussi très fatigué.' },
+      { speaker: 'Doktor', tr: 'Tamam, sizi muayene edeyim. Grip olmuşsunuz.', fr: 'D\'accord, je vais vous examiner. Vous avez la grippe.' },
+      { speaker: 'Hasta', tr: 'İlaç yazacak mısınız?', fr: 'Allez-vous me prescrire des médicaments ?' },
+      { speaker: 'Doktor', tr: 'Evet. Bu ilaçları günde üç kez alın ve dinlenin.', fr: 'Oui. Prenez ces médicaments trois fois par jour et reposez-vous.' }
+    ]
+  },
+  {
+    id: 'd_habitudes',
+    title: 'Mes habitudes',
+    scenario: 'Deux amis parlent de leur routine quotidienne.',
+    level: 2,
+    tags: ['Routine', 'A2'],
+    turns: [
+      { speaker: 'Selin', tr: 'Her sabah saat kaçta kalkıyorsunuz?', fr: 'Vous vous levez à quelle heure chaque matin ?' },
+      { speaker: 'Marc', tr: 'Genellikle yedide kalkıyorum. Siz?', fr: 'En général je me lève à sept heures. Et vous ?' },
+      { speaker: 'Selin', tr: 'Ben altıda kalkıyorum. Hep erken çalışıyorum.', fr: 'Je me lève à six heures. Je travaille toujours tôt.' },
+      { speaker: 'Marc', tr: 'Akşamları ne yapıyorsunuz?', fr: 'Que faites-vous le soir ?' },
+      { speaker: 'Selin', tr: 'Bazen kitap okuyorum, bazen müzik dinliyorum.', fr: 'Parfois je lis un livre, parfois j\'écoute de la musique.' },
+      { speaker: 'Marc', tr: 'Ben de okumayı çok seviyorum. Saat kaçta uyuyorsunuz?', fr: 'Moi aussi j\'aime beaucoup lire. À quelle heure dormez-vous ?' },
+      { speaker: 'Selin', tr: 'Genellikle on birde uyuyorum.', fr: 'En général je dors à onze heures.' }
+    ]
+  },
+  {
+    id: 'd_famille_elargie',
+    title: 'La famille turque',
+    scenario: 'Présentation de la famille lors d\'un repas à Izmir.',
+    level: 2,
+    tags: ['Famille', 'A2'],
+    turns: [
+      { speaker: 'Fatma', tr: 'Ailemizi tanıtayım. Bu dedem ve ninem.', fr: 'Laissez-moi vous présenter ma famille. Voici mon grand-père et ma grand-mère.' },
+      { speaker: 'Sophie', tr: 'Merhaba! Tanıştığımıza memnun oldum.', fr: 'Bonjour ! Ravie de vous rencontrer.' },
+      { speaker: 'Dede', tr: 'Hoş geldiniz! İzmir\'e ilk kez mi geldiniz?', fr: 'Bienvenue ! C\'est votre première visite à Izmir ?' },
+      { speaker: 'Sophie', tr: 'Evet, ilk kez. Çok güzel bir şehir!', fr: 'Oui, la première fois. C\'est une très belle ville !' },
+      { speaker: 'Fatma', tr: 'Şu amcam ve teyzem de var. Büyük bir aileyiz.', fr: 'Il y a aussi mon oncle et ma tante. Nous sommes une grande famille.' },
+      { speaker: 'Sophie', tr: 'Kaç çocuk var ailede?', fr: 'Combien d\'enfants y a-t-il dans la famille ?' },
+      { speaker: 'Fatma', tr: 'Beş çocuk var. Hepimiz İzmir\'i çok seviyoruz.', fr: 'Il y a cinq enfants. Nous aimons tous beaucoup Izmir.' }
+    ]
   }
 ];

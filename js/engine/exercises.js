@@ -181,11 +181,19 @@ window.Exercises = {
     const distractors = this._shuffle(candidates).slice(0, 3);
     if (distractors.length === 0) return null;
 
+    // Exemple contextuel aléatoire si disponible
+    const example = verb.examples && verb.examples.length > 0
+      ? verb.examples[Math.floor(Math.random() * verb.examples.length)]
+      : null;
+    const hintText = example
+      ? `${verb.fr} — <em>${example.tr}</em>`
+      : verb.fr;
+
     return {
       type: 'qcm',
       subtype: 'verb_fill',
       question: `<span class="verb-person-label">${personFr[person]}</span> _______ <span class="verb-tense-label">(${verb.infinitive} · ${tenseLabel[tense]})</span>`,
-      hint: verb.fr,
+      hint: hintText,
       options: this._shuffle([correct, ...distractors]),
       answer: correct,
       data: {

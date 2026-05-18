@@ -49,8 +49,8 @@ window.Units = {
         }
 
         const timeLabel = chap.time ? `${chap.time} min` : '';
-        const clickable = isUnlocked && !isDone ? `onclick="Units.startChapter('${unit.id}','${chap.id}')"` : '';
-        const cursorClass = (isUnlocked && !isDone) ? 'ch-clickable' : '';
+        const clickable = isUnlocked ? `onclick="Units.startChapter('${unit.id}','${chap.id}')"` : '';
+        const cursorClass = isUnlocked ? 'ch-clickable' : '';
 
         chapHtml += `
           <div class="ch-item ${statusClass} ${cursorClass}" ${clickable}>
