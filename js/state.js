@@ -21,8 +21,9 @@ const State = {
     weakVerbs: [],
     reviewQueue: [],
     achievementIds: [],
-    
+
     heatmap: {},
+    tenseStats: {},
     settings: {
       soundEffects: true,
       dailyReminder: true,
@@ -119,16 +120,15 @@ const State = {
       // TODO: déclencher event level up
     }
 
-    // Gestion streak
+    // Heatmap : toute activité XP
     const today = new Date().toISOString().split('T')[0];
-    if (this.data.dailyXP >= this.data.dailyGoal && this.data.lastSessionDate !== today + "_goal_met") {
-        // L'objectif du jour vient d'être atteint, on incrémente le streak
-        this.data.streak += 1;
-        this.data.lastSessionDate = today + "_goal_met"; // marqueur simple
-        
-        // Update heatmap
-        if(!this.data.heatmap[today]) this.data.heatmap[today] = 0;
-        this.data.heatmap[today] += amount;
+    if (!this.data.heatmap[today]) this.data.heatmap[today] = 0;
+    this.data.heatmap[today] += amount;
+
+    // Gestion streak : objectif journalier
+    if (this.data.dailyXP >= this.data.dailyGoal && this.data.lastSessionDate !== today + '_goal_met') {
+      this.data.streak += 1;
+      this.data.lastSessionDate = today + '_goal_met';
     }
 
     this.save();

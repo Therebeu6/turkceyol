@@ -46,9 +46,12 @@ window.Dashboard = {
 
     // 4. Continuer la leçon en cours
     this.renderContinueCard();
-    
+
     // 5. Révisions en attente
     this.renderReviewPreview();
+
+    // 6. Verbes faibles
+    this.renderWeakVerbs();
   },
 
   renderContinueCard() {
@@ -68,6 +71,30 @@ window.Dashboard = {
         document.getElementById('cc-bar-fill').style.width = progress + '%';
       }
     }
+  },
+
+  renderWeakVerbs() {
+    const container = document.getElementById('dash-weak-verbs');
+    if (!container || !window.SRS) return;
+    const weakItems = SRS.getWeakItems(3).filter(i => i.type === 'verb');
+    if (weakItems.length === 0) {
+      container.innerHTML = `<div class="empty-state-sm"><span>💪</span>Continuez les leçons pour identifier vos points faibles.</div>`;
+      return;
+    }
+    container.innerHTML = weakItems.map(item => {
+      const verb = window.AppVerbs && AppVerbs.find(v => v.id === item.id);
+      if (!verb) return '';
+      const rate = Math.round(((item.failures || 0) / Math.max(1, (item.successes || 0) + (item.failures || 0))) * 100);
+      return `
+        <div class="list-item" onclick="App.navigate('#verbs')">
+          <div class="li-left">
+            <div class="li-tr">${verb.infinitive}</div>
+            <div class="li-fr">${verb.fr}</div>
+          </div>
+          <div style="font-size:11px;font-weight:700;color:var(--error)">${rate}% erreur</div>
+        </div>
+      `;
+    }).join('');
   },
 
   renderReviewPreview() {
