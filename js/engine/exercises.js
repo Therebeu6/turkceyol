@@ -46,9 +46,11 @@ window.Exercises = {
     if (vocab.length > 0) {
       const vocabSample = this._shuffle(vocab).slice(0, 5);
       vocabSample.forEach((word, i) => {
-        if (i % 3 === 0) exercises.push(this.createQCMTrFr(word));
-        else if (i % 3 === 1) exercises.push(this.createQCMFrTr(word));
-        else exercises.push(this.createInputTr(word));
+        if (i % 5 === 0) exercises.push(this.createQCMTrFr(word));
+        else if (i % 5 === 1) exercises.push(this.createQCMFrTr(word));
+        else if (i % 5 === 2) exercises.push(this.createInputTr(word));
+        else if (i % 5 === 3) exercises.push(this.createTrueFalse(word));
+        else exercises.push(this.createAudioQCM(word));
       });
     }
 
@@ -127,6 +129,43 @@ window.Exercises = {
       type: 'input',
       question: `Traduisez en turc : <span class="exo-fr">${word.fr}</span>`,
       answer: word.tr,
+      data: { id: word.id, tr: word.tr, fr: word.fr, type: 'vocabulary' }
+    };
+  },
+
+  createTrueFalse(word) {
+    const useReal = Math.random() > 0.5;
+    let proposedFr;
+    if (useReal) {
+      proposedFr = word.fr;
+    } else {
+      const distractors = AppVocabulary.filter(w =>
+        w.id !== word.id && w.topic === word.topic && w.fr !== word.fr
+      );
+      const fallback = AppVocabulary.filter(w => w.id !== word.id && w.fr !== word.fr);
+      const pool = distractors.length > 0 ? distractors : fallback;
+      const picked = pool[Math.floor(Math.random() * pool.length)];
+      proposedFr = picked ? picked.fr : word.fr;
+      if (proposedFr === word.fr) { proposedFr = word.fr; }
+    }
+    const isReal = proposedFr === word.fr;
+    return {
+      type: 'true_false',
+      question: word.tr,
+      proposed: proposedFr,
+      answer: isReal ? 'Vrai' : 'Faux',
+      data: { id: word.id, tr: word.tr, fr: word.fr, type: 'vocabulary' }
+    };
+  },
+
+  createAudioQCM(word) {
+    const distractors = this.getSmartDistractors(word, 3, 'fr');
+    if (distractors.length < 2) return this.createQCMTrFr(word);
+    return {
+      type: 'audio_qcm',
+      audioTr: word.tr,
+      options: this._shuffle([word.fr, ...distractors]),
+      answer: word.fr,
       data: { id: word.id, tr: word.tr, fr: word.fr, type: 'vocabulary' }
     };
   },

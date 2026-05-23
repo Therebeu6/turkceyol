@@ -104,6 +104,50 @@ window.Lesson = {
           </div>
         </div>
       `;
+    } else if (exo.type === 'true_false') {
+      exoHtml = `
+        <div class="exercise-container animate-fade-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">✅ Vrai ou Faux ?</div>
+            <h2 class="exercise-prompt exo-tr">${exo.question}</h2>
+            <div class="tf-proposed">= <span class="exo-fr">${exo.proposed}</span></div>
+          </div>
+          <div class="exercise-content">
+            <div class="tf-grid">
+              <button class="tf-btn option-btn" onclick="Lesson.checkAnswer('Vrai')">
+                <span class="opt-text">Vrai</span>
+              </button>
+              <button class="tf-btn option-btn" onclick="Lesson.checkAnswer('Faux')">
+                <span class="opt-text">Faux</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (exo.type === 'audio_qcm') {
+      const optsHtml = exo.options.map((opt, i) => `
+        <button class="option-btn" onclick="Lesson.checkAnswer('${this._escape(opt)}')">
+          <span class="opt-key">${i + 1}</span>
+          <span class="opt-text">${opt}</span>
+        </button>
+      `).join('');
+      exoHtml = `
+        <div class="exercise-container animate-fade-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">🔊 Écouter et choisir</div>
+            <button class="audio-play-btn" onclick="App.playTTS('${this._escape(exo.audioTr)}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+              Écouter
+            </button>
+          </div>
+          <div class="exercise-content">
+            <div class="options-grid" id="options-container">${optsHtml}</div>
+          </div>
+        </div>
+      `;
     }
 
     const feedbackHtml = `
@@ -137,6 +181,9 @@ window.Lesson = {
         if (inp) inp.focus();
       }, 120);
     }
+    if (exo.type === 'audio_qcm') {
+      setTimeout(() => App.playTTS(exo.audioTr), 400);
+    }
   },
 
   checkInput() {
@@ -155,7 +202,7 @@ window.Lesson = {
     const isCorrect = clean(selected) === clean(exo.answer);
 
     // Style des boutons / input
-    if (exo.type === 'qcm') {
+    if (exo.type === 'qcm' || exo.type === 'true_false' || exo.type === 'audio_qcm') {
       document.querySelectorAll('.option-btn').forEach(b => {
         b.onclick = null;
         const val = (b.querySelector('.opt-text')?.textContent || '').trim();
@@ -188,8 +235,8 @@ window.Lesson = {
       } else {
         document.getElementById('fb-title').textContent = 'Pas tout à fait…';
       }
-      // Shake sur QCM
-      if (exo.type === 'qcm') {
+      // Shake sur QCM/TF/Audio
+      if (exo.type === 'qcm' || exo.type === 'true_false' || exo.type === 'audio_qcm') {
         const wrongBtn = document.querySelector('.option-btn.wrong');
         if (wrongBtn) wrongBtn.classList.add('animate-shake');
       }

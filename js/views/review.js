@@ -8,6 +8,7 @@ window.Review = {
   currentIndex: 0,
   correctCount: 0,
   _active: false,
+  _answered: false,
 
   render() {
     this._active = false;
@@ -137,6 +138,7 @@ window.Review = {
 
     const exo = this.exercises[this.currentIndex];
     const pct = Math.round((this.currentIndex / this.exercises.length) * 100);
+    this._answered = false;
 
     const optsHtml = exo.options.map((opt, i) => `
       <button class="option-btn" onclick="Review._checkAnswer('${this._escape(opt)}')">
@@ -175,6 +177,8 @@ window.Review = {
   },
 
   _checkAnswer(selected) {
+    if (this._answered) return;
+    this._answered = true;
     const exo = this.exercises[this.currentIndex];
     const clean = s => s.normalize('NFC').toLocaleLowerCase('tr-TR')
       .replace(/[.!?,;:'"]/g, '').replace(/\s+/g, ' ').trim();
