@@ -11,6 +11,7 @@ window.Lesson = {
   correctCount: 0,
   currentXp: 0,
   _keyHandler: null,
+  _answered: false,
 
   render(param) {
     if (!param) { App.navigate('#units'); return; }
@@ -127,6 +128,7 @@ window.Lesson = {
       </div>
     `;
 
+    this._answered = false;
     container.innerHTML = exoHtml + feedbackHtml;
 
     if (exo.type === 'input') {
@@ -144,6 +146,8 @@ window.Lesson = {
   },
 
   checkAnswer(selected) {
+    if (this._answered) return;
+    this._answered = true;
     const exo = this.exercises[this.currentIndex];
     const clean = s => s.normalize('NFC').toLocaleLowerCase('tr-TR')
       .replace(/[.!?,;:'"]/g, '').replace(/\s+/g, ' ').trim();
