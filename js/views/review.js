@@ -340,7 +340,8 @@ window.Review = {
 
     if (exo.data.tr) App.playTTS(exo.data.tr);
     if (window.SRS && exo.data.type !== 'phrase') {
-      SRS.updateItem(exo.data.id, exo.data.type || 'vocabulary', isCorrect, exo.data.tense);
+      const quality = isCorrect ? 4 : 2;
+      SRS.updateItem(exo.data.id, exo.data.type || 'vocabulary', quality, exo.data.tense);
     }
 
     fb.classList.add('show');
@@ -444,7 +445,7 @@ window.Review = {
     this._answered = true;
     const exo = this.exercises[this.currentIndex];
     this.correctCount++;
-    if (window.SRS) exo.pairs.forEach(p => SRS.updateItem(p.id, 'vocabulary', true));
+    if (window.SRS) exo.pairs.forEach(p => SRS.updateItem(p.id, 'vocabulary', 4));
     const fb = document.getElementById('rev-feedback');
     fb.classList.add('correct', 'show');
     document.getElementById('rev-fb-icon').textContent = '✓';

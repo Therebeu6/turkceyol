@@ -17,6 +17,7 @@ window.Stats = {
     const fragileItems = window.SRS ? SRS.getFragileItems(5) : [];
     const topicHtml = this._buildTopicRetention();
     const fragileHtml = fragileItems.length > 0 ? this._buildFragileWarning(fragileItems) : '';
+    const srsHtml = this._buildSRSMetrics();
 
     container.innerHTML = `
       <!-- Chiffres clés -->
@@ -41,6 +42,9 @@ window.Stats = {
 
       <!-- Alerte items fragiles -->
       ${fragileHtml}
+
+      <!-- Mémoire SRS (rétention, EF, items à venir) -->
+      ${srsHtml}
 
       <!-- Activité -->
       <div class="section-row"><span class="section-lbl">Activité (7 jours)</span></div>
@@ -177,6 +181,41 @@ window.Stats = {
     return `
       <div class="section-row"><span class="section-lbl">Vocabulaire par thème</span></div>
       <div class="card mb-4">${rows}</div>
+    `;
+  },
+
+  _buildSRSMetrics() {
+    if (!window.SRS) return '';
+    const queue = State.data.reviewQueue || [];
+    if (queue.length === 0) return '';
+
+    const retention = SRS.getRetentionRate();
+    const avgEF = SRS.getAverageEF();
+    const upcoming = SRS.getUpcomingCount(7);
+
+    const retColor = retention >= 70 ? 'var(--success)'
+                  : retention >= 40 ? 'var(--primary)'
+                  : 'var(--warning)';
+    const efColor = avgEF >= 2.5 ? 'var(--success)'
+                  : avgEF >= 2.0 ? 'var(--primary)'
+                  : 'var(--warning)';
+
+    return `
+      <div class="section-row"><span class="section-lbl">Mémoire SRS</span></div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-val" style="color:${retColor}">${retention}%</div>
+          <div class="stat-lbl">Rétention</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" style="color:${efColor}">${avgEF.toFixed(2)}</div>
+          <div class="stat-lbl">EF moyen</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val text-primary">${upcoming}</div>
+          <div class="stat-lbl">À venir 7j</div>
+        </div>
+      </div>
     `;
   },
 

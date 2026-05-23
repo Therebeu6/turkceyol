@@ -333,9 +333,12 @@ window.Lesson = {
       App.playTTS(exo.data.tr);
     }
 
-    // Mise à jour SRS
+    // Mise à jour SRS (qualité SM-2 : 5 si combo, 4 si correct, 2 si faux)
     if (window.SRS && exo.data.type !== 'phrase') {
-      SRS.updateItem(exo.data.id, exo.data.type || 'vocabulary', isCorrect, exo.data.tense);
+      const quality = isCorrect
+        ? (this._comboCount >= 3 ? 5 : 4)
+        : 2;
+      SRS.updateItem(exo.data.id, exo.data.type || 'vocabulary', quality, exo.data.tense);
     }
 
     fbBar.classList.add('show');
@@ -518,7 +521,10 @@ window.Lesson = {
     }
     if (window.AudioEngine) AudioEngine.playCorrect();
 
-    if (window.SRS) exo.pairs.forEach(p => SRS.updateItem(p.id, 'vocabulary', true));
+    if (window.SRS) {
+      const q = this._comboCount >= 3 ? 5 : 4;
+      exo.pairs.forEach(p => SRS.updateItem(p.id, 'vocabulary', q));
+    }
     const fbBar = document.getElementById('feedback-bar');
     fbBar.classList.add('correct', 'show');
     document.getElementById('fb-icon').textContent = '✓';
