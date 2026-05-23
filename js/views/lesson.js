@@ -12,6 +12,7 @@ window.Lesson = {
   currentXp: 0,
   _keyHandler: null,
   _answered: false,
+  _mpState: null,
 
   render(param) {
     if (!param) { App.navigate('#units'); return; }
@@ -148,6 +149,54 @@ window.Lesson = {
           </div>
         </div>
       `;
+    } else if (exo.type === 'word_order') {
+      const wordsHtml = exo.words.map(w =>
+        `<button class="word-chip" data-word="${this._escape(w)}" onclick="Lesson._woClickBank(this)">${w}</button>`
+      ).join('');
+      exoHtml = `
+        <div class="exercise-container animate-fade-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">🔀 Remettre en ordre</div>
+            <h2 class="exercise-prompt">${exo.question}</h2>
+            <div class="exo-hint">${exo.hint}</div>
+          </div>
+          <div class="exercise-content">
+            <div class="word-order-container">
+              <div class="word-answer" id="wo-answer">
+                <span class="answer-placeholder" id="wo-placeholder">Appuie sur les mots…</span>
+              </div>
+              <div class="word-bank" id="wo-bank">${wordsHtml}</div>
+              <button class="btn btn-primary btn-full" id="wo-validate" onclick="Lesson._woValidate()" disabled>Valider</button>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (exo.type === 'match_pairs') {
+      this._mpState = { matched: 0, selectedTR: null, selectedFR: null };
+      const pairsFR = [...exo.pairs].sort(() => 0.5 - Math.random());
+      const trHtml = exo.pairs.map(p =>
+        `<button class="match-chip match-tr" data-id="${p.id}" onclick="Lesson._mpClickTR('${this._escape(p.id)}', this)">${p.tr}</button>`
+      ).join('');
+      const frHtml = pairsFR.map(p =>
+        `<button class="match-chip match-fr" data-id="${p.id}" onclick="Lesson._mpClickFR('${this._escape(p.id)}', this)">${p.fr}</button>`
+      ).join('');
+      exoHtml = `
+        <div class="exercise-container animate-fade-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">🔗 Associer les paires</div>
+            <h2 class="exercise-prompt">${exo.question}</h2>
+            <div class="match-score" id="mp-score">0 / ${exo.pairs.length} paires trouvées</div>
+          </div>
+          <div class="exercise-content">
+            <div class="match-pairs-container">
+              <div class="match-grid">
+                <div class="match-col">${trHtml}</div>
+                <div class="match-col">${frHtml}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
     }
 
     const feedbackHtml = `
@@ -209,6 +258,9 @@ window.Lesson = {
         if (clean(val) === clean(exo.answer)) b.classList.add('correct');
         else if (clean(val) === clean(selected) && !isCorrect) b.classList.add('wrong');
       });
+    } else if (exo.type === 'word_order') {
+      const answerDiv = document.getElementById('wo-answer');
+      if (answerDiv) answerDiv.classList.add(isCorrect ? 'correct' : 'wrong');
     } else {
       const inp = document.getElementById('exo-input');
       if (inp) {
@@ -263,7 +315,7 @@ window.Lesson = {
     }
 
     // Mise à jour SRS
-    if (window.SRS) {
+    if (window.SRS && exo.data.type !== 'phrase') {
       SRS.updateItem(exo.data.id, exo.data.type || 'vocabulary', isCorrect, exo.data.tense);
     }
 
@@ -349,6 +401,91 @@ window.Lesson = {
         }
       }
     }
+  },
+
+  _woClickBank(btn) {
+    btn.onclick = () => Lesson._woClickAnswer(btn);
+    document.getElementById('wo-answer').appendChild(btn);
+    const ph = document.getElementById('wo-placeholder');
+    if (ph) ph.style.display = 'none';
+    document.getElementById('wo-validate').disabled = false;
+  },
+
+  _woClickAnswer(btn) {
+    btn.onclick = () => Lesson._woClickBank(btn);
+    document.getElementById('wo-bank').appendChild(btn);
+    const answerDiv = document.getElementById('wo-answer');
+    if (!answerDiv.querySelector('.word-chip')) {
+      const ph = document.getElementById('wo-placeholder');
+      if (ph) ph.style.display = '';
+      document.getElementById('wo-validate').disabled = true;
+    }
+  },
+
+  _woValidate() {
+    if (this._answered) return;
+    const chips = Array.from(document.getElementById('wo-answer').querySelectorAll('.word-chip'));
+    if (chips.length === 0) return;
+    const selected = chips.map(c => c.dataset.word).join(' ');
+    document.querySelectorAll('.word-chip').forEach(c => { c.onclick = null; });
+    document.getElementById('wo-validate').disabled = true;
+    this.checkAnswer(selected);
+  },
+
+  _mpClickTR(id, btn) {
+    if (!this._mpState) return;
+    document.querySelectorAll('.match-tr.selected').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    this._mpState.selectedTR = { id, btn };
+    this._mpCheck();
+  },
+
+  _mpClickFR(id, btn) {
+    if (!this._mpState) return;
+    document.querySelectorAll('.match-fr.selected').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    this._mpState.selectedFR = { id, btn };
+    this._mpCheck();
+  },
+
+  _mpCheck() {
+    const { selectedTR, selectedFR } = this._mpState;
+    if (!selectedTR || !selectedFR) return;
+    if (selectedTR.id === selectedFR.id) {
+      selectedTR.btn.classList.remove('selected'); selectedFR.btn.classList.remove('selected');
+      selectedTR.btn.classList.add('matched'); selectedFR.btn.classList.add('matched');
+      this._mpState.matched++;
+      const scoreEl = document.getElementById('mp-score');
+      const exo = this.exercises[this.currentIndex];
+      if (scoreEl) scoreEl.textContent = `${this._mpState.matched} / ${exo.pairs.length} paires trouvées`;
+      const pair = exo.pairs.find(p => p.id === selectedTR.id);
+      if (pair) App.playTTS(pair.tr);
+      this._mpState.selectedTR = null; this._mpState.selectedFR = null;
+      if (this._mpState.matched === exo.pairs.length) setTimeout(() => this._mpComplete(), 500);
+    } else {
+      const trBtn = selectedTR.btn, frBtn = selectedFR.btn;
+      trBtn.classList.add('wrong'); frBtn.classList.add('wrong');
+      this._mpState.selectedTR = null; this._mpState.selectedFR = null;
+      setTimeout(() => { trBtn.classList.remove('wrong', 'selected'); frBtn.classList.remove('wrong', 'selected'); }, 600);
+    }
+  },
+
+  _mpComplete() {
+    if (this._answered) return;
+    this._answered = true;
+    const exo = this.exercises[this.currentIndex];
+    this.correctCount++;
+    this.currentXp += 10;
+    App.showXPFloat(10);
+    if (window.SRS) exo.pairs.forEach(p => SRS.updateItem(p.id, 'vocabulary', true));
+    const fbBar = document.getElementById('feedback-bar');
+    fbBar.classList.add('correct', 'show');
+    document.getElementById('fb-icon').textContent = '✓';
+    document.getElementById('fb-title').textContent = 'Toutes les paires trouvées !';
+    document.getElementById('btn-next-exo').className = 'btn btn-success btn-full';
+    document.getElementById('fb-tr').textContent = '';
+    document.getElementById('fb-fr').textContent = `${exo.pairs.length} paires associées ✓`;
+    this.updateProgressUI();
   },
 
   _escape(s) {

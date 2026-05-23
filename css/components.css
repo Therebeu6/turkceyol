@@ -567,3 +567,88 @@
 }
 .btn-tts:hover { background: var(--primary); color: #fff; transform: scale(1.1); }
 .btn-tts:active { transform: scale(0.95); }
+
+/* ── Word Order ── */
+.word-order-container { width: 100%; }
+
+.word-answer {
+  min-height: 52px;
+  border: 2px dashed var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+  align-items: center;
+  margin-bottom: var(--s3);
+  transition: border-color 0.2s, background 0.2s;
+}
+.word-answer.correct { border-color: var(--success); border-style: solid; }
+.word-answer.wrong   { border-color: var(--error);   border-style: solid; }
+
+.word-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  justify-content: center;
+  margin-bottom: var(--s3);
+}
+
+.word-chip {
+  background: var(--surface-2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s1) var(--s3);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.word-chip:hover { background: var(--surface-3); transform: translateY(-1px); }
+
+.answer-placeholder {
+  color: var(--text-3);
+  font-size: var(--text-sm);
+  font-style: italic;
+  pointer-events: none;
+}
+
+/* ── Match Pairs ── */
+.match-pairs-container { width: 100%; }
+
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s3);
+}
+
+.match-col { display: flex; flex-direction: column; gap: var(--s2); }
+
+.match-chip {
+  background: var(--surface-2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s2) var(--s3);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s, border-color 0.15s;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.match-chip:hover { background: var(--surface-3); }
+.match-chip.selected { border-color: var(--primary); background: var(--primary); color: #fff; }
+.match-chip.matched  { border-color: var(--success); background: var(--success); color: #fff; cursor: default; pointer-events: none; }
+.match-chip.wrong    { border-color: var(--error);   background: var(--error);   color: #fff; }
+
+.match-score {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  text-align: center;
+  margin-top: var(--s1);
+}

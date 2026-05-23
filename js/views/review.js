@@ -9,6 +9,7 @@ window.Review = {
   correctCount: 0,
   _active: false,
   _answered: false,
+  _mpState: null,
 
   render() {
     this._active = false;
@@ -140,28 +141,14 @@ window.Review = {
     const pct = Math.round((this.currentIndex / this.exercises.length) * 100);
     this._answered = false;
 
-    const optsHtml = exo.options.map((opt, i) => `
-      <button class="option-btn" onclick="Review._checkAnswer('${this._escape(opt)}')">
-        <span class="opt-key">${i + 1}</span>
-        <span class="opt-text">${opt}</span>
-      </button>
-    `).join('');
-
-    container.innerHTML = `
+    const sessionHeader = `
       <div class="rev-session-header">
         <div class="rev-prog-track"><div class="rev-prog-fill" style="width:${pct}%"></div></div>
         <div class="rev-counter">${this.currentIndex + 1} / ${this.exercises.length}</div>
       </div>
-      <div class="exercise-container animate-fade-in">
-        <div class="exercise-header">
-          <div class="exo-type-label">${exo.subtype === 'verb_fill' ? '⚡ Conjugaison' : '🔄 Révision'}</div>
-          <h2 class="exercise-prompt">${exo.question}</h2>
-          ${exo.hint ? `<div class="exo-hint">${exo.hint}</div>` : ''}
-        </div>
-        <div class="exercise-content">
-          <div class="options-grid" id="rev-options">${optsHtml}</div>
-        </div>
-      </div>
+    `;
+
+    const feedbackHtml = `
       <div id="rev-feedback" class="feedback-bar">
         <div class="fb-msg-row">
           <div class="fb-icon" id="rev-fb-icon">✓</div>
@@ -174,6 +161,146 @@ window.Review = {
         <button class="btn btn-primary btn-full" onclick="Review._next()">Continuer</button>
       </div>
     `;
+
+    let exoHtml = '';
+
+    if (exo.type === 'word_order') {
+      const wordsHtml = exo.words.map(w =>
+        `<button class="word-chip" data-word="${this._escape(w)}" onclick="Review._woClickBank(this)">${w}</button>`
+      ).join('');
+      exoHtml = `
+        <div class="exercise-container animate-fade-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">🔀 Remettre en ordre</div>
+            <h2 class="exercise-prompt">${exo.question}</h2>
+            <div class="exo-hint">${exo.hint}</div>
+          </div>
+          <div class="exercise-content">
+            <div class="word-order-container">
+              <div class="word-answer" id="wo-answer">
+                <span class="answer-placeholder" id="wo-placeholder">Appuie sur les mots…</span>
+              </div>
+              <div class="word-bank" id="wo-bank">${wordsHtml}</div>
+              <button class="btn btn-primary btn-full" id="wo-validate" onclick="Review._woValidate()" disabled>Valider</button>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (exo.type === 'match_pairs') {
+      this._mpState = { matched: 0, selectedTR: null, selectedFR: null };
+      const pairsFR = [...exo.pairs].sort(() => 0.5 - Math.random());
+      const trHtml = exo.pairs.map(p =>
+        `<button class="match-chip match-tr" data-id="${p.id}" onclick="Review._mpClickTR('${this._escape(p.id)}', this)">${p.tr}</button>`
+      ).join('');
+      const frHtml = pairsFR.map(p =>
+        `<button class="match-chip match-fr" data-id="${p.id}" onclick="Review._mpClickFR('${this._escape(p.id)}', this)">${p.fr}</button>`
+      ).join('');
+      exoHtml = `
+        <div class="exercise-container animate-fade-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">🔗 Associer les paires</div>
+            <h2 class="exercise-prompt">${exo.question}</h2>
+            <div class="match-score" id="mp-score">0 / ${exo.pairs.length} paires trouvées</div>
+          </div>
+          <div class="exercise-content">
+            <div class="match-pairs-container">
+              <div class="match-grid">
+                <div class="match-col">${trHtml}</div>
+                <div class="match-col">${frHtml}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (exo.type === 'true_false') {
+      exoHtml = `
+        <div class="exercise-container animate-fade-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">✅ Vrai ou Faux ?</div>
+            <h2 class="exercise-prompt exo-tr">${exo.question}</h2>
+            <div class="tf-proposed">= <span class="exo-fr">${exo.proposed}</span></div>
+          </div>
+          <div class="exercise-content">
+            <div class="tf-grid">
+              <button class="tf-btn option-btn" onclick="Review._checkAnswer('Vrai')">
+                <span class="opt-text">Vrai</span>
+              </button>
+              <button class="tf-btn option-btn" onclick="Review._checkAnswer('Faux')">
+                <span class="opt-text">Faux</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (exo.type === 'audio_qcm') {
+      const optsHtml = exo.options.map((opt, i) =>
+        `<button class="option-btn" onclick="Review._checkAnswer('${this._escape(opt)}')">
+          <span class="opt-key">${i + 1}</span><span class="opt-text">${opt}</span>
+        </button>`
+      ).join('');
+      exoHtml = `
+        <div class="exercise-container animate-fade-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">🔊 Écouter et choisir</div>
+            <button class="audio-play-btn" onclick="App.playTTS('${this._escape(exo.audioTr)}')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+              Écouter
+            </button>
+          </div>
+          <div class="exercise-content">
+            <div class="options-grid" id="rev-options">${optsHtml}</div>
+          </div>
+        </div>
+      `;
+    } else {
+      // qcm (vocab ou verb_fill)
+      let headerContent;
+      if (exo.subtype === 'verb_fill' && exo.verbMeta) {
+        const vm = exo.verbMeta;
+        headerContent = `
+          <div class="verb-exo-card">
+            <div class="verb-exo-row">
+              <div>
+                <div class="verb-exo-name">${vm.infinitive}</div>
+                <div class="verb-exo-meaning">${vm.fr}</div>
+              </div>
+              <span class="verb-exo-tense">${vm.tenseLabel}</span>
+            </div>
+          </div>
+          <h2 class="exercise-prompt">
+            <span class="exo-person">${vm.personLabel}</span><span class="exo-blank"> _______</span>
+          </h2>
+        `;
+      } else {
+        const hintHtml = exo.hint ? `<div class="exo-hint">${exo.hint}</div>` : '';
+        headerContent = `<h2 class="exercise-prompt">${exo.question}</h2>${hintHtml}`;
+      }
+      const optsHtml = exo.options.map((opt, i) =>
+        `<button class="option-btn" onclick="Review._checkAnswer('${this._escape(opt)}')">
+          <span class="opt-key">${i + 1}</span><span class="opt-text">${opt}</span>
+        </button>`
+      ).join('');
+      exoHtml = `
+        <div class="exercise-container animate-fade-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">${exo.subtype === 'verb_fill' ? '⚡ Conjugaison' : '🔄 Révision'}</div>
+            ${headerContent}
+          </div>
+          <div class="exercise-content">
+            <div class="options-grid" id="rev-options">${optsHtml}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    container.innerHTML = sessionHeader + exoHtml + feedbackHtml;
+
+    if (exo.type === 'audio_qcm') {
+      setTimeout(() => App.playTTS(exo.audioTr), 400);
+    }
   },
 
   _checkAnswer(selected) {
@@ -184,12 +311,17 @@ window.Review = {
       .replace(/[.!?,;:'"]/g, '').replace(/\s+/g, ' ').trim();
     const isCorrect = clean(selected) === clean(exo.answer);
 
-    document.querySelectorAll('.option-btn').forEach(b => {
-      b.onclick = null;
-      const val = (b.querySelector('.opt-text')?.textContent || '').trim();
-      if (clean(val) === clean(exo.answer)) b.classList.add('correct');
-      else if (clean(val) === clean(selected) && !isCorrect) b.classList.add('wrong');
-    });
+    if (exo.type === 'qcm' || exo.type === 'true_false' || exo.type === 'audio_qcm') {
+      document.querySelectorAll('.option-btn').forEach(b => {
+        b.onclick = null;
+        const val = (b.querySelector('.opt-text')?.textContent || '').trim();
+        if (clean(val) === clean(exo.answer)) b.classList.add('correct');
+        else if (clean(val) === clean(selected) && !isCorrect) b.classList.add('wrong');
+      });
+    } else if (exo.type === 'word_order') {
+      const answerDiv = document.getElementById('wo-answer');
+      if (answerDiv) answerDiv.classList.add(isCorrect ? 'correct' : 'wrong');
+    }
 
     const fb = document.getElementById('rev-feedback');
     if (isCorrect) {
@@ -207,7 +339,9 @@ window.Review = {
     document.getElementById('rev-fb-fr').textContent = exo.data.fr || '';
 
     if (exo.data.tr) App.playTTS(exo.data.tr);
-    if (window.SRS) SRS.updateItem(exo.data.id, exo.data.type || 'vocabulary', isCorrect, exo.data.tense);
+    if (window.SRS && exo.data.type !== 'phrase') {
+      SRS.updateItem(exo.data.id, exo.data.type || 'vocabulary', isCorrect, exo.data.tense);
+    }
 
     fb.classList.add('show');
   },
@@ -236,6 +370,88 @@ window.Review = {
       </div>
     `;
     App.fireConfetti();
+  },
+
+  _woClickBank(btn) {
+    btn.onclick = () => Review._woClickAnswer(btn);
+    document.getElementById('wo-answer').appendChild(btn);
+    const ph = document.getElementById('wo-placeholder');
+    if (ph) ph.style.display = 'none';
+    document.getElementById('wo-validate').disabled = false;
+  },
+
+  _woClickAnswer(btn) {
+    btn.onclick = () => Review._woClickBank(btn);
+    document.getElementById('wo-bank').appendChild(btn);
+    const answerDiv = document.getElementById('wo-answer');
+    if (!answerDiv.querySelector('.word-chip')) {
+      const ph = document.getElementById('wo-placeholder');
+      if (ph) ph.style.display = '';
+      document.getElementById('wo-validate').disabled = true;
+    }
+  },
+
+  _woValidate() {
+    if (this._answered) return;
+    const chips = Array.from(document.getElementById('wo-answer').querySelectorAll('.word-chip'));
+    if (chips.length === 0) return;
+    const selected = chips.map(c => c.dataset.word).join(' ');
+    document.querySelectorAll('.word-chip').forEach(c => { c.onclick = null; });
+    document.getElementById('wo-validate').disabled = true;
+    this._checkAnswer(selected);
+  },
+
+  _mpClickTR(id, btn) {
+    if (!this._mpState) return;
+    document.querySelectorAll('.match-tr.selected').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    this._mpState.selectedTR = { id, btn };
+    this._mpRevCheck();
+  },
+
+  _mpClickFR(id, btn) {
+    if (!this._mpState) return;
+    document.querySelectorAll('.match-fr.selected').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    this._mpState.selectedFR = { id, btn };
+    this._mpRevCheck();
+  },
+
+  _mpRevCheck() {
+    const { selectedTR, selectedFR } = this._mpState;
+    if (!selectedTR || !selectedFR) return;
+    if (selectedTR.id === selectedFR.id) {
+      selectedTR.btn.classList.remove('selected'); selectedFR.btn.classList.remove('selected');
+      selectedTR.btn.classList.add('matched'); selectedFR.btn.classList.add('matched');
+      this._mpState.matched++;
+      const scoreEl = document.getElementById('mp-score');
+      const exo = this.exercises[this.currentIndex];
+      if (scoreEl) scoreEl.textContent = `${this._mpState.matched} / ${exo.pairs.length} paires trouvées`;
+      const pair = exo.pairs.find(p => p.id === selectedTR.id);
+      if (pair) App.playTTS(pair.tr);
+      this._mpState.selectedTR = null; this._mpState.selectedFR = null;
+      if (this._mpState.matched === exo.pairs.length) setTimeout(() => this._mpRevComplete(), 500);
+    } else {
+      const trBtn = selectedTR.btn, frBtn = selectedFR.btn;
+      trBtn.classList.add('wrong'); frBtn.classList.add('wrong');
+      this._mpState.selectedTR = null; this._mpState.selectedFR = null;
+      setTimeout(() => { trBtn.classList.remove('wrong', 'selected'); frBtn.classList.remove('wrong', 'selected'); }, 600);
+    }
+  },
+
+  _mpRevComplete() {
+    if (this._answered) return;
+    this._answered = true;
+    const exo = this.exercises[this.currentIndex];
+    this.correctCount++;
+    if (window.SRS) exo.pairs.forEach(p => SRS.updateItem(p.id, 'vocabulary', true));
+    const fb = document.getElementById('rev-feedback');
+    fb.classList.add('correct', 'show');
+    document.getElementById('rev-fb-icon').textContent = '✓';
+    document.getElementById('rev-fb-title').textContent = 'Toutes les paires trouvées !';
+    fb.querySelector('.btn').className = 'btn btn-success btn-full';
+    document.getElementById('rev-fb-tr').textContent = '';
+    document.getElementById('rev-fb-fr').textContent = `${exo.pairs.length} paires associées ✓`;
   },
 
   _escape(s) {

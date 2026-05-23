@@ -76,6 +76,18 @@ window.Exercises = {
       });
     }
 
+    // Word order (si verbes disponibles)
+    if (verbs.length > 0) {
+      const wo = this.createWordOrder(verbs, null);
+      if (wo) exercises.push(wo);
+    }
+
+    // Match pairs (si vocab suffisant)
+    if (vocab.length >= 4) {
+      const mp = this.createMatchPairs(vocab);
+      if (mp) exercises.push(mp);
+    }
+
     return this._shuffle(exercises);
   },
 
@@ -99,6 +111,18 @@ window.Exercises = {
         }
       }
     }
+    // Bonus word_order + match_pairs sur le vocab de révision
+    const revVocab = reviewItems.map(it => AppVocabulary.find(w => w.id === it.id)).filter(Boolean);
+    const revVerbs = window.AppVerbs ? reviewItems.map(it => AppVerbs.find(v => v.id === it.id)).filter(Boolean) : [];
+    if (revVocab.length >= 4) {
+      const mp = this.createMatchPairs(revVocab);
+      if (mp) exercises.push(mp);
+    }
+    if (revVerbs.length > 0) {
+      const wo = this.createWordOrder(revVerbs, null);
+      if (wo) exercises.push(wo);
+    }
+
     return this._shuffle(exercises);
   },
 
@@ -167,6 +191,51 @@ window.Exercises = {
       options: this._shuffle([word.fr, ...distractors]),
       answer: word.fr,
       data: { id: word.id, tr: word.tr, fr: word.fr, type: 'vocabulary' }
+    };
+  },
+
+  createWordOrder(verbsPool, phrasesPool) {
+    const withEx = (verbsPool || []).filter(v => v.examples && v.examples.length > 0);
+    let source = null;
+    if (withEx.length > 0) {
+      const candidates = [];
+      for (const v of this._shuffle(withEx)) {
+        for (const ex of v.examples) {
+          if (ex.tr && ex.tr.split(' ').length >= 3) candidates.push(ex);
+        }
+      }
+      if (candidates.length > 0) source = candidates[Math.floor(Math.random() * candidates.length)];
+    }
+    if (!source && phrasesPool && phrasesPool.length > 0) {
+      const pool = phrasesPool.filter(p => p.tr && p.tr.split(' ').length >= 3);
+      if (pool.length > 0) source = pool[Math.floor(Math.random() * pool.length)];
+    }
+    if (!source) return null;
+    const words = source.tr.split(' ');
+    return {
+      type: 'word_order',
+      question: 'Remets les mots dans le bon ordre :',
+      hint: source.fr,
+      words: this._shuffle([...words]),
+      answer: source.tr,
+      data: { id: 'wo_phrase', tr: source.tr, fr: source.fr, type: 'phrase' }
+    };
+  },
+
+  createMatchPairs(vocabPool) {
+    if (!vocabPool || vocabPool.length < 4) return null;
+    const topics = [...new Set(vocabPool.map(w => w.topic))];
+    let pairs = null;
+    for (const topic of this._shuffle(topics)) {
+      const tw = vocabPool.filter(w => w.topic === topic);
+      if (tw.length >= 4) { pairs = this._shuffle(tw).slice(0, 4); break; }
+    }
+    if (!pairs) pairs = this._shuffle(vocabPool).slice(0, 4);
+    return {
+      type: 'match_pairs',
+      question: 'Associe chaque mot à sa traduction :',
+      pairs: pairs.map(w => ({ id: w.id, tr: w.tr, fr: w.fr })),
+      data: { id: pairs[0].id, tr: '', fr: '', type: 'vocabulary' }
     };
   },
 
