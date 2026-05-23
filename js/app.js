@@ -248,8 +248,57 @@ const App = {
   },
 
   fireConfetti() {
-    // Placeholder pour l'animation canvas
-    console.log("🎉 Confetti !");
+    const canvas = this.els.confettiCanvas;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#E8571A', '#F59E0B', '#10B981', '#6366F1', '#EC4899', '#06B6D4'];
+    const particles = Array.from({ length: 120 }, () => ({
+      x: Math.random() * canvas.width,
+      y: -10 - Math.random() * 80,
+      w: 6 + Math.random() * 8,
+      h: 3 + Math.random() * 5,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 3,
+      vy: 3 + Math.random() * 4,
+      angle: Math.random() * Math.PI * 2,
+      spin: (Math.random() - 0.5) * 0.2
+    }));
+
+    const start = performance.now();
+    const duration = 2800;
+
+    const tick = (now) => {
+      const elapsed = now - start;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const fade = Math.max(0, 1 - (elapsed - duration * 0.6) / (duration * 0.4));
+      ctx.globalAlpha = fade;
+
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.08;
+        p.angle += p.spin;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+      }
+
+      if (elapsed < duration) {
+        requestAnimationFrame(tick);
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.globalAlpha = 1;
+      }
+    };
+
+    requestAnimationFrame(tick);
   },
 
   // ── Actions métiers transverses ──
