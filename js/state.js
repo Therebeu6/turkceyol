@@ -77,17 +77,19 @@ const State = {
   checkNewDay() {
     const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
     const lastSession = this.data.lastSessionDate;
+    // Normalise : "2026-05-23_goal_met" → "2026-05-23"
+    const lastDateStr = lastSession ? lastSession.split('_')[0] : null;
 
-    if (!lastSession) {
+    if (!lastDateStr) {
       // Pas de session précédente
       this.data.lastSessionDate = today;
       this.save();
       return;
     }
 
-    if (lastSession !== today) {
+    if (lastDateStr !== today) {
       // Nouveau jour
-      const lastDate = new Date(lastSession);
+      const lastDate = new Date(lastDateStr);
       const currDate = new Date(today);
       const diffTime = Math.abs(currDate - lastDate);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
