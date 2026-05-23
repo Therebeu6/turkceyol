@@ -14,6 +14,7 @@ window.Lesson = {
   _answered: false,
   _mpState: null,
   _comboCount: 0,
+  _mistakes: [],
 
   render(param) {
     if (!param) { App.navigate('#units'); return; }
@@ -27,6 +28,7 @@ window.Lesson = {
     this.correctCount = 0;
     this.currentXp = 0;
     this._comboCount = 0;
+    this._mistakes = [];
 
     document.getElementById('session-modal').classList.add('hidden');
     this._bindKeys();
@@ -83,7 +85,7 @@ window.Lesson = {
       }
 
       exoHtml = `
-        <div class="exercise-container animate-fade-in">
+        <div class="exercise-container exo-slide-in">
           <div class="exercise-header">
             <div class="exo-type-label">${isVerb ? '⚡ Conjugaison' : '🎯 Choix multiple'}</div>
             ${headerContent}
@@ -95,7 +97,7 @@ window.Lesson = {
       `;
     } else if (exo.type === 'input') {
       exoHtml = `
-        <div class="exercise-container animate-fade-in">
+        <div class="exercise-container exo-slide-in">
           <div class="exercise-header">
             <div class="exo-type-label">✍️ Traduire</div>
             <h2 class="exercise-prompt">${exo.question}</h2>
@@ -109,7 +111,7 @@ window.Lesson = {
       `;
     } else if (exo.type === 'true_false') {
       exoHtml = `
-        <div class="exercise-container animate-fade-in">
+        <div class="exercise-container exo-slide-in">
           <div class="exercise-header">
             <div class="exo-type-label">✅ Vrai ou Faux ?</div>
             <h2 class="exercise-prompt exo-tr">${exo.question}</h2>
@@ -135,7 +137,7 @@ window.Lesson = {
         </button>
       `).join('');
       exoHtml = `
-        <div class="exercise-container animate-fade-in">
+        <div class="exercise-container exo-slide-in">
           <div class="exercise-header">
             <div class="exo-type-label">🔊 Écouter et choisir</div>
             <button class="audio-play-btn" onclick="App.playTTS('${this._escape(exo.audioTr)}')">
@@ -156,7 +158,7 @@ window.Lesson = {
         `<button class="word-chip" data-word="${this._escape(w)}" onclick="Lesson._woClickBank(this)">${w}</button>`
       ).join('');
       exoHtml = `
-        <div class="exercise-container animate-fade-in">
+        <div class="exercise-container exo-slide-in">
           <div class="exercise-header">
             <div class="exo-type-label">🔀 Remettre en ordre</div>
             <h2 class="exercise-prompt">${exo.question}</h2>
@@ -183,7 +185,7 @@ window.Lesson = {
         `<button class="match-chip match-fr" data-id="${p.id}" onclick="Lesson._mpClickFR('${this._escape(p.id)}', this)">${p.fr}</button>`
       ).join('');
       exoHtml = `
-        <div class="exercise-container animate-fade-in">
+        <div class="exercise-container exo-slide-in">
           <div class="exercise-header">
             <div class="exo-type-label">🔗 Associer les paires</div>
             <h2 class="exercise-prompt">${exo.question}</h2>
@@ -299,6 +301,16 @@ window.Lesson = {
       this._comboCount = 0;
       if (window.AudioEngine) AudioEngine.playWrong();
 
+      // Track mistake (pour "Revoir les erreurs")
+      if (exo.data && exo.data.id) {
+        this._mistakes.push({
+          id: exo.data.id,
+          type: exo.data.type || 'vocabulary',
+          tr: exo.data.tr || '',
+          fr: exo.data.fr || ''
+        });
+      }
+
       fbBar.classList.add('wrong');
       document.getElementById('fb-icon').textContent = '✕';
       if (exo.subtype === 'verb_fill') {
@@ -356,8 +368,18 @@ window.Lesson = {
 
   nextStep() {
     this.currentIndex++;
-    this._bindKeys();
-    this.showNextExercise();
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const exoEl = document.querySelector('#lesson-body .exercise-container');
+    if (!reduced && exoEl) {
+      exoEl.classList.add('exo-slide-out');
+      setTimeout(() => {
+        this._bindKeys();
+        this.showNextExercise();
+      }, 200);
+    } else {
+      this._bindKeys();
+      this.showNextExercise();
+    }
   },
 
   _bindKeys() {
@@ -406,14 +428,96 @@ window.Lesson = {
 
     if (window.Gamification) Gamification.checkAchievements();
 
+    // Construction dynamique de la session-card (G3)
     const modal = document.getElementById('session-modal');
-    document.getElementById('sm-emoji').textContent = accuracy >= 80 ? '🎉' : '💪';
-    document.getElementById('sm-title').textContent = accuracy >= 80 ? 'Chapitre terminé !' : 'Bien joué !';
-    document.getElementById('sm-xp').textContent = `+${finalXp}`;
-    document.getElementById('sm-acc').textContent = `${accuracy}%`;
-    document.getElementById('sm-learned').textContent = this.exercises.length;
+    const card = modal.querySelector('.session-card');
+
+    let emoji, title, message;
+    if (accuracy >= 80) {
+      emoji = '🎉';
+      title = 'Chapitre terminé !';
+      message = accuracy === 100
+        ? 'Sans-faute ! Tu maîtrises ce chapitre.'
+        : 'Excellent travail — tu progresses vite !';
+    } else if (accuracy >= 60) {
+      emoji = '👍';
+      title = 'Bien joué !';
+      message = 'Solide ! Quelques erreurs à revoir pour consolider.';
+    } else {
+      emoji = '💪';
+      title = 'Continue !';
+      message = 'Pas grave — l\'erreur fait partie de l\'apprentissage. Réessaie !';
+    }
+
+    // Liste des mots vus (uniques)
+    const wordsMap = new Map();
+    this.exercises.forEach(ex => {
+      if (!ex.data || !ex.data.id) return;
+      if (ex.data.type === 'phrase') return;
+      const key = ex.data.id;
+      if (!wordsMap.has(key)) {
+        wordsMap.set(key, { tr: ex.data.tr || '', fr: ex.data.fr || '', wrong: false });
+      }
+    });
+    this._mistakes.forEach(m => {
+      if (wordsMap.has(m.id)) wordsMap.get(m.id).wrong = true;
+    });
+    const words = Array.from(wordsMap.values()).filter(w => w.tr);
+
+    const wordsHtml = words.length > 0 ? `
+      <div class="sm-words-section">
+        <div class="sm-words-title">Vu dans cette leçon · ${words.length}</div>
+        ${words.map(w => `
+          <div class="sm-word-row ${w.wrong ? 'sm-word-wrong' : ''}">
+            <span class="sm-w-tr">${w.wrong ? '✕ ' : '✓ '}${w.tr}</span>
+            <span class="sm-w-fr">${w.fr}</span>
+          </div>
+        `).join('')}
+      </div>
+    ` : '';
+
+    const retryBtn = this._mistakes.length > 0
+      ? `<button class="btn btn-outline btn-full" style="margin-bottom:8px" onclick="Lesson.retryMistakes()">Revoir les erreurs (${this._mistakes.length})</button>`
+      : '';
+
+    card.innerHTML = `
+      <div class="sm-emoji" id="sm-emoji">${emoji}</div>
+      <h2 class="sm-title" id="sm-title">${title}</h2>
+      <div class="sm-message">${message}</div>
+      <div class="sm-stats">
+        <div class="sm-stat"><div class="sm-val" id="sm-xp">+${finalXp}</div><div class="sm-lbl">XP</div></div>
+        <div class="sm-stat"><div class="sm-val" id="sm-acc">${accuracy}%</div><div class="sm-lbl">Précision</div></div>
+        <div class="sm-stat"><div class="sm-val" id="sm-learned">${this.exercises.length}</div><div class="sm-lbl">Exos</div></div>
+      </div>
+      ${wordsHtml}
+      ${retryBtn}
+      <button class="btn btn-primary btn-full" onclick="App.navigate('#units')">Continuer le parcours</button>
+      <button class="btn btn-ghost btn-full" style="margin-top:8px" onclick="App.navigate('#dashboard')">Accueil</button>
+    `;
+
     modal.classList.remove('hidden');
-    App.fireConfetti();
+    if (accuracy >= 80) App.fireConfetti();
+  },
+
+  // Mini-session sur les erreurs uniquement (G3)
+  retryMistakes() {
+    if (!this._mistakes || this._mistakes.length === 0) return;
+    const items = this._mistakes.map(m => ({ id: m.id, type: m.type }));
+    const retryExercises = window.Exercises ? Exercises.generateForReview(items) : [];
+    if (retryExercises.length === 0) {
+      App.showToast('Pas d\'exercices disponibles pour revoir', 'info');
+      return;
+    }
+    this.exercises = retryExercises;
+    this.currentIndex = 0;
+    this.correctCount = 0;
+    this.currentXp = 0;
+    this._comboCount = 0;
+    this._mistakes = [];
+    document.getElementById('session-modal').classList.add('hidden');
+    this._bindKeys();
+    this.updateProgressUI();
+    this.showNextExercise();
   },
 
   _advanceCurrentChapter() {

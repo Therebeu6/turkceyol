@@ -5,6 +5,32 @@
 
 window.Units = {
   render() {
+    // Skeleton avant le vrai rendu (G4)
+    this._renderSkeleton();
+    setTimeout(() => this._renderReal(), 30);
+  },
+
+  _renderSkeleton() {
+    const container = document.getElementById('units-list');
+    if (!container) return;
+    const skCard = `
+      <div class="skeleton-card" style="margin-bottom:var(--s4)">
+        <div class="skeleton-row">
+          <div class="skeleton skeleton-circle skeleton-block-sm" style="width:52px;height:52px"></div>
+          <div style="flex:1">
+            <div class="skeleton skeleton-line sk-w-40"></div>
+            <div class="skeleton skeleton-line sk-w-80"></div>
+            <div class="skeleton skeleton-line sk-w-60"></div>
+          </div>
+        </div>
+        <div class="skeleton skeleton-block-sm" style="margin-top:12px"></div>
+        <div class="skeleton skeleton-block-sm" style="margin-top:8px"></div>
+      </div>
+    `;
+    container.innerHTML = skCard.repeat(3);
+  },
+
+  _renderReal() {
     const container = document.getElementById('units-list');
     container.innerHTML = '';
 

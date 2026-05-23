@@ -5,8 +5,34 @@
 
 window.Dashboard = {
   render() {
+    // Skeleton d'abord, puis vraies données après un frame (G4)
+    this._renderSkeleton();
+    setTimeout(() => this._renderReal(), 30);
+  },
+
+  _renderSkeleton() {
+    const setSk = (id, html) => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = html;
+    };
+    setSk('dash-level-card',
+      `<div class="skeleton skeleton-line sk-w-40"></div>
+       <div class="skeleton skeleton-block-sm" style="margin-top:8px"></div>`);
+    setSk('dash-parcours',
+      `<div class="skeleton-card">
+         <div class="skeleton skeleton-line sk-w-60"></div>
+         <div class="skeleton skeleton-line sk-w-100"></div>
+         <div class="skeleton skeleton-block-sm" style="margin-top:8px"></div>
+       </div>`);
+    setSk('dash-review-preview',
+      `<div class="skeleton skeleton-block-md"></div>`);
+    setSk('dash-weak-verbs',
+      `<div class="skeleton skeleton-block-md"></div>`);
+  },
+
+  _renderReal() {
     const data = State.data;
-    
+
     // 1. Message de bienvenue
     const hour = new Date().getHours();
     let greeting = 'Merhaba !';
@@ -28,14 +54,10 @@ window.Dashboard = {
     const pct = Math.min(100, (data.dailyXP / data.dailyGoal) * 100);
     document.getElementById('goal-xp-cur').textContent = data.dailyXP;
     document.getElementById('goal-xp-target').textContent = data.dailyGoal;
-    
-    // Animation ring (SVG)
-    const ring = document.getElementById('ring-prog');
-    const ringPct = document.getElementById('ring-pct');
-    const offset = 176 - (176 * pct / 100);
-    ring.style.strokeDashoffset = offset;
-    ringPct.textContent = Math.round(pct) + '%';
-    
+
+    // Ring animé (G5)
+    this._animateRing(pct);
+
     // Animation barre
     document.getElementById('goal-bar-fill').style.width = pct + '%';
 
@@ -58,6 +80,34 @@ window.Dashboard = {
 
     // 7. Verbes faibles
     this.renderWeakVerbs();
+  },
+
+  // Ring SVG animé de 0 à target (G5)
+  _animateRing(targetPct) {
+    const ring = document.getElementById('ring-prog');
+    const ringPct = document.getElementById('ring-pct');
+    if (!ring || !ringPct) return;
+
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const setRing = (v) => {
+      const offset = 176 - (176 * v / 100);
+      ring.style.strokeDashoffset = offset;
+      ringPct.textContent = Math.round(v) + '%';
+    };
+
+    if (reduced) { setRing(targetPct); return; }
+
+    const duration = 800;
+    const start = performance.now();
+    const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+    const tick = (now) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = easeOut(t);
+      setRing(targetPct * eased);
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
   },
 
   renderLevelCard() {

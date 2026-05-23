@@ -114,3 +114,53 @@
   box-shadow: var(--sh-md);
   border-color: var(--primary-glow);
 }
+
+/* ── Slide transitions entre exercices (G1) ── */
+@keyframes exoSlideOutLeft {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-32px); }
+}
+@keyframes exoSlideInRight {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.exo-slide-out { animation: exoSlideOutLeft 0.2s ease-out forwards; }
+.exo-slide-in  { animation: exoSlideInRight 0.2s ease-out forwards; }
+
+/* ── Skeleton shimmer (G4) ── */
+@keyframes skeletonShimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface) 0%,
+    var(--surface-3) 50%,
+    var(--surface) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s linear infinite;
+  border-radius: var(--r-md);
+}
+.skeleton-line { height: 12px; margin-bottom: 8px; }
+.skeleton-line.sk-w-100 { width: 100%; }
+.skeleton-line.sk-w-80  { width: 80%; }
+.skeleton-line.sk-w-60  { width: 60%; }
+.skeleton-line.sk-w-40  { width: 40%; }
+.skeleton-block-sm { height: 40px; }
+.skeleton-block-md { height: 72px; }
+.skeleton-block-lg { height: 120px; }
+.skeleton-circle   { border-radius: 50%; }
+
+/* ── Respect prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .skeleton { animation: none; background: var(--surface-2); }
+  .exo-slide-in, .exo-slide-out { animation: none; }
+}

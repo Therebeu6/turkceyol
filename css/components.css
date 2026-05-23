@@ -764,3 +764,183 @@
 }
 .switch input:checked + .slider { background: var(--primary); }
 .switch input:checked + .slider::before { transform: translateX(20px); }
+
+/* ══════════════════════════════════════
+   GRAMMAIRE (G6)
+   ══════════════════════════════════════ */
+.grammar-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: var(--s5);
+  margin-bottom: var(--s3);
+  border-left: 4px solid var(--primary);
+}
+.grammar-title {
+  font-size: var(--text-md);
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: var(--s2);
+  line-height: 1.3;
+}
+.grammar-rule {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: var(--s4);
+}
+.grammar-examples { display: flex; flex-direction: column; gap: var(--s2); }
+.grammar-example {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s2) var(--s3);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text);
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.grammar-example:hover { background: var(--surface-3); border-color: var(--primary); }
+.grammar-example .gex-play {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--primary-glow);
+  color: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.grammar-example .gex-text { flex: 1; min-width: 0; }
+
+/* Bouton accès grammaire depuis dashboard */
+.dash-modules-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s2);
+  margin-bottom: var(--s5);
+}
+.dash-mod-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s3);
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.dash-mod-btn:hover {
+  background: var(--surface-2);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+.dash-mod-btn .dmb-ico { font-size: 1.2rem; }
+
+/* ══════════════════════════════════════
+   ÉCRAN FIN DE LEÇON ENRICHI (G3)
+   ══════════════════════════════════════ */
+.sm-message {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  margin-bottom: var(--s5);
+  line-height: 1.5;
+}
+.sm-words-section {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s3);
+  margin-bottom: var(--s5);
+  text-align: left;
+  max-height: 180px;
+  overflow-y: auto;
+}
+.sm-words-title {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--s2);
+}
+.sm-word-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: var(--text-sm);
+}
+.sm-word-row:last-child { border-bottom: none; }
+.sm-word-row.sm-word-wrong { color: var(--error); }
+.sm-word-row .sm-w-tr { font-weight: 600; }
+.sm-word-row .sm-w-fr { color: var(--text-3); font-size: var(--text-xs); }
+
+/* ══════════════════════════════════════
+   SKELETON TEMPLATES (G4)
+   ══════════════════════════════════════ */
+.skeleton-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: var(--s4);
+  margin-bottom: var(--s3);
+}
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding: var(--s2) 0;
+}
+.skeleton-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s2);
+  margin-bottom: var(--s5);
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE 375px (G2)
+   ══════════════════════════════════════ */
+@media (max-width: 400px) {
+  /* Quick-stats : 4 colonnes → 2×2 */
+  .quick-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--s2);
+  }
+  .qs-card { padding: var(--s2); }
+  .qs-icon { font-size: 1.3rem; }
+
+  /* Skeleton grid pour quick-stats */
+  .skeleton-grid-4 { grid-template-columns: repeat(2, 1fr); }
+
+  /* Padding leçon plus serré */
+  .exercise-container { padding: var(--s4) var(--s3) var(--s3); }
+
+  /* Session card */
+  .session-card { padding: var(--s6) var(--s4); }
+  .sm-stats { gap: var(--s2); }
+  .sm-stat { min-width: 0; flex: 1; padding: var(--s2); }
+  .sm-val { font-size: var(--text-lg); }
+
+  /* Unit-card2 : padding plus serré */
+  .unit-header2 { gap: var(--s3); padding: var(--s3); }
+  .unit-icon2 { width: 44px; height: 44px; }
+  .unit-icon2 span { font-size: 1.3rem !important; }
+
+  /* Chapitres */
+  .ch-item { padding: 8px var(--s3); }
+  .ch-goal { font-size: 10px; }
+
+  /* View scroll */
+  .view-scroll { padding: var(--s3); }
+}

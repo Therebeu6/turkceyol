@@ -103,6 +103,13 @@
           <div class="dc-body"><div class="dc-name" id="dc-name">Défi du jour</div><div class="dc-desc" id="dc-desc">5 questions · ~3 min</div></div>
           <div class="dc-arr">›</div>
         </div>
+        <div class="section-row"><span class="section-lbl">Explorer</span></div>
+        <div class="dash-modules-row">
+          <button class="dash-mod-btn" onclick="App.navigate('#vocabulary')"><span class="dmb-ico">📚</span>Vocabulaire</button>
+          <button class="dash-mod-btn" onclick="App.navigate('#phrases')"><span class="dmb-ico">💬</span>Phrases</button>
+          <button class="dash-mod-btn" onclick="App.navigate('#dialogues')"><span class="dmb-ico">🎭</span>Dialogues</button>
+          <button class="dash-mod-btn" onclick="App.navigate('#grammar')"><span class="dmb-ico">📖</span>Grammaire</button>
+        </div>
         <div class="section-row"><span class="section-lbl">Verbes à renforcer</span><button class="section-link" onclick="App.navigate('#verbs')">Module →</button></div>
         <div id="dash-weak-verbs" class="dash-weak-verbs">
           <div class="empty-state-sm"><span>💪</span> Commencez les leçons pour identifier vos points faibles.</div>
@@ -261,6 +268,15 @@
       </div>
     </section>
 
+    <!-- GRAMMAIRE -->
+    <section id="view-grammar" class="view" data-nav="none">
+      <div class="view-scroll">
+        <div class="view-hero"><h1 class="view-h1">Grammaire</h1><p class="view-sub">Les règles essentielles avec exemples audio</p></div>
+        <div id="grammar-body"><div class="loading-spin-wrap"><div class="spin"></div></div></div>
+        <div class="spacer-nav"></div>
+      </div>
+    </section>
+
     <!-- PARAMÈTRES -->
     <section id="view-settings" class="view" data-nav="none">
       <div class="view-scroll">
@@ -348,9 +364,9 @@
 <script src="js/engine/exercises.js?v=10"></script>
 <script src="js/engine/audio.js?v=1"></script>
 <script src="js/engine/gamification.js?v=11"></script>
-<script src="js/views/dashboard.js?v=11"></script>
-<script src="js/views/units.js?v=9"></script>
-<script src="js/views/lesson.js?v=12"></script>
+<script src="js/views/dashboard.js?v=13"></script>
+<script src="js/views/units.js?v=13"></script>
+<script src="js/views/lesson.js?v=13"></script>
 <script src="js/views/verbs.js?v=9"></script>
 <script src="js/views/vocabulary.js?v=9"></script>
 <script src="js/views/phrases.js?v=9"></script>
@@ -358,6 +374,7 @@
 <script src="js/views/review.js?v=12"></script>
 <script src="js/views/settings.js?v=11"></script>
 <script src="js/views/stats.js?v=12"></script>
+<script src="js/views/grammar.js?v=1"></script>
 <script src="js/state.js?v=11"></script>
 <script src="js/app.js?v=9"></script>
 </body>
