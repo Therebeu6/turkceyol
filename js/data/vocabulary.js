@@ -288,7 +288,7 @@ window.AppVocabulary = [
   { id: 'v_bulutlu', tr: 'Bulutlu', fr: 'Nuageux', topic: 'meteo', type: 'adjectif', difficulty: 2 },
   { id: 'v_gunesli', tr: 'Güneşli', fr: 'Ensoleillé', topic: 'meteo', type: 'adjectif', difficulty: 2 },
   { id: 'v_yagmurlu', tr: 'Yağmurlu', fr: 'Pluvieux', topic: 'meteo', type: 'adjectif', difficulty: 2 },
-  { id: 'v_karik', tr: 'Karlı', fr: 'Enneigé', topic: 'meteo', type: 'adjectif', difficulty: 3 },
+  { id: 'v_karli', tr: 'Karlı', fr: 'Enneigé', topic: 'meteo', type: 'adjectif', difficulty: 3 },
   { id: 'v_hava_sicak', tr: 'Hava sıcak', fr: 'Il fait chaud', topic: 'meteo', type: 'expression', difficulty: 1 },
   { id: 'v_hava_soguk', tr: 'Hava soğuk', fr: 'Il fait froid', topic: 'meteo', type: 'expression', difficulty: 1 },
   { id: 'v_hava_guzel', tr: 'Hava güzel', fr: 'Il fait beau', topic: 'meteo', type: 'expression', difficulty: 1 },
