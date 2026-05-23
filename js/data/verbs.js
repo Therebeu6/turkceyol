@@ -144,7 +144,12 @@ window.AppVerbs = [
         ben: 'konuşmuyorum', sen: 'konuşmuyorsun', o: 'konuşmuyor',
         biz: 'konuşmuyoruz', siz: 'konuşmuyorsunuz', onlar: 'konuşmuyorlar'
       }
-    }
+    },
+    examples: [
+      { tr: 'Türkçe konuşuyorum.', fr: 'Je parle turc.' },
+      { tr: 'Seninle konuşmak istiyorum.', fr: 'Je veux parler avec toi.' },
+      { tr: 'O çok güzel konuşuyor.', fr: 'Il/Elle parle très bien.' }
+    ]
   },
   {
     id: 'vb_yemek',
@@ -258,7 +263,12 @@ window.AppVerbs = [
         ben: 'anlamıyorum', sen: 'anlamıyorsun', o: 'anlamıyor',
         biz: 'anlamıyoruz', siz: 'anlamıyorsunuz', onlar: 'anlamıyorlar'
       }
-    }
+    },
+    examples: [
+      { tr: 'Sizi anlamıyorum.', fr: 'Je ne vous comprends pas.' },
+      { tr: 'Şimdi her şeyi anladım.', fr: 'Maintenant j\'ai tout compris.' },
+      { tr: 'O Türkçe anlıyor ama konuşmuyor.', fr: 'Il/Elle comprend le turc mais ne parle pas.' }
+    ]
   },
   {
     id: 'vb_calismak',
@@ -596,6 +606,309 @@ window.AppVerbs = [
       { tr: 'Her gün günlük yazıyorum.', fr: 'J\'écris un journal tous les jours.' },
       { tr: 'Sana bir mektup yazdım.', fr: 'Je t\'ai écrit une lettre.' },
       { tr: 'Yarın raporu yazacağım.', fr: 'Demain j\'écrirai le rapport.' }
+    ]
+  },
+
+  // ── Lot A ──
+  {
+    id: 'vb_duymak',
+    infinitive: 'Duymak',
+    stem: 'Duy',
+    fr: 'Entendre / Ressentir',
+    difficulty: 1,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'duyuyorum', sen: 'duyuyorsun', o: 'duyuyor',
+        biz: 'duyuyoruz', siz: 'duyuyorsunuz', onlar: 'duyuyorlar'
+      },
+      past: {
+        ben: 'duydum', sen: 'duydun', o: 'duydu',
+        biz: 'duyduk', siz: 'duydunuz', onlar: 'duydular'
+      },
+      future: {
+        ben: 'duyacağım', sen: 'duyacaksın', o: 'duyacak',
+        biz: 'duyacağız', siz: 'duyacaksınız', onlar: 'duyacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'duymuyorum', sen: 'duymuyorsun', o: 'duymuyor',
+        biz: 'duymuyoruz', siz: 'duymuyorsunuz', onlar: 'duymuyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Sesini duyuyorum.', fr: 'J\'entends ta voix.' },
+      { tr: 'Bizi duyuyor musun?', fr: 'Tu nous entends ?' },
+      { tr: 'Müziği duydum ama göremedim.', fr: 'J\'ai entendu la musique mais je n\'ai pas vu.' }
+    ]
+  },
+  {
+    id: 'vb_gormek',
+    infinitive: 'Görmek',
+    stem: 'Gör',
+    fr: 'Voir',
+    difficulty: 1,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'görüyorum', sen: 'görüyorsun', o: 'görüyor',
+        biz: 'görüyoruz', siz: 'görüyorsunuz', onlar: 'görüyorlar'
+      },
+      past: {
+        ben: 'gördüm', sen: 'gördün', o: 'gördü',
+        biz: 'gördük', siz: 'gördünüz', onlar: 'gördüler'
+      },
+      future: {
+        ben: 'göreceğim', sen: 'göreceksin', o: 'görecek',
+        biz: 'göreceğiz', siz: 'göreceksiniz', onlar: 'görecekler'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'görmüyorum', sen: 'görmüyorsun', o: 'görmüyor',
+        biz: 'görmüyoruz', siz: 'görmüyorsunuz', onlar: 'görmüyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Her gün seni görüyorum.', fr: 'Je te vois tous les jours.' },
+      { tr: 'Dün sinemada bir film gördüm.', fr: 'Hier j\'ai vu un film au cinéma.' },
+      { tr: 'Yarın seni göreceğim.', fr: 'Je te verrai demain.' }
+    ]
+  },
+  {
+    id: 'vb_aramak',
+    infinitive: 'Aramak',
+    stem: 'Ara',
+    fr: 'Chercher / Appeler (téléphone)',
+    difficulty: 2,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'arıyorum', sen: 'arıyorsun', o: 'arıyor',
+        biz: 'arıyoruz', siz: 'arıyorsunuz', onlar: 'arıyorlar'
+      },
+      past: {
+        ben: 'aradım', sen: 'aradın', o: 'aradı',
+        biz: 'aradık', siz: 'aradınız', onlar: 'aradılar'
+      },
+      future: {
+        ben: 'arayacağım', sen: 'arayacaksın', o: 'arayacak',
+        biz: 'arayacağız', siz: 'arayacaksınız', onlar: 'arayacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'aramıyorum', sen: 'aramıyorsun', o: 'aramıyor',
+        biz: 'aramıyoruz', siz: 'aramıyorsunuz', onlar: 'aramıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Seni her gün arıyorum.', fr: 'Je t\'appelle tous les jours.' },
+      { tr: 'Anahtarımı aradım ama bulamadım.', fr: 'J\'ai cherché mes clés mais je n\'ai pas trouvé.' },
+      { tr: 'Yarın seni arayacağım.', fr: 'Je t\'appellerai demain.' }
+    ]
+  },
+  {
+    id: 'vb_acmak',
+    infinitive: 'Açmak',
+    stem: 'Aç',
+    fr: 'Ouvrir / Allumer',
+    difficulty: 2,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'açıyorum', sen: 'açıyorsun', o: 'açıyor',
+        biz: 'açıyoruz', siz: 'açıyorsunuz', onlar: 'açıyorlar'
+      },
+      past: {
+        ben: 'açtım', sen: 'açtın', o: 'açtı',
+        biz: 'açtık', siz: 'açtınız', onlar: 'açtılar'
+      },
+      future: {
+        ben: 'açacağım', sen: 'açacaksın', o: 'açacak',
+        biz: 'açacağız', siz: 'açacaksınız', onlar: 'açacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'açmıyorum', sen: 'açmıyorsun', o: 'açmıyor',
+        biz: 'açmıyoruz', siz: 'açmıyorsunuz', onlar: 'açmıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Kapıyı açıyorum.', fr: 'J\'ouvre la porte.' },
+      { tr: 'Televizyonu açtın mı?', fr: 'As-tu allumé la télévision ?' },
+      { tr: 'Yarın pencereyi açacağım.', fr: 'Demain j\'ouvrirai la fenêtre.' }
+    ]
+  },
+  {
+    id: 'vb_kapatmak',
+    infinitive: 'Kapatmak',
+    stem: 'Kapat',
+    fr: 'Fermer / Éteindre',
+    difficulty: 2,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'kapatıyorum', sen: 'kapatıyorsun', o: 'kapatıyor',
+        biz: 'kapatıyoruz', siz: 'kapatıyorsunuz', onlar: 'kapatıyorlar'
+      },
+      past: {
+        ben: 'kapattım', sen: 'kapattın', o: 'kapattı',
+        biz: 'kapattık', siz: 'kapattınız', onlar: 'kapattılar'
+      },
+      future: {
+        ben: 'kapatacağım', sen: 'kapatacaksın', o: 'kapatacak',
+        biz: 'kapatacağız', siz: 'kapatacaksınız', onlar: 'kapatacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'kapatmıyorum', sen: 'kapatmıyorsun', o: 'kapatmıyor',
+        biz: 'kapatmıyoruz', siz: 'kapatmıyorsunuz', onlar: 'kapatmıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Kapıyı kapatıyorum.', fr: 'Je ferme la porte.' },
+      { tr: 'Işığı kapattın mı?', fr: 'As-tu éteint la lumière ?' },
+      { tr: 'Yarın dükkânı kapatacağım.', fr: 'Demain je fermerai le magasin.' }
+    ]
+  },
+
+  // ── Lot B ──
+  {
+    id: 'vb_dusunmek',
+    infinitive: 'Düşünmek',
+    stem: 'Düşün',
+    fr: 'Penser / Réfléchir',
+    difficulty: 2,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'düşünüyorum', sen: 'düşünüyorsun', o: 'düşünüyor',
+        biz: 'düşünüyoruz', siz: 'düşünüyorsunuz', onlar: 'düşünüyorlar'
+      },
+      past: {
+        ben: 'düşündüm', sen: 'düşündün', o: 'düşündü',
+        biz: 'düşündük', siz: 'düşündünüz', onlar: 'düşündüler'
+      },
+      future: {
+        ben: 'düşüneceğim', sen: 'düşüneceksin', o: 'düşünecek',
+        biz: 'düşüneceğiz', siz: 'düşüneceksiniz', onlar: 'düşünecekler'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'düşünmüyorum', sen: 'düşünmüyorsun', o: 'düşünmüyor',
+        biz: 'düşünmüyoruz', siz: 'düşünmüyorsunuz', onlar: 'düşünmüyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Bu konuda ne düşünüyorsun?', fr: 'Qu\'est-ce que tu penses de ce sujet ?' },
+      { tr: 'Çok düşündüm ve karar verdim.', fr: 'J\'ai beaucoup réfléchi et j\'ai décidé.' },
+      { tr: 'Yarın bu soruyu düşüneceğim.', fr: 'Je réfléchirai à cette question demain.' }
+    ]
+  },
+  {
+    id: 'vb_satmak',
+    infinitive: 'Satmak',
+    stem: 'Sat',
+    fr: 'Vendre',
+    difficulty: 2,
+    isFrequent: false,
+    conjugations: {
+      present: {
+        ben: 'satıyorum', sen: 'satıyorsun', o: 'satıyor',
+        biz: 'satıyoruz', siz: 'satıyorsunuz', onlar: 'satıyorlar'
+      },
+      past: {
+        ben: 'sattım', sen: 'sattın', o: 'sattı',
+        biz: 'sattık', siz: 'sattınız', onlar: 'sattılar'
+      },
+      future: {
+        ben: 'satacağım', sen: 'satacaksın', o: 'satacak',
+        biz: 'satacağız', siz: 'satacaksınız', onlar: 'satacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'satmıyorum', sen: 'satmıyorsun', o: 'satmıyor',
+        biz: 'satmıyoruz', siz: 'satmıyorsunuz', onlar: 'satmıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Bu dükkânda meyve satıyorlar.', fr: 'Ils vendent des fruits dans cette boutique.' },
+      { tr: 'Arabasını sattı.', fr: 'Il/Elle a vendu sa voiture.' },
+      { tr: 'Onu ucuza satacağım.', fr: 'Je le vendrai à bas prix.' }
+    ]
+  },
+  {
+    id: 'vb_odemek',
+    infinitive: 'Ödemek',
+    stem: 'Öde',
+    fr: 'Payer',
+    difficulty: 2,
+    isFrequent: true,
+    note: 'Voyelle finale e tombe au présent affirmatif, harmonie sur ö retenu : ödüyorum',
+    conjugations: {
+      present: {
+        ben: 'ödüyorum', sen: 'ödüyorsun', o: 'ödüyor',
+        biz: 'ödüyoruz', siz: 'ödüyorsunuz', onlar: 'ödüyorlar'
+      },
+      past: {
+        ben: 'ödedim', sen: 'ödedin', o: 'ödedi',
+        biz: 'ödedik', siz: 'ödediniz', onlar: 'ödediler'
+      },
+      future: {
+        ben: 'ödeyeceğim', sen: 'ödeyeceksin', o: 'ödeyecek',
+        biz: 'ödeyeceğiz', siz: 'ödeyeceksiniz', onlar: 'ödeyecekler'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'ödemiyorum', sen: 'ödemiyorsun', o: 'ödemiyor',
+        biz: 'ödemiyoruz', siz: 'ödemiyorsunuz', onlar: 'ödemiyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Hesabı ödüyorum.', fr: 'Je paie l\'addition.' },
+      { tr: 'Dün faturayı ödedim.', fr: 'Hier j\'ai payé la facture.' },
+      { tr: 'Yarın kirayı ödeyeceğim.', fr: 'Demain je paierai le loyer.' }
+    ]
+  },
+  {
+    id: 'vb_yardim_etmek',
+    infinitive: 'Yardım etmek',
+    stem: 'Yardım et',
+    fr: 'Aider',
+    difficulty: 2,
+    isFrequent: true,
+    note: 'Verbe composé : yardım + etmek. Conjuguer etmek, t → d devant voyelle (ediyorum). Garder yardım devant.',
+    conjugations: {
+      present: {
+        ben: 'yardım ediyorum', sen: 'yardım ediyorsun', o: 'yardım ediyor',
+        biz: 'yardım ediyoruz', siz: 'yardım ediyorsunuz', onlar: 'yardım ediyorlar'
+      },
+      past: {
+        ben: 'yardım ettim', sen: 'yardım ettin', o: 'yardım etti',
+        biz: 'yardım ettik', siz: 'yardım ettiniz', onlar: 'yardım ettiler'
+      },
+      future: {
+        ben: 'yardım edeceğim', sen: 'yardım edeceksin', o: 'yardım edecek',
+        biz: 'yardım edeceğiz', siz: 'yardım edeceksiniz', onlar: 'yardım edecekler'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'yardım etmiyorum', sen: 'yardım etmiyorsun', o: 'yardım etmiyor',
+        biz: 'yardım etmiyoruz', siz: 'yardım etmiyorsunuz', onlar: 'yardım etmiyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Sana yardım ediyorum.', fr: 'Je t\'aide.' },
+      { tr: 'Dün ona yardım ettim.', fr: 'Hier je l\'ai aidé(e).' },
+      { tr: 'Yarın size yardım edeceğim.', fr: 'Demain je vous aiderai.' }
     ]
   }
 ];
