@@ -13,6 +13,7 @@ window.Lesson = {
   _keyHandler: null,
   _answered: false,
   _mpState: null,
+  _comboCount: 0,
 
   render(param) {
     if (!param) { App.navigate('#units'); return; }
@@ -25,6 +26,7 @@ window.Lesson = {
     this.currentIndex = 0;
     this.correctCount = 0;
     this.currentXp = 0;
+    this._comboCount = 0;
 
     document.getElementById('session-modal').classList.add('hidden');
     this._bindKeys();
@@ -275,11 +277,28 @@ window.Lesson = {
       const xpGain = exo.subtype === 'verb_fill' ? 15 : 10;
       this.currentXp += xpGain;
       App.showXPFloat(xpGain);
+
+      // Combo
+      this._comboCount++;
+      if (this._comboCount > (State.data.maxCombo || 0)) {
+        State.data.maxCombo = this._comboCount;
+        State.save();
+      }
+      if (this._comboCount >= 3) {
+        const bonusXP = 2;
+        this.currentXp += bonusXP;
+        this._showComboToast(this._comboCount);
+      }
+      if (window.AudioEngine) AudioEngine.playCorrect();
+
       fbBar.classList.add('correct');
       document.getElementById('fb-icon').textContent = '✓';
       document.getElementById('fb-title').textContent = ['Parfait !', 'Excellent !', 'Bravo !', 'Super !'][Math.floor(Math.random() * 4)];
       document.getElementById('btn-next-exo').className = 'btn btn-success btn-full';
     } else {
+      this._comboCount = 0;
+      if (window.AudioEngine) AudioEngine.playWrong();
+
       fbBar.classList.add('wrong');
       document.getElementById('fb-icon').textContent = '✕';
       if (exo.subtype === 'verb_fill') {
@@ -370,9 +389,18 @@ window.Lesson = {
     if (accuracy >= 80) finalXp += 20;
     if (accuracy === 100) finalXp += 10;
 
-    State.addXP(finalXp);
+    // Persist via Gamification pour détecter le level-up (audio + toast)
+    if (window.Gamification) Gamification.addXP(finalXp);
+    else State.addXP(finalXp);
     State.completeChapter(this.chapterId);
     this._advanceCurrentChapter();
+
+    // Track perfect lessons (100%)
+    if (accuracy === 100) {
+      State.data.perfectLessons = (State.data.perfectLessons || 0) + 1;
+      State.save();
+    }
+
     if (window.Gamification) Gamification.checkAchievements();
 
     const modal = document.getElementById('session-modal');
@@ -477,6 +505,19 @@ window.Lesson = {
     this.correctCount++;
     this.currentXp += 10;
     App.showXPFloat(10);
+
+    this._comboCount++;
+    if (this._comboCount > (State.data.maxCombo || 0)) {
+      State.data.maxCombo = this._comboCount;
+      State.save();
+    }
+    if (this._comboCount >= 3) {
+      const bonusXP = 2;
+      this.currentXp += bonusXP;
+      this._showComboToast(this._comboCount);
+    }
+    if (window.AudioEngine) AudioEngine.playCorrect();
+
     if (window.SRS) exo.pairs.forEach(p => SRS.updateItem(p.id, 'vocabulary', true));
     const fbBar = document.getElementById('feedback-bar');
     fbBar.classList.add('correct', 'show');
@@ -486,6 +527,26 @@ window.Lesson = {
     document.getElementById('fb-tr').textContent = '';
     document.getElementById('fb-fr').textContent = `${exo.pairs.length} paires associées ✓`;
     this.updateProgressUI();
+  },
+
+  _showComboToast(count) {
+    const host = document.querySelector('.exercise-container');
+    if (!host) return;
+    // Clean previous toast if still visible
+    const old = host.querySelector('.combo-toast');
+    if (old) old.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'combo-toast';
+    toast.textContent = `🔥 ×${count} Combo !`;
+    host.appendChild(toast);
+
+    if (count >= 5 && window.AudioEngine) AudioEngine.playCombo();
+
+    setTimeout(() => {
+      toast.classList.add('fade-out');
+      setTimeout(() => { if (toast.parentNode) toast.remove(); }, 320);
+    }, 1200);
   },
 
   _escape(s) {

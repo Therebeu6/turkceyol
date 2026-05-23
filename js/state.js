@@ -21,6 +21,12 @@ const State = {
     weakVerbs: [],
     reviewQueue: [],
     achievementIds: [],
+    readDialogueIds: [],
+
+    perfectLessons: 0,
+    dialoguesRead: 0,
+    maxCombo: 0,
+    streakFreezes: 0,
 
     heatmap: {},
     tenseStats: {},
@@ -57,7 +63,12 @@ const State = {
         this.data.weakVerbs = parsed.weakVerbs || [];
         this.data.reviewQueue = parsed.reviewQueue || [];
         this.data.achievementIds = parsed.achievementIds || [];
+        this.data.readDialogueIds = parsed.readDialogueIds || [];
         this.data.heatmap = parsed.heatmap || {};
+        this.data.perfectLessons = parsed.perfectLessons || 0;
+        this.data.dialoguesRead = parsed.dialoguesRead || 0;
+        this.data.maxCombo = parsed.maxCombo || 0;
+        this.data.streakFreezes = parsed.streakFreezes || 0;
       } catch (e) {
         console.error("Error parsing saved data, resetting to default.", e);
         this.data = JSON.parse(JSON.stringify(this.defaultData));

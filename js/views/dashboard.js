@@ -21,6 +21,9 @@ window.Dashboard = {
     document.getElementById('qs-words').textContent = data.reviewQueue.length;
     document.getElementById('qs-chapters').textContent = data.completedChapters.length;
 
+    // 2b. Niveau
+    this.renderLevelCard();
+
     // 3. Objectif journalier
     const pct = Math.min(100, (data.dailyXP / data.dailyGoal) * 100);
     document.getElementById('goal-xp-cur').textContent = data.dailyXP;
@@ -55,6 +58,29 @@ window.Dashboard = {
 
     // 7. Verbes faibles
     this.renderWeakVerbs();
+  },
+
+  renderLevelCard() {
+    const container = document.getElementById('dash-level-card');
+    if (!container || !window.Gamification) return;
+    const info = Gamification.getLevelInfo(State.data.totalXP || 0);
+    const isMax = info.nextXP === null;
+    const progressLabel = isMax
+      ? 'Niveau maximum 🌙'
+      : `${info.currentXP} / ${info.nextXP} XP`;
+    const barWidth = isMax ? 100 : info.progress;
+    container.innerHTML = `
+      <div class="lvl-card-row">
+        <div class="lvl-icon">${info.icon}</div>
+        <div class="lvl-info">
+          <div class="lvl-name">${info.name}</div>
+          <div class="lvl-meta">Niveau ${info.level + 1}</div>
+        </div>
+        <div class="lvl-pct">${isMax ? 'MAX' : info.progress + '%'}</div>
+      </div>
+      <div class="lvl-bar-track"><div class="lvl-bar-fill" style="width:${barWidth}%"></div></div>
+      <div class="lvl-xp-label">${progressLabel}</div>
+    `;
   },
 
   renderContinueCard() {

@@ -66,5 +66,16 @@ window.Dialogues = {
     body.classList.toggle('hidden', !isHidden);
     body.classList.toggle('animate-slide-down', isHidden);
     if (chev) chev.style.transform = isHidden ? 'rotate(90deg)' : '';
+
+    // Tracking : compte chaque dialogue ouvert pour la première fois
+    if (isHidden) {
+      if (!State.data.readDialogueIds) State.data.readDialogueIds = [];
+      if (!State.data.readDialogueIds.includes(id)) {
+        State.data.readDialogueIds.push(id);
+        State.data.dialoguesRead = (State.data.dialoguesRead || 0) + 1;
+        State.save();
+        if (window.Gamification) Gamification.checkAchievements();
+      }
+    }
   }
 };
