@@ -175,6 +175,30 @@ window.Lesson = {
           </div>
         </div>
       `;
+    } else if (exo.type === 'cloze') {
+      const optsHtml = exo.options.map((opt, i) => `
+        <button class="option-btn" onclick="Lesson.checkAnswer('${this._escape(opt)}')">
+          <span class="opt-key">${i + 1}</span>
+          <span class="opt-text">${opt}</span>
+        </button>
+      `).join('');
+      const sentenceHtml = exo.sentence.replace(
+        /____/g,
+        '<span style="color:var(--primary);font-weight:800;letter-spacing:1px">____</span>'
+      );
+      const hintHtml = exo.hint ? `<div class="exo-hint">${exo.hint}</div>` : '';
+      exoHtml = `
+        <div class="exercise-container exo-slide-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">🧩 Complète la phrase</div>
+            <h2 class="exercise-prompt exo-tr">${sentenceHtml}</h2>
+            ${hintHtml}
+          </div>
+          <div class="exercise-content">
+            <div class="options-grid" id="options-container">${optsHtml}</div>
+          </div>
+        </div>
+      `;
     } else if (exo.type === 'match_pairs') {
       this._mpState = { matched: 0, selectedTR: null, selectedFR: null };
       const pairsFR = [...exo.pairs].sort(() => 0.5 - Math.random());
@@ -255,7 +279,8 @@ window.Lesson = {
     const isCorrect = clean(selected) === clean(exo.answer);
 
     // Style des boutons / input
-    if (exo.type === 'qcm' || exo.type === 'true_false' || exo.type === 'audio_qcm') {
+    if (exo.type === 'qcm' || exo.type === 'true_false' || exo.type === 'audio_qcm'
+        || exo.type === 'cloze' || exo.type === 'grammar_fill' || exo.type === 'dialogue_fill') {
       document.querySelectorAll('.option-btn').forEach(b => {
         b.onclick = null;
         const val = (b.querySelector('.opt-text')?.textContent || '').trim();
@@ -318,8 +343,9 @@ window.Lesson = {
       } else {
         document.getElementById('fb-title').textContent = 'Pas tout à fait…';
       }
-      // Shake sur QCM/TF/Audio
-      if (exo.type === 'qcm' || exo.type === 'true_false' || exo.type === 'audio_qcm') {
+      // Shake sur QCM/TF/Audio/cloze/grammar/dialogue
+      if (exo.type === 'qcm' || exo.type === 'true_false' || exo.type === 'audio_qcm'
+          || exo.type === 'cloze' || exo.type === 'grammar_fill' || exo.type === 'dialogue_fill') {
         const wrongBtn = document.querySelector('.option-btn.wrong');
         if (wrongBtn) wrongBtn.classList.add('animate-shake');
       }

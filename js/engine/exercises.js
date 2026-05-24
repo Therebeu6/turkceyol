@@ -82,6 +82,12 @@ window.Exercises = {
       if (wo) exercises.push(wo);
     }
 
+    // Cloze (si verbes avec examples[])
+    if (verbs.length > 0) {
+      const cz = this.createCloze(verbs);
+      if (cz) exercises.push(cz);
+    }
+
     // Match pairs (si vocab suffisant)
     if (vocab.length >= 4) {
       const mp = this.createMatchPairs(vocab);
@@ -121,6 +127,10 @@ window.Exercises = {
     if (revVerbs.length > 0) {
       const wo = this.createWordOrder(revVerbs, null);
       if (wo) exercises.push(wo);
+    }
+    if (revVerbs.length > 0) {
+      const cz = this.createCloze(revVerbs);
+      if (cz) exercises.push(cz);
     }
 
     return this._shuffle(exercises);
@@ -236,6 +246,72 @@ window.Exercises = {
       question: 'Associe chaque mot à sa traduction :',
       pairs: pairs.map(w => ({ id: w.id, tr: w.tr, fr: w.fr })),
       data: { id: pairs[0].id, tr: '', fr: '', type: 'vocabulary' }
+    };
+  },
+
+  // ── Cloze : phrase à trou avec UN mot masqué (verbe conjugué) ──
+  createCloze(verbsPool) {
+    const candidates = [];
+    for (const v of (verbsPool || [])) {
+      if (!v.examples || !v.examples.length) continue;
+      for (const ex of v.examples) {
+        if (!ex.tr) continue;
+        const words = ex.tr.split(/\s+/);
+        if (words.length < 3) continue;
+        candidates.push({ verb: v, example: ex, words });
+      }
+    }
+    if (candidates.length === 0) return null;
+
+    const { verb, example, words } = candidates[Math.floor(Math.random() * candidates.length)];
+
+    // Collecter toutes les formes conjuguées (positive + négative présent)
+    const allForms = new Set();
+    for (const tense of Object.keys(verb.conjugations || {})) {
+      for (const p of Object.keys(verb.conjugations[tense])) {
+        const f = verb.conjugations[tense][p];
+        if (f) allForms.add(f.toLocaleLowerCase('tr-TR'));
+      }
+    }
+    if (verb.negations && verb.negations.present) {
+      for (const p of Object.keys(verb.negations.present)) {
+        const f = verb.negations.present[p];
+        if (f) allForms.add(f.toLocaleLowerCase('tr-TR'));
+      }
+    }
+    if (allForms.size < 4) return null;
+
+    // Trouver une forme conjuguée du verbe dans la phrase
+    const strip = s => s.replace(/[.!?,;:'"]/g, '');
+    let maskIdx = -1, correct = '';
+    for (let i = 0; i < words.length; i++) {
+      const cw = strip(words[i]).toLocaleLowerCase('tr-TR');
+      if (allForms.has(cw)) {
+        maskIdx = i;
+        correct = strip(words[i]);
+        break;
+      }
+    }
+    if (maskIdx === -1) return null;
+
+    // Distracteurs : 3 autres formes conjuguées du même verbe
+    const correctLc = correct.toLocaleLowerCase('tr-TR');
+    const distractorPool = [...allForms].filter(f => f !== correctLc);
+    if (distractorPool.length < 3) return null;
+    const distractors = this._shuffle(distractorPool).slice(0, 3);
+
+    const maskedWords = [...words];
+    maskedWords[maskIdx] = '____';
+    const maskedSentence = maskedWords.join(' ');
+
+    return {
+      type: 'cloze',
+      sentence: maskedSentence,
+      blank: correct,
+      hint: example.fr,
+      options: this._shuffle([correct, ...distractors]),
+      answer: correct,
+      data: { id: verb.id, tr: example.tr, fr: example.fr, type: 'verb' }
     };
   },
 

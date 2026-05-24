@@ -164,7 +164,30 @@ window.Review = {
 
     let exoHtml = '';
 
-    if (exo.type === 'word_order') {
+    if (exo.type === 'cloze') {
+      const optsHtml = exo.options.map((opt, i) =>
+        `<button class="option-btn" onclick="Review._checkAnswer('${this._escape(opt)}')">
+          <span class="opt-key">${i + 1}</span><span class="opt-text">${opt}</span>
+        </button>`
+      ).join('');
+      const sentenceHtml = exo.sentence.replace(
+        /____/g,
+        '<span style="color:var(--primary);font-weight:800;letter-spacing:1px">____</span>'
+      );
+      const hintHtml = exo.hint ? `<div class="exo-hint">${exo.hint}</div>` : '';
+      exoHtml = `
+        <div class="exercise-container animate-fade-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">🧩 Complète la phrase</div>
+            <h2 class="exercise-prompt exo-tr">${sentenceHtml}</h2>
+            ${hintHtml}
+          </div>
+          <div class="exercise-content">
+            <div class="options-grid" id="rev-options">${optsHtml}</div>
+          </div>
+        </div>
+      `;
+    } else if (exo.type === 'word_order') {
       const wordsHtml = exo.words.map(w =>
         `<button class="word-chip" data-word="${this._escape(w)}" onclick="Review._woClickBank(this)">${w}</button>`
       ).join('');
@@ -311,7 +334,8 @@ window.Review = {
       .replace(/[.!?,;:'"]/g, '').replace(/\s+/g, ' ').trim();
     const isCorrect = clean(selected) === clean(exo.answer);
 
-    if (exo.type === 'qcm' || exo.type === 'true_false' || exo.type === 'audio_qcm') {
+    if (exo.type === 'qcm' || exo.type === 'true_false' || exo.type === 'audio_qcm'
+        || exo.type === 'cloze' || exo.type === 'grammar_fill' || exo.type === 'dialogue_fill') {
       document.querySelectorAll('.option-btn').forEach(b => {
         b.onclick = null;
         const val = (b.querySelector('.opt-text')?.textContent || '').trim();
