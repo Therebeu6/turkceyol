@@ -689,5 +689,216 @@ window.AppUnits = [
         verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_yapmak']
       }
     ]
+  },
+
+  // ── Unités A2 (u15–u18) ──
+
+  {
+    id: 'u15',
+    title: 'Ma maison & mon quotidien',
+    description: 'Décrire son logement, les pièces, les meubles et les tâches du quotidien.',
+    icon: '🏠',
+    color: '#8B6914',
+    level: 'A2',
+    chapters: [
+      {
+        id: 'u15_c1',
+        title: 'Les pièces de la maison',
+        goal: 'Nommer et localiser les pièces',
+        xpReward: 80,
+        time: 8,
+        tags: ['Maison', 'A2'],
+        vocabIds: ['v_salon', 'v_mutfak', 'v_yatak_odasi', 'v_banyo', 'v_tuvalet', 'v_koridor', 'v_balkon', 'v_garaj', 'v_bahce', 'v_kat'],
+        verbIds: ['vb_olmak', 'vb_gitmek']
+      },
+      {
+        id: 'u15_c2',
+        title: 'Les meubles & objets',
+        goal: 'Décrire les objets de la maison',
+        xpReward: 80,
+        time: 9,
+        tags: ['Maison', 'A2'],
+        vocabIds: ['v_yatak', 'v_masa', 'v_sandalye', 'v_koltuk', 'v_dolap', 'v_buzdolabi', 'v_firin', 'v_televizyon', 'v_pencere', 'v_kapi'],
+        verbIds: ['vb_olmak', 'vb_bakmak']
+      },
+      {
+        id: 'u15_c3',
+        title: 'Les tâches ménagères',
+        goal: 'Parler des activités à la maison',
+        xpReward: 90,
+        time: 10,
+        tags: ['Maison', 'Verbes', 'A2'],
+        vocabIds: ['v_temiz', 'v_kirli', 'v_duzen', 'v_ev'],
+        verbIds: ['vb_yapmak', 'vb_calismak', 'vb_hazirlamak', 'vb_baslamak', 'vb_bitirmek'],
+        tenses: ['present', 'past']
+      },
+      {
+        id: 'u15_c4',
+        title: 'Mon quartier & mes voisins',
+        goal: 'Parler de son environnement proche',
+        xpReward: 100,
+        time: 10,
+        tags: ['Maison', 'Lieux', 'A2'],
+        vocabIds: ['v_komsu', 'v_apartman', 'v_bina', 'v_kira', 'v_adres', 'v_sehir', 'v_mahalle'],
+        verbIds: ['vb_olmak', 'vb_gitmek', 'vb_sormak']
+      }
+    ]
+  },
+
+  {
+    id: 'u16',
+    title: 'Corps, santé & bien-être',
+    description: 'Décrire le corps humain, parler de sa santé et consulter un médecin.',
+    icon: '🏥',
+    color: '#E84040',
+    level: 'A2',
+    chapters: [
+      {
+        id: 'u16_c1',
+        title: 'Le corps humain',
+        goal: 'Nommer les parties du corps',
+        xpReward: 70,
+        time: 8,
+        tags: ['Corps', 'A2'],
+        vocabIds: ['v_bas', 'v_goz', 'v_kulak', 'v_burun', 'v_agiz', 'v_dis', 'v_el', 'v_kol', 'v_ayak', 'v_bacak', 'v_sirt', 'v_karin'],
+        verbIds: []
+      },
+      {
+        id: 'u16_c2',
+        title: 'Comment vous sentez-vous ?',
+        goal: 'Exprimer son état physique et émotionnel',
+        xpReward: 80,
+        time: 9,
+        tags: ['Santé', 'Émotions', 'A2'],
+        vocabIds: ['v_hasta', 'v_yorgun', 'v_agri', 'v_ates', 'v_iyi', 'v_kotu', 'v_mutlu', 'v_uzgun', 'v_endiseli'],
+        verbIds: ['vb_olmak', 'vb_hissetmek']
+      },
+      {
+        id: 'u16_c3',
+        title: 'Chez le médecin',
+        goal: 'Décrire ses symptômes et comprendre une ordonnance',
+        xpReward: 100,
+        time: 11,
+        tags: ['Santé', 'Urgences', 'A2'],
+        vocabIds: ['v_doktor', 'v_ilac', 'v_recete', 'v_ameliyat', 'v_randevu', 'v_eczane', 'v_basbas_agri', 'v_karin_agri'],
+        verbIds: ['vb_olmak', 'vb_sormak', 'vb_soylemek']
+      },
+      {
+        id: 'u16_c4',
+        title: 'Urgences & secours',
+        goal: 'Réagir en cas d\'urgence',
+        xpReward: 90,
+        time: 9,
+        tags: ['Urgences', 'A2'],
+        vocabIds: ['v_yardim', 'v_acil', 'v_polis', 'v_ambulans', 'v_itfaiye', 'v_tehlike'],
+        verbIds: ['vb_aramak', 'vb_gelmek', 'vb_yardim_etmek']
+      }
+    ]
+  },
+
+  {
+    id: 'u17',
+    title: 'Transports, ville & voyages',
+    description: 'Se déplacer en ville, voyager en Turquie et gérer l\'hôtel.',
+    icon: '✈️',
+    color: '#2D9CDB',
+    level: 'A2',
+    chapters: [
+      {
+        id: 'u17_c1',
+        title: 'Transports en commun',
+        goal: 'Prendre le bus, le métro, le taxi',
+        xpReward: 80,
+        time: 9,
+        tags: ['Transport', 'A2'],
+        vocabIds: ['v_otobus', 'v_metro', 'v_taksi', 'v_tren', 'v_durak', 'v_bilet', 'v_aktarma', 'v_hat', 'v_saat'],
+        verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_almak', 'vb_beklemek']
+      },
+      {
+        id: 'u17_c2',
+        title: 'À la gare & à l\'aéroport',
+        goal: 'Acheter un billet et s\'orienter dans un terminal',
+        xpReward: 100,
+        time: 11,
+        tags: ['Transport', 'Voyage', 'A2'],
+        vocabIds: ['v_gar', 'v_havalimani', 'v_ucak', 'v_kalkis', 'v_inis', 'v_peron', 'v_bagaj', 'v_pasaport'],
+        verbIds: ['vb_gitmek', 'vb_sormak', 'vb_almak', 'vb_bulmak']
+      },
+      {
+        id: 'u17_c3',
+        title: 'Lieux & commerces',
+        goal: 'S\'orienter en ville et faire des achats',
+        xpReward: 80,
+        time: 9,
+        tags: ['Lieux', 'Commerce', 'A2'],
+        vocabIds: ['v_banka', 'v_postane', 'v_hastane', 'v_eczane', 'v_market', 'v_muzeum', 'v_sinema', 'v_kuafor', 'v_berber'],
+        verbIds: ['vb_gitmek', 'vb_bulmak', 'vb_almak', 'vb_odemek']
+      },
+      {
+        id: 'u17_c4',
+        title: 'À l\'hôtel',
+        goal: 'Réserver, s\'enregistrer et demander des services',
+        xpReward: 90,
+        time: 10,
+        tags: ['Voyage', 'Hôtel', 'A2'],
+        vocabIds: ['v_otel', 'v_oda', 'v_anahtar', 'v_rezervasyon', 'v_giris', 'v_cikis', 'v_katkat', 'v_fiyat'],
+        verbIds: ['vb_olmak', 'vb_istemek', 'vb_sormak', 'vb_odemek']
+      }
+    ]
+  },
+
+  {
+    id: 'u18',
+    title: 'Verbes avancés & production active',
+    description: 'Maîtriser les verbes A2 essentiels et construire des phrases plus complexes.',
+    icon: '⚡',
+    color: '#8E44AD',
+    level: 'A2',
+    chapters: [
+      {
+        id: 'u18_c1',
+        title: 'Apprendre, se souvenir, oublier',
+        goal: 'Exprimer des processus cognitifs',
+        xpReward: 100,
+        time: 10,
+        tags: ['Verbes A2', 'A2'],
+        vocabIds: [],
+        verbIds: ['vb_ogrenmek', 'vb_ogretmek', 'vb_hatirlamak', 'vb_unutmak'],
+        tenses: ['present', 'past', 'future']
+      },
+      {
+        id: 'u18_c2',
+        title: 'Commencer, finir, demander, répondre',
+        goal: 'Verbes d\'action et d\'interaction',
+        xpReward: 100,
+        time: 10,
+        tags: ['Verbes A2', 'A2'],
+        vocabIds: [],
+        verbIds: ['vb_baslamak', 'vb_bitirmek', 'vb_sormak', 'vb_cevaplamak'],
+        tenses: ['present', 'past', 'future']
+      },
+      {
+        id: 'u18_c3',
+        title: 'Trouver, perdre, dire, préparer',
+        goal: 'Verbes essentiels du quotidien',
+        xpReward: 100,
+        time: 10,
+        tags: ['Verbes A2', 'A2'],
+        vocabIds: [],
+        verbIds: ['vb_bulmak', 'vb_kaybetmek', 'vb_soylemek', 'vb_hazirlamak'],
+        tenses: ['present', 'past', 'future']
+      },
+      {
+        id: 'u18_c4',
+        title: 'Émotions en action',
+        goal: 'Exprimer des émotions avec des verbes',
+        xpReward: 110,
+        time: 11,
+        tags: ['Verbes A2', 'Émotions', 'A2'],
+        vocabIds: ['v_mutlu', 'v_uzgun', 'v_kizgin', 'v_saskin'],
+        verbIds: ['vb_aglamak', 'vb_gulmek', 'vb_tasimak', 'vb_sevmek'],
+        tenses: ['present', 'past']
+      }
+    ]
   }
 ];
