@@ -269,5 +269,192 @@ window.AppDialogues = [
       { speaker: 'Sophie', tr: 'Kaç çocuk var ailede?', fr: 'Combien d\'enfants y a-t-il dans la famille ?' },
       { speaker: 'Fatma', tr: 'Beş çocuk var. Hepimiz İzmir\'i çok seviyoruz.', fr: 'Il y a cinq enfants. Nous aimons tous beaucoup Izmir.' }
     ]
+  },
+  {
+    id: 'd_gare',
+    title: 'À la gare',
+    scenario: 'Acheter un billet de train pour Ankara à la gare d\'Istanbul.',
+    level: 2,
+    tags: ['Transport', 'Gare', 'A2'],
+    turns: [
+      { speaker: 'Müşteri', tr: 'Ankara\'ya bilet istiyorum. Saat kaçta tren var?', fr: 'Je voudrais un billet pour Ankara. À quelle heure y a-t-il un train ?' },
+      { speaker: 'Gişe', tr: 'Sabah dokuzda ve öğleden sonra ikiyle bir tren var.', fr: 'Il y a un train à neuf heures du matin et un à quatorze heures.' },
+      { speaker: 'Müşteri', tr: 'Dokuzluk tren için gidiş-dönüş billet istiyorum.', fr: 'Je voudrais un billet aller-retour pour le train de neuf heures.' },
+      { speaker: 'Gişe', tr: 'Birinci sınıf mı, ikinci sınıf mı?', fr: 'Première classe ou deuxième classe ?' },
+      { speaker: 'Müşteri', tr: 'İkinci sınıf. Ne kadar tutar?', fr: 'Deuxième classe. Combien ça coûte ?' },
+      { speaker: 'Gişe', tr: 'İki yüz elli lira. Kredi kartıyla ödeyebilirsiniz.', fr: 'Deux cent cinquante lires. Vous pouvez payer par carte bancaire.' },
+      { speaker: 'Müşteri', tr: 'Tamam. Peron kaç numara?', fr: 'D\'accord. C\'est quel quai ?' },
+      { speaker: 'Gişe', tr: 'Üç numaralı peron. İyi yolculuklar!', fr: 'Quai numéro trois. Bon voyage !' }
+    ]
+  },
+  {
+    id: 'd_avion',
+    title: 'À l\'aéroport',
+    scenario: 'Enregistrement et embarquement à l\'aéroport d\'Istanbul.',
+    level: 2,
+    tags: ['Transport', 'Voyage', 'A2'],
+    turns: [
+      { speaker: 'Yolcu', tr: 'Merhaba, Paris uçuşu için check-in yapmak istiyorum.', fr: 'Bonjour, je voudrais faire l\'enregistrement pour le vol Paris.' },
+      { speaker: 'Görevli', tr: 'Pasaportunuzu ve biletinizi alabilir miyim?', fr: 'Puis-je avoir votre passeport et votre billet ?' },
+      { speaker: 'Yolcu', tr: 'Buyurun. Pencere kenarı koltuk mümkün mü?', fr: 'Voilà. Un siège côté fenêtre est-il possible ?' },
+      { speaker: 'Görevli', tr: 'Evet, 14A koltuğu uygun. Bagajınızı tartayım.', fr: 'Oui, le siège 14A est disponible. Laissez-moi peser vos bagages.' },
+      { speaker: 'Yolcu', tr: 'Uçuşta gecikme var mı?', fr: 'Y a-t-il un retard pour le vol ?' },
+      { speaker: 'Görevli', tr: 'Evet, yarım saat gecikmeli. Biniş kartınız hazır.', fr: 'Oui, trente minutes de retard. Votre carte d\'embarquement est prête.' }
+    ]
+  },
+  {
+    id: 'd_banque',
+    title: 'À la banque',
+    scenario: 'Changer de l\'argent et s\'informer sur les services bancaires.',
+    level: 2,
+    tags: ['Commerce', 'A2'],
+    turns: [
+      { speaker: 'Müşteri', tr: 'Merhaba, euro bozdurmak istiyorum.', fr: 'Bonjour, je voudrais changer des euros.' },
+      { speaker: 'Kasiyer', tr: 'Bugünkü kur bir euro yirmi lira.', fr: 'Le taux de change aujourd\'hui est de vingt lires pour un euro.' },
+      { speaker: 'Müşteri', tr: 'Tamam. Beş yüz euro bozdurayım. ATM nerede?', fr: 'D\'accord. Je vais changer cinq cents euros. Où est le distributeur ?' },
+      { speaker: 'Kasiyer', tr: 'Girişin sağında. Banka kartı çıkarmak ister misiniz?', fr: 'À droite de l\'entrée. Souhaitez-vous obtenir une carte bancaire ?' },
+      { speaker: 'Müşteri', tr: 'Evet, nasıl açabilirim hesap?', fr: 'Oui, comment puis-je ouvrir un compte ?' },
+      { speaker: 'Kasiyer', tr: 'Pasaportunuz ve adres belgenizle başvurabilirsiniz.', fr: 'Vous pouvez faire une demande avec votre passeport et un justificatif de domicile.' }
+    ]
+  },
+  {
+    id: 'd_medecin',
+    title: 'Chez le médecin',
+    scenario: 'Consultation médicale pour une grippe à la clinique.',
+    level: 2,
+    tags: ['Santé', 'Urgences', 'A2'],
+    turns: [
+      { speaker: 'Hasta', tr: 'Doktor hanım, başım çok ağrıyor ve ateşim var.', fr: 'Docteure, j\'ai très mal à la tête et j\'ai de la fièvre.' },
+      { speaker: 'Doktor', tr: 'Ne zamandır böyle? Öksürüyor musunuz?', fr: 'Depuis quand ? Est-ce que vous toussez ?' },
+      { speaker: 'Hasta', tr: 'Dün geceden beri. Biraz öksürük de var.', fr: 'Depuis hier soir. Il y a aussi un peu de toux.' },
+      { speaker: 'Doktor', tr: 'Ateşiniz 38.5. Muhtemelen grip. Boğazınız ağrıyor mu?', fr: 'Votre fièvre est à 38,5. C\'est probablement la grippe. Avez-vous mal à la gorge ?' },
+      { speaker: 'Hasta', tr: 'Evet, biraz. Ağır bir şey mi?', fr: 'Oui, un peu. C\'est grave ?' },
+      { speaker: 'Doktor', tr: 'Hayır, endişelenmeyin. Size reçete yazıyorum.', fr: 'Non, ne vous inquiétez pas. Je vous fais une ordonnance.' },
+      { speaker: 'Hasta', tr: 'İlaçları ne zaman almalıyım?', fr: 'Quand dois-je prendre les médicaments ?' },
+      { speaker: 'Doktor', tr: 'Günde üç kez, yemekten sonra. Üç gün içinde iyileşirsiniz.', fr: 'Trois fois par jour, après les repas. Vous guérirez en trois jours.' }
+    ]
+  },
+  {
+    id: 'd_restaurant_complet',
+    title: 'Dîner au restaurant',
+    scenario: 'Dîner complet avec entrée, plat et dessert dans un restaurant d\'Istanbul.',
+    level: 2,
+    tags: ['Restaurant', 'A2'],
+    turns: [
+      { speaker: 'Garson', tr: 'Hoş geldiniz! Rezervasyonunuz var mı?', fr: 'Bienvenue ! Avez-vous une réservation ?' },
+      { speaker: 'Müşteri', tr: 'Evet, iki kişilik. Menüyü görebilir miyiz?', fr: 'Oui, pour deux personnes. Pouvons-nous voir le menu ?' },
+      { speaker: 'Garson', tr: 'Tabii. Bugünkü özel yemek kuzu tandır. Şarap listesi de buyurun.', fr: 'Bien sûr. Le plat du jour est l\'agneau au four. Voici aussi la carte des vins.' },
+      { speaker: 'Müşteri', tr: 'Özel yemekten iki porsiyon lütfen. Kırmızı şarap da istiyoruz.', fr: 'Deux portions du plat du jour, s\'il vous plaît. Nous voudrions aussi du vin rouge.' },
+      { speaker: 'Garson', tr: 'Tatlı ister misiniz? Baklava veya sütlaç var.', fr: 'Désirez-vous un dessert ? Nous avons du baklava ou du riz au lait.' },
+      { speaker: 'Müşteri', tr: 'Baklava lütfen. Ve hesabı alabilir miyiz?', fr: 'Du baklava, s\'il vous plaît. Et pouvons-nous avoir l\'addition ?' }
+    ]
+  },
+  {
+    id: 'd_apartman',
+    title: 'Chercher un appartement',
+    scenario: 'Visite d\'un appartement avec un agent immobilier à Istanbul.',
+    level: 3,
+    tags: ['Logement', 'A2'],
+    turns: [
+      { speaker: 'Emlakçı', tr: 'Merhaba! Görmek istediğiniz daire burada.', fr: 'Bonjour ! L\'appartement que vous voulez voir est ici.' },
+      { speaker: 'Müşteri', tr: 'Kaç odalı? Ve kira ne kadar?', fr: 'Il y a combien de pièces ? Et le loyer est de combien ?' },
+      { speaker: 'Emlakçı', tr: 'Üç oda bir salon. Kira ayda sekiz bin lira, aidat dahil.', fr: 'Trois chambres et un salon. Le loyer est de huit mille lires par mois, charges comprises.' },
+      { speaker: 'Müşteri', tr: 'Burası hangi semt? Metroya yakın mı?', fr: 'C\'est quel quartier ? C\'est proche du métro ?' },
+      { speaker: 'Emlakçı', tr: 'Kadıköy. Metro durağına yürüyerek beş dakika.', fr: 'Kadıköy. Cinq minutes à pied de la station de métro.' },
+      { speaker: 'Müşteri', tr: 'Çok güzel. Ne zaman taşınabiliriz?', fr: 'C\'est très bien. Quand peut-on emménager ?' },
+      { speaker: 'Emlakçı', tr: 'Sözleşmeyi imzalarsanız ay başından itibaren.', fr: 'Si vous signez le contrat, à partir du début du mois.' }
+    ]
+  },
+  {
+    id: 'd_universite',
+    title: 'À l\'université',
+    scenario: 'Un étudiant cherche sa salle de cours à l\'université.',
+    level: 2,
+    tags: ['École', 'A2'],
+    turns: [
+      { speaker: 'Öğrenci', tr: 'Affedersiniz, kütüphane nerede?', fr: 'Excusez-moi, où est la bibliothèque ?' },
+      { speaker: 'Görevli', tr: 'Ana binada, ikinci katta.', fr: 'Dans le bâtiment principal, au deuxième étage.' },
+      { speaker: 'Öğrenci', tr: 'Teşekkürler. Türkçe dersi hangi sınıfta?', fr: 'Merci. Le cours de turc est dans quelle salle ?' },
+      { speaker: 'Görevli', tr: 'B blok, 205 numaralı sınıf. Hoca saat üçte geliyor.', fr: 'Bloc B, salle numéro 205. Le professeur arrive à trois heures.' },
+      { speaker: 'Öğrenci', tr: 'Kayıt için nereye gitmem lazım?', fr: 'Où dois-je aller pour l\'inscription ?' },
+      { speaker: 'Görevli', tr: 'Öğrenci işleri birimi, giriş katında, sol tarafta.', fr: 'Le service des affaires étudiantes, au rez-de-chaussée, sur la gauche.' }
+    ]
+  },
+  {
+    id: 'd_supermarche',
+    title: 'Au supermarché',
+    scenario: 'Faire ses courses dans un supermarché turc.',
+    level: 1,
+    tags: ['Shopping', 'A1'],
+    turns: [
+      { speaker: 'Müşteri', tr: 'Affedersiniz, ekmek reyonu nerede?', fr: 'Excusez-moi, où est le rayon pain ?' },
+      { speaker: 'Kasiyer', tr: 'Sağ tarafta, üçüncü koridorda.', fr: 'Sur la droite, dans la troisième allée.' },
+      { speaker: 'Müşteri', tr: 'Bu peynir indirimde mi? Etiketi göremedim.', fr: 'Ce fromage est en promotion ? Je n\'ai pas vu l\'étiquette.' },
+      { speaker: 'Kasiyer', tr: 'Evet, yüzde yirmi indirimli. Sadece bugün.', fr: 'Oui, vingt pour cent de réduction. Seulement aujourd\'hui.' },
+      { speaker: 'Müşteri', tr: 'Harika! Peki market kartınız var mı?', fr: 'Super ! Avez-vous une carte de fidélité ?' },
+      { speaker: 'Kasiyer', tr: 'Evet. Kartınız varsa beş lira indirim yapıyoruz. Poşet ister misiniz?', fr: 'Oui. Si vous avez la carte, on fait cinq lires de réduction. Voulez-vous un sac ?' }
+    ]
+  },
+  {
+    id: 'd_telephone_portable',
+    title: 'Problème de téléphone',
+    scenario: 'À la boutique de téléphonie mobile pour réparer un téléphone cassé.',
+    level: 2,
+    tags: ['Communication', 'A2'],
+    turns: [
+      { speaker: 'Müşteri', tr: 'Telefonum bozuldu, ekranı kırık.', fr: 'Mon téléphone est cassé, l\'écran est brisé.' },
+      { speaker: 'Teknisyen', tr: 'Bakayım. Bu telefon kaç aylık?', fr: 'Laissez-moi regarder. Ce téléphone a combien de mois ?' },
+      { speaker: 'Müşteri', tr: 'Altı aylık. Garanti kapsamında mı?', fr: 'Six mois. Est-ce sous garantie ?' },
+      { speaker: 'Teknisyen', tr: 'Ne yazık ki, ekran kırığı garantiye girmiyor.', fr: 'Malheureusement, les écrans brisés ne sont pas couverts par la garantie.' },
+      { speaker: 'Müşteri', tr: 'Tamiri ne kadar tutar?', fr: 'Combien coûte la réparation ?' },
+      { speaker: 'Teknisyen', tr: 'İki yüz lira. Tamir üç gün sürer.', fr: 'Deux cents lires. La réparation prend trois jours.' }
+    ]
+  },
+  {
+    id: 'd_cinema',
+    title: 'Au cinéma',
+    scenario: 'Acheter des billets de cinéma à Istanbul.',
+    level: 2,
+    tags: ['Loisirs', 'A2'],
+    turns: [
+      { speaker: 'Müşteri', tr: 'Merhaba, bu akşamki seanslar ne zaman?', fr: 'Bonjour, à quelles heures sont les séances ce soir ?' },
+      { speaker: 'Kasiyer', tr: 'Yedide ve dokuzda seans var.', fr: 'Il y a des séances à sept heures et à neuf heures.' },
+      { speaker: 'Müşteri', tr: 'Film Türkçe altyazılı mı, dublajlı mı?', fr: 'Le film est avec sous-titres en turc ou doublé ?' },
+      { speaker: 'Kasiyer', tr: 'Yedideki orijinal dil, Türkçe altyazılı. Dokuzda Türkçe dublaj.', fr: 'Celui de sept heures est en langue originale avec sous-titres turcs. Celui de neuf heures est en turc doublé.' },
+      { speaker: 'Müşteri', tr: 'İkisi için iki bilet. Orta sıralar müsait mi?', fr: 'Deux billets pour celui de sept heures. Les rangées du milieu sont-elles disponibles ?' },
+      { speaker: 'Kasiyer', tr: 'Evet. Bilet fiyatı kişi başı yüz lira. Mısır patlağı ister misiniz?', fr: 'Oui. Le prix du billet est cent lires par personne. Voulez-vous du pop-corn ?' }
+    ]
+  },
+  {
+    id: 'd_soiree_amis',
+    title: 'Soirée entre amis',
+    scenario: 'Invitation à une soirée chez des amis turcs à Istanbul.',
+    level: 2,
+    tags: ['Social', 'A2'],
+    turns: [
+      { speaker: 'Zeynep', tr: 'Bu akşam evime geliyor musunuz? Küçük bir parti yapıyorum.', fr: 'Venez-vous chez moi ce soir ? J\'organise une petite fête.' },
+      { speaker: 'Thomas', tr: 'Tabii! Bir şey getireyim mi?', fr: 'Bien sûr ! Dois-je apporter quelque chose ?' },
+      { speaker: 'Zeynep', tr: 'İstersen içecek getirebilirsin. Saat sekizde başlıyoruz.', fr: 'Tu peux apporter des boissons si tu veux. On commence à huit heures.' },
+      { speaker: 'Thomas', tr: 'Mükemmel. Arkadaşımı da getirebilir miyim?', fr: 'Parfait. Puis-je aussi amener mon ami ?' },
+      { speaker: 'Zeynep', tr: 'Elbette! Ne pişirdiğimi biliyor musun? Börek ve köfte yaptım.', fr: 'Bien sûr ! Tu sais ce que j\'ai cuisiné ? J\'ai fait des börek et des boulettes de viande.' },
+      { speaker: 'Thomas', tr: 'Harika! Müzik de olacak mı? Türk müziği çok seviyorum.', fr: 'Super ! Il y aura de la musique aussi ? J\'adore la musique turque.' },
+      { speaker: 'Zeynep', tr: 'Evet, biraz. Seni görmeyi sabırsızlıkla bekliyorum!', fr: 'Oui, un peu. J\'ai hâte de te voir !' }
+    ]
+  },
+  {
+    id: 'd_voyage_retour',
+    title: 'Rentrer chez soi',
+    scenario: 'À l\'aéroport d\'Istanbul, parler du voyage avant de rentrer en France.',
+    level: 3,
+    tags: ['Voyage', 'A2'],
+    turns: [
+      { speaker: 'Mehmet', tr: 'Nasıldı Türkiye geziniz? Beğendiniz mi?', fr: 'Comment était votre voyage en Turquie ? Vous avez aimé ?' },
+      { speaker: 'Claire', tr: 'Muhteşemdi! Her şey harikaydı, özellikle İstanbul.', fr: 'C\'était formidable ! Tout était merveilleux, surtout Istanbul.' },
+      { speaker: 'Mehmet', tr: 'En çok neyi beğendiniz?', fr: 'Qu\'est-ce qui vous a le plus plu ?' },
+      { speaker: 'Claire', tr: 'En güzel anım Kapadokya\'daki balon yolculuğuydu.', fr: 'Mon meilleur souvenir était le vol en montgolfière en Cappadoce.' },
+      { speaker: 'Mehmet', tr: 'Tekrar gelecek misiniz?', fr: 'Reviendrez-vous ?' },
+      { speaker: 'Claire', tr: 'Kesinlikle! Türkiye\'yi çok sevdim. İletişimde kalır mıyız?', fr: 'Absolument ! J\'ai adoré la Turquie. Resterons-nous en contact ?' },
+      { speaker: 'Mehmet', tr: 'Tabii ki! Numaramı vereyim. İyi yolculuklar, Claire!', fr: 'Bien sûr ! Je vais vous donner mon numéro. Bon voyage, Claire !' }
+    ]
   }
 ];
