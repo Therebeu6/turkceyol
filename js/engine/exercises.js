@@ -92,6 +92,10 @@ window.Exercises = {
     const gf = this.createGrammarFill();
     if (gf) exercises.push(gf);
 
+    // Dialogue fill (si dialogues ≥ 4 répliques)
+    const df = this.createDialogueFill();
+    if (df) exercises.push(df);
+
     // Match pairs (si vocab suffisant)
     if (vocab.length >= 4) {
       const mp = this.createMatchPairs(vocab);
@@ -138,6 +142,8 @@ window.Exercises = {
     }
     const gf = this.createGrammarFill();
     if (gf) exercises.push(gf);
+    const df = this.createDialogueFill();
+    if (df) exercises.push(df);
 
     return this._shuffle(exercises);
   },
@@ -252,6 +258,60 @@ window.Exercises = {
       question: 'Associe chaque mot à sa traduction :',
       pairs: pairs.map(w => ({ id: w.id, tr: w.tr, fr: w.fr })),
       data: { id: pairs[0].id, tr: '', fr: '', type: 'vocabulary' }
+    };
+  },
+
+  // ── Dialogue fill : compléter une réplique masquée dans un dialogue ──
+  createDialogueFill() {
+    if (!window.AppDialogues || AppDialogues.length === 0) return null;
+    const candidates = AppDialogues.filter(d => d.turns && d.turns.length >= 4);
+    if (candidates.length === 0) return null;
+
+    const dialogue = candidates[Math.floor(Math.random() * candidates.length)];
+
+    // Sélectionner une réplique "masquable" : pas la première, min 2 mots
+    const maskableIdxs = [];
+    for (let i = 1; i < dialogue.turns.length; i++) {
+      const t = dialogue.turns[i];
+      if (t.tr && t.tr.split(/\s+/).length >= 2) maskableIdxs.push(i);
+    }
+    if (maskableIdxs.length === 0) return null;
+
+    const maskIdx = maskableIdxs[Math.floor(Math.random() * maskableIdxs.length)];
+    const correctTurn = dialogue.turns[maskIdx];
+
+    // Contexte : 2-3 répliques avant le masque
+    const ctxStart = Math.max(0, maskIdx - 2);
+    const context = dialogue.turns.slice(ctxStart, maskIdx).map(t => ({
+      speaker: t.speaker,
+      text: t.tr
+    }));
+
+    // Distracteurs : 2 autres répliques (du même dialogue d'abord)
+    const sameDialogue = dialogue.turns
+      .filter((t, i) => i !== maskIdx && t.tr && t.tr !== correctTurn.tr)
+      .map(t => t.tr);
+    let pool = [...new Set(sameDialogue)];
+
+    // Compléter depuis d'autres dialogues si nécessaire
+    if (pool.length < 2) {
+      const allOthers = AppDialogues
+        .filter(d => d.id !== dialogue.id)
+        .flatMap(d => (d.turns || []).map(t => t.tr))
+        .filter(t => t && t !== correctTurn.tr);
+      pool = [...new Set([...pool, ...this._shuffle(allOthers)])];
+    }
+    const distractors = this._shuffle(pool).slice(0, 2);
+    if (distractors.length < 2) return null;
+
+    return {
+      type: 'dialogue_fill',
+      context,
+      maskedSpeaker: correctTurn.speaker,
+      hint: correctTurn.fr,
+      options: this._shuffle([correctTurn.tr, ...distractors]),
+      answer: correctTurn.tr,
+      data: { id: dialogue.id, tr: correctTurn.tr, fr: correctTurn.fr, type: 'phrase' }
     };
   },
 

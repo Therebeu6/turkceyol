@@ -164,7 +164,47 @@ window.Review = {
 
     let exoHtml = '';
 
-    if (exo.type === 'grammar_fill') {
+    if (exo.type === 'dialogue_fill') {
+      const ctxHtml = exo.context.map((t, i) => {
+        const isLeft = i % 2 === 0;
+        const align = isLeft ? 'flex-start' : 'flex-end';
+        return `
+          <div style="display:flex;justify-content:${align};margin-bottom:var(--s2)">
+            <div style="max-width:80%;background:var(--surface-2);border-radius:var(--r-md);padding:var(--s2) var(--s3)">
+              <div style="font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;margin-bottom:2px">${t.speaker}</div>
+              <div style="font-size:var(--text-sm);color:var(--text)">${t.text}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      const maskedAlign = exo.context.length % 2 === 0 ? 'flex-start' : 'flex-end';
+      const maskedBubble = `
+        <div style="display:flex;justify-content:${maskedAlign};margin-bottom:var(--s3)">
+          <div style="max-width:80%;background:var(--primary-glow);border:1.5px dashed var(--primary);border-radius:var(--r-md);padding:var(--s2) var(--s3)">
+            <div style="font-size:10px;font-weight:700;color:var(--primary);text-transform:uppercase;margin-bottom:2px">${exo.maskedSpeaker}</div>
+            <div style="font-size:var(--text-sm);color:var(--primary);font-weight:700">_______________</div>
+          </div>
+        </div>
+      `;
+      const optsHtml = exo.options.map((opt, i) =>
+        `<button class="option-btn" onclick="Review._checkAnswer('${this._escape(opt)}')">
+          <span class="opt-key">${i + 1}</span><span class="opt-text">${opt}</span>
+        </button>`
+      ).join('');
+      const hintHtml = exo.hint ? `<div class="exo-hint">${exo.hint}</div>` : '';
+      exoHtml = `
+        <div class="exercise-container animate-fade-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">💬 Complète le dialogue</div>
+            ${hintHtml}
+          </div>
+          <div class="exercise-content">
+            <div style="margin-bottom:var(--s4)">${ctxHtml}${maskedBubble}</div>
+            <div class="options-grid" id="rev-options">${optsHtml}</div>
+          </div>
+        </div>
+      `;
+    } else if (exo.type === 'grammar_fill') {
       const optsHtml = exo.options.map((opt, i) =>
         `<button class="option-btn" onclick="Review._checkAnswer('${this._escape(opt)}')">
           <span class="opt-key">${i + 1}</span><span class="opt-text">${opt}</span>
