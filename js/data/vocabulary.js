@@ -598,5 +598,29 @@ window.AppVocabulary = [
   { id: 'v_erken', tr: 'Erken', fr: 'Tôt', topic: 'temps', type: 'mot', difficulty: 1, example: { tr: 'Erken kalkıyorum.', fr: 'Je me lève tôt.' } },
   { id: 'v_gec', tr: 'Geç', fr: 'Tard', topic: 'temps', type: 'mot', difficulty: 1, example: { tr: 'Çok geç oldu.', fr: 'Il est très tard.' } },
   { id: 'v_oglen', tr: 'Öğlen', fr: 'Midi', topic: 'temps', type: 'mot', difficulty: 2, example: { tr: 'Öğlen yemek yiyorum.', fr: 'Je mange à midi.' } },
-  { id: 'v_yarim_saat', tr: 'Yarım saat', fr: 'Demi-heure', topic: 'temps', type: 'expression', difficulty: 2, example: { tr: 'Yarım saat sonra geliyorum.', fr: 'J\'arrive dans une demi-heure.' } }
+  { id: 'v_yarim_saat', tr: 'Yarım saat', fr: 'Demi-heure', topic: 'temps', type: 'expression', difficulty: 2, example: { tr: 'Yarım saat sonra geliyorum.', fr: 'J\'arrive dans une demi-heure.' } },
+
+  // ── Vocabulaire requis par u15-u18 (couverture units.js) ──
+  { id: 'v_kat', tr: 'Kat', fr: 'Étage', topic: 'maison', type: 'nom', difficulty: 2, example: { tr: 'Üçüncü katta oturuyorum.', fr: 'J\'habite au troisième étage.' } },
+  { id: 'v_duzen', tr: 'Düzen', fr: 'Ordre / Rangement', topic: 'maison', type: 'nom', difficulty: 3, example: { tr: 'Evde düzen önemli.', fr: 'L\'ordre à la maison est important.' } },
+  { id: 'v_komsu', tr: 'Komşu', fr: 'Voisin(e)', topic: 'maison', type: 'nom', difficulty: 2, example: { tr: 'Komşularım çok kibar.', fr: 'Mes voisins sont très polis.' } },
+  { id: 'v_apartman', tr: 'Apartman', fr: 'Immeuble', topic: 'maison', type: 'nom', difficulty: 2, example: { tr: 'Apartmanımız yeni.', fr: 'Notre immeuble est neuf.' } },
+  { id: 'v_bina', tr: 'Bina', fr: 'Bâtiment', topic: 'maison', type: 'nom', difficulty: 2, example: { tr: 'Bu bina çok yüksek.', fr: 'Ce bâtiment est très haut.' } },
+  { id: 'v_kira', tr: 'Kira', fr: 'Loyer', topic: 'maison', type: 'nom', difficulty: 3, example: { tr: 'Kira pahalı.', fr: 'Le loyer est cher.' } },
+  { id: 'v_adres', tr: 'Adres', fr: 'Adresse', topic: 'maison', type: 'nom', difficulty: 2, example: { tr: 'Adresinizi söyler misiniz?', fr: 'Pouvez-vous me dire votre adresse ?' } },
+  { id: 'v_sehir', tr: 'Şehir', fr: 'Ville', topic: 'lieux', type: 'nom', difficulty: 1, example: { tr: 'İstanbul büyük bir şehir.', fr: 'Istanbul est une grande ville.' } },
+  { id: 'v_mahalle', tr: 'Mahalle', fr: 'Quartier', topic: 'lieux', type: 'nom', difficulty: 2, example: { tr: 'Mahallemiz çok sakin.', fr: 'Notre quartier est très calme.' } },
+  { id: 'v_kotu', tr: 'Kötü', fr: 'Mauvais(e)', topic: 'adjectifs', type: 'adjectif', difficulty: 1, example: { tr: 'Hava kötü.', fr: 'Le temps est mauvais.' } },
+  { id: 'v_ambulans', tr: 'Ambulans', fr: 'Ambulance', topic: 'urgences', type: 'nom', difficulty: 2, example: { tr: 'Ambulans çağırın!', fr: 'Appelez une ambulance !' } },
+  { id: 'v_itfaiye', tr: 'İtfaiye', fr: 'Pompiers', topic: 'urgences', type: 'nom', difficulty: 3, example: { tr: 'İtfaiye geliyor.', fr: 'Les pompiers arrivent.' } },
+  { id: 'v_tehlike', tr: 'Tehlike', fr: 'Danger', topic: 'urgences', type: 'nom', difficulty: 2, example: { tr: 'Burada tehlike yok.', fr: 'Il n\'y a pas de danger ici.' } },
+  { id: 'v_aktarma', tr: 'Aktarma', fr: 'Correspondance', topic: 'transport', type: 'nom', difficulty: 3, example: { tr: 'Bir aktarma yapacağız.', fr: 'Nous allons faire une correspondance.' } },
+  { id: 'v_hat', tr: 'Hat', fr: 'Ligne (transport)', topic: 'transport', type: 'nom', difficulty: 2, example: { tr: 'M2 hattı kapalı.', fr: 'La ligne M2 est fermée.' } },
+  { id: 'v_kalkis', tr: 'Kalkış', fr: 'Décollage / Départ', topic: 'transport', type: 'nom', difficulty: 3, example: { tr: 'Kalkış saat dokuzda.', fr: 'Le départ est à neuf heures.' } },
+  { id: 'v_inis', tr: 'İniş', fr: 'Atterrissage / Arrivée', topic: 'transport', type: 'nom', difficulty: 3, example: { tr: 'İniş yumuşaktı.', fr: 'L\'atterrissage était doux.' } },
+  { id: 'v_peron', tr: 'Peron', fr: 'Quai', topic: 'transport', type: 'nom', difficulty: 3, example: { tr: 'Tren beşinci peronda.', fr: 'Le train est au quai cinq.' } },
+  { id: 'v_berber', tr: 'Berber', fr: 'Barbier', topic: 'lieux', type: 'nom', difficulty: 2, example: { tr: 'Berbere gidiyorum.', fr: 'Je vais chez le barbier.' } },
+  { id: 'v_rezervasyon', tr: 'Rezervasyon', fr: 'Réservation', topic: 'voyage', type: 'nom', difficulty: 3, example: { tr: 'Rezervasyon yaptım.', fr: 'J\'ai fait une réservation.' } },
+  { id: 'v_giris', tr: 'Giriş', fr: 'Entrée', topic: 'voyage', type: 'nom', difficulty: 2, example: { tr: 'Giriş ücretsiz.', fr: 'L\'entrée est gratuite.' } },
+  { id: 'v_cikis', tr: 'Çıkış', fr: 'Sortie', topic: 'voyage', type: 'nom', difficulty: 2, example: { tr: 'Çıkış burada.', fr: 'La sortie est ici.' } }
 ];

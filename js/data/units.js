@@ -666,7 +666,7 @@ window.AppUnits = [
         time: 7,
         tags: ['Salutations', 'A2'],
         vocabIds: ['v_nasilsiniz', 'v_iyiyim', 'v_cok_iyi', 'v_fena_degil', 'v_tesekkurler', 'v_iyi_degilim', 'v_hasta'],
-        verbIds: ['vb_olmak', 'vb_hissetmek']
+        verbIds: ['vb_olmak', 'vb_sevmek']
       },
       {
         id: 'u14_c3',
@@ -771,7 +771,7 @@ window.AppUnits = [
         time: 9,
         tags: ['Santé', 'Émotions', 'A2'],
         vocabIds: ['v_hasta', 'v_yorgun', 'v_agri', 'v_ates', 'v_iyi', 'v_kotu', 'v_mutlu', 'v_uzgun', 'v_endiseli'],
-        verbIds: ['vb_olmak', 'vb_hissetmek']
+        verbIds: ['vb_olmak', 'vb_sevmek']
       },
       {
         id: 'u16_c3',
@@ -780,7 +780,7 @@ window.AppUnits = [
         xpReward: 100,
         time: 11,
         tags: ['Santé', 'Urgences', 'A2'],
-        vocabIds: ['v_doktor', 'v_ilac', 'v_recete', 'v_ameliyat', 'v_randevu', 'v_eczane', 'v_basbas_agri', 'v_karin_agri'],
+        vocabIds: ['v_doktor', 'v_ilac', 'v_recete', 'v_ameliyat', 'v_randevu', 'v_eczane', 'v_bas_agrisi', 'v_karin_agrisi'],
         verbIds: ['vb_olmak', 'vb_sormak', 'vb_soylemek']
       },
       {
@@ -831,7 +831,7 @@ window.AppUnits = [
         xpReward: 80,
         time: 9,
         tags: ['Lieux', 'Commerce', 'A2'],
-        vocabIds: ['v_banka', 'v_postane', 'v_hastane', 'v_eczane', 'v_market', 'v_muzeum', 'v_sinema', 'v_kuafor', 'v_berber'],
+        vocabIds: ['v_banka', 'v_postane', 'v_hastane', 'v_eczane', 'v_market', 'v_muze', 'v_sinema', 'v_kuafor', 'v_berber'],
         verbIds: ['vb_gitmek', 'vb_bulmak', 'vb_almak', 'vb_odemek']
       },
       {
@@ -841,7 +841,7 @@ window.AppUnits = [
         xpReward: 90,
         time: 10,
         tags: ['Voyage', 'Hôtel', 'A2'],
-        vocabIds: ['v_otel', 'v_oda', 'v_anahtar', 'v_rezervasyon', 'v_giris', 'v_cikis', 'v_katkat', 'v_fiyat'],
+        vocabIds: ['v_otel', 'v_oda', 'v_anahtar', 'v_rezervasyon', 'v_giris', 'v_cikis', 'v_kat', 'v_fiyat'],
         verbIds: ['vb_olmak', 'vb_istemek', 'vb_sormak', 'vb_odemek']
       }
     ]
