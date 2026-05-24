@@ -534,7 +534,7 @@ window.Exercises = {
   createListeningTranscribe(chapter) {
     // Pool 1 : mots courts du vocabulaire (difficulty ≤ 2, ≤ 3 mots turcs)
     const shortVocab = (window.AppVocabulary || []).filter(v =>
-      v.tr && v.tr.split(' ').length <= 3 && (v.difficulty || 3) <= 2
+      v.tr && v.tr.split(' ').length <= 3 && (v.difficulty ?? 3) <= 2
     );
     if (shortVocab.length > 0) {
       const item = shortVocab[Math.floor(Math.random() * shortVocab.length)];
@@ -560,7 +560,7 @@ window.Exercises = {
         type: 'listening_transcribe',
         text: pick.tr,
         hint: pick.fr,
-        data: { id: pick.id, tr: pick.tr, fr: pick.fr, type: 'vocabulary' }
+        data: { id: pick.id, tr: pick.tr, fr: pick.fr, type: 'phrase' }
       };
     }
     return null;
