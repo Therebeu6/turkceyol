@@ -224,8 +224,7 @@ const App = {
 
   _playGoogleTTS(text) {
     const audio = new Audio();
-    audio.playbackRate = window._ttsRate || 1.0;
-    audio.oncanplaythrough = () => { audio.play(); };
+    audio.oncanplaythrough = () => { audio.playbackRate = window._ttsRate || 1.0; audio.play(); };
     audio.onerror = () => { /* silencieux */ };
     audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&q=${encodeURIComponent(text)}`;
     audio.load();
