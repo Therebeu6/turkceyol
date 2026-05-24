@@ -855,8 +855,12 @@ window.Lesson = {
     const { selectedTR, selectedFR } = this._mpState;
     if (!selectedTR || !selectedFR) return;
     if (selectedTR.id === selectedFR.id) {
+      const _mpColors = ['#22c55e','#3b82f6','#a855f7','#f59e0b'];
+      const col = _mpColors[this._mpState.matched % _mpColors.length];
       selectedTR.btn.classList.remove('selected'); selectedFR.btn.classList.remove('selected');
       selectedTR.btn.classList.add('matched'); selectedFR.btn.classList.add('matched');
+      selectedTR.btn.style.cssText += `;background:${col}!important;border-color:${col}!important`;
+      selectedFR.btn.style.cssText += `;background:${col}!important;border-color:${col}!important`;
       this._mpState.matched++;
       const scoreEl = document.getElementById('mp-score');
       const exo = this.exercises[this.currentIndex];
