@@ -733,6 +733,106 @@ window.Lesson = {
     this.checkAnswer(selected);
   },
 
+  _sbClickBank(btn) {
+    btn.onclick = () => Lesson._sbClickAnswer(btn);
+    document.getElementById('sb-answer').appendChild(btn);
+    const ph = document.getElementById('sb-placeholder');
+    if (ph) ph.style.display = 'none';
+    document.getElementById('sb-validate').disabled = false;
+  },
+
+  _sbClickAnswer(btn) {
+    btn.onclick = () => Lesson._sbClickBank(btn);
+    document.getElementById('sb-bank').appendChild(btn);
+    const answerDiv = document.getElementById('sb-answer');
+    if (!answerDiv.querySelector('.word-chip')) {
+      const ph = document.getElementById('sb-placeholder');
+      if (ph) ph.style.display = '';
+      document.getElementById('sb-validate').disabled = true;
+    }
+  },
+
+  _sbValidate() {
+    if (this._answered) return;
+    const answerDiv = document.getElementById('sb-answer');
+    if (!answerDiv) return;
+    const chips = Array.from(answerDiv.querySelectorAll('.word-chip'));
+    if (chips.length === 0) return;
+    const exo = this.exercises[this.currentIndex];
+    const userAnswer = chips.map(c => c.dataset.word).join(' ');
+    const expected = exo.correct.join(' ');
+    document.querySelectorAll('.word-chip').forEach(c => { c.onclick = null; });
+    document.getElementById('sb-validate').disabled = true;
+    const correct = _localIsCorrect(userAnswer, expected);
+    // Use internal checkAnswer flow via a synthetic call
+    if (this._answered) return;
+    this._answered = true;
+    const clean = s => s.normalize('NFC').toLocaleLowerCase('tr-TR')
+      .replace(/[.!?,;:'"]/g, '').replace(/\s+/g, ' ').trim();
+    const isCorrect = correct;
+
+    answerDiv.classList.add(isCorrect ? 'correct' : 'wrong');
+
+    const fbBar = document.getElementById('feedback-bar');
+    if (isCorrect) {
+      this.correctCount++;
+      const xpGain = 10;
+      this.currentXp += xpGain;
+      App.showXPFloat(xpGain);
+      this._comboCount++;
+      if (this._comboCount > (State.data.maxCombo || 0)) {
+        State.data.maxCombo = this._comboCount;
+        State.save();
+      }
+      if (this._comboCount >= 3) {
+        this.currentXp += 2;
+        this._showComboToast(this._comboCount);
+      }
+      if (window.AudioEngine) AudioEngine.playCorrect();
+      fbBar.classList.add('correct');
+      document.getElementById('fb-icon').textContent = '✓';
+      document.getElementById('fb-title').textContent = ['Parfait !', 'Excellent !', 'Bravo !', 'Super !'][Math.floor(Math.random() * 4)];
+      document.getElementById('btn-next-exo').className = 'btn btn-success btn-full';
+    } else {
+      this._comboCount = 0;
+      if (window.AudioEngine) AudioEngine.playWrong();
+      if (exo.data && exo.data.id) {
+        this._mistakes.push({
+          id: exo.data.id,
+          type: exo.data.type || 'phrase',
+          tr: exo.data.tr || '',
+          fr: exo.data.fr || ''
+        });
+      }
+      fbBar.classList.add('wrong');
+      document.getElementById('fb-icon').textContent = '✕';
+      document.getElementById('fb-title').textContent = 'Pas tout à fait…';
+    }
+
+    document.getElementById('fb-tr').textContent = exo.data.tr || '';
+    document.getElementById('fb-fr').textContent = exo.data.fr || '';
+
+    if (exo.data.tr) {
+      const ttsBtn = document.getElementById('fb-tts-btn');
+      if (ttsBtn) {
+        ttsBtn.style.display = 'inline-flex';
+        ttsBtn.onclick = () => App.playTTS(exo.data.tr);
+      }
+      App.playTTS(exo.data.tr);
+    }
+
+    fbBar.classList.add('show');
+    this.updateProgressUI();
+
+    if (this._keyHandler) {
+      document.removeEventListener('keydown', this._keyHandler);
+    }
+    this._keyHandler = (e) => {
+      if (e.key === 'Enter') { this.nextStep(); }
+    };
+    document.addEventListener('keydown', this._keyHandler);
+  },
+
   _mpClickTR(id, btn) {
     if (!this._mpState) return;
     document.querySelectorAll('.match-tr.selected').forEach(b => b.classList.remove('selected'));

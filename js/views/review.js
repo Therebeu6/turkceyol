@@ -3,6 +3,10 @@
    Session de révision SRS interactive
    ═══════════════════════════════════════════════ */
 
+function _localIsCorrect(input, expected) {
+  return input.trim().toLowerCase() === expected.trim().toLowerCase();
+}
+
 window.Review = {
   exercises: [],
   currentIndex: 0,
@@ -267,6 +271,27 @@ window.Review = {
           </div>
         </div>
       `;
+    } else if (exo.type === 'sentence_builder') {
+      const blocksHtml = exo.blocks.map(w =>
+        `<button class="word-chip" data-word="${this._escape(w)}" onclick="Review._sbClickBank(this)">${w}</button>`
+      ).join('');
+      exoHtml = `
+        <div class="exercise-container animate-fade-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">🏗️ Construire la phrase</div>
+            <div class="exo-hint">${exo.hint}</div>
+          </div>
+          <div class="exercise-content">
+            <div class="word-order-container">
+              <div class="word-answer" id="sb-answer">
+                <span class="answer-placeholder" id="sb-placeholder">Construis la phrase…</span>
+              </div>
+              <div class="word-bank" id="sb-bank">${blocksHtml}</div>
+              <button class="btn btn-primary btn-full" id="sb-validate" onclick="Review._sbValidate()" disabled>Valider</button>
+            </div>
+          </div>
+        </div>
+      `;
     } else if (exo.type === 'match_pairs') {
       this._mpState = { matched: 0, selectedTR: null, selectedFR: null };
       const pairsFR = [...exo.pairs].sort(() => 0.5 - Math.random());
@@ -435,6 +460,8 @@ window.Review = {
         ? window.Grading.isCorrect(selected, exo.text)
         : { correct: selected.trim().toLowerCase() === exo.text.trim().toLowerCase() };
       isCorrect = result.correct;
+    } else if (exo.type === 'sentence_builder') {
+      isCorrect = _localIsCorrect(selected, exo.correct.join(' '));
     } else {
       isCorrect = clean(selected) === clean(exo.answer);
     }
@@ -449,6 +476,9 @@ window.Review = {
       });
     } else if (exo.type === 'word_order') {
       const answerDiv = document.getElementById('wo-answer');
+      if (answerDiv) answerDiv.classList.add(isCorrect ? 'correct' : 'wrong');
+    } else if (exo.type === 'sentence_builder') {
+      const answerDiv = document.getElementById('sb-answer');
       if (answerDiv) answerDiv.classList.add(isCorrect ? 'correct' : 'wrong');
     } else if (exo.type === 'listening_transcribe') {
       const inp = document.getElementById('lt-input');
@@ -535,6 +565,37 @@ window.Review = {
     document.querySelectorAll('.word-chip').forEach(c => { c.onclick = null; });
     document.getElementById('wo-validate').disabled = true;
     this._checkAnswer(selected);
+  },
+
+  _sbClickBank(btn) {
+    btn.onclick = () => Review._sbClickAnswer(btn);
+    document.getElementById('sb-answer').appendChild(btn);
+    const ph = document.getElementById('sb-placeholder');
+    if (ph) ph.style.display = 'none';
+    document.getElementById('sb-validate').disabled = false;
+  },
+
+  _sbClickAnswer(btn) {
+    btn.onclick = () => Review._sbClickBank(btn);
+    document.getElementById('sb-bank').appendChild(btn);
+    const answerDiv = document.getElementById('sb-answer');
+    if (!answerDiv.querySelector('.word-chip')) {
+      const ph = document.getElementById('sb-placeholder');
+      if (ph) ph.style.display = '';
+      document.getElementById('sb-validate').disabled = true;
+    }
+  },
+
+  _sbValidate() {
+    if (this._answered) return;
+    const answerDiv = document.getElementById('sb-answer');
+    if (!answerDiv) return;
+    const chips = Array.from(answerDiv.querySelectorAll('.word-chip'));
+    if (chips.length === 0) return;
+    const userAnswer = chips.map(c => c.dataset.word).join(' ');
+    document.querySelectorAll('.word-chip').forEach(c => { c.onclick = null; });
+    document.getElementById('sb-validate').disabled = true;
+    this._checkAnswer(userAnswer);
   },
 
   _mpClickTR(id, btn) {
