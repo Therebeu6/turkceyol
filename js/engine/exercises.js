@@ -532,13 +532,12 @@ window.Exercises = {
   },
 
   createListeningTranscribe(chapter) {
-    // Source: mots A1 courts (≤2 mots) de AppVocabulary
+    // Pool 1 : mots courts du vocabulaire (difficulty ≤ 2, ≤ 3 mots turcs)
     const shortVocab = (window.AppVocabulary || []).filter(v =>
-      v.level === 'A1' && v.tr && v.tr.split(' ').length <= 2
+      v.tr && v.tr.split(' ').length <= 3 && (v.difficulty || 3) <= 2
     );
-    let item = null;
     if (shortVocab.length > 0) {
-      item = shortVocab[Math.floor(Math.random() * shortVocab.length)];
+      const item = shortVocab[Math.floor(Math.random() * shortVocab.length)];
       return {
         type: 'listening_transcribe',
         text: item.tr,
@@ -546,18 +545,23 @@ window.Exercises = {
         data: { id: item.id, tr: item.tr, fr: item.fr, type: 'vocabulary' }
       };
     }
-    // Fallback: verb example ≤4 mots
-    const verbs = (window.AppVerbs || []);
-    for (const verb of verbs) {
-      const ex = (verb.examples || [])[0];
-      if (ex && ex.tr && ex.tr.split(' ').length <= 4) {
-        return {
-          type: 'listening_transcribe',
-          text: ex.tr,
-          hint: ex.fr,
-          data: { id: 'lt_' + verb.id, tr: ex.tr, fr: ex.fr, type: 'vocabulary' }
-        };
+    // Pool 2 : exemples de verbes ≤ 4 mots (tous collectés puis tirage aléatoire)
+    const verbExamples = [];
+    for (const verb of (window.AppVerbs || [])) {
+      for (const ex of (verb.examples || [])) {
+        if (ex && ex.tr && ex.tr.split(' ').length <= 4) {
+          verbExamples.push({ id: 'lt_' + verb.id, tr: ex.tr, fr: ex.fr });
+        }
       }
+    }
+    if (verbExamples.length > 0) {
+      const pick = verbExamples[Math.floor(Math.random() * verbExamples.length)];
+      return {
+        type: 'listening_transcribe',
+        text: pick.tr,
+        hint: pick.fr,
+        data: { id: pick.id, tr: pick.tr, fr: pick.fr, type: 'vocabulary' }
+      };
     }
     return null;
   },
