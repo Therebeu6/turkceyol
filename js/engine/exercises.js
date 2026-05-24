@@ -88,6 +88,10 @@ window.Exercises = {
       if (cz) exercises.push(cz);
     }
 
+    // Grammar fill (si règles avec drills[])
+    const gf = this.createGrammarFill();
+    if (gf) exercises.push(gf);
+
     // Match pairs (si vocab suffisant)
     if (vocab.length >= 4) {
       const mp = this.createMatchPairs(vocab);
@@ -132,6 +136,8 @@ window.Exercises = {
       const cz = this.createCloze(revVerbs);
       if (cz) exercises.push(cz);
     }
+    const gf = this.createGrammarFill();
+    if (gf) exercises.push(gf);
 
     return this._shuffle(exercises);
   },
@@ -246,6 +252,28 @@ window.Exercises = {
       question: 'Associe chaque mot à sa traduction :',
       pairs: pairs.map(w => ({ id: w.id, tr: w.tr, fr: w.fr })),
       data: { id: pairs[0].id, tr: '', fr: '', type: 'vocabulary' }
+    };
+  },
+
+  // ── Grammar fill : drill grammatical (locatif, datif, pluriel, etc.) ──
+  createGrammarFill() {
+    if (!window.AppGrammar) return null;
+    const withDrills = AppGrammar.filter(g => Array.isArray(g.drills) && g.drills.length > 0);
+    if (withDrills.length === 0) return null;
+    const rule = withDrills[Math.floor(Math.random() * withDrills.length)];
+    const drill = rule.drills[Math.floor(Math.random() * rule.drills.length)];
+    if (!drill || !drill.correct || !Array.isArray(drill.distractors) || drill.distractors.length < 3) {
+      return null;
+    }
+    return {
+      type: 'grammar_fill',
+      root: drill.root,
+      question: drill.question,
+      ruleTitle: rule.title,
+      ruleId: rule.id,
+      options: this._shuffle([drill.correct, ...drill.distractors.slice(0, 3)]),
+      answer: drill.correct,
+      data: { id: rule.id, tr: drill.correct, fr: drill.question, type: 'grammar' }
     };
   },
 

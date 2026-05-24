@@ -175,6 +175,25 @@ window.Lesson = {
           </div>
         </div>
       `;
+    } else if (exo.type === 'grammar_fill') {
+      const optsHtml = exo.options.map((opt, i) => `
+        <button class="option-btn" onclick="Lesson.checkAnswer('${this._escape(opt)}')">
+          <span class="opt-key">${i + 1}</span>
+          <span class="opt-text">${opt}</span>
+        </button>
+      `).join('');
+      exoHtml = `
+        <div class="exercise-container exo-slide-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">📐 Grammaire — ${exo.ruleTitle || ''}</div>
+            <h2 class="exercise-prompt exo-tr" style="font-size:var(--text-2xl)">${exo.root}</h2>
+            <div class="exo-hint" style="font-size:var(--text-md);color:var(--text-2);margin-top:8px">${exo.question}</div>
+          </div>
+          <div class="exercise-content">
+            <div class="options-grid" id="options-container">${optsHtml}</div>
+          </div>
+        </div>
+      `;
     } else if (exo.type === 'cloze') {
       const optsHtml = exo.options.map((opt, i) => `
         <button class="option-btn" onclick="Lesson.checkAnswer('${this._escape(opt)}')">
