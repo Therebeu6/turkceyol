@@ -151,6 +151,7 @@ window.Lesson = {
               </svg>
               Écouter
             </button>
+            <div style="display:flex;gap:6px;margin-top:0.5rem;justify-content:center">${this._ttsSpeedHtml()}</div>
           </div>
           <div class="exercise-content">
             <div class="options-grid" id="options-container">${optsHtml}</div>
@@ -275,6 +276,7 @@ window.Lesson = {
               <button class="btn-play-tts" onclick="App.playTTS('${this._escape(exo.text)}')">
                 🔊 Écouter
               </button>
+              <div style="display:flex;gap:6px;margin-top:0.5rem;flex-wrap:wrap">${this._ttsSpeedHtml()}</div>
               <div class="input-group" style="margin-top:1rem">
                 <input type="text" id="lt-input" class="answer-input" placeholder="Écris ce que tu entends…" autocomplete="off" autocorrect="off" spellcheck="false" style="width:100%">
               </div>
@@ -923,6 +925,14 @@ window.Lesson = {
       toast.classList.add('fade-out');
       setTimeout(() => { if (toast.parentNode) toast.remove(); }, 320);
     }, 1200);
+  },
+
+  _ttsSpeedHtml() {
+    const cur = window._ttsRate || 0.9;
+    return [['🐢',0.6,'Lent'],['🐇',0.9,'Normal'],['⚡',1.3,'Rapide']].map(([icon,val,label]) => {
+      const active = Math.abs(cur - val) < 0.05;
+      return `<button class="btn-speed${active?' active':''}" style="padding:4px 10px;border-radius:20px;border:1px solid var(--border);background:${active?'var(--primary)':'var(--surface)'};color:${active?'#fff':'inherit'};cursor:pointer;font-size:1.1rem;" onclick="window._ttsRate=${val};document.querySelectorAll('.btn-speed').forEach(b=>{b.style.background='var(--surface)';b.style.color='inherit';b.classList.remove('active')});this.style.background='var(--primary)';this.style.color='#fff';this.classList.add('active')" title="${label}">${icon}</button>`;
+    }).join('');
   },
 
   _escape(s) {
