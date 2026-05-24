@@ -282,7 +282,7 @@ window.Lesson = {
               </div>
               <div class="virtual-keyboard" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:0.75rem">
                 ${['ş','ğ','ç','ö','ü','ı','İ'].map(k =>
-                  `<button class="btn-vk" onclick="(function(){var el=document.getElementById('lt-input');el.value+=('${k}');el.focus();})()">${k}</button>`
+                  `<button class="btn-vk" style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2,#2a2a2a);color:#fff;cursor:pointer;font-size:1rem;font-weight:600;" onclick="(function(){var el=document.getElementById('lt-input');el.value+=('${k}');el.focus();})()">${k}</button>`
                 ).join('')}
               </div>
               <button class="btn btn-primary btn-full mt-4" onclick="Lesson._ltValidate()" style="margin-top:1rem">Valider</button>
