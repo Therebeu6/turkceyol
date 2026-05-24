@@ -79,6 +79,19 @@ window.Lesson = {
             <span class="exo-person">${vm.personLabel}</span><span class="exo-blank"> _______</span>
           </h2>
         `;
+      } else if (exo.subtype === 'grammar_fill' && exo.grammarMeta) {
+        const gm = exo.grammarMeta;
+        const gmHint = gm.hint ? `<div class="exo-hint grammar-exo-hint">💡 ${gm.hint}</div>` : '';
+        headerContent = `
+          <div class="grammar-exo-card">
+            <div class="grammar-exo-row">
+              <span class="grammar-exo-badge">📐 Grammaire</span>
+              <span class="grammar-exo-title">${gm.ruleTitle}</span>
+            </div>
+          </div>
+          <h2 class="exercise-prompt">${exo.question}</h2>
+          ${gmHint}
+        `;
       } else {
         const hintHtml = exo.hint ? `<div class="exo-hint">${exo.hint}</div>` : '';
         headerContent = `<h2 class="exercise-prompt">${exo.question}</h2>${hintHtml}`;
@@ -87,7 +100,7 @@ window.Lesson = {
       exoHtml = `
         <div class="exercise-container exo-slide-in">
           <div class="exercise-header">
-            <div class="exo-type-label">${isVerb ? '⚡ Conjugaison' : '🎯 Choix multiple'}</div>
+            <div class="exo-type-label">${isVerb ? '⚡ Conjugaison' : exo.subtype === 'grammar_fill' ? '📐 Grammaire' : '🎯 Choix multiple'}</div>
             ${headerContent}
           </div>
           <div class="exercise-content">
@@ -315,6 +328,8 @@ window.Lesson = {
       document.getElementById('fb-icon').textContent = '✕';
       if (exo.subtype === 'verb_fill') {
         document.getElementById('fb-title').textContent = `La bonne forme :`;
+      } else if (exo.subtype === 'grammar_fill') {
+        document.getElementById('fb-title').textContent = `La bonne réponse :`;
       } else {
         document.getElementById('fb-title').textContent = 'Pas tout à fait…';
       }
@@ -330,6 +345,8 @@ window.Lesson = {
       const vm = exo.verbMeta;
       document.getElementById('fb-fr').textContent =
         `${vm.personLabel} — ${vm.fr} (${vm.tenseLabel})`;
+    } else if (exo.subtype === 'grammar_fill' && exo.grammarMeta) {
+      document.getElementById('fb-fr').textContent = exo.data.fr || exo.grammarMeta.ruleTitle;
     } else {
       document.getElementById('fb-fr').textContent = exo.data.fr || '';
     }

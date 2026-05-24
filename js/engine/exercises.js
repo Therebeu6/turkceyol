@@ -354,5 +354,38 @@ window.Exercises = {
 
   _shuffle(arr) {
     return [...arr].sort(() => 0.5 - Math.random());
+  },
+
+  generateForGrammarRule(ruleId) {
+    const rule = window.AppGrammar && AppGrammar.find(g => g.id === ruleId);
+    if (!rule) return [];
+    if (!rule.exercises || rule.exercises.length === 0) {
+      // Fallback: 3 vocab QCMs
+      const fallback = this._shuffle(AppVocabulary).slice(0, 3);
+      return fallback.map(w => this.createQCMTrFr(w));
+    }
+    return rule.exercises.map(ex => this.createGrammarFill(ex, ruleId, rule.title));
+  },
+
+  createGrammarFill(exerciseData, ruleId, ruleTitle) {
+    return {
+      type: 'qcm',
+      subtype: 'grammar_fill',
+      question: exerciseData.prompt,
+      grammarMeta: {
+        ruleId: ruleId,
+        ruleTitle: ruleTitle,
+        hint: exerciseData.hint || ''
+      },
+      hint: exerciseData.hint || '',
+      options: this._shuffle([...exerciseData.options]),
+      answer: exerciseData.answer,
+      data: {
+        id: ruleId,
+        tr: exerciseData.answer,
+        fr: exerciseData.explanation || ruleTitle,
+        type: 'grammar'
+      }
+    };
   }
 };
