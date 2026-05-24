@@ -910,5 +910,518 @@ window.AppVerbs = [
       { tr: 'Dün ona yardım ettim.', fr: 'Hier je l\'ai aidé(e).' },
       { tr: 'Yarın size yardım edeceğim.', fr: 'Demain je vous aiderai.' }
     ]
+  },
+
+  // ── Verbes A2 ──
+
+  {
+    id: 'vb_ogrenmek',
+    infinitive: 'öğrenmek',
+    stem: 'öğren',
+    fr: 'Apprendre',
+    difficulty: 2,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'öğreniyorum', sen: 'öğreniyorsun', o: 'öğreniyor',
+        biz: 'öğreniyoruz', siz: 'öğreniyorsunuz', onlar: 'öğreniyorlar'
+      },
+      past: {
+        ben: 'öğrendim', sen: 'öğrendin', o: 'öğrendi',
+        biz: 'öğrendik', siz: 'öğrendiniz', onlar: 'öğrendiler'
+      },
+      future: {
+        ben: 'öğreneceğim', sen: 'öğreneceksin', o: 'öğrenecek',
+        biz: 'öğreneceğiz', siz: 'öğreneceksiniz', onlar: 'öğrenecekler'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'öğrenmiyorum', sen: 'öğrenmiyorsun', o: 'öğrenmiyor',
+        biz: 'öğrenmiyoruz', siz: 'öğrenmiyorsunuz', onlar: 'öğrenmiyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Türkçe öğreniyorum.', fr: 'J\'apprends le turc.' },
+      { tr: 'Dün yeni kelimeler öğrendim.', fr: 'Hier j\'ai appris de nouveaux mots.' },
+      { tr: 'Her gün bir şey öğreneceğim.', fr: 'J\'apprendrai quelque chose chaque jour.' }
+    ]
+  },
+
+  {
+    id: 'vb_ogretmek',
+    infinitive: 'öğretmek',
+    stem: 'öğret',
+    fr: 'Enseigner / Apprendre à quelqu\'un',
+    difficulty: 2,
+    isFrequent: false,
+    conjugations: {
+      present: {
+        ben: 'öğretiyorum', sen: 'öğretiyorsun', o: 'öğretiyor',
+        biz: 'öğretiyoruz', siz: 'öğretiyorsunuz', onlar: 'öğretiyorlar'
+      },
+      past: {
+        ben: 'öğrettim', sen: 'öğrettin', o: 'öğretti',
+        biz: 'öğrettik', siz: 'öğrettiniz', onlar: 'öğrettiler'
+      },
+      future: {
+        ben: 'öğreteceğim', sen: 'öğreteceksin', o: 'öğretecek',
+        biz: 'öğreteceğiz', siz: 'öğreteceksiniz', onlar: 'öğretecekler'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'öğretmiyorum', sen: 'öğretmiyorsun', o: 'öğretmiyor',
+        biz: 'öğretmiyoruz', siz: 'öğretmiyorsunuz', onlar: 'öğretmiyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Çocuklara Türkçe öğretiyorum.', fr: 'J\'enseigne le turc aux enfants.' },
+      { tr: 'Bana Türkçe öğrettiniz.', fr: 'Vous m\'avez appris le turc.' },
+      { tr: 'Sana dans öğreteceğim.', fr: 'Je vais t\'apprendre à danser.' }
+    ]
+  },
+
+  {
+    id: 'vb_hatirlamak',
+    infinitive: 'hatırlamak',
+    stem: 'hatırla',
+    fr: 'Se souvenir / Se rappeler',
+    difficulty: 2,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'hatırlıyorum', sen: 'hatırlıyorsun', o: 'hatırlıyor',
+        biz: 'hatırlıyoruz', siz: 'hatırlıyorsunuz', onlar: 'hatırlıyorlar'
+      },
+      past: {
+        ben: 'hatırladım', sen: 'hatırladın', o: 'hatırladı',
+        biz: 'hatırladık', siz: 'hatırladınız', onlar: 'hatırladılar'
+      },
+      future: {
+        ben: 'hatırlayacağım', sen: 'hatırlayacaksın', o: 'hatırlayacak',
+        biz: 'hatırlayacağız', siz: 'hatırlayacaksınız', onlar: 'hatırlayacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'hatırlamıyorum', sen: 'hatırlamıyorsun', o: 'hatırlamıyor',
+        biz: 'hatırlamıyoruz', siz: 'hatırlamıyorsunuz', onlar: 'hatırlamıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Onun adını hatırlıyorum.', fr: 'Je me souviens de son nom.' },
+      { tr: 'Nerede tanıştığımızı hatırladım.', fr: 'Je me suis souvenu(e) où on s\'est rencontré.' },
+      { tr: 'Her şeyi hatırlayacağım.', fr: 'Je me souviendrai de tout.' }
+    ]
+  },
+
+  {
+    id: 'vb_unutmak',
+    infinitive: 'unutmak',
+    stem: 'unut',
+    fr: 'Oublier',
+    difficulty: 2,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'unutuyorum', sen: 'unutuyorsun', o: 'unutuyor',
+        biz: 'unutuyoruz', siz: 'unutuyorsunuz', onlar: 'unutuyorlar'
+      },
+      past: {
+        ben: 'unuttum', sen: 'unuttun', o: 'unuttu',
+        biz: 'unuttuk', siz: 'unuttunuz', onlar: 'unuttular'
+      },
+      future: {
+        ben: 'unutacağım', sen: 'unutacaksın', o: 'unutacak',
+        biz: 'unutacağız', siz: 'unutacaksınız', onlar: 'unutacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'unutmuyorum', sen: 'unutmuyorsun', o: 'unutmuyor',
+        biz: 'unutmuyoruz', siz: 'unutmuyorsunuz', onlar: 'unutmuyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Anahtarımı unuttum.', fr: 'J\'ai oublié ma clé.' },
+      { tr: 'Seni hiç unutmuyorum.', fr: 'Je ne t\'oublie jamais.' },
+      { tr: 'Bunu unutmayacağım.', fr: 'Je n\'oublierai pas ça.' }
+    ]
+  },
+
+  {
+    id: 'vb_baslamak',
+    infinitive: 'başlamak',
+    stem: 'başla',
+    fr: 'Commencer / Débuter',
+    difficulty: 2,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'başlıyorum', sen: 'başlıyorsun', o: 'başlıyor',
+        biz: 'başlıyoruz', siz: 'başlıyorsunuz', onlar: 'başlıyorlar'
+      },
+      past: {
+        ben: 'başladım', sen: 'başladın', o: 'başladı',
+        biz: 'başladık', siz: 'başladınız', onlar: 'başladılar'
+      },
+      future: {
+        ben: 'başlayacağım', sen: 'başlayacaksın', o: 'başlayacak',
+        biz: 'başlayacağız', siz: 'başlayacaksınız', onlar: 'başlayacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'başlamıyorum', sen: 'başlamıyorsun', o: 'başlamıyor',
+        biz: 'başlamıyoruz', siz: 'başlamıyorsunuz', onlar: 'başlamıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Türkçe öğrenmeye başlıyorum.', fr: 'Je commence à apprendre le turc.' },
+      { tr: 'Derse başladık.', fr: 'On a commencé le cours.' },
+      { tr: 'Yarın işe başlayacağım.', fr: 'Je commencerai à travailler demain.' }
+    ]
+  },
+
+  {
+    id: 'vb_bitirmek',
+    infinitive: 'bitirmek',
+    stem: 'bitir',
+    fr: 'Finir / Terminer',
+    difficulty: 2,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'bitiriyorum', sen: 'bitiriyorsun', o: 'bitiriyor',
+        biz: 'bitiriyoruz', siz: 'bitiriyorsunuz', onlar: 'bitiriyorlar'
+      },
+      past: {
+        ben: 'bitirdim', sen: 'bitirdin', o: 'bitirdi',
+        biz: 'bitirdik', siz: 'bitirdiniz', onlar: 'bitirdiler'
+      },
+      future: {
+        ben: 'bitireceğim', sen: 'bitireceksin', o: 'bitirecek',
+        biz: 'bitireceğiz', siz: 'bitireceksiniz', onlar: 'bitirecekler'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'bitirmiyorum', sen: 'bitirmiyorsun', o: 'bitirmiyor',
+        biz: 'bitirmiyoruz', siz: 'bitirmiyorsunuz', onlar: 'bitirmiyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Ödevi bitiriyorum.', fr: 'Je termine mes devoirs.' },
+      { tr: 'Filmi bitirdik.', fr: 'On a fini le film.' },
+      { tr: 'Kitabı bu hafta bitireceğim.', fr: 'Je finirai le livre cette semaine.' }
+    ]
+  },
+
+  {
+    id: 'vb_sormak',
+    infinitive: 'sormak',
+    stem: 'sor',
+    fr: 'Demander / Poser une question',
+    difficulty: 1,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'soruyorum', sen: 'soruyorsun', o: 'soruyor',
+        biz: 'soruyoruz', siz: 'soruyorsunuz', onlar: 'soruyorlar'
+      },
+      past: {
+        ben: 'sordum', sen: 'sordun', o: 'sordu',
+        biz: 'sorduk', siz: 'sordunuz', onlar: 'sordular'
+      },
+      future: {
+        ben: 'soracağım', sen: 'soracaksın', o: 'soracak',
+        biz: 'soracağız', siz: 'soracaksınız', onlar: 'soracaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'sormuyorum', sen: 'sormuyorsun', o: 'sormuyor',
+        biz: 'sormuyoruz', siz: 'sormuyorsunuz', onlar: 'sormuyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Bir şey soruyorum.', fr: 'Je pose une question.' },
+      { tr: 'Yolu sordum.', fr: 'J\'ai demandé le chemin.' },
+      { tr: 'Ona adresini soracağım.', fr: 'Je vais lui demander son adresse.' }
+    ]
+  },
+
+  {
+    id: 'vb_cevaplamak',
+    infinitive: 'cevaplamak',
+    stem: 'cevapla',
+    fr: 'Répondre',
+    difficulty: 2,
+    isFrequent: false,
+    conjugations: {
+      present: {
+        ben: 'cevaplıyorum', sen: 'cevaplıyorsun', o: 'cevaplıyor',
+        biz: 'cevaplıyoruz', siz: 'cevaplıyorsunuz', onlar: 'cevaplıyorlar'
+      },
+      past: {
+        ben: 'cevapladım', sen: 'cevapladın', o: 'cevapladı',
+        biz: 'cevapladık', siz: 'cevapladınız', onlar: 'cevapladılar'
+      },
+      future: {
+        ben: 'cevaplayacağım', sen: 'cevaplayacaksın', o: 'cevaplayacak',
+        biz: 'cevaplayacağız', siz: 'cevaplayacaksınız', onlar: 'cevaplayacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'cevaplamıyorum', sen: 'cevaplamıyorsun', o: 'cevaplamıyor',
+        biz: 'cevaplamıyoruz', siz: 'cevaplamıyorsunuz', onlar: 'cevaplamıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Soruyu cevaplıyorum.', fr: 'Je réponds à la question.' },
+      { tr: 'Mesajını cevapladım.', fr: 'J\'ai répondu à ton message.' },
+      { tr: 'Herkese cevaplayacağım.', fr: 'Je répondrai à tout le monde.' }
+    ]
+  },
+
+  {
+    id: 'vb_bulmak',
+    infinitive: 'bulmak',
+    stem: 'bul',
+    fr: 'Trouver',
+    difficulty: 1,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'buluyorum', sen: 'buluyorsun', o: 'buluyor',
+        biz: 'buluyoruz', siz: 'buluyorsunuz', onlar: 'buluyorlar'
+      },
+      past: {
+        ben: 'buldum', sen: 'buldun', o: 'buldu',
+        biz: 'bulduk', siz: 'buldunuz', onlar: 'buldular'
+      },
+      future: {
+        ben: 'bulacağım', sen: 'bulacaksın', o: 'bulacak',
+        biz: 'bulacağız', siz: 'bulacaksınız', onlar: 'bulacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'bulmuyorum', sen: 'bulmuyorsun', o: 'bulmuyor',
+        biz: 'bulmuyoruz', siz: 'bulmuyorsunuz', onlar: 'bulmuyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Anahtarımı bulamıyorum.', fr: 'Je ne trouve pas ma clé.' },
+      { tr: 'İyi bir restoran buldum.', fr: 'J\'ai trouvé un bon restaurant.' },
+      { tr: 'Doğru cevabı bulacağız.', fr: 'Nous trouverons la bonne réponse.' }
+    ]
+  },
+
+  {
+    id: 'vb_kaybetmek',
+    infinitive: 'kaybetmek',
+    stem: 'kaybet',
+    fr: 'Perdre',
+    difficulty: 2,
+    isFrequent: true,
+    note: 'Verbe composé : kayb + etmek. t → d devant voyelle (kaybediyorum).',
+    conjugations: {
+      present: {
+        ben: 'kaybediyorum', sen: 'kaybediyorsun', o: 'kaybediyor',
+        biz: 'kaybediyoruz', siz: 'kaybediyorsunuz', onlar: 'kaybediyorlar'
+      },
+      past: {
+        ben: 'kaybettim', sen: 'kaybettin', o: 'kaybetti',
+        biz: 'kaybettik', siz: 'kaybettiniz', onlar: 'kaybettiler'
+      },
+      future: {
+        ben: 'kaybedeceğim', sen: 'kaybedeceksin', o: 'kaybedecek',
+        biz: 'kaybedeceğiz', siz: 'kaybedeceksiniz', onlar: 'kaybedecekler'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'kaybetmiyorum', sen: 'kaybetmiyorsun', o: 'kaybetmiyor',
+        biz: 'kaybetmiyoruz', siz: 'kaybetmiyorsunuz', onlar: 'kaybetmiyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Cüzdanımı kaybettim.', fr: 'J\'ai perdu mon portefeuille.' },
+      { tr: 'Zamanı kaybetmiyorum.', fr: 'Je ne perds pas de temps.' },
+      { tr: 'Umarım onu kaybetmeyeceğiz.', fr: 'J\'espère qu\'on ne le perdra pas.' }
+    ]
+  },
+
+  {
+    id: 'vb_soylemek',
+    infinitive: 'söylemek',
+    stem: 'söyle',
+    fr: 'Dire / Raconter',
+    difficulty: 2,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'söylüyorum', sen: 'söylüyorsun', o: 'söylüyor',
+        biz: 'söylüyoruz', siz: 'söylüyorsunuz', onlar: 'söylüyorlar'
+      },
+      past: {
+        ben: 'söyledim', sen: 'söyledin', o: 'söyledi',
+        biz: 'söyledik', siz: 'söylediniz', onlar: 'söylediler'
+      },
+      future: {
+        ben: 'söyleyeceğim', sen: 'söyleyeceksin', o: 'söyleyecek',
+        biz: 'söyleyeceğiz', siz: 'söyleyeceksiniz', onlar: 'söyleyecekler'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'söylemiyorum', sen: 'söylemiyorsun', o: 'söylemiyor',
+        biz: 'söylemiyoruz', siz: 'söylemiyorsunuz', onlar: 'söylemiyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Sana bir şey söylüyorum.', fr: 'Je te dis quelque chose.' },
+      { tr: 'Bana adını söyledi.', fr: 'Il/Elle m\'a dit son nom.' },
+      { tr: 'Gerçeği söyleyeceğim.', fr: 'Je dirai la vérité.' }
+    ]
+  },
+
+  {
+    id: 'vb_aglamak',
+    infinitive: 'ağlamak',
+    stem: 'ağla',
+    fr: 'Pleurer',
+    difficulty: 2,
+    isFrequent: false,
+    conjugations: {
+      present: {
+        ben: 'ağlıyorum', sen: 'ağlıyorsun', o: 'ağlıyor',
+        biz: 'ağlıyoruz', siz: 'ağlıyorsunuz', onlar: 'ağlıyorlar'
+      },
+      past: {
+        ben: 'ağladım', sen: 'ağladın', o: 'ağladı',
+        biz: 'ağladık', siz: 'ağladınız', onlar: 'ağladılar'
+      },
+      future: {
+        ben: 'ağlayacağım', sen: 'ağlayacaksın', o: 'ağlayacak',
+        biz: 'ağlayacağız', siz: 'ağlayacaksınız', onlar: 'ağlayacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'ağlamıyorum', sen: 'ağlamıyorsun', o: 'ağlamıyor',
+        biz: 'ağlamıyoruz', siz: 'ağlamıyorsunuz', onlar: 'ağlamıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Film çok güzeldi, ağladım.', fr: 'Le film était très beau, j\'ai pleuré.' },
+      { tr: 'Çocuk ağlıyor.', fr: 'L\'enfant pleure.' },
+      { tr: 'Artık ağlamayacağım.', fr: 'Je ne pleurerai plus.' }
+    ]
+  },
+
+  {
+    id: 'vb_gulmek',
+    infinitive: 'gülmek',
+    stem: 'gül',
+    fr: 'Rire / Sourire',
+    difficulty: 1,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'gülüyorum', sen: 'gülüyorsun', o: 'gülüyor',
+        biz: 'gülüyoruz', siz: 'gülüyorsunuz', onlar: 'gülüyorlar'
+      },
+      past: {
+        ben: 'güldüm', sen: 'güldün', o: 'güldü',
+        biz: 'güldük', siz: 'güldünüz', onlar: 'güldüler'
+      },
+      future: {
+        ben: 'güleceğim', sen: 'güleceksin', o: 'gülecek',
+        biz: 'güleceğiz', siz: 'güleceksiniz', onlar: 'gülecekler'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'gülmüyorum', sen: 'gülmüyorsun', o: 'gülmüyor',
+        biz: 'gülmüyoruz', siz: 'gülmüyorsunuz', onlar: 'gülmüyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Çok gülüyorum.', fr: 'Je ris beaucoup.' },
+      { tr: 'Şakasına güldük.', fr: 'On a ri à sa blague.' },
+      { tr: 'Seninle çok güleceğiz.', fr: 'On va beaucoup rire ensemble.' }
+    ]
+  },
+
+  {
+    id: 'vb_tasimak',
+    infinitive: 'taşımak',
+    stem: 'taşı',
+    fr: 'Porter / Transporter',
+    difficulty: 2,
+    isFrequent: false,
+    conjugations: {
+      present: {
+        ben: 'taşıyorum', sen: 'taşıyorsun', o: 'taşıyor',
+        biz: 'taşıyoruz', siz: 'taşıyorsunuz', onlar: 'taşıyorlar'
+      },
+      past: {
+        ben: 'taşıdım', sen: 'taşıdın', o: 'taşıdı',
+        biz: 'taşıdık', siz: 'taşıdınız', onlar: 'taşıdılar'
+      },
+      future: {
+        ben: 'taşıyacağım', sen: 'taşıyacaksın', o: 'taşıyacak',
+        biz: 'taşıyacağız', siz: 'taşıyacaksınız', onlar: 'taşıyacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'taşımıyorum', sen: 'taşımıyorsun', o: 'taşımıyor',
+        biz: 'taşımıyoruz', siz: 'taşımıyorsunuz', onlar: 'taşımıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Çantamı taşıyorum.', fr: 'Je porte mon sac.' },
+      { tr: 'Kutuları taşıdık.', fr: 'On a transporté les cartons.' },
+      { tr: 'Ağır eşyaları taşıyacağız.', fr: 'On va porter les objets lourds.' }
+    ]
+  },
+
+  {
+    id: 'vb_hazirlamak',
+    infinitive: 'hazırlamak',
+    stem: 'hazırla',
+    fr: 'Préparer',
+    difficulty: 2,
+    isFrequent: true,
+    conjugations: {
+      present: {
+        ben: 'hazırlıyorum', sen: 'hazırlıyorsun', o: 'hazırlıyor',
+        biz: 'hazırlıyoruz', siz: 'hazırlıyorsunuz', onlar: 'hazırlıyorlar'
+      },
+      past: {
+        ben: 'hazırladım', sen: 'hazırladın', o: 'hazırladı',
+        biz: 'hazırladık', siz: 'hazırladınız', onlar: 'hazırladılar'
+      },
+      future: {
+        ben: 'hazırlayacağım', sen: 'hazırlayacaksın', o: 'hazırlayacak',
+        biz: 'hazırlayacağız', siz: 'hazırlayacaksınız', onlar: 'hazırlayacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'hazırlamıyorum', sen: 'hazırlamıyorsun', o: 'hazırlamıyor',
+        biz: 'hazırlamıyoruz', siz: 'hazırlamıyorsunuz', onlar: 'hazırlamıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Akşam yemeği hazırlıyorum.', fr: 'Je prépare le dîner.' },
+      { tr: 'Sınav için hazırladım.', fr: 'J\'ai préparé pour l\'examen.' },
+      { tr: 'Yarın için plan hazırlayacağım.', fr: 'Je vais préparer un plan pour demain.' }
+    ]
   }
 ];
