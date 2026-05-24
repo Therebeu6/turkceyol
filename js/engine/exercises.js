@@ -82,6 +82,10 @@ window.Exercises = {
       if (wo) exercises.push(wo);
     }
 
+    // Sentence builder (si verbes avec examples[] ≥ 3 mots)
+    const sb = this.createSentenceBuilder(chapter);
+    if (sb) exercises.push(sb);
+
     // Cloze (si verbes avec examples[])
     if (verbs.length > 0) {
       const cz = this.createCloze(verbs);
@@ -101,6 +105,10 @@ window.Exercises = {
       const mp = this.createMatchPairs(vocab);
       if (mp) exercises.push(mp);
     }
+
+    // Listening transcribe (1 par session)
+    const lt = this.createListeningTranscribe(chapter);
+    if (lt) exercises.push(lt);
 
     return this._shuffle(exercises);
   },
@@ -140,10 +148,14 @@ window.Exercises = {
       const cz = this.createCloze(revVerbs);
       if (cz) exercises.push(cz);
     }
+    const sbRev = this.createSentenceBuilder(null);
+    if (sbRev) exercises.push(sbRev);
     const gf = this.createGrammarFill();
     if (gf) exercises.push(gf);
     const df = this.createDialogueFill();
     if (df) exercises.push(df);
+    const lt = this.createListeningTranscribe(null);
+    if (lt) exercises.push(lt);
 
     return this._shuffle(exercises);
   },
@@ -241,6 +253,39 @@ window.Exercises = {
       words: this._shuffle([...words]),
       answer: source.tr,
       data: { id: 'wo_phrase', tr: source.tr, fr: source.fr, type: 'phrase' }
+    };
+  },
+
+  createSentenceBuilder(chapter) {
+    const verbs = (window.AppVerbs || []).filter(v =>
+      (v.examples || []).some(ex => ex.tr && ex.tr.split(' ').length >= 3)
+    );
+    if (verbs.length === 0) return null;
+
+    const verb = verbs[Math.floor(Math.random() * verbs.length)];
+    const example = (verb.examples || []).find(ex => ex.tr && ex.tr.split(' ').length >= 3);
+    if (!example) return null;
+
+    const correctBlocks = example.tr.split(' ');
+
+    // Distracteurs depuis AppVocabulary (mots courts, pas déjà dans la phrase)
+    const allVocab = (window.AppVocabulary || []).filter(v =>
+      v.tr && v.tr.split(' ').length === 1 && !correctBlocks.includes(v.tr)
+    );
+    const distractors = [];
+    const shuffledVocab = allVocab.sort(() => Math.random() - 0.5);
+    for (let i = 0; i < shuffledVocab.length && distractors.length < 3; i++) {
+      distractors.push(shuffledVocab[i].tr);
+    }
+
+    const allBlocks = [...correctBlocks, ...distractors].sort(() => Math.random() - 0.5);
+
+    return {
+      type: 'sentence_builder',
+      blocks: allBlocks,
+      correct: correctBlocks,
+      hint: example.fr,
+      data: { id: 'sb_' + verb.id, tr: example.tr, fr: example.fr, type: 'phrase' }
     };
   },
 
@@ -484,6 +529,37 @@ window.Exercises = {
         tense: tense === 'present_neg' ? 'present' : tense
       }
     };
+  },
+
+  createListeningTranscribe(chapter) {
+    // Source: mots A1 courts (≤2 mots) de AppVocabulary
+    const shortVocab = (window.AppVocabulary || []).filter(v =>
+      v.level === 'A1' && v.tr && v.tr.split(' ').length <= 2
+    );
+    let item = null;
+    if (shortVocab.length > 0) {
+      item = shortVocab[Math.floor(Math.random() * shortVocab.length)];
+      return {
+        type: 'listening_transcribe',
+        text: item.tr,
+        hint: item.fr,
+        data: { id: item.id, tr: item.tr, fr: item.fr, type: 'vocabulary' }
+      };
+    }
+    // Fallback: verb example ≤4 mots
+    const verbs = (window.AppVerbs || []);
+    for (const verb of verbs) {
+      const ex = (verb.examples || [])[0];
+      if (ex && ex.tr && ex.tr.split(' ').length <= 4) {
+        return {
+          type: 'listening_transcribe',
+          text: ex.tr,
+          hint: ex.fr,
+          data: { id: 'lt_' + verb.id, tr: ex.tr, fr: ex.fr, type: 'vocabulary' }
+        };
+      }
+    }
+    return null;
   },
 
   getSmartDistractors(targetWord, count, field) {

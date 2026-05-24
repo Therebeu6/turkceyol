@@ -3,6 +3,10 @@
    Leçon interactive — exercices, feedback, TTS
    ═══════════════════════════════════════════════ */
 
+function _localIsCorrect(input, expected) {
+  return input.trim().toLowerCase() === expected.trim().toLowerCase();
+}
+
 window.Lesson = {
   chapterId: null,
   unitId: null,
@@ -259,6 +263,52 @@ window.Lesson = {
           </div>
         </div>
       `;
+    } else if (exo.type === 'listening_transcribe') {
+      exoHtml = `
+        <div class="exercise-container exo-slide-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">🎧 Écouter et transcrire</div>
+          </div>
+          <div class="exercise-content" style="justify-content:flex-start;margin-top:1rem">
+            <div class="exercise-card listening-transcribe-card">
+              <p class="exercise-hint">${exo.hint}</p>
+              <button class="btn-play-tts" onclick="App.playTTS('${this._escape(exo.text)}')">
+                🔊 Écouter
+              </button>
+              <div class="input-group" style="margin-top:1rem">
+                <input type="text" id="lt-input" class="answer-input" placeholder="Écris ce que tu entends…" autocomplete="off" autocorrect="off" spellcheck="false" style="width:100%">
+              </div>
+              <div class="virtual-keyboard" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:0.75rem">
+                ${['ş','ğ','ç','ö','ü','ı','İ'].map(k =>
+                  `<button class="btn-vk" onclick="(function(){var el=document.getElementById('lt-input');el.value+=('${k}');el.focus();})()">${k}</button>`
+                ).join('')}
+              </div>
+              <button class="btn btn-primary btn-full mt-4" onclick="Lesson._ltValidate()" style="margin-top:1rem">Valider</button>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (exo.type === 'sentence_builder') {
+      const blocksHtml = exo.blocks.map(w =>
+        `<button class="word-chip" data-word="${this._escape(w)}" onclick="Lesson._sbClickBank(this)">${w}</button>`
+      ).join('');
+      exoHtml = `
+        <div class="exercise-container exo-slide-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">🏗️ Construire la phrase</div>
+            <div class="exo-hint">${exo.hint}</div>
+          </div>
+          <div class="exercise-content">
+            <div class="word-order-container">
+              <div class="word-answer" id="sb-answer">
+                <span class="answer-placeholder" id="sb-placeholder">Construis la phrase…</span>
+              </div>
+              <div class="word-bank" id="sb-bank">${blocksHtml}</div>
+              <button class="btn btn-primary btn-full" id="sb-validate" onclick="Lesson._sbValidate()" disabled>Valider</button>
+            </div>
+          </div>
+        </div>
+      `;
     } else if (exo.type === 'match_pairs') {
       this._mpState = { matched: 0, selectedTR: null, selectedFR: null };
       const pairsFR = [...exo.pairs].sort(() => 0.5 - Math.random());
@@ -321,12 +371,25 @@ window.Lesson = {
     if (exo.type === 'audio_qcm') {
       setTimeout(() => App.playTTS(exo.audioTr), 400);
     }
+    if (exo.type === 'listening_transcribe') {
+      setTimeout(() => {
+        App.playTTS(exo.text);
+        const inp = document.getElementById('lt-input');
+        if (inp) inp.focus();
+      }, 400);
+    }
   },
 
   checkInput() {
     const el = document.getElementById('exo-input');
     if (!el || !el.value.trim()) return;
     this.checkAnswer(el.value.trim());
+  },
+
+  _ltValidate() {
+    const input = document.getElementById('lt-input');
+    if (!input || !input.value.trim()) return;
+    this.checkAnswer(input.value.trim());
   },
 
   checkAnswer(selected) {
@@ -336,7 +399,15 @@ window.Lesson = {
     const clean = s => s.normalize('NFC').toLocaleLowerCase('tr-TR')
       .replace(/[.!?,;:'"]/g, '').replace(/\s+/g, ' ').trim();
 
-    const isCorrect = clean(selected) === clean(exo.answer);
+    let isCorrect;
+    if (exo.type === 'listening_transcribe') {
+      const result = window.Grading
+        ? window.Grading.isCorrect(selected, exo.text)
+        : { correct: selected.trim().toLowerCase() === exo.text.trim().toLowerCase() };
+      isCorrect = result.correct;
+    } else {
+      isCorrect = clean(selected) === clean(exo.answer);
+    }
 
     // Style des boutons / input
     if (exo.type === 'qcm' || exo.type === 'true_false' || exo.type === 'audio_qcm'
@@ -350,6 +421,15 @@ window.Lesson = {
     } else if (exo.type === 'word_order') {
       const answerDiv = document.getElementById('wo-answer');
       if (answerDiv) answerDiv.classList.add(isCorrect ? 'correct' : 'wrong');
+    } else if (exo.type === 'sentence_builder') {
+      const answerDiv = document.getElementById('sb-answer');
+      if (answerDiv) answerDiv.classList.add(isCorrect ? 'correct' : 'wrong');
+    } else if (exo.type === 'listening_transcribe') {
+      const inp = document.getElementById('lt-input');
+      if (inp) {
+        inp.disabled = true;
+        inp.classList.add(isCorrect ? 'correct' : 'wrong');
+      }
     } else {
       const inp = document.getElementById('exo-input');
       if (inp) {
