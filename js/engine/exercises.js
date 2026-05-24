@@ -257,25 +257,41 @@ window.Exercises = {
   },
 
   createSentenceBuilder(chapter) {
-    const verbs = (window.AppVerbs || []).filter(v =>
+    const chapterVerbIds = (chapter && chapter.verbIds) || [];
+    let verbPool = (window.AppVerbs || []).filter(v =>
       (v.examples || []).some(ex => ex.tr && ex.tr.split(' ').length >= 3)
     );
-    if (verbs.length === 0) return null;
+    // Préférer les verbes du chapitre courant
+    if (chapterVerbIds.length > 0) {
+      const chapterVerbs = verbPool.filter(v => chapterVerbIds.includes(v.id));
+      if (chapterVerbs.length > 0) verbPool = chapterVerbs;
+    }
+    if (verbPool.length === 0) return null;
 
-    const verb = verbs[Math.floor(Math.random() * verbs.length)];
+    const verb = verbPool[Math.floor(Math.random() * verbPool.length)];
     const example = (verb.examples || []).find(ex => ex.tr && ex.tr.split(' ').length >= 3);
     if (!example) return null;
 
     const correctBlocks = example.tr.split(' ');
 
-    // Distracteurs depuis AppVocabulary (mots courts, pas déjà dans la phrase)
-    const allVocab = (window.AppVocabulary || []).filter(v =>
+    // Distracteurs : même topic que le chapitre d'abord, sinon aléatoire
+    const chapterTopics = new Set(
+      (window.AppVocabulary || [])
+        .filter(v => chapterVerbIds.length > 0
+          ? (chapter && chapter.vocabIds || []).includes(v.id)
+          : false)
+        .map(v => v.topic).filter(Boolean)
+    );
+    let distPool = (window.AppVocabulary || []).filter(v =>
       v.tr && v.tr.split(' ').length === 1 && !correctBlocks.includes(v.tr)
     );
+    const topicPool = chapterTopics.size > 0
+      ? distPool.filter(v => chapterTopics.has(v.topic))
+      : [];
     const distractors = [];
-    const shuffledVocab = allVocab.sort(() => Math.random() - 0.5);
-    for (let i = 0; i < shuffledVocab.length && distractors.length < 3; i++) {
-      distractors.push(shuffledVocab[i].tr);
+    const shuffledDist = [...(topicPool.length >= 3 ? topicPool : distPool)].sort(() => Math.random() - 0.5);
+    for (let i = 0; i < shuffledDist.length && distractors.length < 3; i++) {
+      distractors.push(shuffledDist[i].tr);
     }
 
     const allBlocks = [...correctBlocks, ...distractors].sort(() => Math.random() - 0.5);
@@ -532,10 +548,23 @@ window.Exercises = {
   },
 
   createListeningTranscribe(chapter) {
-    // Pool 1 : mots courts du vocabulaire (difficulty ≤ 2, ≤ 3 mots turcs)
-    const shortVocab = (window.AppVocabulary || []).filter(v =>
+    // Inférer les topics du chapitre depuis ses vocabIds
+    const chapterVocabIds = (chapter && chapter.vocabIds) || [];
+    const chapterVerbIds  = (chapter && chapter.verbIds)  || [];
+    const chapterTopics = new Set(
+      (window.AppVocabulary || [])
+        .filter(v => chapterVocabIds.includes(v.id) && v.topic)
+        .map(v => v.topic)
+    );
+
+    // Pool 1 : vocab court (≤ 3 mots, difficulty ≤ 2) — filtré par topic si possible
+    let shortVocab = (window.AppVocabulary || []).filter(v =>
       v.tr && v.tr.split(' ').length <= 3 && (v.difficulty ?? 3) <= 2
     );
+    if (chapterTopics.size > 0) {
+      const topicFiltered = shortVocab.filter(v => chapterTopics.has(v.topic));
+      if (topicFiltered.length > 0) shortVocab = topicFiltered;
+    }
     if (shortVocab.length > 0) {
       const item = shortVocab[Math.floor(Math.random() * shortVocab.length)];
       return {
@@ -545,9 +574,14 @@ window.Exercises = {
         data: { id: item.id, tr: item.tr, fr: item.fr, type: 'vocabulary' }
       };
     }
-    // Pool 2 : exemples de verbes ≤ 4 mots (tous collectés puis tirage aléatoire)
+    // Pool 2 : exemples de verbes ≤ 4 mots — verbes du chapitre d'abord
     const verbExamples = [];
-    for (const verb of (window.AppVerbs || [])) {
+    const verbs = (window.AppVerbs || []);
+    const chapterVerbs = chapterVerbIds.length > 0
+      ? verbs.filter(v => chapterVerbIds.includes(v.id))
+      : verbs;
+    const verbsToScan = chapterVerbs.length > 0 ? chapterVerbs : verbs;
+    for (const verb of verbsToScan) {
       for (const ex of (verb.examples || [])) {
         if (ex && ex.tr && ex.tr.split(' ').length <= 4) {
           verbExamples.push({ id: 'lt_' + verb.id, tr: ex.tr, fr: ex.fr });
