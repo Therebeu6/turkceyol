@@ -548,22 +548,20 @@ window.Exercises = {
   },
 
   createListeningTranscribe(chapter) {
-    // Inférer les topics du chapitre depuis ses vocabIds
     const chapterVocabIds = (chapter && chapter.vocabIds) || [];
     const chapterVerbIds  = (chapter && chapter.verbIds)  || [];
-    const chapterTopics = new Set(
-      (window.AppVocabulary || [])
-        .filter(v => chapterVocabIds.includes(v.id) && v.topic)
-        .map(v => v.topic)
-    );
 
-    // Pool 1 : vocab court (≤ 3 mots, difficulty ≤ 2) — filtré par topic si possible
-    let shortVocab = (window.AppVocabulary || []).filter(v =>
-      v.tr && v.tr.split(' ').length <= 3 && (v.difficulty ?? 3) <= 2
-    );
-    if (chapterTopics.size > 0) {
-      const topicFiltered = shortVocab.filter(v => chapterTopics.has(v.topic));
-      if (topicFiltered.length > 0) shortVocab = topicFiltered;
+    // Pool 1a : vocab DIRECT du chapitre (≤ 3 mots turcs)
+    let shortVocab = chapterVocabIds.length > 0
+      ? (window.AppVocabulary || []).filter(v =>
+          chapterVocabIds.includes(v.id) && v.tr && v.tr.split(' ').length <= 3
+        )
+      : [];
+    // Pool 1b : fallback global (difficulty ≤ 2, ≤ 3 mots) si chapitre vide
+    if (shortVocab.length === 0) {
+      shortVocab = (window.AppVocabulary || []).filter(v =>
+        v.tr && v.tr.split(' ').length <= 3 && (v.difficulty ?? 3) <= 2
+      );
     }
     if (shortVocab.length > 0) {
       const item = shortVocab[Math.floor(Math.random() * shortVocab.length)];
@@ -574,14 +572,14 @@ window.Exercises = {
         data: { id: item.id, tr: item.tr, fr: item.fr, type: 'vocabulary' }
       };
     }
-    // Pool 2 : exemples de verbes ≤ 4 mots — verbes du chapitre d'abord
+    // Pool 2 : exemples de verbes ≤ 4 mots — tous les verbes du chapitre + global fallback
     const verbExamples = [];
     const verbs = (window.AppVerbs || []);
-    const chapterVerbs = chapterVerbIds.length > 0
+    const verbsToScan = chapterVerbIds.length > 0
       ? verbs.filter(v => chapterVerbIds.includes(v.id))
       : verbs;
-    const verbsToScan = chapterVerbs.length > 0 ? chapterVerbs : verbs;
-    for (const verb of verbsToScan) {
+    const verbsPool = verbsToScan.length > 0 ? verbsToScan : verbs;
+    for (const verb of verbsPool) {
       for (const ex of (verb.examples || [])) {
         if (ex && ex.tr && ex.tr.split(' ').length <= 4) {
           verbExamples.push({ id: 'lt_' + verb.id, tr: ex.tr, fr: ex.fr });
