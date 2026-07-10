@@ -143,6 +143,10 @@ window.Exercises = {
     }
 
     // ── Assemblage : découverte fixe, puis phases mélangées SANS répétition de type ──
+    discover.forEach(e => { e.phase = 'discover'; });
+    practice.forEach(e => { e.phase = 'practice'; });
+    recall.forEach(e => { e.phase = 'recall'; });
+    produce.forEach(e => { e.phase = 'produce'; });
     return [
       ...discover,
       ...this._antiRepeat(this._shuffle(practice)),
@@ -374,10 +378,10 @@ window.Exercises = {
     let verbPool = (window.AppVerbs || []).filter(v =>
       (v.examples || []).some(ex => ex.tr && ex.tr.split(' ').length >= 3)
     );
-    // Préférer les verbes du chapitre courant
-    if (chapterVerbIds.length > 0) {
-      const chapterVerbs = verbPool.filter(v => chapterVerbIds.includes(v.id));
-      if (chapterVerbs.length > 0) verbPool = chapterVerbs;
+    // En leçon : UNIQUEMENT les verbes du chapitre (Pilier B). En révision : tous.
+    if (chapter) {
+      if (chapterVerbIds.length === 0) return null;
+      verbPool = verbPool.filter(v => chapterVerbIds.includes(v.id));
     }
     if (verbPool.length === 0) return null;
 
@@ -699,8 +703,8 @@ window.Exercises = {
           chapterVocabIds.includes(v.id) && v.tr && v.tr.split(' ').length <= 3
         )
       : [];
-    // Pool 1b : fallback global (difficulty ≤ 2, ≤ 3 mots) si chapitre vide
-    if (shortVocab.length === 0) {
+    // Pool 1b : fallback global UNIQUEMENT hors leçon (révision) — Pilier B
+    if (shortVocab.length === 0 && !chapter) {
       shortVocab = (window.AppVocabulary || []).filter(v =>
         v.tr && v.tr.split(' ').length <= 3 && (v.difficulty ?? 3) <= 2
       );
@@ -714,13 +718,13 @@ window.Exercises = {
         data: { id: item.id, tr: item.tr, fr: item.fr, type: 'vocabulary' }
       };
     }
-    // Pool 2 : exemples de verbes ≤ 4 mots — tous les verbes du chapitre + global fallback
+    // Pool 2 : exemples de verbes ≤ 4 mots — verbes du chapitre en leçon,
+    // tous les verbes uniquement en révision (Pilier B)
     const verbExamples = [];
     const verbs = (window.AppVerbs || []);
-    const verbsToScan = chapterVerbIds.length > 0
+    const verbsPool = chapterVerbIds.length > 0
       ? verbs.filter(v => chapterVerbIds.includes(v.id))
-      : verbs;
-    const verbsPool = verbsToScan.length > 0 ? verbsToScan : verbs;
+      : (chapter ? [] : verbs);
     for (const verb of verbsPool) {
       for (const ex of (verb.examples || [])) {
         if (ex && ex.tr && ex.tr.split(' ').length <= 4) {

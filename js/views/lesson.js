@@ -52,6 +52,20 @@ window.Lesson = {
       ? (this.currentIndex / this.exercises.length) * 100 : 0;
     document.getElementById('lesson-prog-fill').style.width = pct + '%';
     document.getElementById('lesson-xp-live').textContent = `${this.currentXp} XP`;
+
+    // Chip de phase (v5 — Pilier F)
+    const chip = document.getElementById('lesson-phase-chip');
+    if (chip) {
+      const cur = this.exercises[this.currentIndex];
+      const labels = {
+        discover: '📖 Découverte',
+        practice: '🎯 Pratique',
+        recall: '🧠 Rappel',
+        produce: '✍️ Production'
+      };
+      chip.textContent = (cur && labels[cur.phase]) || '';
+      chip.style.display = (cur && labels[cur.phase]) ? '' : 'none';
+    }
   },
 
   showNextExercise() {
@@ -60,6 +74,7 @@ window.Lesson = {
       this.finishLesson();
       return;
     }
+    this.updateProgressUI();
     const exo = this.exercises[this.currentIndex];
     const container = document.getElementById('lesson-body');
 

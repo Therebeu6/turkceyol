@@ -1328,3 +1328,15 @@
 }
 .unit-cefr-a1 { background: rgba(34,197,94,0.15); color: #22C55E; }
 .unit-cefr-a2 { background: rgba(99,102,241,0.15); color: #818CF8; }
+
+/* v5 — Chip de phase dans la barre de leçon (Pilier F) */
+.lesson-phase-chip {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border-radius: 20px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}

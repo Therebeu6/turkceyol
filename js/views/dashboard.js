@@ -64,6 +64,10 @@ window.Dashboard = {
     if (pct >= 100) {
       document.getElementById('goal-status').textContent = "Objectif atteint ! 🔥";
       document.getElementById('goal-status').classList.add('text-success');
+    } else if (hour >= 18 && data.dailyXP === 0 && data.streak > 0) {
+      // Alerte streak en danger (v5 — Pilier G)
+      document.getElementById('goal-status').textContent = `⚠️ Streak de ${data.streak} j en danger — une leçon rapide ?`;
+      document.getElementById('goal-status').classList.remove('text-success');
     } else {
       document.getElementById('goal-status').textContent = `Encore ${data.dailyGoal - data.dailyXP} XP !`;
       document.getElementById('goal-status').classList.remove('text-success');

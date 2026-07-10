@@ -1,5 +1,23 @@
 # TürkçeYol — ROADMAP v5
 
+> **📌 ÉTAT (10/07/2026 — session V5-1)** : le noyau de la v5 est **implémenté** ✅
+> - **Pilier B ✅** — aléatoire tué : `grammarIds`/`dialogueIds` sur 56 chapitres, `createGrammarFill(chapter)` /
+>   `createDialogueFill(chapter)` / `createSentenceBuilder` / `createListeningTranscribe` contextualisés,
+>   fallback vocab global supprimé. Révision (sans chapitre) = tirage libre conservé.
+> - **Pilier A ✅ (noyau)** — leçon en phases Découverte → Pratique → Rappel → Production :
+>   `intro_card` (mot + TTS auto + exemple + phonétique, skip si SRS step≥2), `grammar_note`
+>   (fiche règle + pièges avant les exos), `tip_callout`, précision hors slides d'enseignement.
+> - **Pilier E ✅** — gating production (u1 reconnaissance pure / u2 saisie / u3+ tout),
+>   anti-répétition de type, difficulté croissante par phases, chip de phase dans la barre de leçon.
+> - **Pilier C ✅ (léger)** — `cefr` par unité + badge A1/A2, `canDo` sur les 71 chapitres +
+>   bandeau 🎯 objectif en leçon, titres doublons différenciés (sans casser les ids sauvegardés).
+> - **Pilier D ✅ (moteur)** — **`js/engine/phonetics.js`** : phonétique TR→FR automatique par règles
+>   (mieux que le plan : couvre 100% des mots sans data). `traps[]` sur les 18 règles (leçon + vue
+>   Grammaire), `tips[]` sur 8 chapitres clés. *Reste : `example` sur les ~261 mots sans exemple.*
+> - **Pilier F/G ✅ (partiel)** — chip de phase, alerte streak en danger le soir. L'objectif quotidien,
+>   les révisions dues, l'écran de fin enrichi et « revoir les erreurs » existaient déjà (v3/v4).
+>   *Reste (plus tard) : dashboard-chemin, découpage CSS, ligues/rapport hebdo.*
+
 ## « Réparer les fondations » — Cohérence, pédagogie & expérience d'apprentissage
 
 > Les roadmaps v3 (Sessions A→G) et v4 (Blocs H→M) ont **ajouté** : du contenu, des types
