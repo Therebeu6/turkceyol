@@ -1166,3 +1166,131 @@
   margin-top: 0.25rem;
   margin-bottom: 0.5rem;
 }
+
+/* ═══════════════════════════════════════════════
+   v5 — Slides d'enseignement (Pilier A)
+   intro_card / grammar_note / tip_callout
+   ═══════════════════════════════════════════════ */
+
+.intro-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-lg, 16px);
+  padding: var(--s5, 1.5rem) var(--s4, 1rem);
+  text-align: center;
+  animation: gp-appear 0.25s ease-out;
+}
+.ic-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  background: var(--primary-glow);
+  border-radius: 20px;
+  padding: 4px 12px;
+  margin-bottom: var(--s3, 0.75rem);
+}
+.ic-tr {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.15;
+  margin-bottom: var(--s2, 0.5rem);
+}
+.ic-audio {
+  margin: 0 auto var(--s3, 0.75rem);
+}
+.ic-fr {
+  font-size: var(--text-lg, 1.15rem);
+  color: var(--text-2);
+  font-weight: 600;
+  margin-bottom: var(--s2, 0.5rem);
+}
+.ic-phonetic {
+  font-size: var(--text-sm, 0.85rem);
+  color: var(--text-3);
+  font-style: italic;
+  margin-bottom: var(--s3, 0.75rem);
+}
+.ic-example {
+  background: var(--surface-2);
+  border-radius: var(--r-md, 12px);
+  padding: var(--s3, 0.75rem);
+  margin-top: var(--s3, 0.75rem);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.12s ease;
+}
+.ic-example:active { transform: scale(0.98); }
+.ic-ex-tr {
+  font-size: var(--text-md, 1rem);
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.ic-ex-tts { font-size: 0.85rem; opacity: 0.7; }
+.ic-ex-fr {
+  font-size: var(--text-sm, 0.85rem);
+  color: var(--text-3);
+}
+
+.grammar-note-card {
+  background: var(--surface);
+  border: 1.5px solid var(--primary);
+  border-radius: var(--r-lg, 16px);
+  padding: var(--s4, 1rem);
+  animation: gp-appear 0.25s ease-out;
+}
+.gn-title {
+  font-size: var(--text-lg, 1.15rem);
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: var(--s2, 0.5rem);
+}
+.gn-rule {
+  font-size: var(--text-md, 1rem);
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: var(--s3, 0.75rem);
+}
+.gn-example {
+  background: var(--surface-2);
+  border-left: 3px solid var(--primary);
+  border-radius: var(--r-sm, 8px);
+  padding: var(--s2, 0.5rem) var(--s3, 0.75rem);
+  font-size: var(--text-sm, 0.85rem);
+  color: var(--text-2);
+  margin-bottom: var(--s2, 0.5rem);
+}
+.gn-trap {
+  font-size: var(--text-sm, 0.85rem);
+  color: var(--warning, #F59E0B);
+  background: rgba(245, 158, 11, 0.08);
+  border-radius: var(--r-sm, 8px);
+  padding: var(--s2, 0.5rem) var(--s3, 0.75rem);
+  margin-top: var(--s2, 0.5rem);
+  line-height: 1.4;
+}
+
+.tip-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s3, 0.75rem);
+  background: var(--surface);
+  border: 1.5px dashed var(--primary);
+  border-radius: var(--r-lg, 16px);
+  padding: var(--s4, 1rem);
+  animation: gp-appear 0.25s ease-out;
+}
+.tip-icon { font-size: 1.5rem; flex-shrink: 0; }
+.tip-text {
+  font-size: var(--text-md, 1rem);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-card, .grammar-note-card, .tip-callout { animation: none; }
+}

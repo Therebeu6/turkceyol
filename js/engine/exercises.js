@@ -5,6 +5,12 @@
 
 window.Exercises = {
 
+  /* ═══ v5 — Leçon en phases : Découverte → Pratique → Rappel → Production ═══
+     - 100% du contenu vient du chapitre (plus d'injection aléatoire)
+     - On enseigne (intro_card / grammar_note) AVANT de tester
+     - Difficulté croissante + anti-répétition de type
+     - Gating : pas de production dans les toutes premières unités          */
+
   generateForChapter(chapterId) {
     let chapter = null, unit = null;
     for (const u of AppUnits) {
@@ -14,20 +20,14 @@ window.Exercises = {
 
     const hasExplicitVocab = chapter && chapter.vocabIds && chapter.vocabIds.length > 0;
 
-    // Vocab du chapitre — fallback seulement si le chapitre a du vocab explicite
+    // Vocab du chapitre — complément UNIQUEMENT depuis la même unité (jamais global)
     let vocab = [];
     if (hasExplicitVocab) {
       vocab = chapter.vocabIds.map(id => AppVocabulary.find(w => w.id === id)).filter(Boolean);
-      // Complément depuis l'unité
       if (vocab.length < 5 && unit) {
         const unitIds = new Set(unit.chapters.flatMap(c => c.vocabIds || []));
         const extra = AppVocabulary.filter(w => unitIds.has(w.id) && !vocab.find(v => v.id === w.id));
         vocab.push(...this._shuffle(extra));
-      }
-      // Fallback global minimal
-      if (vocab.length < 4) {
-        const extra = AppVocabulary.filter(w => !vocab.find(v => v.id === w.id));
-        vocab.push(...this._shuffle(extra).slice(0, 4 - vocab.length));
       }
     }
 
@@ -40,77 +40,190 @@ window.Exercises = {
     // Temps autorisés (présent_neg inclus pour u10_c3)
     const allowedTenses = (chapter && chapter.tenses) || ['present', 'past', 'future'];
 
-    const exercises = [];
+    // Gating production (Pilier E) : u1 = reconnaissance pure,
+    // u2 = saisie simple ok, u3+ = tout
+    const unitNum = unit ? parseInt(unit.id.slice(1), 10) || 99 : 99;
+    const prodLevel = unitNum <= 1 ? 0 : (unitNum === 2 ? 1 : 2);
 
-    // Exercices de vocabulaire (seulement si vocab explicite)
-    if (vocab.length > 0) {
-      const vocabSample = this._shuffle(vocab).slice(0, 5);
-      vocabSample.forEach((word, i) => {
-        if (i % 5 === 0) exercises.push(this.createQCMTrFr(word));
-        else if (i % 5 === 1) exercises.push(this.createQCMFrTr(word));
-        else if (i % 5 === 2) exercises.push(this.createInputTr(word));
-        else if (i % 5 === 3) exercises.push(this.createTrueFalse(word));
-        else exercises.push(this.createAudioQCM(word));
-      });
+    // ── Échantillon : on enseigne EXACTEMENT ce qu'on teste ──
+    const vocabSample = this._shuffle(vocab).slice(0, 5);
+
+    const discover = [];  // enseigner
+    const practice = [];  // reconnaître (niv 1)
+    const recall   = [];  // rappeler   (niv 2)
+    const produce  = [];  // produire   (niv 3)
+
+    // 1) Cartes de découverte (mots non maîtrisés uniquement)
+    discover.push(...this.createIntroCards(vocabSample, verbs));
+
+    // 2) Fiche grammaire du chapitre (1 max)
+    const gn = this.createGrammarNote(chapter);
+    if (gn) discover.push(gn);
+
+    // 3) Astuces du chapitre (tips[])
+    if (chapter && Array.isArray(chapter.tips)) {
+      for (const tip of chapter.tips.slice(0, 2)) {
+        if (tip && tip.text) {
+          discover.push({ type: 'tip_callout', isTeaching: true, icon: tip.icon || '💡', text: tip.text });
+        }
+      }
     }
 
-    // Exercices de conjugaison
+    // 4) Exercices de vocabulaire répartis par difficulté
+    vocabSample.forEach((word, i) => {
+      if (i % 5 === 0) practice.push(this.createQCMTrFr(word));
+      else if (i % 5 === 1) recall.push(this.createQCMFrTr(word));
+      else if (i % 5 === 2) {
+        if (prodLevel >= 1) produce.push(this.createInputTr(word));
+        else practice.push(this.createQCMFrTr(word));
+      }
+      else if (i % 5 === 3) practice.push(this.createTrueFalse(word));
+      else practice.push(this.createAudioQCM(word));
+    });
+
+    // 5) Conjugaison → rappel
     if (verbs.length > 0) {
       const persons = ['ben', 'sen', 'o', 'biz', 'siz', 'onlar'];
-      // Chapitre grammaire pure (pas de vocab) → plus d'exercices de conjugaison
       const count = !hasExplicitVocab ? Math.min(8, verbs.length * 2 + 1) : Math.min(3, verbs.length + 1);
       for (let i = 0; i < count; i++) {
         const verb = verbs[i % verbs.length];
         const person = persons[i % persons.length];
         const tense = allowedTenses[i % allowedTenses.length];
         const ex = this.createVerbFill(verb, person, tense);
-        if (ex) exercises.push(ex);
+        if (ex) recall.push(ex);
       }
     }
 
-    // Fallback si aucun exercice généré
-    if (exercises.length === 0) {
+    // 6) Grammaire du chapitre (drills/exercises des règles rattachées) → rappel
+    if (chapter) {
+      const gf = this.createGrammarFill(chapter);
+      if (gf) recall.push(gf);
+    }
+
+    // 7) Dialogue du chapitre → rappel en contexte
+    if (chapter) {
+      const df = this.createDialogueFill(chapter);
+      if (df) recall.push(df);
+    }
+
+    // 8) Cloze (exemples des verbes du chapitre) → rappel
+    if (verbs.length > 0) {
+      const cz = this.createCloze(verbs);
+      if (cz) recall.push(cz);
+    }
+
+    // 9) Match pairs (vocab du chapitre) → pratique
+    if (vocab.length >= 4) {
+      const mp = this.createMatchPairs(vocab);
+      if (mp) practice.push(mp);
+    }
+
+    // 10) Production (si niveau suffisant)
+    if (prodLevel >= 2) {
+      if (verbs.length > 0) {
+        const wo = this.createWordOrder(verbs, null);
+        if (wo) produce.push(wo);
+      }
+      const sb = this.createSentenceBuilder(chapter);
+      if (sb) produce.push(sb);
+      const lt = this.createListeningTranscribe(chapter);
+      if (lt) produce.push(lt);
+    } else if (prodLevel === 1) {
+      // Écoute d'un mot simple dès u2 (transcription courte)
+      const lt = this.createListeningTranscribe(chapter);
+      if (lt && lt.text && lt.text.split(' ').length <= 2) produce.push(lt);
+    }
+
+    // Fallback sécurité (données cassées uniquement)
+    if (practice.length + recall.length + produce.length === 0) {
       const fallback = this._shuffle(AppVocabulary).slice(0, 5);
       fallback.forEach((word, i) => {
-        exercises.push(i % 2 === 0 ? this.createQCMTrFr(word) : this.createQCMFrTr(word));
+        practice.push(i % 2 === 0 ? this.createQCMTrFr(word) : this.createQCMFrTr(word));
       });
     }
 
-    // Word order (si verbes disponibles)
-    if (verbs.length > 0) {
-      const wo = this.createWordOrder(verbs, null);
-      if (wo) exercises.push(wo);
+    // ── Assemblage : découverte fixe, puis phases mélangées SANS répétition de type ──
+    return [
+      ...discover,
+      ...this._antiRepeat(this._shuffle(practice)),
+      ...this._antiRepeat(this._shuffle(recall)),
+      ...this._antiRepeat(this._shuffle(produce))
+    ];
+  },
+
+  // ── Cartes de découverte : enseigner avant de tester (Pilier A) ──
+  createIntroCards(words, verbs) {
+    const cards = [];
+    const known = new Set(
+      ((window.State && State.data && State.data.reviewQueue) || [])
+        .filter(it => (it.step || 0) >= 2)
+        .map(it => it.id)
+    );
+    for (const word of (words || [])) {
+      if (known.has(word.id)) continue;
+      cards.push({
+        type: 'intro_card',
+        isTeaching: true,
+        tr: word.tr,
+        fr: word.fr,
+        phonetic: word.phonetic || null,
+        example: word.example || null,
+        data: { id: word.id, tr: word.tr, fr: word.fr, type: 'vocabulary' }
+      });
+      if (cards.length >= 5) break;
     }
-
-    // Sentence builder (si verbes avec examples[] ≥ 3 mots)
-    const sb = this.createSentenceBuilder(chapter);
-    if (sb) exercises.push(sb);
-
-    // Cloze (si verbes avec examples[])
-    if (verbs.length > 0) {
-      const cz = this.createCloze(verbs);
-      if (cz) exercises.push(cz);
+    // Verbes nouveaux : 2 cartes max
+    let verbCards = 0;
+    for (const verb of (verbs || [])) {
+      if (known.has(verb.id) || verbCards >= 2 || cards.length >= 6) break;
+      const ex = (verb.examples && verb.examples[0]) || null;
+      cards.push({
+        type: 'intro_card',
+        isTeaching: true,
+        isVerb: true,
+        tr: verb.infinitive,
+        fr: verb.fr,
+        phonetic: verb.phonetic || null,
+        example: ex,
+        data: { id: verb.id, tr: verb.infinitive, fr: verb.fr, type: 'verb' }
+      });
+      verbCards++;
     }
+    return cards;
+  },
 
-    // Grammar fill (si règles avec drills[])
-    const gf = this.createGrammarFill();
-    if (gf) exercises.push(gf);
+  // ── Fiche grammaire compacte du chapitre (Pilier A) ──
+  createGrammarNote(chapter) {
+    if (!chapter || !window.AppGrammar) return null;
+    const ids = chapter.grammarIds || [];
+    if (ids.length === 0) return null;
+    const rule = AppGrammar.find(g => g.id === ids[0]);
+    if (!rule) return null;
+    return {
+      type: 'grammar_note',
+      isTeaching: true,
+      ruleId: rule.id,
+      title: rule.title,
+      rule: rule.rule,
+      example: rule.example || '',
+      traps: Array.isArray(rule.traps) ? rule.traps.slice(0, 2) : []
+    };
+  },
 
-    // Dialogue fill (si dialogues ≥ 4 répliques)
-    const df = this.createDialogueFill();
-    if (df) exercises.push(df);
-
-    // Match pairs (si vocab suffisant)
-    if (vocab.length >= 4) {
-      const mp = this.createMatchPairs(vocab);
-      if (mp) exercises.push(mp);
+  // ── Anti-répétition : jamais 2 fois le même type d'affilée (Pilier E) ──
+  _antiRepeat(list) {
+    const result = [...list];
+    for (let i = 1; i < result.length; i++) {
+      if (result[i].type === result[i - 1].type) {
+        for (let j = i + 1; j < result.length; j++) {
+          if (result[j].type !== result[i - 1].type) {
+            [result[i], result[j]] = [result[j], result[i]];
+            break;
+          }
+        }
+      }
     }
-
-    // Listening transcribe (1 par session)
-    const lt = this.createListeningTranscribe(chapter);
-    if (lt) exercises.push(lt);
-
-    return this._shuffle(exercises);
+    return result;
   },
 
   generateForReview(reviewItems) {
@@ -323,9 +436,17 @@ window.Exercises = {
   },
 
   // ── Dialogue fill : compléter une réplique masquée dans un dialogue ──
-  createDialogueFill() {
+  // Contextualisé (Pilier B) : en leçon, UNIQUEMENT les dialogues du chapitre.
+  // Sans chapitre (révision), tirage libre.
+  createDialogueFill(chapter) {
     if (!window.AppDialogues || AppDialogues.length === 0) return null;
-    const candidates = AppDialogues.filter(d => d.turns && d.turns.length >= 4);
+    let pool = AppDialogues;
+    if (chapter) {
+      const ids = chapter.dialogueIds || [];
+      if (ids.length === 0) return null; // chapitre sans dialogue → on omet, pas de hors-sujet
+      pool = AppDialogues.filter(d => ids.includes(d.id));
+    }
+    const candidates = pool.filter(d => d.turns && d.turns.length >= 4);
     if (candidates.length === 0) return null;
 
     const dialogue = candidates[Math.floor(Math.random() * candidates.length)];
@@ -377,15 +498,36 @@ window.Exercises = {
   },
 
   // ── Grammar fill : drill grammatical (locatif, datif, pluriel, etc.) ──
-  createGrammarFill() {
+  // Contextualisé (Pilier B) : en leçon, UNIQUEMENT les règles du chapitre
+  // (drills[] ET exercises[] comme sources). Sans chapitre (révision), tirage libre.
+  createGrammarFill(chapter) {
     if (!window.AppGrammar) return null;
-    const withDrills = AppGrammar.filter(g => Array.isArray(g.drills) && g.drills.length > 0);
-    if (withDrills.length === 0) return null;
-    const rule = withDrills[Math.floor(Math.random() * withDrills.length)];
-    const drill = rule.drills[Math.floor(Math.random() * rule.drills.length)];
-    if (!drill || !drill.correct || !Array.isArray(drill.distractors) || drill.distractors.length < 3) {
-      return null;
+    let pool = AppGrammar;
+    if (chapter) {
+      const ids = chapter.grammarIds || [];
+      if (ids.length === 0) return null; // chapitre sans grammaire → on omet
+      pool = AppGrammar.filter(g => ids.includes(g.id));
     }
+    // Candidats : drills (format racine+question) et exercises (format QCM)
+    const candidates = [];
+    for (const rule of pool) {
+      for (const drill of (rule.drills || [])) {
+        if (drill && drill.correct && Array.isArray(drill.distractors) && drill.distractors.length >= 3) {
+          candidates.push({ kind: 'drill', rule, drill });
+        }
+      }
+      for (const ex of (rule.exercises || [])) {
+        if (ex && ex.answer && Array.isArray(ex.options) && ex.options.length >= 3) {
+          candidates.push({ kind: 'ex', rule, ex });
+        }
+      }
+    }
+    if (candidates.length === 0) return null;
+    const pick = candidates[Math.floor(Math.random() * candidates.length)];
+    if (pick.kind === 'ex') {
+      return this.createGrammarPracticeExercise(pick.ex, pick.rule.id, pick.rule.title);
+    }
+    const { rule, drill } = pick;
     return {
       type: 'grammar_fill',
       root: drill.root,

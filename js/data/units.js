@@ -14,6 +14,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u1_c1',
+        grammarIds: ['g_harmonie_majeure'],
         title: 'Sons et lettres clés',
         goal: 'Lire les sons ç, ş, ğ, ı, ö, ü',
         xpReward: 50,
@@ -24,6 +25,7 @@ window.AppUnits = [
       },
       {
         id: 'u1_c2',
+        dialogueIds: ['d_rencontre'],
         title: 'Bonjour et au revoir',
         goal: 'Saluer et prendre congé',
         xpReward: 50,
@@ -73,6 +75,8 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u2_c1',
+        grammarIds: ['g_ordre_mots'],
+        dialogueIds: ['d_rencontre'],
         title: 'Je m\'appelle...',
         goal: 'Dire et demander son prénom',
         xpReward: 60,
@@ -83,6 +87,7 @@ window.AppUnits = [
       },
       {
         id: 'u2_c2',
+        dialogueIds: ['d_nationalite'],
         title: 'Ma nationalité',
         goal: 'Pays, origines, langues et nationalités',
         xpReward: 70,
@@ -103,6 +108,7 @@ window.AppUnits = [
       },
       {
         id: 'u2_c4',
+        dialogueIds: ['d_calisma'],
         title: 'Mon métier',
         goal: 'Professions fréquentes',
         xpReward: 70,
@@ -113,6 +119,8 @@ window.AppUnits = [
       },
       {
         id: 'u2_c5',
+        grammarIds: ['g_ordre_mots'],
+        dialogueIds: ['d_rencontre', 'd_nationalite'],
         title: 'Mini présentation',
         goal: 'Enchaîner 4 phrases sur soi',
         xpReward: 100,
@@ -142,6 +150,8 @@ window.AppUnits = [
       },
       {
         id: 'u3_c2',
+        grammarIds: ['g_pluriel'],
+        dialogueIds: ['d_apartman'],
         title: 'Mots de la maison',
         goal: 'Pièces et objets du quotidien',
         xpReward: 80,
@@ -181,6 +191,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u4_c1',
+        dialogueIds: ['d_aile', 'd_famille_elargie'],
         title: 'Ma famille',
         goal: 'Membres de la famille',
         xpReward: 70,
@@ -201,6 +212,7 @@ window.AppUnits = [
       },
       {
         id: 'u4_c3',
+        grammarIds: ['g_possessif'],
         title: 'Possessifs',
         goal: 'Mon/ma/mes — les pronoms possessifs',
         xpReward: 80,
@@ -220,6 +232,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u5_c1',
+        grammarIds: ['g_locatif'],
         title: 'Lieux de la ville',
         goal: 'Magasin, hôpital, gare, hôtel...',
         xpReward: 80,
@@ -230,6 +243,8 @@ window.AppUnits = [
       },
       {
         id: 'u5_c2',
+        grammarIds: ['g_datif'],
+        dialogueIds: ['d_direction'],
         title: 'Demander son chemin',
         goal: 'Où est... ? À gauche, à droite, tout droit',
         xpReward: 90,
@@ -240,6 +255,7 @@ window.AppUnits = [
       },
       {
         id: 'u5_c3',
+        dialogueIds: ['d_otobus', 'd_taksi'],
         title: 'Transports',
         goal: 'Bus, métro, taxi, train, avion',
         xpReward: 70,
@@ -250,6 +266,8 @@ window.AppUnits = [
       },
       {
         id: 'u5_c4',
+        grammarIds: ['g_ablatif'],
+        dialogueIds: ['d_direction'],
         title: 'Directions',
         goal: 'Tout droit, tournez à gauche, c\'est près',
         xpReward: 80,
@@ -269,6 +287,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u6_c1',
+        dialogueIds: ['d_marche'],
         title: 'Les aliments',
         goal: 'Fruits, légumes, viandes et produits de base',
         xpReward: 80,
@@ -279,6 +298,7 @@ window.AppUnits = [
       },
       {
         id: 'u6_c2',
+        dialogueIds: ['d_cafe'],
         title: 'Les boissons',
         goal: 'Eau, thé, café, jus de fruit',
         xpReward: 60,
@@ -289,6 +309,8 @@ window.AppUnits = [
       },
       {
         id: 'u6_c3',
+        grammarIds: ['g_accusatif'],
+        dialogueIds: ['d_restaurant_complet'],
         title: 'Au restaurant',
         goal: 'Commander un plat et payer l\'addition',
         xpReward: 100,
@@ -299,6 +321,7 @@ window.AppUnits = [
       },
       {
         id: 'u6_c4',
+        grammarIds: ['g_yok_var'],
         title: 'Goûts et préférences',
         goal: 'J\'aime, je n\'aime pas, c\'est délicieux',
         xpReward: 80,
@@ -318,6 +341,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u7_c1',
+        dialogueIds: ['d_supermarche'],
         title: 'Les prix',
         goal: 'Combien ça coûte ? C\'est cher ou pas cher ?',
         xpReward: 80,
@@ -328,6 +352,7 @@ window.AppUnits = [
       },
       {
         id: 'u7_c2',
+        dialogueIds: ['d_kiyafet'],
         title: 'Vêtements',
         goal: 'Chemise, pantalon, robe, chaussures...',
         xpReward: 70,
@@ -338,6 +363,7 @@ window.AppUnits = [
       },
       {
         id: 'u7_c3',
+        dialogueIds: ['d_kiyafet'],
         title: 'Couleurs et tailles',
         goal: 'Décrire la couleur et la taille d\'un article',
         xpReward: 60,
@@ -348,6 +374,7 @@ window.AppUnits = [
       },
       {
         id: 'u7_c4',
+        grammarIds: ['g_comparatif'],
         title: 'Comparer',
         goal: 'Plus grand, moins cher, très beau...',
         xpReward: 90,
@@ -367,6 +394,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u8_c1',
+        dialogueIds: ['d_telefon'],
         title: 'Faire répéter',
         goal: 'Pardon ? Pouvez-vous répéter / parler plus lentement ?',
         xpReward: 60,
@@ -377,6 +405,7 @@ window.AppUnits = [
       },
       {
         id: 'u8_c2',
+        dialogueIds: ['d_eczane'],
         title: 'Demander de l\'aide',
         goal: 'J\'ai besoin de... Au secours ! C\'est urgent',
         xpReward: 80,
@@ -387,6 +416,7 @@ window.AppUnits = [
       },
       {
         id: 'u8_c3',
+        dialogueIds: ['d_telefon'],
         title: 'Je ne comprends pas',
         goal: 'Gérer l\'incompréhension en turc',
         xpReward: 60,
@@ -397,6 +427,7 @@ window.AppUnits = [
       },
       {
         id: 'u8_c4',
+        dialogueIds: ['d_eczane'],
         title: 'Urgences',
         goal: 'Médecin, police, pharmacie : les mots qui sauvent',
         xpReward: 90,
@@ -416,6 +447,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u9_c1',
+        dialogueIds: ['d_habitudes'],
         title: 'Ma journée type',
         goal: 'Se lever, dormir, manger, aller au travail',
         xpReward: 90,
@@ -426,6 +458,7 @@ window.AppUnits = [
       },
       {
         id: 'u9_c2',
+        grammarIds: ['g_datif'],
         title: 'Verbes de mouvement',
         goal: 'Aller, venir, partir — avec lieu et transport',
         xpReward: 90,
@@ -436,6 +469,7 @@ window.AppUnits = [
       },
       {
         id: 'u9_c3',
+        grammarIds: ['g_present_iyor'],
         title: 'Ce que je fais',
         goal: 'Introduction au présent progressif en contexte',
         xpReward: 100,
@@ -456,6 +490,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u10_c1',
+        grammarIds: ['g_harmonie_majeure'],
         title: 'Les infinitifs',
         goal: 'Comprendre les suffixes -mak et -mek',
         xpReward: 80,
@@ -467,6 +502,7 @@ window.AppUnits = [
       },
       {
         id: 'u10_c2',
+        grammarIds: ['g_present_iyor'],
         title: 'Le présent affirmatif',
         goal: 'Former le présent progressif avec -iyor',
         xpReward: 120,
@@ -478,6 +514,7 @@ window.AppUnits = [
       },
       {
         id: 'u10_c3',
+        grammarIds: ['g_negatif_fiil'],
         title: 'Le présent négatif',
         goal: 'Former la négation avec -miyor (-mıyor, -muyor, -müyor)',
         xpReward: 100,
@@ -489,6 +526,7 @@ window.AppUnits = [
       },
       {
         id: 'u10_c4',
+        grammarIds: ['g_soru_mi'],
         title: 'Poser une question',
         goal: 'La particule interrogative mi/mı/mu/mü',
         xpReward: 100,
@@ -509,6 +547,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u11_c1',
+        grammarIds: ['g_passe_di'],
         title: 'Le passé simple',
         goal: 'Suffixe -di / -dı / -du / -dü',
         xpReward: 120,
@@ -520,6 +559,8 @@ window.AppUnits = [
       },
       {
         id: 'u11_c2',
+        grammarIds: ['g_passe_di'],
+        dialogueIds: ['d_habitudes'],
         title: 'Raconter sa journée',
         goal: 'Enchaîner des actions passées en contexte',
         xpReward: 120,
@@ -531,6 +572,7 @@ window.AppUnits = [
       },
       {
         id: 'u11_c3',
+        grammarIds: ['g_futur_acak'],
         title: 'Le futur',
         goal: 'Suffixe -ecek / -acak — projets et intentions',
         xpReward: 120,
@@ -542,6 +584,7 @@ window.AppUnits = [
       },
       {
         id: 'u11_c4',
+        grammarIds: ['g_futur_acak'],
         title: 'Mes projets',
         goal: 'Exprimer des intentions futures en contexte',
         xpReward: 100,
@@ -562,6 +605,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u12_c1',
+        dialogueIds: ['d_hotel'],
         title: 'À l\'hôtel',
         goal: 'Réserver une chambre et gérer un problème',
         xpReward: 130,
@@ -572,6 +616,7 @@ window.AppUnits = [
       },
       {
         id: 'u12_c2',
+        dialogueIds: ['d_avion'],
         title: 'Dans l\'avion',
         goal: 'Vocabulaire du voyage, douanes et aéroport',
         xpReward: 130,
@@ -582,6 +627,7 @@ window.AppUnits = [
       },
       {
         id: 'u12_c3',
+        dialogueIds: ['d_soiree_amis', 'd_rencontre'],
         title: 'Rencontre informelle',
         goal: 'Dialogue long multi-temps avec un natif',
         xpReward: 150,
@@ -592,6 +638,7 @@ window.AppUnits = [
       },
       {
         id: 'u12_c4',
+        grammarIds: ['g_present_iyor', 'g_passe_di', 'g_futur_acak', 'g_locatif'],
         title: 'Test A1',
         goal: 'Validation finale du niveau — 50 questions mixtes',
         xpReward: 200,
@@ -611,6 +658,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u13_c1',
+        dialogueIds: ['d_meteo'],
         title: 'La météo',
         goal: 'Parler du temps qu\'il fait',
         xpReward: 70,
@@ -631,6 +679,7 @@ window.AppUnits = [
       },
       {
         id: 'u13_c3',
+        dialogueIds: ['d_saglik'],
         title: 'Je ne me sens pas bien',
         goal: 'Décrire un symptôme chez le médecin',
         xpReward: 90,
@@ -650,6 +699,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u14_c1',
+        grammarIds: ['g_soru_mi', 'g_yok_var'],
         title: 'Questions essentielles',
         goal: 'Poser les 5 grandes questions en turc',
         xpReward: 80,
@@ -660,6 +710,7 @@ window.AppUnits = [
       },
       {
         id: 'u14_c2',
+        dialogueIds: ['d_rencontre'],
         title: 'Comment ça va ?',
         goal: 'Saluer, demander et répondre sur l\'état',
         xpReward: 70,
@@ -703,6 +754,8 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u15_c1',
+        grammarIds: ['g_locatif'],
+        dialogueIds: ['d_apartman'],
         title: 'Les pièces de la maison',
         goal: 'Nommer et localiser les pièces',
         xpReward: 80,
@@ -713,6 +766,7 @@ window.AppUnits = [
       },
       {
         id: 'u15_c2',
+        grammarIds: ['g_yok_var'],
         title: 'Les meubles & objets',
         goal: 'Décrire les objets de la maison',
         xpReward: 80,
@@ -734,6 +788,7 @@ window.AppUnits = [
       },
       {
         id: 'u15_c4',
+        dialogueIds: ['d_apartman'],
         title: 'Mon quartier & mes voisins',
         goal: 'Parler de son environnement proche',
         xpReward: 100,
@@ -775,6 +830,7 @@ window.AppUnits = [
       },
       {
         id: 'u16_c3',
+        dialogueIds: ['d_medecin', 'd_saglik'],
         title: 'Chez le médecin',
         goal: 'Décrire ses symptômes et comprendre une ordonnance',
         xpReward: 100,
@@ -785,6 +841,7 @@ window.AppUnits = [
       },
       {
         id: 'u16_c4',
+        dialogueIds: ['d_eczane'],
         title: 'Urgences & secours',
         goal: 'Réagir en cas d\'urgence',
         xpReward: 90,
@@ -806,6 +863,8 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u17_c1',
+        grammarIds: ['g_ablatif'],
+        dialogueIds: ['d_otobus', 'd_taksi'],
         title: 'Transports en commun',
         goal: 'Prendre le bus, le métro, le taxi',
         xpReward: 80,
@@ -816,6 +875,7 @@ window.AppUnits = [
       },
       {
         id: 'u17_c2',
+        dialogueIds: ['d_gare', 'd_avion', 'd_voyage_retour'],
         title: 'À la gare & à l\'aéroport',
         goal: 'Acheter un billet et s\'orienter dans un terminal',
         xpReward: 100,
@@ -826,6 +886,8 @@ window.AppUnits = [
       },
       {
         id: 'u17_c3',
+        grammarIds: ['g_locatif'],
+        dialogueIds: ['d_banque', 'd_cinema'],
         title: 'Lieux & commerces',
         goal: 'S\'orienter en ville et faire des achats',
         xpReward: 80,
@@ -836,6 +898,7 @@ window.AppUnits = [
       },
       {
         id: 'u17_c4',
+        dialogueIds: ['d_hotel'],
         title: 'À l\'hôtel',
         goal: 'Réserver, s\'enregistrer et demander des services',
         xpReward: 90,
@@ -857,6 +920,8 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u18_c1',
+        grammarIds: ['g_abilmek'],
+        dialogueIds: ['d_universite'],
         title: 'Apprendre, se souvenir, oublier',
         goal: 'Exprimer des processus cognitifs',
         xpReward: 100,
@@ -879,6 +944,8 @@ window.AppUnits = [
       },
       {
         id: 'u18_c3',
+        grammarIds: ['g_ki_relatif'],
+        dialogueIds: ['d_telephone_portable'],
         title: 'Trouver, perdre, dire, préparer',
         goal: 'Verbes essentiels du quotidien',
         xpReward: 100,
@@ -890,6 +957,7 @@ window.AppUnits = [
       },
       {
         id: 'u18_c4',
+        grammarIds: ['g_suffixe_avec'],
         title: 'Émotions en action',
         goal: 'Exprimer des émotions avec des verbes',
         xpReward: 110,

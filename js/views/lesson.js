@@ -56,6 +56,12 @@ window.Lesson = {
     const exo = this.exercises[this.currentIndex];
     const container = document.getElementById('lesson-body');
 
+    // ── Slides d'enseignement (v5 — Pilier A) : pas de scoring, juste "Continuer" ──
+    if (exo.isTeaching) {
+      this._renderTeachingSlide(exo, container);
+      return;
+    }
+
     let exoHtml = '';
     if (exo.type === 'qcm') {
       const isVerb = exo.subtype === 'verb_fill';
@@ -395,6 +401,90 @@ window.Lesson = {
     }
   },
 
+  // ── Rendu des slides d'enseignement : intro_card / grammar_note / tip_callout (v5) ──
+  _renderTeachingSlide(exo, container) {
+    let html = '';
+    if (exo.type === 'intro_card') {
+      const phoneticHtml = exo.phonetic
+        ? `<div class="ic-phonetic">🗣 ${exo.phonetic}</div>` : '';
+      const exampleHtml = exo.example && exo.example.tr ? `
+        <div class="ic-example" onclick="App.playTTS('${this._escape(exo.example.tr)}')">
+          <div class="ic-ex-tr">📖 ${exo.example.tr} <span class="ic-ex-tts">🔊</span></div>
+          <div class="ic-ex-fr">${exo.example.fr || ''}</div>
+        </div>` : '';
+      const badge = exo.isVerb ? '⚡ Nouveau verbe' : '✨ Nouveau mot';
+      html = `
+        <div class="exercise-container exo-slide-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">📖 Découverte</div>
+          </div>
+          <div class="exercise-content" style="justify-content:flex-start">
+            <div class="intro-card">
+              <div class="ic-badge">${badge}</div>
+              <div class="ic-tr">${exo.tr}</div>
+              <button class="audio-play-btn ic-audio" onclick="App.playTTS('${this._escape(exo.tr)}')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                </svg>
+                Écouter
+              </button>
+              <div class="ic-fr">${exo.fr}</div>
+              ${phoneticHtml}
+              ${exampleHtml}
+            </div>
+            <button class="btn btn-primary btn-full mt-4" onclick="Lesson.nextStep()">Continuer</button>
+          </div>
+        </div>
+      `;
+    } else if (exo.type === 'grammar_note') {
+      const trapsHtml = (exo.traps || []).map(t =>
+        `<div class="gn-trap">⚠️ ${t}</div>`
+      ).join('');
+      const exampleHtml = exo.example
+        ? `<div class="gn-example">${exo.example}</div>` : '';
+      html = `
+        <div class="exercise-container exo-slide-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">📐 Point de grammaire</div>
+          </div>
+          <div class="exercise-content" style="justify-content:flex-start">
+            <div class="grammar-note-card">
+              <div class="gn-title">${exo.title}</div>
+              <div class="gn-rule">${exo.rule}</div>
+              ${exampleHtml}
+              ${trapsHtml}
+            </div>
+            <button class="btn btn-primary btn-full mt-4" onclick="Lesson.nextStep()">J'ai compris</button>
+          </div>
+        </div>
+      `;
+    } else { // tip_callout
+      html = `
+        <div class="exercise-container exo-slide-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">💡 Astuce</div>
+          </div>
+          <div class="exercise-content" style="justify-content:flex-start">
+            <div class="tip-callout">
+              <span class="tip-icon">${exo.icon || '💡'}</span>
+              <span class="tip-text">${exo.text}</span>
+            </div>
+            <button class="btn btn-primary btn-full mt-4" onclick="Lesson.nextStep()">Continuer</button>
+          </div>
+        </div>
+      `;
+    }
+
+    this._answered = false;
+    container.innerHTML = html;
+
+    // TTS auto sur les nouveaux mots
+    if (exo.type === 'intro_card' && exo.tr) {
+      setTimeout(() => App.playTTS(exo.tr), 350);
+    }
+  },
+
   checkInput() {
     const el = document.getElementById('exo-input');
     if (!el || !el.value.trim()) return;
@@ -570,6 +660,12 @@ window.Lesson = {
   _bindKeys() {
     if (this._keyHandler) document.removeEventListener('keydown', this._keyHandler);
     this._keyHandler = (e) => {
+      // Slide d'enseignement : Entrée = continuer
+      const cur = this.exercises[this.currentIndex];
+      if (cur && cur.isTeaching) {
+        if (e.key === 'Enter') this.nextStep();
+        return;
+      }
       const fbVisible = document.getElementById('feedback-bar')?.classList.contains('show');
       if (fbVisible) {
         if (e.key === 'Enter') this.nextStep();
@@ -592,8 +688,10 @@ window.Lesson = {
   },
 
   finishLesson() {
-    const accuracy = this.exercises.length > 0
-      ? Math.round((this.correctCount / this.exercises.length) * 100) : 0;
+    // Précision calculée sur les vrais exercices (hors slides d'enseignement)
+    const realExos = this.exercises.filter(e => !e.isTeaching);
+    const accuracy = realExos.length > 0
+      ? Math.round((this.correctCount / realExos.length) * 100) : 0;
 
     let finalXp = this.currentXp;
     if (accuracy >= 80) finalXp += 20;
@@ -672,7 +770,7 @@ window.Lesson = {
       <div class="sm-stats">
         <div class="sm-stat"><div class="sm-val" id="sm-xp">+${finalXp}</div><div class="sm-lbl">XP</div></div>
         <div class="sm-stat"><div class="sm-val" id="sm-acc">${accuracy}%</div><div class="sm-lbl">Précision</div></div>
-        <div class="sm-stat"><div class="sm-val" id="sm-learned">${this.exercises.length}</div><div class="sm-lbl">Exos</div></div>
+        <div class="sm-stat"><div class="sm-val" id="sm-learned">${realExos.length}</div><div class="sm-lbl">Exos</div></div>
       </div>
       ${wordsHtml}
       ${retryBtn}
