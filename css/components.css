@@ -944,3 +944,225 @@
   /* View scroll */
   .view-scroll { padding: var(--s3); }
 }
+
+/* ═══════════════════════════════════════════════
+   Grammar Practice Overlay (Bloc I)
+   ═══════════════════════════════════════════════ */
+
+.grammar-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+.grammar-card-header .grammar-title {
+  margin-bottom: 0;
+  flex: 1;
+}
+.btn-grammar-practice {
+  flex-shrink: 0;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+.btn-grammar-practice:hover { background: var(--primary-dark, #005ecb); transform: translateY(-1px); }
+
+/* Practice overlay */
+.grammar-practice-overlay {
+  background: var(--bg, #fff);
+  border: 2px solid var(--primary);
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+  animation: gp-appear 0.25s ease-out;
+}
+.grammar-practice-overlay.hidden { display: none; }
+
+@keyframes gp-appear {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.gp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+.gp-rule-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.gp-close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--text-secondary, #888);
+  padding: 0.2rem 0.4rem;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.gp-close:hover { background: var(--bg-secondary, #f0f0f0); }
+
+.gp-progress-track {
+  height: 4px;
+  background: var(--border, #e0e0e0);
+  border-radius: 2px;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+.gp-progress-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+.gp-counter {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #888);
+  text-align: right;
+  margin-bottom: 1rem;
+}
+
+.gp-type-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary, #888);
+  margin-bottom: 0.6rem;
+}
+.gp-question {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text, #222);
+  margin: 0 0 0.75rem;
+  line-height: 1.4;
+}
+.gp-hint {
+  font-size: 0.8rem;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.gp-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.gp-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--bg-secondary, #f5f5f5);
+  border: 2px solid var(--border, #e0e0e0);
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+  font-size: 0.9rem;
+}
+.gp-option:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 5%, var(--bg-secondary, #f5f5f5)); }
+.gp-option.correct { border-color: var(--success, #22c55e); background: color-mix(in srgb, var(--success, #22c55e) 10%, transparent); }
+.gp-option.wrong { border-color: var(--error, #ef4444); background: color-mix(in srgb, var(--error, #ef4444) 10%, transparent); }
+.gp-opt-key {
+  background: var(--border, #e0e0e0);
+  color: var(--text-secondary, #888);
+  border-radius: 6px;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.gp-opt-text { font-weight: 500; }
+
+/* Feedback inside overlay */
+.gp-feedback {
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.gp-feedback.hidden { display: none; }
+.gp-feedback.correct { background: color-mix(in srgb, var(--success, #22c55e) 12%, transparent); border: 1.5px solid var(--success, #22c55e); }
+.gp-feedback.wrong { background: color-mix(in srgb, var(--error, #ef4444) 10%, transparent); border: 1.5px solid var(--error, #ef4444); }
+.gp-fb-icon { font-size: 1.4rem; }
+.gp-fb-title { font-weight: 700; font-size: 0.95rem; }
+.gp-fb-answer { font-size: 0.88rem; font-weight: 600; color: var(--error, #ef4444); }
+.gp-feedback.correct .gp-fb-answer { color: var(--success, #22c55e); }
+.gp-fb-expl { font-size: 0.82rem; color: var(--text-secondary, #666); font-style: italic; }
+
+/* Finish screen */
+.gp-finish {
+  text-align: center;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+.gp-finish-medal { font-size: 2.5rem; }
+.gp-finish-score { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+.gp-finish-label { font-size: 0.9rem; color: var(--text-secondary, #666); margin-bottom: 0.5rem; }
+.mt-2 { margin-top: 0.5rem; }
+
+/* Grammar exercise card in lesson (grammar_fill subtype) */
+.grammar-exo-card {
+  background: color-mix(in srgb, var(--primary) 7%, var(--bg-secondary, #f5f5f5));
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  margin-bottom: 0.75rem;
+}
+.grammar-exo-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.grammar-exo-badge {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 20px;
+  padding: 0.18rem 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.grammar-exo-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text, #222);
+}
+.grammar-exo-hint {
+  font-size: 0.8rem;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  border-radius: 8px;
+  padding: 0.35rem 0.75rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
