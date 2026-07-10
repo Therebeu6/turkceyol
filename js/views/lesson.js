@@ -27,6 +27,13 @@ window.Lesson = {
     this.unitId = parts[0];
     this.chapterId = parts.slice(0, 2).join('_');
 
+    // Objectif "can-do" du chapitre (Pilier C)
+    this._canDo = null;
+    for (const u of AppUnits) {
+      const c = u.chapters.find(ch => ch.id === this.chapterId);
+      if (c) { this._canDo = c.canDo || null; break; }
+    }
+
     this.exercises = Exercises.generateForChapter(this.chapterId);
     this.currentIndex = 0;
     this.correctCount = 0;
@@ -381,7 +388,7 @@ window.Lesson = {
     `;
 
     this._answered = false;
-    container.innerHTML = exoHtml + feedbackHtml;
+    container.innerHTML = this._canDoBanner() + exoHtml + feedbackHtml;
 
     if (exo.type === 'input') {
       setTimeout(() => {
@@ -399,6 +406,17 @@ window.Lesson = {
         if (inp) inp.focus();
       }, 400);
     }
+  },
+
+  // Bandeau objectif (affiché sur la 1re slide uniquement)
+  _canDoBanner() {
+    if (!this._canDo || this.currentIndex !== 0) return '';
+    return `
+      <div class="cando-banner">
+        <span class="cando-icon">🎯</span>
+        <span class="cando-text">Objectif : ${this._canDo}</span>
+      </div>
+    `;
   },
 
   // ── Rendu des slides d'enseignement : intro_card / grammar_note / tip_callout (v5) ──
@@ -477,7 +495,7 @@ window.Lesson = {
     }
 
     this._answered = false;
-    container.innerHTML = html;
+    container.innerHTML = this._canDoBanner() + html;
 
     // TTS auto sur les nouveaux mots
     if (exo.type === 'intro_card' && exo.tr) {

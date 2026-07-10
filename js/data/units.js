@@ -7,6 +7,7 @@
 window.AppUnits = [
   {
     id: 'u1',
+    cefr: 'A1',
     title: 'Premiers pas',
     description: 'Bases, salutations et prononciation.',
     icon: '👋',
@@ -14,6 +15,8 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u1_c1',
+        tips: [{ icon: '🔤', text: 'Bonne nouvelle : le turc se lit EXACTEMENT comme il s\'écrit. Une lettre = un son, toujours. Apprenez les 6 lettres spéciales et vous savez tout lire !' }],
+        canDo: 'Je peux lire et prononcer les sons spéciaux du turc',
         grammarIds: ['g_harmonie_majeure'],
         title: 'Sons et lettres clés',
         goal: 'Lire les sons ç, ş, ğ, ı, ö, ü',
@@ -25,6 +28,7 @@ window.AppUnits = [
       },
       {
         id: 'u1_c2',
+        canDo: 'Je peux saluer et prendre congé',
         dialogueIds: ['d_rencontre'],
         title: 'Bonjour et au revoir',
         goal: 'Saluer et prendre congé',
@@ -36,6 +40,7 @@ window.AppUnits = [
       },
       {
         id: 'u1_c3',
+        canDo: 'Je peux remercier et m\'excuser',
         title: 'Politesse essentielle',
         goal: 'Dire merci, pardon, s\'il vous plaît',
         xpReward: 60,
@@ -46,6 +51,7 @@ window.AppUnits = [
       },
       {
         id: 'u1_c4',
+        canDo: 'Je peux répondre oui, non, d\'accord',
         title: 'Oui, non, peut-être',
         goal: 'Réponses de base',
         xpReward: 40,
@@ -56,6 +62,8 @@ window.AppUnits = [
       },
       {
         id: 'u1_c5',
+        tips: [{ icon: '🔢', text: 'Les nombres se combinent logiquement : on üç = 13 (dix-trois), yirmi bir = 21 (vingt-un). Aucune exception !' }],
+        canDo: 'Je peux compter de 1 à 10',
         title: 'Les chiffres 1–10',
         goal: 'Compter jusqu\'à 10',
         xpReward: 70,
@@ -68,6 +76,7 @@ window.AppUnits = [
   },
   {
     id: 'u2',
+    cefr: 'A1',
     title: 'Me présenter',
     description: 'Parler de soi : nom, âge, nationalité.',
     icon: '👤',
@@ -75,6 +84,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u2_c1',
+        canDo: 'Je peux dire mon prénom et demander celui de quelqu\'un',
         grammarIds: ['g_ordre_mots'],
         dialogueIds: ['d_rencontre'],
         title: 'Je m\'appelle...',
@@ -87,6 +97,8 @@ window.AppUnits = [
       },
       {
         id: 'u2_c2',
+        tips: [{ icon: '🌍', text: 'Pas de masculin/féminin en turc : Fransız = français ET française. Le genre grammatical n\'existe pas !' }],
+        canDo: 'Je peux dire ma nationalité et ma langue',
         dialogueIds: ['d_nationalite'],
         title: 'Ma nationalité',
         goal: 'Pays, origines, langues et nationalités',
@@ -98,6 +110,7 @@ window.AppUnits = [
       },
       {
         id: 'u2_c3',
+        canDo: 'Je peux dire et demander l\'âge',
         title: 'Mon âge',
         goal: 'Dire et demander l\'âge avec des chiffres',
         xpReward: 50,
@@ -108,6 +121,7 @@ window.AppUnits = [
       },
       {
         id: 'u2_c4',
+        canDo: 'Je peux dire mon métier',
         dialogueIds: ['d_calisma'],
         title: 'Mon métier',
         goal: 'Professions fréquentes',
@@ -119,6 +133,7 @@ window.AppUnits = [
       },
       {
         id: 'u2_c5',
+        canDo: 'Je peux me présenter en 4 phrases',
         grammarIds: ['g_ordre_mots'],
         dialogueIds: ['d_rencontre', 'd_nationalite'],
         title: 'Mini présentation',
@@ -133,6 +148,7 @@ window.AppUnits = [
   },
   {
     id: 'u3',
+    cefr: 'A1',
     title: 'Le quotidien',
     description: 'Mots de la maison, l\'heure, les jours.',
     icon: '🏠',
@@ -140,6 +156,8 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u3_c1',
+        tips: [{ icon: '🕐', text: '« Saat kaç ? » = quelle heure est-il ? — mais « Kaç saat ? » = combien d\'heures ? L\'ordre des mots change tout.' }],
+        canDo: 'Je peux dire l\'heure et les jours de la semaine',
         title: 'L\'heure et les jours',
         goal: 'Dire l\'heure et les jours de la semaine',
         xpReward: 70,
@@ -150,6 +168,7 @@ window.AppUnits = [
       },
       {
         id: 'u3_c2',
+        canDo: 'Je peux nommer les pièces et objets de base de la maison',
         grammarIds: ['g_pluriel'],
         dialogueIds: ['d_apartman'],
         title: 'Mots de la maison',
@@ -162,6 +181,7 @@ window.AppUnits = [
       },
       {
         id: 'u3_c3',
+        canDo: 'Je peux situer une action : hier, aujourd\'hui, demain',
         title: 'Aujourd\'hui et demain',
         goal: 'Notions de temps : hier, aujourd\'hui, demain',
         xpReward: 70,
@@ -172,6 +192,7 @@ window.AppUnits = [
       },
       {
         id: 'u3_c4',
+        canDo: 'Je peux compter jusqu\'à 1000',
         title: 'Les chiffres 10–1000',
         goal: 'Compter jusqu\'à 1000 : dizaines et centaines',
         xpReward: 60,
@@ -184,6 +205,7 @@ window.AppUnits = [
   },
   {
     id: 'u4',
+    cefr: 'A1',
     title: 'Famille et entourage',
     description: 'Parler de ses proches et les décrire.',
     icon: '👨‍👩‍👧‍👦',
@@ -191,6 +213,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u4_c1',
+        canDo: 'Je peux présenter ma famille',
         dialogueIds: ['d_aile', 'd_famille_elargie'],
         title: 'Ma famille',
         goal: 'Membres de la famille',
@@ -202,6 +225,7 @@ window.AppUnits = [
       },
       {
         id: 'u4_c2',
+        canDo: 'Je peux décrire l\'apparence de quelqu\'un',
         title: 'Décrire quelqu\'un',
         goal: 'Taille, apparence et caractère',
         xpReward: 80,
@@ -212,6 +236,8 @@ window.AppUnits = [
       },
       {
         id: 'u4_c3',
+        tips: [{ icon: '👪', text: 'En turc on ne dit pas « ma mère » avec un mot séparé : le possessif est un SUFFIXE collé au nom : annem = ma mère.' }],
+        canDo: 'Je peux dire « mon, ton, son » avec les suffixes possessifs',
         grammarIds: ['g_possessif'],
         title: 'Possessifs',
         goal: 'Mon/ma/mes — les pronoms possessifs',
@@ -225,6 +251,7 @@ window.AppUnits = [
   },
   {
     id: 'u5',
+    cefr: 'A1',
     title: 'Se déplacer',
     description: 'Lieux, directions et transports.',
     icon: '🗺️',
@@ -232,6 +259,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u5_c1',
+        canDo: 'Je peux nommer les lieux courants de la ville',
         grammarIds: ['g_locatif'],
         title: 'Lieux de la ville',
         goal: 'Magasin, hôpital, gare, hôtel...',
@@ -243,6 +271,7 @@ window.AppUnits = [
       },
       {
         id: 'u5_c2',
+        canDo: 'Je peux demander mon chemin',
         grammarIds: ['g_datif'],
         dialogueIds: ['d_direction'],
         title: 'Demander son chemin',
@@ -255,6 +284,7 @@ window.AppUnits = [
       },
       {
         id: 'u5_c3',
+        canDo: 'Je peux nommer les transports',
         dialogueIds: ['d_otobus', 'd_taksi'],
         title: 'Transports',
         goal: 'Bus, métro, taxi, train, avion',
@@ -266,6 +296,7 @@ window.AppUnits = [
       },
       {
         id: 'u5_c4',
+        canDo: 'Je peux comprendre des indications de direction',
         grammarIds: ['g_ablatif'],
         dialogueIds: ['d_direction'],
         title: 'Directions',
@@ -280,6 +311,7 @@ window.AppUnits = [
   },
   {
     id: 'u6',
+    cefr: 'A1',
     title: 'Manger et boire',
     description: 'Aliments, restaurant, goûts.',
     icon: '🍽️',
@@ -287,6 +319,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u6_c1',
+        canDo: 'Je peux nommer les aliments de base',
         dialogueIds: ['d_marche'],
         title: 'Les aliments',
         goal: 'Fruits, légumes, viandes et produits de base',
@@ -298,6 +331,7 @@ window.AppUnits = [
       },
       {
         id: 'u6_c2',
+        canDo: 'Je peux commander une boisson',
         dialogueIds: ['d_cafe'],
         title: 'Les boissons',
         goal: 'Eau, thé, café, jus de fruit',
@@ -309,6 +343,8 @@ window.AppUnits = [
       },
       {
         id: 'u6_c3',
+        tips: [{ icon: '🍽️', text: 'Pour commander poliment : « … istiyorum » (je voudrais) ou « … alabilir miyim ? » (puis-je avoir ?).' }],
+        canDo: 'Je peux commander au restaurant et demander l\'addition',
         grammarIds: ['g_accusatif'],
         dialogueIds: ['d_restaurant_complet'],
         title: 'Au restaurant',
@@ -321,6 +357,7 @@ window.AppUnits = [
       },
       {
         id: 'u6_c4',
+        canDo: 'Je peux dire ce que j\'aime et ce que je n\'aime pas',
         grammarIds: ['g_yok_var'],
         title: 'Goûts et préférences',
         goal: 'J\'aime, je n\'aime pas, c\'est délicieux',
@@ -334,6 +371,7 @@ window.AppUnits = [
   },
   {
     id: 'u7',
+    cefr: 'A1',
     title: 'Acheter et comparer',
     description: 'Shopping, vêtements, prix.',
     icon: '🛍️',
@@ -341,6 +379,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u7_c1',
+        canDo: 'Je peux demander et comprendre un prix',
         dialogueIds: ['d_supermarche'],
         title: 'Les prix',
         goal: 'Combien ça coûte ? C\'est cher ou pas cher ?',
@@ -352,6 +391,7 @@ window.AppUnits = [
       },
       {
         id: 'u7_c2',
+        canDo: 'Je peux nommer les vêtements courants',
         dialogueIds: ['d_kiyafet'],
         title: 'Vêtements',
         goal: 'Chemise, pantalon, robe, chaussures...',
@@ -363,6 +403,7 @@ window.AppUnits = [
       },
       {
         id: 'u7_c3',
+        canDo: 'Je peux décrire la couleur et la taille d\'un article',
         dialogueIds: ['d_kiyafet'],
         title: 'Couleurs et tailles',
         goal: 'Décrire la couleur et la taille d\'un article',
@@ -374,6 +415,7 @@ window.AppUnits = [
       },
       {
         id: 'u7_c4',
+        canDo: 'Je peux comparer deux choses (plus grand, moins cher)',
         grammarIds: ['g_comparatif'],
         title: 'Comparer',
         goal: 'Plus grand, moins cher, très beau...',
@@ -387,6 +429,7 @@ window.AppUnits = [
   },
   {
     id: 'u8',
+    cefr: 'A1',
     title: 'Se faire comprendre',
     description: 'Clarifications et urgences.',
     icon: '🆘',
@@ -394,6 +437,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u8_c1',
+        canDo: 'Je peux faire répéter et demander de parler lentement',
         dialogueIds: ['d_telefon'],
         title: 'Faire répéter',
         goal: 'Pardon ? Pouvez-vous répéter / parler plus lentement ?',
@@ -405,6 +449,7 @@ window.AppUnits = [
       },
       {
         id: 'u8_c2',
+        canDo: 'Je peux demander de l\'aide',
         dialogueIds: ['d_eczane'],
         title: 'Demander de l\'aide',
         goal: 'J\'ai besoin de... Au secours ! C\'est urgent',
@@ -416,6 +461,7 @@ window.AppUnits = [
       },
       {
         id: 'u8_c3',
+        canDo: 'Je peux gérer une incompréhension',
         dialogueIds: ['d_telefon'],
         title: 'Je ne comprends pas',
         goal: 'Gérer l\'incompréhension en turc',
@@ -427,6 +473,7 @@ window.AppUnits = [
       },
       {
         id: 'u8_c4',
+        canDo: 'Je peux réagir face à une urgence',
         dialogueIds: ['d_eczane'],
         title: 'Urgences',
         goal: 'Médecin, police, pharmacie : les mots qui sauvent',
@@ -440,6 +487,7 @@ window.AppUnits = [
   },
   {
     id: 'u9',
+    cefr: 'A1',
     title: 'Ma routine',
     description: 'Actions du quotidien et verbes de mouvement.',
     icon: '⏰',
@@ -447,6 +495,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u9_c1',
+        canDo: 'Je peux raconter ma journée type',
         dialogueIds: ['d_habitudes'],
         title: 'Ma journée type',
         goal: 'Se lever, dormir, manger, aller au travail',
@@ -458,6 +507,7 @@ window.AppUnits = [
       },
       {
         id: 'u9_c2',
+        canDo: 'Je peux dire où je vais et d\'où je viens',
         grammarIds: ['g_datif'],
         title: 'Verbes de mouvement',
         goal: 'Aller, venir, partir — avec lieu et transport',
@@ -469,6 +519,7 @@ window.AppUnits = [
       },
       {
         id: 'u9_c3',
+        canDo: 'Je peux dire ce que je suis en train de faire',
         grammarIds: ['g_present_iyor'],
         title: 'Ce que je fais',
         goal: 'Introduction au présent progressif en contexte',
@@ -483,6 +534,7 @@ window.AppUnits = [
   },
   {
     id: 'u10',
+    cefr: 'A1',
     title: 'Conjugaison : Présent',
     description: 'Maîtriser le temps présent progressif (-iyor).',
     icon: '⚡',
@@ -490,6 +542,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u10_c1',
+        canDo: 'Je reconnais l\'infinitif des verbes (-mak/-mek)',
         grammarIds: ['g_harmonie_majeure'],
         title: 'Les infinitifs',
         goal: 'Comprendre les suffixes -mak et -mek',
@@ -502,6 +555,8 @@ window.AppUnits = [
       },
       {
         id: 'u10_c2',
+        tips: [{ icon: '⚡', text: 'Le présent -iyor couvre à la fois « je mange » et « je suis en train de manger » : un seul temps pour les deux !' }],
+        canDo: 'Je peux conjuguer au présent progressif (-iyor)',
         grammarIds: ['g_present_iyor'],
         title: 'Le présent affirmatif',
         goal: 'Former le présent progressif avec -iyor',
@@ -514,6 +569,7 @@ window.AppUnits = [
       },
       {
         id: 'u10_c3',
+        canDo: 'Je peux dire ce que je ne fais pas (-miyor)',
         grammarIds: ['g_negatif_fiil'],
         title: 'Le présent négatif',
         goal: 'Former la négation avec -miyor (-mıyor, -muyor, -müyor)',
@@ -526,6 +582,7 @@ window.AppUnits = [
       },
       {
         id: 'u10_c4',
+        canDo: 'Je peux poser une question oui/non (mi ?)',
         grammarIds: ['g_soru_mi'],
         title: 'Poser une question',
         goal: 'La particule interrogative mi/mı/mu/mü',
@@ -540,6 +597,7 @@ window.AppUnits = [
   },
   {
     id: 'u11',
+    cefr: 'A1',
     title: 'Passé et Futur',
     description: 'Parler de ce qui a été fait et ce qui sera fait.',
     icon: '⏳',
@@ -547,6 +605,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u11_c1',
+        canDo: 'Je peux conjuguer au passé (-di)',
         grammarIds: ['g_passe_di'],
         title: 'Le passé simple',
         goal: 'Suffixe -di / -dı / -du / -dü',
@@ -559,6 +618,7 @@ window.AppUnits = [
       },
       {
         id: 'u11_c2',
+        canDo: 'Je peux raconter ma journée au passé',
         grammarIds: ['g_passe_di'],
         dialogueIds: ['d_habitudes'],
         title: 'Raconter sa journée',
@@ -572,6 +632,7 @@ window.AppUnits = [
       },
       {
         id: 'u11_c3',
+        canDo: 'Je peux conjuguer au futur (-ecek/-acak)',
         grammarIds: ['g_futur_acak'],
         title: 'Le futur',
         goal: 'Suffixe -ecek / -acak — projets et intentions',
@@ -584,6 +645,7 @@ window.AppUnits = [
       },
       {
         id: 'u11_c4',
+        canDo: 'Je peux parler de mes projets',
         grammarIds: ['g_futur_acak'],
         title: 'Mes projets',
         goal: 'Exprimer des intentions futures en contexte',
@@ -598,6 +660,7 @@ window.AppUnits = [
   },
   {
     id: 'u12',
+    cefr: 'A1',
     title: 'Missions réelles (A1)',
     description: 'Mises en situation pratiques et test final.',
     icon: '🏆',
@@ -605,8 +668,9 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u12_c1',
+        canDo: 'Je peux réserver une chambre d\'hôtel',
         dialogueIds: ['d_hotel'],
-        title: 'À l\'hôtel',
+        title: 'Mission : à l\'hôtel',
         goal: 'Réserver une chambre et gérer un problème',
         xpReward: 130,
         time: 12,
@@ -616,6 +680,7 @@ window.AppUnits = [
       },
       {
         id: 'u12_c2',
+        canDo: 'Je peux me débrouiller à l\'aéroport et dans l\'avion',
         dialogueIds: ['d_avion'],
         title: 'Dans l\'avion',
         goal: 'Vocabulaire du voyage, douanes et aéroport',
@@ -627,6 +692,7 @@ window.AppUnits = [
       },
       {
         id: 'u12_c3',
+        canDo: 'Je peux tenir une conversation informelle simple',
         dialogueIds: ['d_soiree_amis', 'd_rencontre'],
         title: 'Rencontre informelle',
         goal: 'Dialogue long multi-temps avec un natif',
@@ -638,6 +704,7 @@ window.AppUnits = [
       },
       {
         id: 'u12_c4',
+        canDo: 'Je valide mon niveau A1 !',
         grammarIds: ['g_present_iyor', 'g_passe_di', 'g_futur_acak', 'g_locatif'],
         title: 'Test A1',
         goal: 'Validation finale du niveau — 50 questions mixtes',
@@ -651,6 +718,7 @@ window.AppUnits = [
   },
   {
     id: 'u13',
+    cefr: 'A2',
     title: 'Santé et météo',
     description: 'Parler du temps, du corps et de la santé.',
     icon: '🏥',
@@ -658,6 +726,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u13_c1',
+        canDo: 'Je peux parler du temps qu\'il fait',
         dialogueIds: ['d_meteo'],
         title: 'La météo',
         goal: 'Parler du temps qu\'il fait',
@@ -669,6 +738,7 @@ window.AppUnits = [
       },
       {
         id: 'u13_c2',
+        canDo: 'Je peux nommer les parties du corps',
         title: 'Mon corps',
         goal: 'Nommer les parties du corps',
         xpReward: 70,
@@ -679,6 +749,8 @@ window.AppUnits = [
       },
       {
         id: 'u13_c3',
+        tips: [{ icon: '🏥', text: 'Pour dire où vous avez mal : partie du corps + ağrıyor → Başım ağrıyor = j\'ai mal à la tête.' }],
+        canDo: 'Je peux décrire un symptôme',
         dialogueIds: ['d_saglik'],
         title: 'Je ne me sens pas bien',
         goal: 'Décrire un symptôme chez le médecin',
@@ -692,6 +764,7 @@ window.AppUnits = [
   },
   {
     id: 'u14',
+    cefr: 'A2',
     title: 'Expressions du quotidien',
     description: 'Questions essentielles, salutations et expressions courantes.',
     icon: '💬',
@@ -699,6 +772,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u14_c1',
+        canDo: 'Je peux poser les questions essentielles (où, quand, comment…)',
         grammarIds: ['g_soru_mi', 'g_yok_var'],
         title: 'Questions essentielles',
         goal: 'Poser les 5 grandes questions en turc',
@@ -710,6 +784,7 @@ window.AppUnits = [
       },
       {
         id: 'u14_c2',
+        canDo: 'Je peux demander et dire comment ça va',
         dialogueIds: ['d_rencontre'],
         title: 'Comment ça va ?',
         goal: 'Saluer, demander et répondre sur l\'état',
@@ -721,6 +796,7 @@ window.AppUnits = [
       },
       {
         id: 'u14_c3',
+        canDo: 'Je peux nuancer une opinion (beaucoup, un peu, vraiment)',
         title: 'Exprimer l\'opinion',
         goal: 'Dire ce qu\'on aime, pense, veut',
         xpReward: 90,
@@ -731,6 +807,7 @@ window.AppUnits = [
       },
       {
         id: 'u14_c4',
+        canDo: 'Je peux situer des actions dans le temps (avant, après)',
         title: 'Avant et après',
         goal: 'Situer des actions dans le temps',
         xpReward: 80,
@@ -746,6 +823,7 @@ window.AppUnits = [
 
   {
     id: 'u15',
+    cefr: 'A2',
     title: 'Ma maison & mon quotidien',
     description: 'Décrire son logement, les pièces, les meubles et les tâches du quotidien.',
     icon: '🏠',
@@ -754,6 +832,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u15_c1',
+        canDo: 'Je peux décrire les pièces de mon logement',
         grammarIds: ['g_locatif'],
         dialogueIds: ['d_apartman'],
         title: 'Les pièces de la maison',
@@ -766,6 +845,7 @@ window.AppUnits = [
       },
       {
         id: 'u15_c2',
+        canDo: 'Je peux décrire les meubles et objets de la maison',
         grammarIds: ['g_yok_var'],
         title: 'Les meubles & objets',
         goal: 'Décrire les objets de la maison',
@@ -777,6 +857,7 @@ window.AppUnits = [
       },
       {
         id: 'u15_c3',
+        canDo: 'Je peux parler des tâches ménagères',
         title: 'Les tâches ménagères',
         goal: 'Parler des activités à la maison',
         xpReward: 90,
@@ -788,6 +869,7 @@ window.AppUnits = [
       },
       {
         id: 'u15_c4',
+        canDo: 'Je peux parler de mon quartier et de mes voisins',
         dialogueIds: ['d_apartman'],
         title: 'Mon quartier & mes voisins',
         goal: 'Parler de son environnement proche',
@@ -802,6 +884,7 @@ window.AppUnits = [
 
   {
     id: 'u16',
+    cefr: 'A2',
     title: 'Corps, santé & bien-être',
     description: 'Décrire le corps humain, parler de sa santé et consulter un médecin.',
     icon: '🏥',
@@ -810,8 +893,9 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u16_c1',
-        title: 'Le corps humain',
-        goal: 'Nommer les parties du corps',
+        canDo: 'Je maîtrise le vocabulaire complet du corps humain',
+        title: 'Le corps humain — approfondi',
+        goal: 'Réviser et compléter les parties du corps',
         xpReward: 70,
         time: 8,
         tags: ['Corps', 'A2'],
@@ -820,6 +904,7 @@ window.AppUnits = [
       },
       {
         id: 'u16_c2',
+        canDo: 'Je peux exprimer mon état physique et émotionnel',
         title: 'Comment vous sentez-vous ?',
         goal: 'Exprimer son état physique et émotionnel',
         xpReward: 80,
@@ -830,6 +915,7 @@ window.AppUnits = [
       },
       {
         id: 'u16_c3',
+        canDo: 'Je peux consulter un médecin et comprendre une ordonnance',
         dialogueIds: ['d_medecin', 'd_saglik'],
         title: 'Chez le médecin',
         goal: 'Décrire ses symptômes et comprendre une ordonnance',
@@ -841,6 +927,7 @@ window.AppUnits = [
       },
       {
         id: 'u16_c4',
+        canDo: 'Je peux appeler les secours et réagir en urgence',
         dialogueIds: ['d_eczane'],
         title: 'Urgences & secours',
         goal: 'Réagir en cas d\'urgence',
@@ -855,6 +942,7 @@ window.AppUnits = [
 
   {
     id: 'u17',
+    cefr: 'A2',
     title: 'Transports, ville & voyages',
     description: 'Se déplacer en ville, voyager en Turquie et gérer l\'hôtel.',
     icon: '✈️',
@@ -863,6 +951,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u17_c1',
+        canDo: 'Je peux prendre les transports en commun',
         grammarIds: ['g_ablatif'],
         dialogueIds: ['d_otobus', 'd_taksi'],
         title: 'Transports en commun',
@@ -875,6 +964,7 @@ window.AppUnits = [
       },
       {
         id: 'u17_c2',
+        canDo: 'Je peux acheter un billet et m\'orienter en gare/aéroport',
         dialogueIds: ['d_gare', 'd_avion', 'd_voyage_retour'],
         title: 'À la gare & à l\'aéroport',
         goal: 'Acheter un billet et s\'orienter dans un terminal',
@@ -886,6 +976,7 @@ window.AppUnits = [
       },
       {
         id: 'u17_c3',
+        canDo: 'Je peux faire des achats et des démarches en ville',
         grammarIds: ['g_locatif'],
         dialogueIds: ['d_banque', 'd_cinema'],
         title: 'Lieux & commerces',
@@ -898,6 +989,7 @@ window.AppUnits = [
       },
       {
         id: 'u17_c4',
+        canDo: 'Je peux gérer mon séjour à l\'hôtel de A à Z',
         dialogueIds: ['d_hotel'],
         title: 'À l\'hôtel',
         goal: 'Réserver, s\'enregistrer et demander des services',
@@ -912,6 +1004,7 @@ window.AppUnits = [
 
   {
     id: 'u18',
+    cefr: 'A2',
     title: 'Verbes avancés & production active',
     description: 'Maîtriser les verbes A2 essentiels et construire des phrases plus complexes.',
     icon: '⚡',
@@ -920,6 +1013,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u18_c1',
+        canDo: 'Je peux parler d\'apprendre, se souvenir, oublier',
         grammarIds: ['g_abilmek'],
         dialogueIds: ['d_universite'],
         title: 'Apprendre, se souvenir, oublier',
@@ -933,6 +1027,7 @@ window.AppUnits = [
       },
       {
         id: 'u18_c2',
+        canDo: 'Je peux exprimer commencer, finir, demander, répondre',
         title: 'Commencer, finir, demander, répondre',
         goal: 'Verbes d\'action et d\'interaction',
         xpReward: 100,
@@ -944,6 +1039,7 @@ window.AppUnits = [
       },
       {
         id: 'u18_c3',
+        canDo: 'Je peux utiliser trouver, perdre, dire, préparer',
         grammarIds: ['g_ki_relatif'],
         dialogueIds: ['d_telephone_portable'],
         title: 'Trouver, perdre, dire, préparer',
@@ -957,6 +1053,7 @@ window.AppUnits = [
       },
       {
         id: 'u18_c4',
+        canDo: 'Je peux exprimer des émotions avec des verbes',
         grammarIds: ['g_suffixe_avec'],
         title: 'Émotions en action',
         goal: 'Exprimer des émotions avec des verbes',

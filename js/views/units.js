@@ -110,7 +110,7 @@ window.Units = {
               ${isUnitDone ? `<div class="unit-done-ring" style="border-color:var(--success)"></div>` : ''}
             </div>
             <div class="unit-info2">
-              <div class="unit-num2">Unité ${uIdx + 1}${isUnitDone ? ' · Terminé ✓' : ''}</div>
+              <div class="unit-num2">Unité ${uIdx + 1}${unit.cefr ? ` <span class="unit-cefr-badge unit-cefr-${unit.cefr.toLowerCase()}">${unit.cefr}</span>` : ''}${isUnitDone ? ' · Terminé ✓' : ''}</div>
               <div class="unit-title2">${unit.title}</div>
               <div class="unit-desc2">${unit.description}</div>
               <div class="unit-prog-row">

@@ -10,6 +10,7 @@ window.AppGrammar = [
     title: 'Harmonie vocalique (Majeure)',
     rule: 'En turc, les voyelles s\'accordent. Si la dernière voyelle du mot est A, I, O, U, on utilise le suffixe en A ou I sans point (ı). Si c\'est E, İ, Ö, Ü, on utilise E ou İ.',
     example: 'Araba -> Arabalar (Voitures) | Ev -> Evler (Maisons)',
+    traps: ['Réflexe français à éviter : toujours choisir -de. Regardez la DERNIÈRE voyelle du mot avant de choisir le suffixe.'],
     exercises: [
       {
         prompt: 'Suffixe locatif pour "araba" (voyelle finale = a) ?',
@@ -39,6 +40,7 @@ window.AppGrammar = [
     title: 'L\'ordre des mots (SOV)',
     rule: 'La structure de base est Sujet + Objet + Verbe. Le verbe est toujours à la fin de la phrase.',
     example: 'Ben (Sujet) elma (Objet) yiyorum (Verbe). -> Je mange une pomme.',
+    traps: ['Ne calquez pas le français « Je mange une pomme » : en turc, le verbe ferme TOUJOURS la phrase (Ben elma yiyorum).'],
     exercises: [
       {
         prompt: 'Ordre correct : "elma / yiyorum / Ben" ?',
@@ -68,6 +70,7 @@ window.AppGrammar = [
     title: 'Le présent progressif (-iyor)',
     rule: 'Pour dire "je suis en train de faire", on ajoute -iyor au radical du verbe, puis la terminaison personnelle (ex: -um pour "Je").',
     example: 'Yapmak (Faire) -> Yap + ı + yor + um = Yapıyorum.',
+    traps: ['Attention aux consonnes qui changent devant -iyor : git- devient gid-iyor (t→d devant voyelle).'],
     exercises: [
       {
         prompt: '"gitmek" (aller) conjugué à "je" (ben) ?',
@@ -97,6 +100,7 @@ window.AppGrammar = [
     title: 'Pluriel -lar/-ler',
     rule: 'Pour mettre un nom au pluriel, on ajoute -lar après une voyelle arrière (a, ı, o, u) ou -ler après une voyelle avant (e, i, ö, ü). Suit l\'harmonie vocalique.',
     example: 'araba → arabalar (voitures) | ev → evler (maisons)',
+    traps: ['Pas de -s ! Et après un nombre, PAS de pluriel : üç elma (trois pommes), jamais üç elmalar.'],
     drills: [
       { root: 'kitap', question: 'Pluriel de "kitap" ?', correct: 'kitaplar', distractors: ['kitabler', 'kitap', 'kitablar'] },
       { root: 'ev', question: 'Pluriel de "ev" ?', correct: 'evler', distractors: ['evlar', 'evlerin', 'ev'] },
@@ -131,6 +135,7 @@ window.AppGrammar = [
     title: 'Négation du verbe (-me/-ma)',
     rule: 'Pour nier un verbe au présent progressif, on insère -me (voyelle avant) ou -ma (voyelle arrière) entre le radical et -iyor. Le -e/-a tombe devant -iyor : -miyor/-mıyor.',
     example: 'gidiyorum → gitmiyorum (je ne vais pas) | yapıyorum → yapmıyorum (je ne fais pas)',
+    traps: ['Ne cherchez pas un mot « pas » : la négation est DANS le verbe (-mi-/-mı- inséré avant -yor).'],
     exercises: [
       {
         prompt: 'Négatif de "gidiyorum" (je vais) ?',
@@ -160,6 +165,7 @@ window.AppGrammar = [
     title: 'Question -mı/-mi/-mu/-mü',
     rule: 'Pour poser une question oui/non, on ajoute la particule -mı/-mi/-mu/-mü après le verbe selon l\'harmonie vocalique. Elle s\'écrit séparée du verbe.',
     example: 'Geliyor musun? = Tu viens ? | Gidiyor musunuz? = Vous allez ?',
+    traps: ['La particule s\'écrit SÉPARÉE du verbe : Geliyor musun ? (jamais Geliyormusun).'],
     drills: [
       { root: 'geliyor', question: '"Tu viens ?" (forme interrogative) ?', correct: 'geliyor musun?', distractors: ['geliyorsun mu?', 'geliyor mu sun?', 'geliyor mısın?'] },
       { root: 'biliyor', question: '"Vous savez ?" (forme interrogative) ?', correct: 'biliyor musunuz?', distractors: ['biliyor musun?', 'biliyorsun muz?', 'biliyor mü sunuz?'] },
@@ -194,6 +200,7 @@ window.AppGrammar = [
     title: 'Cas locatif -da/-de (à/dans/sur)',
     rule: 'Le suffixe -da/-de indique la position (lieu où l\'on se trouve). Après une consonne sourde (ç, f, h, k, p, s, ş, t), -da/-de devient -ta/-te par assimilation.',
     example: 'evde = à la maison | okulda = à l\'école | parkta = dans le parc',
+    traps: ['Après une consonne sourde (ç, f, h, k, p, s, ş, t), -da devient -ta : parkta, jamais parkda.'],
     drills: [
       { root: 'ev', question: 'Forme locative (à/dans la maison) ?', correct: 'evde', distractors: ['eve', 'evden', 'evin'] },
       { root: 'okul', question: 'Forme locative (à l\'école) ?', correct: 'okulda', distractors: ['okula', 'okuldan', 'okulun'] },
@@ -228,6 +235,7 @@ window.AppGrammar = [
     title: 'Cas directif/datif -a/-e (à/vers)',
     rule: 'Le suffixe -a/-e exprime le mouvement vers un lieu ou une personne. Après une voyelle, on ajoute un -y- de liaison : ev → eve, araba → arabaya.',
     example: 'eve gidiyorum = je vais à la maison | okula gidiyorum = je vais à l\'école',
+    traps: ['Après une voyelle, n\'oubliez pas le -y- de liaison : araba → arabaya (jamais arabaa).'],
     drills: [
       { root: 'ev', question: 'Forme datif (vers/à la maison) ?', correct: 'eve', distractors: ['evde', 'evden', 'evi'] },
       { root: 'okul', question: 'Forme datif (à l\'école) ?', correct: 'okula', distractors: ['okulda', 'okuldan', 'okulu'] },
@@ -262,6 +270,7 @@ window.AppGrammar = [
     title: 'Cas ablatif -dan/-den (de/depuis)',
     rule: 'Le suffixe -dan/-den exprime la provenance ou le point de départ. Après consonne sourde, -dan/-den devient -tan/-ten par assimilation.',
     example: 'evden geliyorum = je viens de la maison | Türkiye\'den = de Turquie',
+    traps: ['Même piège que le locatif : après consonne sourde, -dan devient -tan (parktan).'],
     drills: [
       { root: 'ev', question: 'Forme ablatif (de/depuis la maison) ?', correct: 'evden', distractors: ['evde', 'eve', 'evi'] },
       { root: 'okul', question: 'Forme ablatif (depuis l\'école) ?', correct: 'okuldan', distractors: ['okulda', 'okula', 'okulu'] },
@@ -296,6 +305,7 @@ window.AppGrammar = [
     title: 'Passé simple -dı/-di/-du/-dü',
     rule: 'Pour former le passé accompli, on ajoute au radical -dı/-di/-du/-dü (selon harmonie) puis la terminaison personnelle. Après consonne sourde : -tı/-ti/-tu/-tü.',
     example: 'gittim = je suis allé | yaptın = tu as fait | geldi = il est venu',
+    traps: ['Le suffixe s\'accorde deux fois : voyelle (-dı/-di/-du/-dü) ET consonne sourde (-tı/-ti…) : gittim.'],
     exercises: [
       {
         prompt: '"gitmek" (aller) au passé à "je" ?',
@@ -325,6 +335,7 @@ window.AppGrammar = [
     title: 'Futur -acak/-ecek',
     rule: 'Pour exprimer le futur, on ajoute au radical -acak (voyelle arrière) ou -ecek (voyelle avant), puis la terminaison personnelle. Le -k final peut se transformer en -ğ devant une voyelle.',
     example: 'gideceğim = j\'irai | yapacaksın = tu feras | gelecek = il viendra',
+    traps: ['Après une voyelle, -y- de liaison : yiyecek. Et git- → gidecek (t→d).'],
     exercises: [
       {
         prompt: '"gitmek" (aller) au futur à "je" ?',
@@ -354,6 +365,7 @@ window.AppGrammar = [
     title: 'Cas accusatif -ı/-i/-u/-ü (COD défini)',
     rule: 'L\'objet direct défini ou spécifique prend le suffixe d\'accusatif -ı/-i/-u/-ü. Sans suffixe, l\'objet est indéfini ou général. Après voyelle, un -y- de liaison s\'intercale.',
     example: 'elmayı yiyorum = je mange LA pomme | elma yiyorum = je mange (une/des) pomme(s)',
+    traps: ['Uniquement pour un objet DÉFINI : elmayı yiyorum = je mange LA pomme. Objet indéfini → pas de suffixe.'],
     drills: [
       { root: 'kitap', question: 'Accusatif (le livre) ?', correct: 'kitabı', distractors: ['kitapı', 'kitaba', 'kitapta'] },
       { root: 'elma', question: 'Accusatif (la pomme) ?', correct: 'elmayı', distractors: ['elmaı', 'elmaya', 'elmada'] },
@@ -389,6 +401,7 @@ window.AppGrammar = [
     title: 'Possessifs suffixaux',
     rule: 'Les possessifs se forment avec des suffixes ajoutés au nom : -ım/-im/-um/-üm (mon/ma), -ın/-in/-un/-ün (ton/ta), -(s)ı/-(s)i/-(s)u/-(s)ü (son/sa). Suit l\'harmonie vocalique.',
     example: 'evim = ma maison | araban = ta voiture | arabası = sa voiture',
+    traps: ['Pensez « double marquage » : benim evim (litt. de-moi ma-maison). Le possédé porte TOUJOURS le suffixe.'],
     drills: [
       { root: 'ev', question: 'Possessif "ma maison" ?', correct: 'evim', distractors: ['evin', 'evi', 'evimiz'] },
       { root: 'araba', question: 'Possessif "ta voiture" ?', correct: 'araban', distractors: ['arabam', 'arabası', 'arabanız'] },
@@ -423,6 +436,7 @@ window.AppGrammar = [
     title: 'Comparatif (daha/en)',
     rule: 'Pour comparer, on place daha (plus) devant l\'adjectif. Pour le superlatif, on utilise en (le/la plus) devant l\'adjectif. Ces mots sont invariables.',
     example: 'daha büyük = plus grand | en güzel = le plus beau/belle',
+    traps: ['daha / en se placent AVANT l\'adjectif et sont invariables — aucun accord comme en français.'],
     drills: [
       { root: 'büyük', question: '"Plus grand" ?', correct: 'daha büyük', distractors: ['en büyük', 'çok büyük', 'büyüker'] },
       { root: 'güzel', question: '"Le plus beau" ?', correct: 'en güzel', distractors: ['daha güzel', 'çok güzel', 'güzelin'] },
@@ -457,6 +471,7 @@ window.AppGrammar = [
     title: 'Var / Yok (il y a / il n\'y a pas)',
     rule: 'var signifie "il y a" ou "c\'est disponible / j\'en ai". yok signifie "il n\'y a pas" ou "ce n\'est pas disponible / je n\'en ai pas". Très courants à l\'oral.',
     example: 'Su var mı? Evet, var. = Il y a de l\'eau ? Oui. | Param yok. = Je n\'ai pas d\'argent.',
+    traps: ['var / yok se placent en FIN de phrase : Su var (il y a de l\'eau), Param yok (je n\'ai pas d\'argent).'],
     exercises: [
       {
         prompt: 'Comment dire "Il y a du café" en turc ?',
@@ -486,6 +501,7 @@ window.AppGrammar = [
     title: 'Capacité -abil- (pouvoir/savoir)',
     rule: 'Pour exprimer la capacité ou la possibilité, on insère -abil- entre le radical et la conjugaison. La négation est -ama-/-eme- (le -bil- disparaît à la forme négative).',
     example: 'gidebiliyorum = je peux y aller | yapamıyorum = je ne peux pas faire',
+    traps: ['-abil- s\'insère ENTRE le radical et la terminaison : gel-ebil-irim = je peux venir.'],
     exercises: [
       {
         prompt: '"je peux y aller" en turc ? (gitmek)',
@@ -515,6 +531,7 @@ window.AppGrammar = [
     title: 'Suffixe relatif -ki',
     rule: 'Le suffixe -ki s\'ajoute à un nom au locatif pour former un adjectif relatif signifiant "celui/celle de" ou "celui/celle qui est à/dans". Il est invariable.',
     example: 'evdeki = celui de la maison | masadaki kitap = le livre (qui est) sur la table',
+    traps: ['-ki est invariable : masadaki kitap = le livre qui est sur la table. Pas d\'accord en nombre.'],
     exercises: [
       {
         prompt: '"le livre sur la table" en turc ? (masa + kitap)',
@@ -544,6 +561,7 @@ window.AppGrammar = [
     title: 'Comitative -le/-la (avec)',
     rule: 'Le suffixe -le/-la exprime l\'accompagnement ("avec"). Après une voyelle, on ajoute un -y- de liaison : -yle/-yla. Il suit l\'harmonie vocalique.',
     example: 'seninle = avec toi | arabamla = avec ma voiture | arkadaşımla = avec mon ami',
+    traps: ['-le/-la (= avec) se COLLE au mot : arkadaşımla = avec mon ami. Après voyelle : -yle/-yla.'],
     exercises: [
       {
         prompt: '"avec toi" en turc ? (sen)',

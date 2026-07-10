@@ -42,6 +42,7 @@ window.Grammar = {
             </div>
             <p class="grammar-rule">${g.rule}</p>
             <div class="grammar-examples">${exHtml}</div>
+            ${(g.traps || []).map(t => `<div class="gn-trap">⚠️ ${t}</div>`).join('')}
           </div>
         `;
       }).join('')}

@@ -1294,3 +1294,37 @@
 @media (prefers-reduced-motion: reduce) {
   .intro-card, .grammar-note-card, .tip-callout { animation: none; }
 }
+
+/* v5 — Bandeau objectif can-do (Pilier C) */
+.cando-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--s2, 0.5rem);
+  background: var(--primary-glow);
+  border: 1px solid var(--primary);
+  border-radius: var(--r-md, 12px);
+  padding: var(--s2, 0.5rem) var(--s3, 0.75rem);
+  margin-bottom: var(--s3, 0.75rem);
+  animation: gp-appear 0.25s ease-out;
+}
+.cando-icon { font-size: 1.1rem; flex-shrink: 0; }
+.cando-text {
+  font-size: var(--text-sm, 0.85rem);
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+/* v5 — Badge CEFR sur les unités (Pilier C) */
+.unit-cefr-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  border-radius: 6px;
+  padding: 1px 6px;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+.unit-cefr-a1 { background: rgba(34,197,94,0.15); color: #22C55E; }
+.unit-cefr-a2 { background: rgba(99,102,241,0.15); color: #818CF8; }

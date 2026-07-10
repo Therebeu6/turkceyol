@@ -166,7 +166,7 @@ window.Exercises = {
         isTeaching: true,
         tr: word.tr,
         fr: word.fr,
-        phonetic: word.phonetic || null,
+        phonetic: word.phonetic || (window.Phonetics ? Phonetics.toFrench(word.tr) : null),
         example: word.example || null,
         data: { id: word.id, tr: word.tr, fr: word.fr, type: 'vocabulary' }
       });
@@ -183,7 +183,7 @@ window.Exercises = {
         isVerb: true,
         tr: verb.infinitive,
         fr: verb.fr,
-        phonetic: verb.phonetic || null,
+        phonetic: verb.phonetic || (window.Phonetics ? Phonetics.toFrench(verb.infinitive) : null),
         example: ex,
         data: { id: verb.id, tr: verb.infinitive, fr: verb.fr, type: 'verb' }
       });
