@@ -527,6 +527,21 @@ window.Lesson = {
           </div>
         </div>
       `;
+    } else if (exo.type === 'culture_note') {
+      html = `
+        <div class="exercise-container exo-slide-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">🇹🇷 Culture</div>
+          </div>
+          <div class="exercise-content" style="justify-content:flex-start">
+            <div class="culture-note">
+              <span class="culture-icon">🇹🇷</span>
+              <span class="culture-text">${exo.text}</span>
+            </div>
+            <button class="btn btn-primary btn-full mt-4" onclick="Lesson.nextStep()">Continuer</button>
+          </div>
+        </div>
+      `;
     } else { // tip_callout
       html = `
         <div class="exercise-container exo-slide-in">

@@ -69,6 +69,11 @@ window.Exercises = {
       }
     }
 
+    // 3b) Note culturelle du chapitre (AXE 2.2) — en fin de découverte
+    if (chapter && chapter.culture) {
+      discover.push({ type: 'culture_note', isTeaching: true, text: chapter.culture });
+    }
+
     // 4) Exercices de vocabulaire répartis par difficulté
     vocabSample.forEach((word, i) => {
       if (i % 5 === 0) practice.push(this.createQCMTrFr(word));

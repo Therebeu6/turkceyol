@@ -28,6 +28,7 @@ window.AppUnits = [
       },
       {
         id: 'u1_c2',
+        culture: 'En Turquie, on salue chaleureusement : une poignée de main ferme, souvent deux bises entre proches. « Merhaba » marche à toute heure ; « Selam » est plus familier entre jeunes.',
         canDo: 'Je peux saluer et prendre congé',
         dialogueIds: ['d_rencontre'],
         title: 'Bonjour et au revoir',
@@ -40,6 +41,7 @@ window.AppUnits = [
       },
       {
         id: 'u1_c3',
+        culture: '« Buyurun » est un mot magique : il veut dire « je vous en prie / voici / entrez / servez-vous » selon le contexte. Un commerçant vous accueillera toujours par « Buyurun ! ».',
         canDo: 'Je peux remercier et m\'excuser',
         title: 'Politesse essentielle',
         goal: 'Dire merci, pardon, s\'il vous plaît',
@@ -84,6 +86,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u2_c1',
+        culture: 'Le turc distingue « sen » (tu, proches) et « siz » (vous, politesse). Avec un inconnu ou une personne plus âgée, utilisez toujours « siz » — c\'est une marque de respect essentielle.',
         canDo: 'Je peux dire mon prénom et demander celui de quelqu\'un',
         grammarIds: ['g_ordre_mots'],
         dialogueIds: ['d_rencontre'],
@@ -213,6 +216,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u4_c1',
+        culture: '« Abi » (grand frère) et « abla » (grande sœur) ne servent pas qu\'en famille : on les utilise pour s\'adresser poliment à une personne un peu plus âgée, même un serveur ou un vendeur.',
         canDo: 'Je peux présenter ma famille',
         dialogueIds: ['d_aile', 'd_famille_elargie'],
         title: 'Ma famille',
@@ -271,6 +275,7 @@ window.AppUnits = [
       },
       {
         id: 'u5_c2',
+        culture: 'Les Turcs sont réputés très serviables : demandez votre chemin et on vous accompagnera parfois sur plusieurs rues. Un « Affedersiniz » (excusez-moi) ouvre toutes les portes.',
         canDo: 'Je peux demander mon chemin',
         grammarIds: ['g_datif'],
         dialogueIds: ['d_direction'],
@@ -331,6 +336,7 @@ window.AppUnits = [
       },
       {
         id: 'u6_c2',
+        culture: 'Le çay (thé) est une institution : servi dans un petit verre tulipe, offert partout, à toute heure, souvent gratuitement. Refuser un çay peut presque vexer — acceptez, c\'est un geste d\'hospitalité.',
         canDo: 'Je peux commander une boisson',
         dialogueIds: ['d_cafe'],
         title: 'Les boissons',
@@ -343,6 +349,7 @@ window.AppUnits = [
       },
       {
         id: 'u6_c3',
+        culture: 'À table, on souhaite « Afiyet olsun » (bon appétit) et on remercie le cuisinier par « Elinize sağlık » (santé à vos mains). Le pain (ekmek) accompagne quasiment tout repas.',
         tips: [{ icon: '🍽️', text: 'Pour commander poliment : « … istiyorum » (je voudrais) ou « … alabilir miyim ? » (puis-je avoir ?).' }],
         canDo: 'Je peux commander au restaurant et demander l\'addition',
         grammarIds: ['g_accusatif'],
@@ -357,6 +364,7 @@ window.AppUnits = [
       },
       {
         id: 'u6_c4',
+        culture: 'Le petit-déjeuner turc (kahvaltı) est un festin : fromages, olives, tomates, concombre, miel, œufs, pain frais et çay. C\'est souvent le repas préféré des Turcs.',
         canDo: 'Je peux dire ce que j\'aime et ce que je n\'aime pas',
         grammarIds: ['g_yok_var'],
         title: 'Goûts et préférences',
@@ -379,6 +387,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u7_c1',
+        culture: 'Au bazar et sur les marchés, marchander (pazarlık) est normal et attendu. Dans les magasins à prix fixe, non. Souriez, discutez : le prix baisse souvent avec la sympathie.',
         canDo: 'Je peux demander et comprendre un prix',
         dialogueIds: ['d_supermarche'],
         title: 'Les prix',
@@ -449,6 +458,7 @@ window.AppUnits = [
       },
       {
         id: 'u8_c2',
+        culture: 'Le numéro d\'urgence unique en Turquie est le 112 (police, pompiers, ambulance). « İmdat ! » veut dire « au secours ! ».',
         canDo: 'Je peux demander de l\'aide',
         dialogueIds: ['d_eczane'],
         title: 'Demander de l\'aide',
@@ -495,6 +505,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u9_c1',
+        culture: 'La journée turque est rythmée par les repas et le çay. En ville, on dîne plutôt tard ; « kolay gelsin » se dit à quelqu\'un au travail, et « eline sağlık » à qui a cuisiné.',
         canDo: 'Je peux raconter ma journée type',
         dialogueIds: ['d_habitudes'],
         title: 'Ma journée type',
@@ -668,6 +679,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u12_c1',
+        culture: 'Dans les hôtels, la carte d\'identité ou le passeport est demandé à l\'enregistrement (giriş). Le petit-déjeuner (kahvaltı dahil) est très souvent inclus.',
         canDo: 'Je peux réserver une chambre d\'hôtel',
         dialogueIds: ['d_hotel'],
         title: 'Mission : à l\'hôtel',
@@ -726,6 +738,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u13_c1',
+        culture: 'Le climat turc est très contrasté : étés chauds et secs sur la côte égéenne, hivers neigeux à l\'est et en Anatolie centrale. « Kolay gelsin » (bon courage) se dit à qui travaille par tous les temps.',
         canDo: 'Je peux parler du temps qu\'il fait',
         dialogueIds: ['d_meteo'],
         title: 'La météo',
@@ -785,6 +798,7 @@ window.AppUnits = [
       },
       {
         id: 'u14_c2',
+        culture: '« Nasılsın ? » (comment vas-tu ?) est un rituel : on répond souvent « İyiyim, teşekkürler, sen ? ». Répondre « şükür » (Dieu merci) est courant et chaleureux.',
         canDo: 'Je peux demander et dire comment ça va',
         dialogueIds: ['d_rencontre'],
         title: 'Comment ça va ?',
@@ -929,6 +943,7 @@ window.AppUnits = [
       },
       {
         id: 'u16_c4',
+        culture: 'En cas d\'urgence médicale, composez le 112. Les pharmacies (eczane) de garde (« nöbetçi eczane ») assurent un service de nuit, affiché sur chaque devanture.',
         canDo: 'Je peux appeler les secours et réagir en urgence',
         dialogueIds: ['d_eczane'],
         title: 'Urgences & secours',
@@ -953,6 +968,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u17_c1',
+        culture: 'Dans les grandes villes, la carte Istanbulkart (ou équivalent local) sert pour bus, métro, tram et ferry. On dit « inecek var ! » (quelqu\'un descend !) pour signaler son arrêt dans le bus.',
         canDo: 'Je peux prendre les transports en commun',
         grammarIds: ['g_ablatif'],
         dialogueIds: ['d_otobus', 'd_taksi'],

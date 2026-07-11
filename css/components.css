@@ -1458,3 +1458,22 @@
   line-height: 1.35;
   text-align: left;
 }
+
+/* v6 AXE 2.2 — Note culturelle (slide d'enseignement, sans scoring) */
+.culture-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s3, 0.75rem);
+  background: linear-gradient(135deg, rgba(227,10,23,0.06), rgba(227,10,23,0.02));
+  border: 1.5px solid rgba(227,10,23,0.35);
+  border-radius: var(--r-lg, 16px);
+  padding: var(--s4, 1rem);
+  animation: gp-appear 0.25s ease-out;
+}
+.culture-icon { font-size: 1.6rem; flex-shrink: 0; line-height: 1; }
+.culture-text {
+  font-size: var(--text-md, 1rem);
+  color: var(--text);
+  line-height: 1.55;
+}
+@media (prefers-reduced-motion: reduce) { .culture-note { animation: none; } }

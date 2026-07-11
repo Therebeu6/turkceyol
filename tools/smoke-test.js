@@ -78,7 +78,7 @@ if (!Exercises || typeof Exercises.generateForChapter !== 'function') {
 // Types dont la réponse est un choix parmi `options` (true_false a des boutons
 // fixes Vrai/Faux → pas de tableau options, vérifié via `answer` seul).
 const OPTION_TYPES = new Set(['qcm', 'audio_qcm', 'cloze', 'grammar_fill', 'dialogue_fill']);
-const TEACHING_TYPES = new Set(['intro_card', 'grammar_note', 'tip_callout']);
+const TEACHING_TYPES = new Set(['intro_card', 'grammar_note', 'tip_callout', 'culture_note']);
 
 let chapterCount = 0, slideCount = 0;
 const RUNS = 5; // plusieurs passes car la génération est aléatoire
