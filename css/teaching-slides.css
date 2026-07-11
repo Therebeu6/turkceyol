@@ -1,0 +1,228 @@
+/* ═══════════════════════════════════════════════
+   v5 — Slides d'enseignement (Pilier A)
+   intro_card / grammar_note / tip_callout
+   ═══════════════════════════════════════════════ */
+
+.intro-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-lg, 16px);
+  padding: var(--s5, 1.5rem) var(--s4, 1rem);
+  text-align: center;
+  animation: gp-appear 0.25s ease-out;
+}
+.ic-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  background: var(--primary-glow);
+  border-radius: 20px;
+  padding: 4px 12px;
+  margin-bottom: var(--s3, 0.75rem);
+}
+.ic-tr {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.15;
+  margin-bottom: var(--s2, 0.5rem);
+}
+.ic-audio {
+  margin: 0 auto var(--s3, 0.75rem);
+}
+.ic-fr {
+  font-size: var(--text-lg, 1.15rem);
+  color: var(--text-2);
+  font-weight: 600;
+  margin-bottom: var(--s2, 0.5rem);
+}
+.ic-phonetic {
+  font-size: var(--text-sm, 0.85rem);
+  color: var(--text-3);
+  font-style: italic;
+  margin-bottom: var(--s3, 0.75rem);
+}
+.ic-example {
+  background: var(--surface-2);
+  border-radius: var(--r-md, 12px);
+  padding: var(--s3, 0.75rem);
+  margin-top: var(--s3, 0.75rem);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.12s ease;
+}
+.ic-example:active { transform: scale(0.98); }
+.ic-ex-tr {
+  font-size: var(--text-md, 1rem);
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.ic-ex-tts { font-size: 0.85rem; opacity: 0.7; }
+.ic-ex-fr {
+  font-size: var(--text-sm, 0.85rem);
+  color: var(--text-3);
+}
+
+.grammar-note-card {
+  background: var(--surface);
+  border: 1.5px solid var(--primary);
+  border-radius: var(--r-lg, 16px);
+  padding: var(--s4, 1rem);
+  animation: gp-appear 0.25s ease-out;
+}
+.gn-title {
+  font-size: var(--text-lg, 1.15rem);
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: var(--s2, 0.5rem);
+}
+.gn-rule {
+  font-size: var(--text-md, 1rem);
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: var(--s3, 0.75rem);
+}
+.gn-example {
+  background: var(--surface-2);
+  border-left: 3px solid var(--primary);
+  border-radius: var(--r-sm, 8px);
+  padding: var(--s2, 0.5rem) var(--s3, 0.75rem);
+  font-size: var(--text-sm, 0.85rem);
+  color: var(--text-2);
+  margin-bottom: var(--s2, 0.5rem);
+}
+.gn-trap {
+  font-size: var(--text-sm, 0.85rem);
+  color: var(--warning, #F59E0B);
+  background: rgba(245, 158, 11, 0.08);
+  border-radius: var(--r-sm, 8px);
+  padding: var(--s2, 0.5rem) var(--s3, 0.75rem);
+  margin-top: var(--s2, 0.5rem);
+  line-height: 1.4;
+}
+
+.tip-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s3, 0.75rem);
+  background: var(--surface);
+  border: 1.5px dashed var(--primary);
+  border-radius: var(--r-lg, 16px);
+  padding: var(--s4, 1rem);
+  animation: gp-appear 0.25s ease-out;
+}
+.tip-icon { font-size: 1.5rem; flex-shrink: 0; }
+.tip-text {
+  font-size: var(--text-md, 1rem);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-card, .grammar-note-card, .tip-callout { animation: none; }
+}
+
+/* v5 — Bandeau objectif can-do (Pilier C) */
+.cando-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--s2, 0.5rem);
+  background: var(--primary-glow);
+  border: 1px solid var(--primary);
+  border-radius: var(--r-md, 12px);
+  padding: var(--s2, 0.5rem) var(--s3, 0.75rem);
+  margin-bottom: var(--s3, 0.75rem);
+  animation: gp-appear 0.25s ease-out;
+}
+.cando-icon { font-size: 1.1rem; flex-shrink: 0; }
+.cando-text {
+  font-size: var(--text-sm, 0.85rem);
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+/* v5 — Badge CEFR sur les unités (Pilier C) */
+.unit-cefr-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  border-radius: 6px;
+  padding: 1px 6px;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+.unit-cefr-a1 { background: rgba(34,197,94,0.15); color: #22C55E; }
+.unit-cefr-a2 { background: rgba(99,102,241,0.15); color: #818CF8; }
+
+/* v5 — Chip de phase dans la barre de leçon (Pilier F) */
+.lesson-phase-chip {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border-radius: 20px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+/* v5.1 — Consultation d'un exercice déjà répondu (navigation arrière) */
+.review-answered-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 4px 12px;
+  margin: 6px 0 var(--s2, 0.5rem);
+}
+.review-ok {
+  color: var(--success, #22C55E);
+  background: rgba(34,197,94,0.12);
+}
+.review-ko {
+  color: var(--error, #EF4444);
+  background: rgba(239,68,68,0.12);
+}
+.review-answer-card {
+  width: 100%;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-lg, 16px);
+  padding: var(--s4, 1rem);
+}
+.review-answer-row + .review-answer-row {
+  margin-top: var(--s3, 0.75rem);
+  padding-top: var(--s3, 0.75rem);
+  border-top: 1px solid var(--border);
+}
+.review-answer-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+.review-answer-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-lg, 1.1rem);
+  font-weight: 700;
+  color: var(--text);
+}
+.review-wrong-value {
+  color: var(--error, #EF4444);
+  font-weight: 600;
+  font-size: var(--text-md, 1rem);
+  text-decoration: line-through;
+  text-decoration-color: rgba(239,68,68,0.5);
+}
+

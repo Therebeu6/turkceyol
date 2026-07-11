@@ -1,0 +1,37 @@
+/* ══════════════════════════════════════
+   RESPONSIVE 375px (G2)
+   ══════════════════════════════════════ */
+@media (max-width: 400px) {
+  /* Quick-stats : 4 colonnes → 2×2 */
+  .quick-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--s2);
+  }
+  .qs-card { padding: var(--s2); }
+  .qs-icon { font-size: 1.3rem; }
+
+  /* Skeleton grid pour quick-stats */
+  .skeleton-grid-4 { grid-template-columns: repeat(2, 1fr); }
+
+  /* Padding leçon plus serré */
+  .exercise-container { padding: var(--s4) var(--s3) var(--s3); }
+
+  /* Session card */
+  .session-card { padding: var(--s6) var(--s4); }
+  .sm-stats { gap: var(--s2); }
+  .sm-stat { min-width: 0; flex: 1; padding: var(--s2); }
+  .sm-val { font-size: var(--text-lg); }
+
+  /* Unit-card2 : padding plus serré */
+  .unit-header2 { gap: var(--s3); padding: var(--s3); }
+  .unit-icon2 { width: 44px; height: 44px; }
+  .unit-icon2 span { font-size: 1.3rem !important; }
+
+  /* Chapitres */
+  .ch-item { padding: 8px var(--s3); }
+  .ch-goal { font-size: 10px; }
+
+  /* View scroll */
+  .view-scroll { padding: var(--s3); }
+}
+

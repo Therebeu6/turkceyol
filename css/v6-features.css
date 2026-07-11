@@ -1,0 +1,223 @@
+/* v6 AXE 2.1 — Tableau de conjugaison dans la fiche grammaire */
+.gn-conj-table {
+  margin-top: var(--s3, 0.75rem);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md, 12px);
+  overflow: hidden;
+}
+.gn-conj-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+  padding: 8px 12px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+.gn-conj-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s ease;
+}
+.gn-conj-row:last-child { border-bottom: none; }
+.gn-conj-row:active { background: var(--primary-glow); }
+.gn-conj-person {
+  flex-shrink: 0;
+  width: 46px;
+  font-size: var(--text-sm, 0.85rem);
+  font-weight: 600;
+  color: var(--text-3);
+}
+.gn-conj-form {
+  flex: 1;
+  font-size: var(--text-md, 1rem);
+  font-weight: 700;
+  color: var(--text);
+}
+.gn-conj-tts { font-size: 0.85rem; opacity: 0.55; }
+
+/* v6 AXE 2.3 — Rappels de sons durs sur la carte Découverte */
+.ic-sound-hints {
+  margin-top: var(--s2, 0.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ic-sound-hint {
+  font-size: 12px;
+  color: var(--primary);
+  background: var(--primary-glow);
+  border-radius: 8px;
+  padding: 5px 10px;
+  line-height: 1.35;
+  text-align: left;
+}
+
+/* v6 AXE 2.2 — Note culturelle (slide d'enseignement, sans scoring) */
+.culture-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s3, 0.75rem);
+  background: linear-gradient(135deg, rgba(227,10,23,0.06), rgba(227,10,23,0.02));
+  border: 1.5px solid rgba(227,10,23,0.35);
+  border-radius: var(--r-lg, 16px);
+  padding: var(--s4, 1rem);
+  animation: gp-appear 0.25s ease-out;
+}
+.culture-icon { font-size: 1.6rem; flex-shrink: 0; line-height: 1; }
+.culture-text {
+  font-size: var(--text-md, 1rem);
+  color: var(--text);
+  line-height: 1.55;
+}
+@media (prefers-reduced-motion: reduce) { .culture-note { animation: none; } }
+
+/* v6 AXE 3.5 — Bandeau gel de série sur l'écran de fin */
+.sm-freeze-banner {
+  background: rgba(56,189,248,0.12);
+  border: 1px solid rgba(56,189,248,0.4);
+  color: #38BDF8;
+  border-radius: var(--r-md, 12px);
+  padding: 8px 12px;
+  font-size: var(--text-sm, 0.85rem);
+  font-weight: 600;
+  margin: 0 0 var(--s3, 0.75rem);
+}
+
+/* v6 AXE 3.3 — Sélecteur d'objectif quotidien (settings) */
+.goal-select-row { display: flex; gap: 8px; }
+.goal-opt {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 6px;
+  background: var(--surface-2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md, 12px);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.goal-opt-active { border-color: var(--primary); background: var(--primary-glow); }
+.goal-opt-xp { font-weight: 800; font-size: var(--text-md, 1rem); color: var(--text); }
+.goal-opt-lbl { font-size: 11px; color: var(--text-3); }
+.goal-opt-active .goal-opt-xp { color: var(--primary); }
+
+/* v6 AXE 3.3 — Rapport hebdomadaire (stats) */
+.wr-summary { display: flex; gap: 8px; margin-bottom: var(--s3, 0.75rem); }
+.wr-kpi {
+  flex: 1;
+  text-align: center;
+  background: var(--surface-2);
+  border-radius: var(--r-md, 12px);
+  padding: 10px 6px;
+}
+.wr-kpi-val { font-weight: 800; font-size: var(--text-lg, 1.1rem); color: var(--primary); }
+.wr-kpi-lbl { font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; }
+.wr-bars { display: flex; align-items: flex-end; gap: 6px; height: 80px; }
+.wr-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; }
+.wr-bar-wrap { flex: 1; width: 100%; display: flex; align-items: flex-end; justify-content: center; }
+.wr-bar {
+  width: 70%;
+  min-height: 2px;
+  background: var(--border);
+  border-radius: 4px 4px 0 0;
+  transition: height 0.4s ease;
+}
+.wr-bar-today { background: var(--primary); }
+.wr-bar-lbl { font-size: 10px; color: var(--text-3); }
+
+/* v6 AXE 3.1 — Vue Parcours en "chemin" vertical (spine + tu es ici) */
+.unit-path .ch-path-item { position: relative; }
+.unit-path .ch-icon-wrap {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+.unit-path .ch-icon-wrap::before {
+  content: '';
+  position: absolute;
+  left: 13px;            /* centre du cercle 28px */
+  top: 0; bottom: 0;
+  width: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+.unit-path .ch-path-item:first-child .ch-icon-wrap::before { top: 50%; }
+.unit-path .ch-path-item:last-child .ch-icon-wrap::before { bottom: 50%; }
+.unit-path .ch-path-item.ch-done .ch-icon-wrap::before { background: var(--success); opacity: 0.5; }
+.unit-path .ch-icon { position: relative; z-index: 1; }
+
+.ch-here-badge {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #fff;
+  background: var(--primary);
+  border-radius: 20px;
+  padding: 2px 9px;
+  animation: pulse 2s infinite;
+}
+
+/* v6 AXE 6.5 — Accessibilité : focus visible clavier */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+.option-btn:focus-visible,
+.ch-item.ch-clickable:focus-visible {
+  outline: 3px solid var(--secondary);
+  outline-offset: 2px;
+  border-radius: var(--r-sm, 8px);
+}
+/* Ne pas afficher l'outline au clic souris (uniquement clavier) */
+button:focus:not(:focus-visible) { outline: none; }
+
+/* v6 AXE 5.1 — Mode écoute intensive */
+.listen-intro { text-align: center; padding: var(--s6, 24px) var(--s4, 16px); }
+.listen-intro-icon { font-size: 2.5rem; margin-bottom: var(--s2, 8px); }
+.listen-intro-title { font-size: var(--text-xl, 1.25rem); font-weight: 800; color: var(--text); margin-bottom: var(--s2, 8px); }
+.listen-intro-sub { font-size: var(--text-sm, 0.85rem); color: var(--text-2); line-height: 1.5; margin-bottom: var(--s4, 16px); }
+
+.listen-progress { display: flex; align-items: center; gap: 10px; margin-bottom: var(--s4, 16px); }
+.listen-prog-track { flex: 1; height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+.listen-prog-fill { height: 100%; background: var(--primary); border-radius: 3px; transition: width 0.3s ease; }
+.listen-prog-lbl { font-size: 12px; font-weight: 700; color: var(--text-3); flex-shrink: 0; }
+
+.listen-card { text-align: center; padding: var(--s6, 24px) var(--s4, 16px); }
+.listen-big-play {
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 24px var(--primary-glow);
+  transition: transform 0.12s ease;
+}
+.listen-big-play:active { transform: scale(0.94); }
+.listen-speeds { display: flex; gap: 6px; justify-content: center; margin-top: var(--s3, 12px); }
+
+.listen-reveal { margin-top: var(--s4, 16px); animation: gp-appear 0.2s ease-out; }
+.listen-reveal.hidden { display: none; }
+.listen-tr { font-size: var(--text-2xl, 1.5rem); font-weight: 800; color: var(--text); }
+.listen-phon { font-size: var(--text-sm, 0.85rem); color: var(--text-3); font-style: italic; margin: 4px 0; }
+.listen-fr { font-size: var(--text-lg, 1.1rem); color: var(--text-2); font-weight: 600; }
+
+#listen-actions { margin-top: var(--s4, 16px); }
+.listen-rate-row { display: flex; gap: 10px; }
+.listen-rate { flex: 1; }

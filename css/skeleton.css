@@ -1,0 +1,23 @@
+/* ══════════════════════════════════════
+   SKELETON TEMPLATES (G4)
+   ══════════════════════════════════════ */
+.skeleton-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: var(--s4);
+  margin-bottom: var(--s3);
+}
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding: var(--s2) 0;
+}
+.skeleton-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s2);
+  margin-bottom: var(--s5);
+}
+
