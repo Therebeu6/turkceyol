@@ -19,6 +19,31 @@ window.Phonetics = {
       .join(' ');
   },
 
+  // Rappels de prononciation des lettres "piège" présentes dans le mot (v6 AXE 2.3)
+  // Retourne au plus 2 rappels courts (les plus surprenants pour un francophone).
+  SOUND_HINTS: [
+    ['c', 'c se lit « dj » (comme dans « adjectif »)'],
+    ['ç', 'ç se lit « tch » (comme dans « tchèque »)'],
+    ['ş', 'ş se lit « ch » (comme dans « chat »)'],
+    ['ğ', 'ğ ne se prononce pas : il allonge la voyelle d\'avant'],
+    ['ı', 'ı (sans point) se lit « e » sourd (comme le « e » de « le »)'],
+    ['ö', 'ö se lit « eu » (comme dans « peu »)'],
+    ['ü', 'ü se lit « u » français (comme dans « lune »)']
+  ],
+
+  soundHints(text) {
+    if (!text) return [];
+    const lower = String(text).toLocaleLowerCase('tr-TR');
+    const hints = [];
+    for (const [letter, hint] of this.SOUND_HINTS) {
+      if (lower.indexOf(letter) !== -1) {
+        hints.push(hint);
+        if (hints.length >= 2) break;
+      }
+    }
+    return hints;
+  },
+
   _word(word) {
     // Nettoyage + minuscules turques (İ→i, I→ı)
     const clean = word.replace(/[.!?,;:'"()]/g, '');

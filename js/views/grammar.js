@@ -34,6 +34,20 @@ window.Grammar = {
           ? `<button class="btn-grammar-practice" onclick="Grammar.startPractice('${g.id}')">🎯 Pratiquer</button>`
           : '';
 
+        const table = window.Exercises ? Exercises._buildConjTable(g.id) : null;
+        const tableHtml = table ? `
+          <div class="gn-conj-table">
+            <div class="gn-conj-label">${table.label}</div>
+            ${table.rows.map(r => `
+              <button class="gn-conj-row" onclick="App.playTTS('${this._escape(r.form)}')">
+                <span class="gn-conj-person">${r.person}</span>
+                <span class="gn-conj-form">${r.form}</span>
+                <span class="gn-conj-tts">🔊</span>
+              </button>
+            `).join('')}
+          </div>
+        ` : '';
+
         return `
           <div class="grammar-card" id="gcard-${g.id}">
             <div class="grammar-card-header">
@@ -42,6 +56,7 @@ window.Grammar = {
             </div>
             <p class="grammar-rule">${g.rule}</p>
             <div class="grammar-examples">${exHtml}</div>
+            ${tableHtml}
             ${(g.traps || []).map(t => `<div class="gn-trap">⚠️ ${t}</div>`).join('')}
           </div>
         `;

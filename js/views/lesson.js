@@ -434,6 +434,24 @@ window.Lesson = {
     }
   },
 
+  // Rendu d'un tableau de conjugaison (6 personnes, chaque forme cliquable → TTS)
+  _conjTableHtml(table) {
+    if (!table || !Array.isArray(table.rows) || table.rows.length === 0) return '';
+    const rows = table.rows.map(r => `
+      <button class="gn-conj-row" onclick="App.playTTS('${this._escape(r.form)}')">
+        <span class="gn-conj-person">${r.person}</span>
+        <span class="gn-conj-form">${r.form}</span>
+        <span class="gn-conj-tts">🔊</span>
+      </button>
+    `).join('');
+    return `
+      <div class="gn-conj-table">
+        <div class="gn-conj-label">${table.label}</div>
+        ${rows}
+      </div>
+    `;
+  },
+
   // Bandeau objectif (affiché sur la 1re slide uniquement)
   _canDoBanner() {
     if (!this._canDo || this.currentIndex !== 0) return '';
@@ -451,6 +469,9 @@ window.Lesson = {
     if (exo.type === 'intro_card') {
       const phoneticHtml = exo.phonetic
         ? `<div class="ic-phonetic">🗣 ${exo.phonetic}</div>` : '';
+      const soundHintsHtml = (exo.soundHints && exo.soundHints.length)
+        ? `<div class="ic-sound-hints">${exo.soundHints.map(h => `<div class="ic-sound-hint">🔤 ${h}</div>`).join('')}</div>`
+        : '';
       const exampleHtml = exo.example && exo.example.tr ? `
         <div class="ic-example" onclick="App.playTTS('${this._escape(exo.example.tr)}')">
           <div class="ic-ex-tr">📖 ${exo.example.tr} <span class="ic-ex-tts">🔊</span></div>
@@ -475,6 +496,7 @@ window.Lesson = {
               </button>
               <div class="ic-fr">${exo.fr}</div>
               ${phoneticHtml}
+              ${soundHintsHtml}
               ${exampleHtml}
             </div>
             <button class="btn btn-primary btn-full mt-4" onclick="Lesson.nextStep()">Continuer</button>
@@ -487,6 +509,7 @@ window.Lesson = {
       ).join('');
       const exampleHtml = exo.example
         ? `<div class="gn-example">${exo.example}</div>` : '';
+      const tableHtml = this._conjTableHtml(exo.table);
       html = `
         <div class="exercise-container exo-slide-in">
           <div class="exercise-header">
@@ -497,6 +520,7 @@ window.Lesson = {
               <div class="gn-title">${exo.title}</div>
               <div class="gn-rule">${exo.rule}</div>
               ${exampleHtml}
+              ${tableHtml}
               ${trapsHtml}
             </div>
             <button class="btn btn-primary btn-full mt-4" onclick="Lesson.nextStep()">J'ai compris</button>

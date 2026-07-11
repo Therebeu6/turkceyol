@@ -171,6 +171,7 @@ window.Exercises = {
         tr: word.tr,
         fr: word.fr,
         phonetic: word.phonetic || (window.Phonetics ? Phonetics.toFrench(word.tr) : null),
+        soundHints: window.Phonetics ? Phonetics.soundHints(word.tr) : [],
         example: word.example || null,
         data: { id: word.id, tr: word.tr, fr: word.fr, type: 'vocabulary' }
       });
@@ -188,12 +189,38 @@ window.Exercises = {
         tr: verb.infinitive,
         fr: verb.fr,
         phonetic: verb.phonetic || (window.Phonetics ? Phonetics.toFrench(verb.infinitive) : null),
+        soundHints: window.Phonetics ? Phonetics.soundHints(verb.infinitive) : [],
         example: ex,
         data: { id: verb.id, tr: verb.infinitive, fr: verb.fr, type: 'verb' }
       });
       verbCards++;
     }
     return cards;
+  },
+
+  // Règles verbales → tableau de conjugaison (6 personnes) depuis verbs.js
+  _CONJ_TABLE_RULES: {
+    g_present_iyor: { verbId: 'vb_gelmek', tense: 'present', label: 'Présent (-iyor) — venir' },
+    g_negatif_fiil: { verbId: 'vb_gitmek', tense: 'present_neg', label: 'Présent négatif — aller' },
+    g_passe_di:     { verbId: 'vb_gitmek', tense: 'past', label: 'Passé (-di) — aller' },
+    g_futur_acak:   { verbId: 'vb_gelmek', tense: 'future', label: 'Futur (-ecek) — venir' }
+  },
+
+  _buildConjTable(ruleId) {
+    const map = this._CONJ_TABLE_RULES[ruleId];
+    if (!map || !window.AppVerbs) return null;
+    const verb = AppVerbs.find(v => v.id === map.verbId);
+    if (!verb) return null;
+    const table = map.tense === 'present_neg'
+      ? (verb.negations && verb.negations.present)
+      : (verb.conjugations && verb.conjugations[map.tense]);
+    if (!table) return null;
+    const persons = [['ben', 'je'], ['sen', 'tu'], ['o', 'il/elle'], ['biz', 'nous'], ['siz', 'vous'], ['onlar', 'ils/elles']];
+    const rows = persons
+      .filter(([p]) => table[p])
+      .map(([p, fr]) => ({ person: p, fr, form: table[p] }));
+    if (rows.length === 0) return null;
+    return { label: map.label, rows };
   },
 
   // ── Fiche grammaire compacte du chapitre (Pilier A) ──
@@ -210,6 +237,7 @@ window.Exercises = {
       title: rule.title,
       rule: rule.rule,
       example: rule.example || '',
+      table: this._buildConjTable(rule.id),
       traps: Array.isArray(rule.traps) ? rule.traps.slice(0, 2) : []
     };
   },
