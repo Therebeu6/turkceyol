@@ -27,7 +27,7 @@
     })();
   </script>
   <link rel="stylesheet" href="css/main.css?v=2">
-  <link rel="stylesheet" href="css/components.css?v=12">
+  <link rel="stylesheet" href="css/components.css?v=13">
   <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
@@ -125,6 +125,7 @@
           <button class="dash-mod-btn" onclick="App.navigate('#phrases')"><span class="dmb-ico">💬</span>Phrases</button>
           <button class="dash-mod-btn" onclick="App.navigate('#dialogues')"><span class="dmb-ico">🎭</span>Dialogues</button>
           <button class="dash-mod-btn" onclick="App.navigate('#grammar')"><span class="dmb-ico">📖</span>Grammaire</button>
+          <button class="dash-mod-btn" onclick="App.navigate('#listening')"><span class="dmb-ico">🎧</span>Écoute</button>
         </div>
         <div class="section-row"><span class="section-lbl">Verbes à renforcer</span><button class="section-link" onclick="App.navigate('#verbs')">Module →</button></div>
         <div id="dash-weak-verbs" class="dash-weak-verbs">
@@ -301,6 +302,15 @@
       </div>
     </section>
 
+    <!-- MODE ÉCOUTE -->
+    <section id="view-listening" class="view" data-nav="none">
+      <div class="view-scroll">
+        <div class="view-hero"><h1 class="view-h1">Mode écoute 🎧</h1><p class="view-sub">Entraîne ton oreille : écoute, devine, révèle</p></div>
+        <div id="listening-body"><div class="loading-spin-wrap"><div class="spin"></div></div></div>
+        <div class="spacer-nav"></div>
+      </div>
+    </section>
+
     <!-- PARAMÈTRES -->
     <section id="view-settings" class="view" data-nav="none">
       <div class="view-scroll">
@@ -401,6 +411,7 @@
 <script src="js/views/settings.js?v=13"></script>
 <script src="js/views/stats.js?v=13"></script>
 <script src="js/views/grammar.js?v=4"></script>
+<script src="js/views/listening.js?v=1"></script>
 <script src="js/state.js?v=12"></script>
 <script src="js/app.js?v=10"></script>
 <script>

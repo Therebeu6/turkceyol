@@ -1582,3 +1582,39 @@ input:focus-visible,
 }
 /* Ne pas afficher l'outline au clic souris (uniquement clavier) */
 button:focus:not(:focus-visible) { outline: none; }
+
+/* v6 AXE 5.1 — Mode écoute intensive */
+.listen-intro { text-align: center; padding: var(--s6, 24px) var(--s4, 16px); }
+.listen-intro-icon { font-size: 2.5rem; margin-bottom: var(--s2, 8px); }
+.listen-intro-title { font-size: var(--text-xl, 1.25rem); font-weight: 800; color: var(--text); margin-bottom: var(--s2, 8px); }
+.listen-intro-sub { font-size: var(--text-sm, 0.85rem); color: var(--text-2); line-height: 1.5; margin-bottom: var(--s4, 16px); }
+
+.listen-progress { display: flex; align-items: center; gap: 10px; margin-bottom: var(--s4, 16px); }
+.listen-prog-track { flex: 1; height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+.listen-prog-fill { height: 100%; background: var(--primary); border-radius: 3px; transition: width 0.3s ease; }
+.listen-prog-lbl { font-size: 12px; font-weight: 700; color: var(--text-3); flex-shrink: 0; }
+
+.listen-card { text-align: center; padding: var(--s6, 24px) var(--s4, 16px); }
+.listen-big-play {
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 24px var(--primary-glow);
+  transition: transform 0.12s ease;
+}
+.listen-big-play:active { transform: scale(0.94); }
+.listen-speeds { display: flex; gap: 6px; justify-content: center; margin-top: var(--s3, 12px); }
+
+.listen-reveal { margin-top: var(--s4, 16px); animation: gp-appear 0.2s ease-out; }
+.listen-reveal.hidden { display: none; }
+.listen-tr { font-size: var(--text-2xl, 1.5rem); font-weight: 800; color: var(--text); }
+.listen-phon { font-size: var(--text-sm, 0.85rem); color: var(--text-3); font-style: italic; margin: 4px 0; }
+.listen-fr { font-size: var(--text-lg, 1.1rem); color: var(--text-2); font-weight: 600; }
+
+#listen-actions { margin-top: var(--s4, 16px); }
+.listen-rate-row { display: flex; gap: 10px; }
+.listen-rate { flex: 1; }
