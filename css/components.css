@@ -1477,3 +1477,15 @@
   line-height: 1.55;
 }
 @media (prefers-reduced-motion: reduce) { .culture-note { animation: none; } }
+
+/* v6 AXE 3.5 — Bandeau gel de série sur l'écran de fin */
+.sm-freeze-banner {
+  background: rgba(56,189,248,0.12);
+  border: 1px solid rgba(56,189,248,0.4);
+  color: #38BDF8;
+  border-radius: var(--r-md, 12px);
+  padding: 8px 12px;
+  font-size: var(--text-sm, 0.85rem);
+  font-weight: 600;
+  margin: 0 0 var(--s3, 0.75rem);
+}

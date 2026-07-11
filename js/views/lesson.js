@@ -39,6 +39,7 @@ window.Lesson = {
     this.correctCount = 0;
     this.currentXp = 0;
     this._comboCount = 0;
+    this._sessionMaxCombo = 0;
     this._mistakes = [];
 
     document.getElementById('session-modal').classList.add('hidden');
@@ -701,6 +702,7 @@ window.Lesson = {
 
       // Combo
       this._comboCount++;
+      if (this._comboCount > (this._sessionMaxCombo || 0)) this._sessionMaxCombo = this._comboCount;
       if (this._comboCount > (State.data.maxCombo || 0)) {
         State.data.maxCombo = this._comboCount;
         State.save();
@@ -930,14 +932,28 @@ window.Lesson = {
       ? `<button class="btn btn-outline btn-full" style="margin-bottom:8px" onclick="Lesson.retryMistakes()">Revoir les erreurs (${this._mistakes.length})</button>`
       : '';
 
+    // 4e tuile : meilleur combo de la session (AXE 3.4)
+    const comboTile = (this._sessionMaxCombo || 0) >= 2
+      ? `<div class="sm-stat"><div class="sm-val">🔥${this._sessionMaxCombo}</div><div class="sm-lbl">Combo max</div></div>`
+      : '';
+
+    // Bandeau gel de série gagné/utilisé (AXE 3.5)
+    let freezeBanner = '';
+    if (State._lastStreakEvent === 'freeze_earned') {
+      freezeBanner = `<div class="sm-freeze-banner">❄️ Gel de série gagné ! (${State.data.streakFreezes} en réserve)</div>`;
+      State._lastStreakEvent = null;
+    }
+
     card.innerHTML = `
       <div class="sm-emoji" id="sm-emoji">${emoji}</div>
       <h2 class="sm-title" id="sm-title">${title}</h2>
       <div class="sm-message">${message}</div>
+      ${freezeBanner}
       <div class="sm-stats">
         <div class="sm-stat"><div class="sm-val" id="sm-xp">+${finalXp}</div><div class="sm-lbl">XP</div></div>
         <div class="sm-stat"><div class="sm-val" id="sm-acc">${accuracy}%</div><div class="sm-lbl">Précision</div></div>
         <div class="sm-stat"><div class="sm-val" id="sm-learned">${realExos.length}</div><div class="sm-lbl">Exos</div></div>
+        ${comboTile}
       </div>
       ${wordsHtml}
       ${retryBtn}
@@ -1069,6 +1085,7 @@ window.Lesson = {
       this.currentXp += xpGain;
       App.showXPFloat(xpGain);
       this._comboCount++;
+      if (this._comboCount > (this._sessionMaxCombo || 0)) this._sessionMaxCombo = this._comboCount;
       if (this._comboCount > (State.data.maxCombo || 0)) {
         State.data.maxCombo = this._comboCount;
         State.save();

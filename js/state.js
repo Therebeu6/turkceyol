@@ -105,11 +105,15 @@ const State = {
       const diffTime = Math.abs(currDate - lastDate);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
+      this._lastStreakEvent = null;
       if (diffDays === 1) {
-        // Streak maintenue (pas d'incrément ici, on incrémente lors de la première action du jour si on veut, ou à la fin d'une leçon)
-        // Pour simplifier, on incrémente le streak dès qu'ils font une action (géré par addXP)
+        // Streak maintenue (l'incrément se fait dans addXP à l'atteinte de l'objectif)
+      } else if (diffDays === 2 && (this.data.streakFreezes || 0) > 0) {
+        // Un seul jour manqué + gel disponible → on consomme un gel et on garde la série
+        this.data.streakFreezes -= 1;
+        this._lastStreakEvent = 'freeze_used';
       } else if (diffDays > 1) {
-        // Streak brisée
+        // Streak brisée (aucun gel, ou trop de jours manqués)
         this.data.streak = 0;
       }
 
@@ -142,6 +146,11 @@ const State = {
     if (this.data.dailyXP >= this.data.dailyGoal && this.data.lastSessionDate !== today + '_goal_met') {
       this.data.streak += 1;
       this.data.lastSessionDate = today + '_goal_met';
+      // Gel de série : 1 gagné tous les 7 jours de série, plafonné à 2 (AXE 3.5)
+      if (this.data.streak > 0 && this.data.streak % 7 === 0 && (this.data.streakFreezes || 0) < 2) {
+        this.data.streakFreezes = (this.data.streakFreezes || 0) + 1;
+        this._lastStreakEvent = 'freeze_earned';
+      }
     }
 
     this.save();

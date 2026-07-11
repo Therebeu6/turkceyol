@@ -61,15 +61,20 @@ window.Dashboard = {
     // Animation barre
     document.getElementById('goal-bar-fill').style.width = pct + '%';
 
+    const freezes = data.streakFreezes || 0;
+    const freezeLabel = freezes > 0 ? ` ❄️×${freezes}` : '';
     if (pct >= 100) {
-      document.getElementById('goal-status').textContent = "Objectif atteint ! 🔥";
+      document.getElementById('goal-status').textContent = "Objectif atteint ! 🔥" + freezeLabel;
       document.getElementById('goal-status').classList.add('text-success');
     } else if (hour >= 18 && data.dailyXP === 0 && data.streak > 0) {
-      // Alerte streak en danger (v5 — Pilier G)
-      document.getElementById('goal-status').textContent = `⚠️ Streak de ${data.streak} j en danger — une leçon rapide ?`;
+      // Alerte streak en danger (v5 — Pilier G) ; rassure si un gel protège
+      const msg = freezes > 0
+        ? `⚠️ Streak de ${data.streak} j — ❄️×${freezes} te protège, mais joue quand même !`
+        : `⚠️ Streak de ${data.streak} j en danger — une leçon rapide ?`;
+      document.getElementById('goal-status').textContent = msg;
       document.getElementById('goal-status').classList.remove('text-success');
     } else {
-      document.getElementById('goal-status').textContent = `Encore ${data.dailyGoal - data.dailyXP} XP !`;
+      document.getElementById('goal-status').textContent = `Encore ${data.dailyGoal - data.dailyXP} XP !` + freezeLabel;
       document.getElementById('goal-status').classList.remove('text-success');
     }
 
