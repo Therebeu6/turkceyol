@@ -477,17 +477,17 @@ window.Exercises = {
     const sameDialogue = dialogue.turns
       .filter((t, i) => i !== maskIdx && t.tr && t.tr !== correctTurn.tr)
       .map(t => t.tr);
-    let pool = [...new Set(sameDialogue)];
+    let distractorPool = [...new Set(sameDialogue)];
 
     // Compléter depuis d'autres dialogues si nécessaire
-    if (pool.length < 2) {
+    if (distractorPool.length < 2) {
       const allOthers = AppDialogues
         .filter(d => d.id !== dialogue.id)
         .flatMap(d => (d.turns || []).map(t => t.tr))
         .filter(t => t && t !== correctTurn.tr);
-      pool = [...new Set([...pool, ...this._shuffle(allOthers)])];
+      distractorPool = [...new Set([...distractorPool, ...this._shuffle(allOthers)])];
     }
-    const distractors = this._shuffle(pool).slice(0, 2);
+    const distractors = this._shuffle(distractorPool).slice(0, 2);
     if (distractors.length < 2) return null;
 
     return {
