@@ -146,7 +146,8 @@ window.Stats = {
     const tenses = [
       { key: 'present', label: 'Présent (-iyor)', color: 'var(--primary)' },
       { key: 'past',    label: 'Passé (-di)',     color: 'var(--secondary)' },
-      { key: 'future',  label: 'Futur (-ecek)',   color: 'var(--success)' }
+      { key: 'future',  label: 'Futur (-ecek)',   color: 'var(--success)' },
+      { key: 'aorist',  label: 'Aoriste (-Ar/-Ir)', color: 'var(--gold)' }
     ];
 
     const hasData = tenses.some(t => ts[t.key] && ts[t.key].total > 0);

@@ -585,5 +585,45 @@ window.AppGrammar = [
         explanation: 'arkadaşım + la (consonne finale + voyelle arrière) = arkadaşımla.'
       }
     ]
+  },
+  {
+    id: 'g_aorist',
+    title: 'L\'aoriste — présent large (-r / -Ar / -Ir)',
+    rule: 'L\'aoriste exprime une habitude, une vérité générale ou une capacité (pas une action en cours). Radical + -r si le radical finit par une voyelle (oku → okur). Sinon, radical + -Ar/-Er (2 sons) pour la plupart des verbes monosyllabiques, ou -Ir/-Ur (4 sons, harmonie complète) pour les verbes de plusieurs syllabes. 13 verbes monosyllabiques sont irréguliers et prennent -Ir/-Ur au lieu de -Ar/-Er : al, ol, öl, bil, bul, kal, gel, var, ver, vur, dur, gör, san.',
+    example: 'Ben çay içerim (Je bois du thé, en général) | O her gün okur (Il/elle lit tous les jours) | Kuşlar uçar (Les oiseaux volent, vérité générale)',
+    traps: [
+      'Ne confonds pas avec -iyor : "Çay içiyorum" = je suis en train de boire du thé MAINTENANT. "Çay içerim" = j\'ai l\'habitude de boire du thé (en général). Les deux se traduisent par "je bois" en français, mais ce n\'est pas la même idée en turc.',
+      '13 verbes monosyllabiques piègent tout le monde car ils ne suivent PAS la règle -Ar/-Er attendue : gelmek → gelir (pas "gelar"), olmak → olur (pas "olar"), almak → alır (pas "alar"). À mémoriser par cœur.'
+    ],
+    exercises: [
+      {
+        prompt: '"yapmak" (faire) à l\'aoriste, "il/elle" (o) ?',
+        answer: 'yapar',
+        options: ['yapar', 'yapır', 'yapıyor', 'yapacak'],
+        hint: 'yap finit par consonne, monosyllabique, PAS dans la liste des 13 irréguliers → -ar (voyelle arrière)',
+        explanation: 'yap + ar = yapar. "yap" n\'est pas un des 13 verbes irréguliers, donc harmonie normale -Ar/-Er.'
+      },
+      {
+        prompt: '"gelmek" (venir) à l\'aoriste, "je" (ben) ?',
+        answer: 'gelirim',
+        options: ['gelirim', 'gelerim', 'geliyorum', 'geleceğim'],
+        hint: 'gel fait partie des 13 verbes irréguliers → -ir (pas -er)',
+        explanation: '"gel" est irrégulier (liste des 13) → gelir, puis +im pour "je" = gelirim.'
+      },
+      {
+        prompt: '"okumak" (lire) à l\'aoriste, "il/elle" (o) ?',
+        answer: 'okur',
+        options: ['okur', 'okar', 'okuyor', 'okumuş'],
+        hint: 'oku finit par une voyelle → on ajoute juste -r',
+        explanation: 'Radical vocalique (oku) → +r directement = okur.'
+      },
+      {
+        prompt: 'Quelle phrase veut dire "je bois du thé" au sens d\'une HABITUDE (pas maintenant) ?',
+        answer: 'Çay içerim',
+        options: ['Çay içerim', 'Çay içiyorum', 'Çay içtim', 'Çay içeceğim'],
+        hint: 'Habitude/vérité générale → aoriste, pas -iyor (action en cours)',
+        explanation: 'içerim (aoriste) = habitude générale. içiyorum serait "je suis en train de boire".'
+      }
+    ]
   }
 ];

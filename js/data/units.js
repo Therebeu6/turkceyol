@@ -1081,6 +1081,20 @@ window.AppUnits = [
         vocabIds: ['v_mutlu', 'v_uzgun', 'v_kizgin', 'v_saskin'],
         verbIds: ['vb_aglamak', 'vb_gulmek', 'vb_tasimak', 'vb_sevmek'],
         tenses: ['present', 'past']
+      },
+      {
+        id: 'u18_c5',
+        tips: [{ icon: '🔁', text: 'L\'aoriste sert pour les habitudes et vérités générales — pas pour une action en train de se passer (ça, c\'est -iyor).' }],
+        canDo: 'Je peux parler de mes habitudes avec l\'aoriste (-er/-ir)',
+        grammarIds: ['g_aorist'],
+        title: 'Mes habitudes (l\'aoriste)',
+        goal: 'Exprimer des habitudes et vérités générales avec le présent large -r/-Ar/-Ir',
+        xpReward: 110,
+        time: 11,
+        tags: ['Grammaire', 'A2'],
+        vocabIds: [],
+        verbIds: ['vb_yemek', 'vb_icmek', 'vb_okumak', 'vb_calismak', 'vb_uyumak', 'vb_yazmak'],
+        tenses: ['aorist']
       }
     ]
   }

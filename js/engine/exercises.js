@@ -208,7 +208,8 @@ window.Exercises = {
     g_present_iyor: { verbId: 'vb_gelmek', tense: 'present', label: 'Présent (-iyor) — venir' },
     g_negatif_fiil: { verbId: 'vb_gitmek', tense: 'present_neg', label: 'Présent négatif — aller' },
     g_passe_di:     { verbId: 'vb_gitmek', tense: 'past', label: 'Passé (-di) — aller' },
-    g_futur_acak:   { verbId: 'vb_gelmek', tense: 'future', label: 'Futur (-ecek) — venir' }
+    g_futur_acak:   { verbId: 'vb_gelmek', tense: 'future', label: 'Futur (-ecek) — venir' },
+    g_aorist:       { verbId: 'vb_yapmak', tense: 'aorist', label: 'Aoriste (-Ar/-Ir) — faire' }
   },
 
   _buildConjTable(ruleId) {
@@ -649,7 +650,8 @@ window.Exercises = {
       present: 'présent',
       past: 'passé',
       future: 'futur',
-      present_neg: 'présent négatif'
+      present_neg: 'présent négatif',
+      aorist: 'aoriste (habitude)'
     };
 
     // Résoudre la table de conjugaison (normale ou négative)

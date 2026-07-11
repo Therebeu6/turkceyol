@@ -24,6 +24,10 @@ window.AppVerbs = [
       future: {
         ben: 'olacağım', sen: 'olacaksın', o: 'olacak',
         biz: 'olacağız', siz: 'olacaksınız', onlar: 'olacaklar'
+      },
+      aorist: {
+        ben: 'olurum', sen: 'olursun', o: 'olur',
+        biz: 'oluruz', siz: 'olursunuz', onlar: 'olurlar'
       }
     },
     negations: {
@@ -52,6 +56,10 @@ window.AppVerbs = [
       future: {
         ben: 'yapacağım', sen: 'yapacaksın', o: 'yapacak',
         biz: 'yapacağız', siz: 'yapacaksınız', onlar: 'yapacaklar'
+      },
+      aorist: {
+        ben: 'yaparım', sen: 'yaparsın', o: 'yapar',
+        biz: 'yaparız', siz: 'yaparsınız', onlar: 'yaparlar'
       }
     },
     negations: {
@@ -81,6 +89,10 @@ window.AppVerbs = [
       future: {
         ben: 'gideceğim', sen: 'gideceksin', o: 'gidecek',
         biz: 'gideceğiz', siz: 'gideceksiniz', onlar: 'gidecekler'
+      },
+      aorist: {
+        ben: 'giderim', sen: 'gidersin', o: 'gider',
+        biz: 'gideriz', siz: 'gidersiniz', onlar: 'giderler'
       }
     },
     negations: {
@@ -109,6 +121,10 @@ window.AppVerbs = [
       future: {
         ben: 'geleceğim', sen: 'geleceksin', o: 'gelecek',
         biz: 'geleceğiz', siz: 'geleceksiniz', onlar: 'gelecekler'
+      },
+      aorist: {
+        ben: 'gelirim', sen: 'gelirsin', o: 'gelir',
+        biz: 'geliriz', siz: 'gelirsiniz', onlar: 'gelirler'
       }
     },
     negations: {
@@ -137,6 +153,10 @@ window.AppVerbs = [
       future: {
         ben: 'konuşacağım', sen: 'konuşacaksın', o: 'konuşacak',
         biz: 'konuşacağız', siz: 'konuşacaksınız', onlar: 'konuşacaklar'
+      },
+      aorist: {
+        ben: 'konuşurum', sen: 'konuşursun', o: 'konuşur',
+        biz: 'konuşuruz', siz: 'konuşursunuz', onlar: 'konuşurlar'
       }
     },
     negations: {
@@ -171,6 +191,10 @@ window.AppVerbs = [
       future: {
         ben: 'yiyeceğim', sen: 'yiyeceksin', o: 'yiyecek',
         biz: 'yiyeceğiz', siz: 'yiyeceksiniz', onlar: 'yiyecekler'
+      },
+      aorist: {
+        ben: 'yerim', sen: 'yersin', o: 'yer',
+        biz: 'yeriz', siz: 'yersiniz', onlar: 'yerler'
       }
     },
     negations: {
@@ -199,6 +223,10 @@ window.AppVerbs = [
       future: {
         ben: 'içeceğim', sen: 'içeceksin', o: 'içecek',
         biz: 'içeceğiz', siz: 'içeceksiniz', onlar: 'içecekler'
+      },
+      aorist: {
+        ben: 'içerim', sen: 'içersin', o: 'içer',
+        biz: 'içeriz', siz: 'içersiniz', onlar: 'içerler'
       }
     },
     negations: {
@@ -228,6 +256,10 @@ window.AppVerbs = [
       future: {
         ben: 'isteyeceğim', sen: 'isteyeceksin', o: 'isteyecek',
         biz: 'isteyeceğiz', siz: 'isteyeceksiniz', onlar: 'isteyecekler'
+      },
+      aorist: {
+        ben: 'isterim', sen: 'istersin', o: 'ister',
+        biz: 'isteriz', siz: 'istersiniz', onlar: 'isterler'
       }
     },
     negations: {
@@ -256,6 +288,10 @@ window.AppVerbs = [
       future: {
         ben: 'anlayacağım', sen: 'anlayacaksın', o: 'anlayacak',
         biz: 'anlayacağız', siz: 'anlayacaksınız', onlar: 'anlayacaklar'
+      },
+      aorist: {
+        ben: 'anlarım', sen: 'anlarsın', o: 'anlar',
+        biz: 'anlarız', siz: 'anlarsınız', onlar: 'anlarlar'
       }
     },
     negations: {
@@ -289,6 +325,10 @@ window.AppVerbs = [
       future: {
         ben: 'çalışacağım', sen: 'çalışacaksın', o: 'çalışacak',
         biz: 'çalışacağız', siz: 'çalışacaksınız', onlar: 'çalışacaklar'
+      },
+      aorist: {
+        ben: 'çalışırım', sen: 'çalışırsın', o: 'çalışır',
+        biz: 'çalışırız', siz: 'çalışırsınız', onlar: 'çalışırlar'
       }
     },
     negations: {
@@ -317,6 +357,10 @@ window.AppVerbs = [
       future: {
         ben: 'seveceğim', sen: 'seveceksin', o: 'sevecek',
         biz: 'seveceğiz', siz: 'seveceksiniz', onlar: 'sevecekler'
+      },
+      aorist: {
+        ben: 'severim', sen: 'seversin', o: 'sever',
+        biz: 'severiz', siz: 'seversiniz', onlar: 'severler'
       }
     },
     negations: {
@@ -345,6 +389,10 @@ window.AppVerbs = [
       future: {
         ben: 'uyuyacağım', sen: 'uyuyacaksın', o: 'uyuyacak',
         biz: 'uyuyacağız', siz: 'uyuyacaksınız', onlar: 'uyuyacaklar'
+      },
+      aorist: {
+        ben: 'uyurum', sen: 'uyursun', o: 'uyur',
+        biz: 'uyuruz', siz: 'uyursunuz', onlar: 'uyurlar'
       }
     },
     negations: {
@@ -373,6 +421,10 @@ window.AppVerbs = [
       future: {
         ben: 'kalkacağım', sen: 'kalkacaksın', o: 'kalkacak',
         biz: 'kalkacağız', siz: 'kalkacaksınız', onlar: 'kalkacaklar'
+      },
+      aorist: {
+        ben: 'kalkarım', sen: 'kalkarsın', o: 'kalkar',
+        biz: 'kalkarız', siz: 'kalkarsınız', onlar: 'kalkarlar'
       }
     },
     negations: {
@@ -401,6 +453,10 @@ window.AppVerbs = [
       future: {
         ben: 'bileceğim', sen: 'bileceksin', o: 'bilecek',
         biz: 'bileceğiz', siz: 'bileceksiniz', onlar: 'bilecekler'
+      },
+      aorist: {
+        ben: 'bilirim', sen: 'bilirsin', o: 'bilir',
+        biz: 'biliriz', siz: 'bilirsiniz', onlar: 'bilirler'
       }
     },
     negations: {
@@ -429,6 +485,10 @@ window.AppVerbs = [
       future: {
         ben: 'alacağım', sen: 'alacaksın', o: 'alacak',
         biz: 'alacağız', siz: 'alacaksınız', onlar: 'alacaklar'
+      },
+      aorist: {
+        ben: 'alırım', sen: 'alırsın', o: 'alır',
+        biz: 'alırız', siz: 'alırsınız', onlar: 'alırlar'
       }
     },
     negations: {
@@ -462,6 +522,10 @@ window.AppVerbs = [
       future: {
         ben: 'vereceğim', sen: 'vereceksin', o: 'verecek',
         biz: 'vereceğiz', siz: 'vereceksiniz', onlar: 'verecekler'
+      },
+      aorist: {
+        ben: 'veririm', sen: 'verirsin', o: 'verir',
+        biz: 'veririz', siz: 'verirsiniz', onlar: 'verirler'
       }
     },
     negations: {
@@ -495,6 +559,10 @@ window.AppVerbs = [
       future: {
         ben: 'bakacağım', sen: 'bakacaksın', o: 'bakacak',
         biz: 'bakacağız', siz: 'bakacaksınız', onlar: 'bakacaklar'
+      },
+      aorist: {
+        ben: 'bakarım', sen: 'bakarsın', o: 'bakar',
+        biz: 'bakarız', siz: 'bakarsınız', onlar: 'bakarlar'
       }
     },
     negations: {
@@ -528,6 +596,10 @@ window.AppVerbs = [
       future: {
         ben: 'bekleyeceğim', sen: 'bekleyeceksin', o: 'bekleyecek',
         biz: 'bekleyeceğiz', siz: 'bekleyeceksiniz', onlar: 'bekleyecekler'
+      },
+      aorist: {
+        ben: 'beklerim', sen: 'beklersin', o: 'bekler',
+        biz: 'bekleriz', siz: 'beklersiniz', onlar: 'beklerler'
       }
     },
     negations: {
@@ -561,6 +633,10 @@ window.AppVerbs = [
       future: {
         ben: 'okuyacağım', sen: 'okuyacaksın', o: 'okuyacak',
         biz: 'okuyacağız', siz: 'okuyacaksınız', onlar: 'okuyacaklar'
+      },
+      aorist: {
+        ben: 'okurum', sen: 'okursun', o: 'okur',
+        biz: 'okuruz', siz: 'okursunuz', onlar: 'okurlar'
       }
     },
     negations: {
@@ -594,6 +670,10 @@ window.AppVerbs = [
       future: {
         ben: 'yazacağım', sen: 'yazacaksın', o: 'yazacak',
         biz: 'yazacağız', siz: 'yazacaksınız', onlar: 'yazacaklar'
+      },
+      aorist: {
+        ben: 'yazarım', sen: 'yazarsın', o: 'yazar',
+        biz: 'yazarız', siz: 'yazarsınız', onlar: 'yazarlar'
       }
     },
     negations: {
@@ -629,6 +709,10 @@ window.AppVerbs = [
       future: {
         ben: 'duyacağım', sen: 'duyacaksın', o: 'duyacak',
         biz: 'duyacağız', siz: 'duyacaksınız', onlar: 'duyacaklar'
+      },
+      aorist: {
+        ben: 'duyarım', sen: 'duyarsın', o: 'duyar',
+        biz: 'duyarız', siz: 'duyarsınız', onlar: 'duyarlar'
       }
     },
     negations: {
@@ -662,6 +746,10 @@ window.AppVerbs = [
       future: {
         ben: 'göreceğim', sen: 'göreceksin', o: 'görecek',
         biz: 'göreceğiz', siz: 'göreceksiniz', onlar: 'görecekler'
+      },
+      aorist: {
+        ben: 'görürüm', sen: 'görürsün', o: 'görür',
+        biz: 'görürüz', siz: 'görürsünüz', onlar: 'görürler'
       }
     },
     negations: {
@@ -695,6 +783,10 @@ window.AppVerbs = [
       future: {
         ben: 'arayacağım', sen: 'arayacaksın', o: 'arayacak',
         biz: 'arayacağız', siz: 'arayacaksınız', onlar: 'arayacaklar'
+      },
+      aorist: {
+        ben: 'ararım', sen: 'ararsın', o: 'arar',
+        biz: 'ararız', siz: 'ararsınız', onlar: 'ararlar'
       }
     },
     negations: {
@@ -728,6 +820,10 @@ window.AppVerbs = [
       future: {
         ben: 'açacağım', sen: 'açacaksın', o: 'açacak',
         biz: 'açacağız', siz: 'açacaksınız', onlar: 'açacaklar'
+      },
+      aorist: {
+        ben: 'açarım', sen: 'açarsın', o: 'açar',
+        biz: 'açarız', siz: 'açarsınız', onlar: 'açarlar'
       }
     },
     negations: {

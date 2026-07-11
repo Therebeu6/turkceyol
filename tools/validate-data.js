@@ -40,6 +40,16 @@ for (const f of DATA_FILES) {
   }
 }
 
+// stories.js (v7 AXE 1) : optionnel, chargé seulement s'il existe déjà
+const storiesPath = path.join(DATA, 'stories.js');
+if (fs.existsSync(storiesPath)) {
+  try {
+    vm.runInContext(fs.readFileSync(storiesPath, 'utf8'), sandbox, { filename: 'stories.js' });
+  } catch (e) {
+    err(`js/data/stories.js : erreur de parsing JS → ${e.message}`);
+  }
+}
+
 const W = sandbox.window;
 const vocab = W.AppVocabulary || [];
 const verbs = W.AppVerbs || [];
@@ -48,6 +58,7 @@ const dialogues = W.AppDialogues || [];
 const grammar = W.AppGrammar || [];
 const units = W.AppUnits || [];
 const achievements = W.AppAchievements || [];
+const stories = W.AppStories || [];
 
 // ── Helpers ──
 const idSet = (arr) => new Set(arr.map(x => x && x.id).filter(Boolean));
@@ -68,6 +79,7 @@ checkUniqueIds(dialogues, 'dialogues');
 checkUniqueIds(grammar, 'grammar');
 checkUniqueIds(units, 'units');
 checkUniqueIds(achievements, 'achievements');
+checkUniqueIds(stories, 'stories');
 
 // ── 2. Champs requis du vocabulaire (+ forme de example) ──
 const REQ_VOCAB = ['id', 'tr', 'fr', 'topic', 'type', 'difficulty'];
@@ -113,6 +125,26 @@ for (const g of grammar) {
   }
 }
 
+// ── 3b. Histoires (v7 AXE 1) : lignes et questions bien formées ──
+for (const s of stories) {
+  const tag = `story "${s.id}"`;
+  if (!Array.isArray(s.lines) || s.lines.length === 0) { err(`${tag} : lines absentes ou vides`); continue; }
+  s.lines.forEach((l, i) => {
+    if (!l.tr || !l.fr) err(`${tag}.lines[${i}] : tr/fr requis`);
+  });
+  if (!Array.isArray(s.questions) || s.questions.length === 0) {
+    warn(`${tag} : aucune question de compréhension`);
+  } else {
+    s.questions.forEach((q, i) => {
+      const qtag = `${tag}.questions[${i}]`;
+      if (!Array.isArray(q.options) || q.options.length !== 4) err(`${qtag} : attendu 4 options`);
+      else if (new Set(q.options).size !== q.options.length) err(`${qtag} : options dupliquées`);
+      if (q.answer === undefined) err(`${qtag} : answer absente`);
+      else if (Array.isArray(q.options) && !q.options.includes(q.answer)) err(`${qtag} : answer absente des options`);
+    });
+  }
+}
+
 // ── 4. Références croisées des chapitres (units → vocab/verbs/grammar/dialogues) ──
 const vocabIds = idSet(vocab);
 const verbIds = idSet(verbs);
@@ -150,9 +182,10 @@ for (const g of grammar) if (!usedGrammar.has(g.id)) warn(`règle "${g.id}" ratt
 console.log('─'.repeat(56));
 console.log('TürkçeYol — validation des données');
 console.log('─'.repeat(56));
+const verbsWithAorist = verbs.filter(v => v.conjugations && v.conjugations.aorist).length;
 console.log(`Vocabulaire : ${vocab.length} (avec example : ${vocabWithExample})`);
-console.log(`Verbes : ${verbs.length} · Phrases : ${phrases.length} · Dialogues : ${dialogues.length}`);
-console.log(`Grammaire : ${grammar.length} · Unités : ${units.length} · Chapitres : ${chapterCount}`);
+console.log(`Verbes : ${verbs.length} (avec aoriste : ${verbsWithAorist}) · Phrases : ${phrases.length} · Dialogues : ${dialogues.length}`);
+console.log(`Grammaire : ${grammar.length} · Unités : ${units.length} · Chapitres : ${chapterCount} · Histoires : ${stories.length}`);
 console.log('─'.repeat(56));
 
 if (warnings.length) {
