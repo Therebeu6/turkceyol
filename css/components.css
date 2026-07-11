@@ -1340,3 +1340,57 @@
   padding: 3px 8px;
   white-space: nowrap;
 }
+
+/* v5.1 — Consultation d'un exercice déjà répondu (navigation arrière) */
+.review-answered-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 4px 12px;
+  margin: 6px 0 var(--s2, 0.5rem);
+}
+.review-ok {
+  color: var(--success, #22C55E);
+  background: rgba(34,197,94,0.12);
+}
+.review-ko {
+  color: var(--error, #EF4444);
+  background: rgba(239,68,68,0.12);
+}
+.review-answer-card {
+  width: 100%;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-lg, 16px);
+  padding: var(--s4, 1rem);
+}
+.review-answer-row + .review-answer-row {
+  margin-top: var(--s3, 0.75rem);
+  padding-top: var(--s3, 0.75rem);
+  border-top: 1px solid var(--border);
+}
+.review-answer-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+.review-answer-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-lg, 1.1rem);
+  font-weight: 700;
+  color: var(--text);
+}
+.review-wrong-value {
+  color: var(--error, #EF4444);
+  font-weight: 600;
+  font-size: var(--text-md, 1rem);
+  text-decoration: line-through;
+  text-decoration-color: rgba(239,68,68,0.5);
+}

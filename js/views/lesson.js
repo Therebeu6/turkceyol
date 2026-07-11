@@ -66,6 +66,10 @@ window.Lesson = {
       chip.textContent = (cur && labels[cur.phase]) || '';
       chip.style.display = (cur && labels[cur.phase]) ? '' : 'none';
     }
+
+    // Bouton retour (v5.1) : visible dès qu'on a dépassé la première slide
+    const backBtn = document.getElementById('btn-lesson-back');
+    if (backBtn) backBtn.style.display = this.currentIndex > 0 ? '' : 'none';
   },
 
   showNextExercise() {
@@ -81,6 +85,13 @@ window.Lesson = {
     // ── Slides d'enseignement (v5 — Pilier A) : pas de scoring, juste "Continuer" ──
     if (exo.isTeaching) {
       this._renderTeachingSlide(exo, container);
+      return;
+    }
+
+    // ── Déjà répondu (navigation arrière/avant sur un exo passé) : consultation
+    //    seule, jamais de re-scoring, jamais de double XP/SRS ──
+    if (exo._answered) {
+      this._renderReviewSlide(exo, container);
       return;
     }
 
@@ -518,6 +529,67 @@ window.Lesson = {
     }
   },
 
+  // ── Consultation d'un exercice déjà répondu (navigation arrière — v5.1) ──
+  // Lecture seule : aucun scoring, aucun appel SRS/XP. On rejoue juste l'affichage.
+  _renderReviewSlide(exo, container) {
+    const wasCorrect = !!exo._wasCorrect;
+    const typeLabels = {
+      qcm: exo.subtype === 'verb_fill' ? '⚡ Conjugaison' : (exo.subtype === 'grammar_fill' ? '📐 Grammaire' : '🎯 Choix multiple'),
+      input: '✍️ Traduire',
+      true_false: '✅ Vrai ou Faux ?',
+      audio_qcm: '🔊 Écouter et choisir',
+      word_order: '🔀 Remettre en ordre',
+      dialogue_fill: '💬 Complète le dialogue',
+      grammar_fill: '📐 Grammaire',
+      cloze: '🧩 Complète la phrase',
+      listening_transcribe: '🎧 Écouter et transcrire',
+      sentence_builder: '🏗️ Construire la phrase',
+      match_pairs: '🔗 Associer les paires'
+    };
+
+    const promptText = exo.question || exo.root || exo.hint || '';
+
+    let correctAnswerText;
+    if (exo.type === 'sentence_builder') correctAnswerText = (exo.correct || []).join(' ');
+    else if (exo.type === 'match_pairs') correctAnswerText = (exo.pairs || []).map(p => `${p.tr} = ${p.fr}`).join(' · ');
+    else correctAnswerText = exo.answer || exo.text || '';
+
+    const showUserAnswer = !wasCorrect && exo._userAnswer && exo.type !== 'match_pairs';
+
+    const html = `
+      <div class="exercise-container exo-slide-in">
+        <div class="exercise-header">
+          <div class="exo-type-label">${typeLabels[exo.type] || ''}</div>
+          <div class="review-answered-badge ${wasCorrect ? 'review-ok' : 'review-ko'}">
+            ${wasCorrect ? '✓ Déjà répondu — correct' : '✕ Déjà répondu — incorrect'}
+          </div>
+          ${promptText ? `<h2 class="exercise-prompt">${promptText}</h2>` : ''}
+        </div>
+        <div class="exercise-content" style="justify-content:flex-start">
+          <div class="review-answer-card">
+            <div class="review-answer-row">
+              <span class="review-answer-label">Bonne réponse</span>
+              <div class="review-answer-value">
+                <span class="exo-tr">${this._escapeHtml(correctAnswerText)}</span>
+                ${correctAnswerText ? `<button class="btn-tts-inline" onclick="App.playTTS('${this._escape(correctAnswerText)}')">🔊</button>` : ''}
+              </div>
+            </div>
+            ${showUserAnswer ? `
+              <div class="review-answer-row">
+                <span class="review-answer-label">Ta réponse</span>
+                <div class="review-answer-value review-wrong-value">${this._escapeHtml(exo._userAnswer)}</div>
+              </div>
+            ` : ''}
+          </div>
+          <button class="btn btn-primary btn-full mt-4" onclick="Lesson.nextStep()">Continuer</button>
+        </div>
+      </div>
+    `;
+
+    this._answered = true;
+    container.innerHTML = this._canDoBanner() + html;
+  },
+
   checkInput() {
     const el = document.getElementById('exo-input');
     if (!el || !el.value.trim()) return;
@@ -546,6 +618,11 @@ window.Lesson = {
     } else {
       isCorrect = clean(selected) === clean(exo.answer);
     }
+
+    // Persiste l'état pour la navigation arrière : en consultation, jamais de re-scoring
+    exo._answered = true;
+    exo._userAnswer = selected;
+    exo._wasCorrect = isCorrect;
 
     // Style des boutons / input
     if (exo.type === 'qcm' || exo.type === 'true_false' || exo.type === 'audio_qcm'
@@ -690,12 +767,30 @@ window.Lesson = {
     }
   },
 
+  // ── Retour arrière (v5.1) : revoir une slide déjà vue, sans jamais re-scorer ──
+  prevStep() {
+    if (this.currentIndex <= 0) return;
+    this.currentIndex--;
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const exoEl = document.querySelector('#lesson-body .exercise-container');
+    if (!reduced && exoEl) {
+      exoEl.classList.add('exo-slide-out');
+      setTimeout(() => {
+        this._bindKeys();
+        this.showNextExercise();
+      }, 200);
+    } else {
+      this._bindKeys();
+      this.showNextExercise();
+    }
+  },
+
   _bindKeys() {
     if (this._keyHandler) document.removeEventListener('keydown', this._keyHandler);
     this._keyHandler = (e) => {
-      // Slide d'enseignement : Entrée = continuer
+      // Slide d'enseignement ou déjà répondue (consultation) : Entrée = continuer, jamais rescorer
       const cur = this.exercises[this.currentIndex];
-      if (cur && cur.isTeaching) {
+      if (cur && (cur.isTeaching || cur._answered)) {
         if (e.key === 'Enter') this.nextStep();
         return;
       }
@@ -921,6 +1016,11 @@ window.Lesson = {
       .replace(/[.!?,;:'"]/g, '').replace(/\s+/g, ' ').trim();
     const isCorrect = correct;
 
+    // Persiste l'état pour la navigation arrière
+    exo._answered = true;
+    exo._userAnswer = userAnswer;
+    exo._wasCorrect = isCorrect;
+
     answerDiv.classList.add(isCorrect ? 'correct' : 'wrong');
 
     const fbBar = document.getElementById('feedback-bar');
@@ -1029,6 +1129,8 @@ window.Lesson = {
     if (this._answered) return;
     this._answered = true;
     const exo = this.exercises[this.currentIndex];
+    exo._answered = true;
+    exo._wasCorrect = true;
     this.correctCount++;
     this.currentXp += 10;
     App.showXPFloat(10);
@@ -1089,5 +1191,9 @@ window.Lesson = {
 
   _escape(s) {
     return String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  },
+
+  _escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 };
