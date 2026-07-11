@@ -171,8 +171,11 @@ window.Lesson = {
             <h2 class="exercise-prompt">${exo.question}</h2>
           </div>
           <div class="exercise-content" style="justify-content:flex-start;margin-top:1.5rem">
-            <input type="text" id="exo-input" class="exercise-input"
-                   placeholder="Écrivez en turc…" autocomplete="off" autocorrect="off" spellcheck="false">
+            <div class="mic-input-row">
+              <input type="text" id="exo-input" class="exercise-input"
+                     placeholder="Écrivez en turc…" autocomplete="off" autocorrect="off" spellcheck="false">
+              ${this._micButtonHtml('exo-input')}
+            </div>
             <button class="btn btn-primary btn-full mt-4" onclick="Lesson.checkInput()">Valider</button>
           </div>
         </div>
@@ -341,8 +344,9 @@ window.Lesson = {
                 🔊 Écouter
               </button>
               <div style="display:flex;gap:6px;margin-top:0.5rem;flex-wrap:wrap">${this._ttsSpeedHtml()}</div>
-              <div class="input-group" style="margin-top:1rem">
+              <div class="input-group mic-input-row" style="margin-top:1rem">
                 <input type="text" id="lt-input" class="answer-input" placeholder="Écris ce que tu entends…" autocomplete="off" autocorrect="off" spellcheck="false" style="width:100%">
+                ${this._micButtonHtml('lt-input')}
               </div>
               <div class="virtual-keyboard" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:0.75rem">
                 ${['ş','ğ','ç','ö','ü','ı','İ'].map(k =>
@@ -1251,6 +1255,39 @@ window.Lesson = {
       toast.classList.add('fade-out');
       setTimeout(() => { if (toast.parentNode) toast.remove(); }, 320);
     }, 1200);
+  },
+
+  // Bouton micro optionnel (v7 AXE 4.1) : opt-in strict + détection de support.
+  // Remplit juste le champ existant — aucun scoring, le circuit Grading existant
+  // s'applique ensuite sans rien changer. Canal entrant, ne touche pas au TTS.
+  _micButtonHtml(inputId) {
+    const enabled = window.State && State.data && State.data.settings && State.data.settings.speechInput === true;
+    const supported = window.Speech && Speech.isSupported();
+    if (!enabled || !supported) return '';
+    return `
+      <button type="button" class="mic-btn" id="mic-btn-${inputId}" onclick="Lesson._startMic('${inputId}')" aria-label="Dicter">
+        🎤
+      </button>
+    `;
+  },
+
+  _startMic(inputId) {
+    if (!window.Speech || !Speech.isSupported()) return;
+    const btn = document.getElementById('mic-btn-' + inputId);
+    const input = document.getElementById(inputId);
+    if (btn) btn.classList.add('mic-listening');
+    Speech.listen({
+      onResult: (text) => {
+        if (input && text) { input.value = text; input.focus(); }
+      },
+      onError: () => {
+        if (btn) btn.classList.remove('mic-listening');
+        App.showToast('Micro indisponible ou non autorisé', 'info');
+      },
+      onEnd: () => {
+        if (btn) btn.classList.remove('mic-listening');
+      }
+    });
   },
 
   _ttsSpeedHtml() {

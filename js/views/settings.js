@@ -15,6 +15,8 @@ window.Settings = {
     const themeOpts = [['dark', '🌙 Sombre'], ['light', '☀️ Clair'], ['system', '💻 Système']];
     const density = State.data.sessionDensity || 'normal';
     const densityOpts = [['short', 'Courte'], ['normal', 'Normale'], ['long', 'Longue']];
+    const speechOn = s.speechInput === true;
+    const speechSupported = window.Speech && Speech.isSupported();
 
     document.getElementById('settings-body').innerHTML = `
       <div class="card mb-4">
@@ -43,6 +45,21 @@ window.Settings = {
             </button>
           `).join('')}
         </div>
+        <hr class="border-t border-border my-4" style="border-color: var(--border);">
+
+        <h3 class="font-bold text-sm text-muted uppercase mb-2">Saisie vocale (bêta) 🎤</h3>
+        ${speechSupported ? `
+          <p class="text-xs text-muted mb-3">Expérimental. Ta voix est envoyée à un service de reconnaissance externe (navigateur). Peut mal fonctionner sur iPhone.</p>
+          <div class="flex justify-between items-center mb-4">
+            <span class="font-bold">Bouton micro sur les exercices de saisie</span>
+            <label class="switch">
+              <input type="checkbox" ${speechOn ? 'checked' : ''} onchange="Settings.toggleSpeech(this.checked)">
+              <span class="slider"></span>
+            </label>
+          </div>
+        ` : `
+          <p class="text-xs text-muted mb-4">Non disponible sur ce navigateur.</p>
+        `}
         <hr class="border-t border-border my-4" style="border-color: var(--border);">
 
         <div class="flex justify-between items-center mb-4">
@@ -90,6 +107,11 @@ window.Settings = {
   toggleSound(enabled) {
     State.updateSetting('soundEffects', enabled);
     App.showToast(`Sons ${enabled ? 'activés' : 'désactivés'}`);
+  },
+
+  toggleSpeech(enabled) {
+    State.updateSetting('speechInput', enabled);
+    App.showToast(`Micro ${enabled ? 'activé' : 'désactivé'}`);
   },
 
   toggleReminder(enabled) {

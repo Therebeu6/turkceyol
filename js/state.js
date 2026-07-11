@@ -37,7 +37,8 @@ const State = {
       soundEffects: true,
       dailyReminder: true,
       haptics: true,
-      theme: 'dark'
+      theme: 'dark',
+      speechInput: false
     }
   },
 

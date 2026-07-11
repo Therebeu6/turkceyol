@@ -139,3 +139,27 @@
 .sm-val { font-size: var(--text-xl); font-weight: 800; color: var(--primary); margin-bottom: 2px; }
 .sm-lbl { font-size: var(--text-xs); font-weight: 600; color: var(--text-3); text-transform: uppercase; }
 
+
+/* v7 AXE 4.1 — Bouton micro optionnel (bêta) */
+.mic-input-row { display: flex; align-items: stretch; gap: 8px; width: 100%; }
+.mic-input-row .exercise-input,
+.mic-input-row .answer-input { flex: 1; }
+.mic-btn {
+  flex-shrink: 0;
+  width: 52px;
+  border: 2px solid var(--border);
+  border-radius: var(--r-lg, 16px);
+  background: var(--surface);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.mic-btn:active { transform: scale(0.94); }
+.mic-btn.mic-listening {
+  border-color: var(--primary);
+  background: var(--primary-glow);
+  animation: pulse 1.2s infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mic-btn.mic-listening { animation: none; }
+}
