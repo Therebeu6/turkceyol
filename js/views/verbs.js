@@ -63,6 +63,7 @@ window.Verbs = {
         `<span class="mdot ${i < mastery ? 'fill' : ''}"></span>`
       ).join('');
       const hasNote = v.note ? `<span class="verb-note-ico" title="${v.note}">⚠️</span>` : '';
+      const isFav = window.App && App.isFavorite(v.id, 'verb');
 
       return `
         <div class="verb-item" onclick="Verbs.showDetail('${v.id}')">
@@ -76,6 +77,7 @@ window.Verbs = {
           </div>
           <div class="li-right">
             <div class="mastery-dots">${dots}</div>
+            <button class="fav-star ${isFav ? 'fav-active' : ''}" onclick="App.toggleFavoriteFromEvent(event, '${v.id}', 'verb')" aria-label="Favori">${isFav ? '★' : '☆'}</button>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
               <path d="M9 18l6-6-6-6"/>
             </svg>

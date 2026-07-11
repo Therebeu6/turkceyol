@@ -56,6 +56,7 @@ window.Vocabulary = {
         `<span class="mdot ${i < mastery ? 'fill' : ''}"></span>`
       ).join('');
 
+      const isFav = window.App && App.isFavorite(w.id, 'vocabulary');
       return `
         <div class="list-item" onclick="App.playTTS('${w.tr.replace(/'/g, "\\'")}')">
           <div class="li-left">
@@ -64,6 +65,7 @@ window.Vocabulary = {
           </div>
           <div class="li-right">
             <div class="mastery-dots">${dots}</div>
+            <button class="fav-star ${isFav ? 'fav-active' : ''}" onclick="App.toggleFavoriteFromEvent(event, '${w.id}', 'vocabulary')" aria-label="Favori">${isFav ? '★' : '☆'}</button>
           </div>
         </div>
       `;

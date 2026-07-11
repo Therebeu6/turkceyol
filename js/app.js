@@ -183,6 +183,31 @@ const App = {
     }, 3000);
   },
 
+  // ── Favoris ⭐ (v7 AXE 3.3) — mots/verbes/phrases, réutilisés par le hub Pratique ──
+  isFavorite(id, type) {
+    const favs = (window.State && State.data && State.data.favorites) || [];
+    return favs.some(f => f.id === id && f.type === type);
+  },
+
+  toggleFavorite(id, type) {
+    if (!window.State) return false;
+    if (!State.data.favorites) State.data.favorites = [];
+    const idx = State.data.favorites.findIndex(f => f.id === id && f.type === type);
+    let nowFav;
+    if (idx >= 0) { State.data.favorites.splice(idx, 1); nowFav = false; }
+    else { State.data.favorites.push({ id, type }); nowFav = true; }
+    State.save();
+    return nowFav;
+  },
+
+  // Bascule l'étoile au clic sans déclencher le onclick du parent (ex. lecture TTS)
+  toggleFavoriteFromEvent(event, id, type) {
+    event.stopPropagation();
+    const nowFav = this.toggleFavorite(id, type);
+    const btn = event.currentTarget;
+    if (btn) btn.classList.toggle('fav-active', nowFav);
+  },
+
   // ── Text-To-Speech (Prononciation Turque) ──
   _voices: [],
   

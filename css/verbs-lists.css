@@ -33,3 +33,17 @@
 .mdot { width: 8px; height: 8px; border-radius: 50%; background: var(--surface-3); }
 .mdot.fill { background: var(--success); }
 
+
+/* v7 AXE 3.3 — Bouton favori ⭐ */
+.fav-star {
+  background: none;
+  border: none;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--text-3);
+  cursor: pointer;
+  padding: 2px 4px;
+  transition: transform 0.12s ease, color 0.12s ease;
+}
+.fav-star:active { transform: scale(1.2); }
+.fav-star.fav-active { color: var(--gold, #F59E0B); }

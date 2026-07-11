@@ -14,8 +14,25 @@ window.Review = {
   _active: false,
   _answered: false,
   _mpState: null,
+  _pendingItems: null,
+
+  // Lance une session personnalisée depuis un autre écran (v7 AXE 3 — hub Pratique).
+  // App.navigate() change window.location.hash, ce qui déclenche le routage de façon
+  // ASYNCHRONE (événement hashchange) : on ne peut donc pas enchaîner navigate() puis
+  // _launchSession() sur la même ligne (Review.render() écraserait tout). On pose le
+  // drapeau _pendingItems AVANT de naviguer ; render() le consomme en priorité.
+  launchCustomSession(items) {
+    this._pendingItems = items;
+    App.navigate('#review');
+  },
 
   render() {
+    if (this._pendingItems) {
+      const items = this._pendingItems;
+      this._pendingItems = null;
+      this._launchSession(items);
+      return;
+    }
     this._active = false;
     const dueItems = window.SRS ? SRS.getDueItems() : [];
     const container = document.getElementById('review-body');

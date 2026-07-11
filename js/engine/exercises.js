@@ -45,8 +45,12 @@ window.Exercises = {
     const unitNum = unit ? parseInt(unit.id.slice(1), 10) || 99 : 99;
     const prodLevel = unitNum <= 1 ? 0 : (unitNum === 2 ? 1 : 2);
 
+    // Densité de session (v7 AXE 3.2) : Courte/Normale/Longue, réglable en Settings
+    const density = (window.State && State.data && State.data.sessionDensity) || 'normal';
+    const vocabSampleSize = density === 'short' ? 3 : density === 'long' ? 7 : 5;
+
     // ── Échantillon : on enseigne EXACTEMENT ce qu'on teste ──
-    const vocabSample = this._shuffle(vocab).slice(0, 5);
+    const vocabSample = this._shuffle(vocab).slice(0, vocabSampleSize);
 
     const discover = [];  // enseigner
     const practice = [];  // reconnaître (niv 1)
@@ -147,16 +151,26 @@ window.Exercises = {
       });
     }
 
+    // Densité "courte" : on garde le meilleur de chaque phase plutôt que tout
+    // (jamais les slides d'enseignement — enseigner reste toujours complet)
+    let trimmedPractice = practice, trimmedRecall = recall, trimmedProduce = produce;
+    if (density === 'short') {
+      const keep = (arr) => arr.length > 1 ? arr.slice(0, Math.ceil(arr.length * 0.6)) : arr;
+      trimmedPractice = keep(practice);
+      trimmedRecall = keep(recall);
+      trimmedProduce = keep(produce);
+    }
+
     // ── Assemblage : découverte fixe, puis phases mélangées SANS répétition de type ──
     discover.forEach(e => { e.phase = 'discover'; });
-    practice.forEach(e => { e.phase = 'practice'; });
-    recall.forEach(e => { e.phase = 'recall'; });
-    produce.forEach(e => { e.phase = 'produce'; });
+    trimmedPractice.forEach(e => { e.phase = 'practice'; });
+    trimmedRecall.forEach(e => { e.phase = 'recall'; });
+    trimmedProduce.forEach(e => { e.phase = 'produce'; });
     return [
       ...discover,
-      ...this._antiRepeat(this._shuffle(practice)),
-      ...this._antiRepeat(this._shuffle(recall)),
-      ...this._antiRepeat(this._shuffle(produce))
+      ...this._antiRepeat(this._shuffle(trimmedPractice)),
+      ...this._antiRepeat(this._shuffle(trimmedRecall)),
+      ...this._antiRepeat(this._shuffle(trimmedProduce))
     ];
   },
 

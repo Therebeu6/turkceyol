@@ -33,7 +33,7 @@
   <link rel="stylesheet" href="css/units-path.css?v=1">
   <link rel="stylesheet" href="css/lesson-core.css?v=1">
   <link rel="stylesheet" href="css/review-stats.css?v=1">
-  <link rel="stylesheet" href="css/verbs-lists.css?v=1">
+  <link rel="stylesheet" href="css/verbs-lists.css?v=2">
   <link rel="stylesheet" href="css/settings-dialogues.css?v=1">
   <link rel="stylesheet" href="css/widgets.css?v=1">
   <link rel="stylesheet" href="css/grammar.css?v=1">
@@ -44,6 +44,7 @@
   <link rel="stylesheet" href="css/teaching-slides.css?v=1">
   <link rel="stylesheet" href="css/v6-features.css?v=1">
   <link rel="stylesheet" href="css/stories.css?v=1">
+  <link rel="stylesheet" href="css/practice.css?v=1">
   <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
@@ -133,6 +134,12 @@
         <div class="daily-chal-card" onclick="App.navigate('#daily')">
           <div class="dc-ico">⚡</div>
           <div class="dc-body"><div class="dc-name" id="dc-name">Défi du jour</div><div class="dc-desc" id="dc-desc">5 questions · ~3 min</div></div>
+          <div class="dc-arr">›</div>
+        </div>
+        <div class="section-row"><span class="section-lbl">S'entraîner</span></div>
+        <div class="daily-chal-card" onclick="App.navigate('#practice')">
+          <div class="dc-ico">🧠</div>
+          <div class="dc-body"><div class="dc-name">Hub d'entraînement</div><div class="dc-desc">Mots fragiles, conjugaison, favoris…</div></div>
           <div class="dc-arr">›</div>
         </div>
         <div class="section-row"><span class="section-lbl">Explorer</span></div>
@@ -337,6 +344,15 @@
       </div>
     </section>
 
+    <!-- HUB D'ENTRAÎNEMENT -->
+    <section id="view-practice" class="view" data-nav="none">
+      <div class="view-scroll">
+        <div class="view-hero"><h1 class="view-h1">S'entraîner 🧠</h1><p class="view-sub">Des sessions ciblées sur ce que tu dois vraiment revoir</p></div>
+        <div id="practice-body"><div class="loading-spin-wrap"><div class="spin"></div></div></div>
+        <div class="spacer-nav"></div>
+      </div>
+    </section>
+
     <!-- PARAMÈTRES -->
     <section id="view-settings" class="view" data-nav="none">
       <div class="view-scroll">
@@ -424,24 +440,25 @@
 <script src="js/engine/srs.js?v=12"></script>
 <script src="js/engine/phonetics.js?v=2"></script>
 <script src="js/engine/grading.js?v=1"></script>
-<script src="js/engine/exercises.js?v=29"></script>
+<script src="js/engine/exercises.js?v=30"></script>
 <script src="js/engine/audio.js?v=1"></script>
 <script src="js/engine/gamification.js?v=11"></script>
 <script src="js/views/dashboard.js?v=15"></script>
 <script src="js/views/units.js?v=15"></script>
 <script src="js/views/lesson.js?v=29"></script>
-<script src="js/views/verbs.js?v=9"></script>
-<script src="js/views/vocabulary.js?v=9"></script>
+<script src="js/views/verbs.js?v=10"></script>
+<script src="js/views/vocabulary.js?v=10"></script>
 <script src="js/views/phrases.js?v=9"></script>
 <script src="js/views/dialogues.js?v=11"></script>
-<script src="js/views/review.js?v=19"></script>
-<script src="js/views/settings.js?v=13"></script>
+<script src="js/views/review.js?v=20"></script>
+<script src="js/views/settings.js?v=14"></script>
 <script src="js/views/stats.js?v=14"></script>
 <script src="js/views/grammar.js?v=4"></script>
 <script src="js/views/listening.js?v=1"></script>
 <script src="js/views/stories.js?v=1"></script>
+<script src="js/views/practice.js?v=1"></script>
 <script src="js/state.js?v=13"></script>
-<script src="js/app.js?v=10"></script>
+<script src="js/app.js?v=11"></script>
 <script>
   /* Enregistrement du service worker (v6 AXE 6.3) — installable + offline */
   if ('serviceWorker' in navigator) {

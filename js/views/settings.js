@@ -13,6 +13,8 @@ window.Settings = {
     const goal = State.data.dailyGoal || 50;
     const goalOpts = [[20, 'Détente'], [50, 'Normal'], [100, 'Sérieux']];
     const themeOpts = [['dark', '🌙 Sombre'], ['light', '☀️ Clair'], ['system', '💻 Système']];
+    const density = State.data.sessionDensity || 'normal';
+    const densityOpts = [['short', 'Courte'], ['normal', 'Normale'], ['long', 'Longue']];
 
     document.getElementById('settings-body').innerHTML = `
       <div class="card mb-4">
@@ -25,11 +27,19 @@ window.Settings = {
           `).join('')}
         </div>
         <h3 class="font-bold text-sm text-muted uppercase mb-3">Objectif quotidien</h3>
-        <div class="goal-select-row">
+        <div class="goal-select-row" style="margin-bottom:var(--s4)">
           ${goalOpts.map(([v, lbl]) => `
             <button class="goal-opt ${goal === v ? 'goal-opt-active' : ''}" onclick="Settings.setGoal(${v})">
               <span class="goal-opt-xp">${v} XP</span>
               <span class="goal-opt-lbl">${lbl}</span>
+            </button>
+          `).join('')}
+        </div>
+        <h3 class="font-bold text-sm text-muted uppercase mb-3">Durée des leçons</h3>
+        <div class="goal-select-row">
+          ${densityOpts.map(([v, lbl]) => `
+            <button class="goal-opt ${density === v ? 'goal-opt-active' : ''}" onclick="Settings.setDensity('${v}')">
+              <span class="goal-opt-lbl" style="font-size:var(--text-sm)">${lbl}</span>
             </button>
           `).join('')}
         </div>
@@ -98,6 +108,14 @@ window.Settings = {
     State.save();
     this.render();
     App.showToast(`Objectif : ${value} XP / jour`);
+  },
+
+  setDensity(value) {
+    State.data.sessionDensity = value;
+    State.save();
+    this.render();
+    const labels = { short: 'Courte', normal: 'Normale', long: 'Longue' };
+    App.showToast(`Leçons : ${labels[value]}`);
   },
 
   setTheme(value) {
