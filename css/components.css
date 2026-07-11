@@ -1533,3 +1533,39 @@
 }
 .wr-bar-today { background: var(--primary); }
 .wr-bar-lbl { font-size: 10px; color: var(--text-3); }
+
+/* v6 AXE 3.1 — Vue Parcours en "chemin" vertical (spine + tu es ici) */
+.unit-path .ch-path-item { position: relative; }
+.unit-path .ch-icon-wrap {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+.unit-path .ch-icon-wrap::before {
+  content: '';
+  position: absolute;
+  left: 13px;            /* centre du cercle 28px */
+  top: 0; bottom: 0;
+  width: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+.unit-path .ch-path-item:first-child .ch-icon-wrap::before { top: 50%; }
+.unit-path .ch-path-item:last-child .ch-icon-wrap::before { bottom: 50%; }
+.unit-path .ch-path-item.ch-done .ch-icon-wrap::before { background: var(--success); opacity: 0.5; }
+.unit-path .ch-icon { position: relative; z-index: 1; }
+
+.ch-here-badge {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #fff;
+  background: var(--primary);
+  border-radius: 20px;
+  padding: 2px 9px;
+  animation: pulse 2s infinite;
+}

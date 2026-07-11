@@ -78,12 +78,14 @@ window.Units = {
         const clickable = isUnlocked ? `onclick="Units.startChapter('${unit.id}','${chap.id}')"` : '';
         const cursorClass = isUnlocked ? 'ch-clickable' : '';
 
+        const hereBadge = isNext ? `<div class="ch-here-badge">Tu es ici</div>` : '';
         chapHtml += `
-          <div class="ch-item ${statusClass} ${cursorClass}" ${clickable}>
+          <div class="ch-item ch-path-item ${statusClass} ${cursorClass}" ${clickable}>
             <div class="ch-icon-wrap"><div class="ch-icon ${statusClass}-icon">${iconHtml}</div></div>
             <div class="ch-info">
-              <div class="ch-title">${chap.title}</div>
+              <div class="ch-title">${chap.title}${chap.canDo ? '' : ''}</div>
               <div class="ch-goal">${chap.goal}</div>
+              ${hereBadge}
             </div>
             <div class="ch-meta">
               ${timeLabel ? `<span class="ch-time">${timeLabel}</span>` : ''}
@@ -119,7 +121,7 @@ window.Units = {
               </div>
             </div>
           </div>
-          <div class="unit-chapters-wrap">${chapHtml}</div>
+          <div class="unit-chapters-wrap unit-path">${chapHtml}</div>
         </div>
       `;
 
