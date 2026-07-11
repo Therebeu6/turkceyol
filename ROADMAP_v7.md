@@ -1,5 +1,26 @@
 # TürkçeYol — ROADMAP v7 (élaguée)
 
+> **📌 STATUT : 100% livrée (session du 12/07/2026)** ✅
+> - **AXE 1 — COMPRENDRE** ✅ `stories.js` (8 histoires A1/A2, 58 lignes, 24 questions) +
+>   lecteur `#stories` (audio phrase-à-phrase, révélation FR, questions QCM, XP + confettis).
+> - **AXE 2 — GRAMMAIRE** ✅ Aoriste `-r/-Ar/-Er/-Ir` (règle `g_aorist` + 24 verbes conjugués,
+>   formes vérifiées programmatiquement contre 7 références connues + chapitre `u18_c5`).
+>   Nécessitatif `-meli` laissé en réserve (contenu incrémental, pas de bloc géant).
+> - **AXE 3 — S'ENTRAÎNER MIEUX** ✅ Hub `#practice` (mots fragiles, conjugaison, mix rapide,
+>   favoris, écoute — tout recalculé depuis le SRS existant) + densité de session
+>   (Courte/Normale/Longue, vérifié 9→13→15 slides) + favoris ⭐ (vocab + verbes).
+> - **AXE 4 — PARLER (bêta)** ✅ `speech.js` (reconnaissance vocale, canal entrant distinct du
+>   TTS), bouton micro opt-in sur `input`/`listening_transcribe`, avertissement honnête,
+>   absent si navigateur non supporté. Scoring/shadowing complets restent hors scope (décision
+>   assumée : risque technique non vérifié en conditions réelles, cf. annexe).
+> - **AXE 5 — INSIGHTS** ✅ Radar de compétences (Stats) — 5 dimensions, 100% calculées depuis
+>   des données réellement trackées (SRS, tenseStats, storiesRead), aucune valeur inventée.
+> - **AXE 6 — TECHNIQUE** ✅ `validate-data.js` étendu pour `stories.js` (ids, lignes, questions).
+> - **Coupé et non regretté** : ligue simulée, carte de partage, notifications, i18n, onboarding —
+>   cf. annexe « Ce qui a été coupé et pourquoi ».
+> - **Vérification finale** : 33/33 fichiers JS valides, 72 chapitres × 10 passes = 12155 slides
+>   sans erreur, moteur TTS strictement intact, aucun id supprimé.
+
 ## « PARLER (un peu) · COMPRENDRE · S'ENTRAÎNER MIEUX »
 
 > Séquence : v3 (bases) → v4 (densité) → v5 (fondations : phases de leçon, cohérence, phonétique) →
