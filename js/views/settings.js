@@ -9,11 +9,21 @@ window.Settings = {
     const soundOn = s.soundEffects !== false;
     const reminderOn = s.dailyReminder !== false;
     const hapticsOn = s.haptics !== false;
+    const theme = s.theme || 'dark';
     const goal = State.data.dailyGoal || 50;
     const goalOpts = [[20, 'Détente'], [50, 'Normal'], [100, 'Sérieux']];
+    const themeOpts = [['dark', '🌙 Sombre'], ['light', '☀️ Clair'], ['system', '💻 Système']];
 
     document.getElementById('settings-body').innerHTML = `
       <div class="card mb-4">
+        <h3 class="font-bold text-sm text-muted uppercase mb-3">Thème</h3>
+        <div class="goal-select-row" style="margin-bottom:var(--s4)">
+          ${themeOpts.map(([v, lbl]) => `
+            <button class="goal-opt ${theme === v ? 'goal-opt-active' : ''}" onclick="Settings.setTheme('${v}')">
+              <span class="goal-opt-lbl" style="font-size:var(--text-sm)">${lbl}</span>
+            </button>
+          `).join('')}
+        </div>
         <h3 class="font-bold text-sm text-muted uppercase mb-3">Objectif quotidien</h3>
         <div class="goal-select-row">
           ${goalOpts.map(([v, lbl]) => `
@@ -88,8 +98,21 @@ window.Settings = {
     State.save();
     this.render();
     App.showToast(`Objectif : ${value} XP / jour`);
-    if (window.Dashboard && typeof Dashboard.render === 'function') {
-      // rafraîchit l'anneau si on revient au dashboard
+  },
+
+  setTheme(value) {
+    State.updateSetting('theme', value);
+    Settings.applyTheme(value);
+    this.render();
+    App.showToast('Thème mis à jour');
+  },
+
+  // Applique le thème au <html> (system = suit la préférence OS)
+  applyTheme(value) {
+    let t = value;
+    if (value === 'system') {
+      t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
     }
+    document.documentElement.setAttribute('data-theme', t);
   }
 };

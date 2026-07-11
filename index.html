@@ -10,7 +10,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css">
+  <script>
+    /* Anti-flash thème (v6 AXE 4.3) : applique le thème sauvegardé avant le rendu */
+    (function(){
+      try {
+        var d = JSON.parse(localStorage.getItem('turkceyol_data') || '{}');
+        var t = (d.settings && d.settings.theme) || 'dark';
+        if (t === 'system') {
+          t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/main.css?v=2">
   <link rel="stylesheet" href="css/components.css?v=11">
   <link rel="stylesheet" href="css/animations.css">
 </head>
@@ -382,7 +395,7 @@
 <script src="js/views/phrases.js?v=9"></script>
 <script src="js/views/dialogues.js?v=11"></script>
 <script src="js/views/review.js?v=19"></script>
-<script src="js/views/settings.js?v=12"></script>
+<script src="js/views/settings.js?v=13"></script>
 <script src="js/views/stats.js?v=13"></script>
 <script src="js/views/grammar.js?v=4"></script>
 <script src="js/state.js?v=12"></script>
