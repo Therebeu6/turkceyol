@@ -34,7 +34,18 @@ window.Lesson = {
       if (c) { this._canDo = c.canDo || null; break; }
     }
 
-    this.exercises = Exercises.generateForChapter(this.chapterId);
+    // Garde-fou (AXE 6.4) : une donnée cassée ne doit jamais bloquer l'écran
+    try {
+      this.exercises = Exercises.generateForChapter(this.chapterId);
+    } catch (e) {
+      console.error('generateForChapter a échoué pour', this.chapterId, e);
+      this.exercises = [];
+    }
+    if (!Array.isArray(this.exercises) || this.exercises.length === 0) {
+      App.showToast('Ce chapitre est momentanément indisponible.', 'info');
+      App.navigate('#units');
+      return;
+    }
     this.currentIndex = 0;
     this.correctCount = 0;
     this.currentXp = 0;

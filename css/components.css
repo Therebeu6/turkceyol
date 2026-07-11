@@ -1569,3 +1569,16 @@
   padding: 2px 9px;
   animation: pulse 2s infinite;
 }
+
+/* v6 AXE 6.5 — Accessibilité : focus visible clavier */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+.option-btn:focus-visible,
+.ch-item.ch-clickable:focus-visible {
+  outline: 3px solid var(--secondary);
+  outline-offset: 2px;
+  border-radius: var(--r-sm, 8px);
+}
+/* Ne pas afficher l'outline au clic souris (uniquement clavier) */
+button:focus:not(:focus-visible) { outline: none; }
