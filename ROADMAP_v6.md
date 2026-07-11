@@ -1,10 +1,10 @@
 # TürkçeYol — ROADMAP v6
 
-> **📌 AVANCEMENT (session du 11/07/2026)** — l'essentiel de la v6 est **livré** ✅
-> - **AXE 1** — ✅ 1.1 (520/520 mots avec exemple) · ✅ 1.3 (18/18 règles rattachées + renfort possessif corps). 1.2 audit doublons : recentrage léger par titre fait (u12_c1, u16_c1), refonte profonde différée.
+> **📌 AVANCEMENT (session du 11/07/2026)** — la v6 est **livrée à 100 %** ✅
+> - **AXE 1** — ✅ 1.1 (520/520 mots avec exemple) · ✅ 1.2 (les 3 pires doublons A1/A2 réellement recentrés par le contenu : u16_c1 corps 10/12→0/12 overlap, u15_c2 meubles 5/10→0/10, u17_c3 lieux 4/9→0/9 — vocabulaire piochi dans des mots existants jamais rattachés, aucun id créé/supprimé) · ✅ 1.3 (18/18 règles rattachées + renfort possessif corps).
 > - **AXE 2** — ✅ 2.1 tableaux de conjugaison (leçon + vue Grammaire) · ✅ 2.2 notes culturelles (16 chapitres, slide `culture_note`) · ✅ 2.3 mnémo sons durs · ✅ 2.4 distracteurs longueur-proche + anti-doublon.
 > - **AXE 3** — ✅ 3.1 dashboard-chemin (spine + « tu es ici ») · ✅ 3.2 révisions (dues + renforcement + compteur) · ✅ 3.3 objectif configurable + rapport hebdo · ✅ 3.4 écran de fin (combo max) · ✅ 3.5 gel de série.
-> - **AXE 4** — ✅ 4.3 thème clair/sombre/système (anti-flash) · ✅ 4.4 haptique · 4.2 transitions déjà en place. **4.1 découpage CSS : différé** (refactor pur, risque > valeur).
+> - **AXE 4** — ✅ 4.1 découpage CSS (components.css 1620 lignes → 14 modules < 230 lignes chacun, cascade préservée à l'octet près, preuve par `cmp` binaire) · ✅ 4.3 thème clair/sombre/système (anti-flash) · ✅ 4.4 haptique · 4.2 transitions déjà en place.
 > - **AXE 5** — ✅ 5.1 mode écoute intensive (#listening) · ✅ 5.3 TTS exemples (cartes Découverte). 5.2 shadowing : couvert partiellement par le contrôle de vitesse, non prioritaire.
 > - **AXE 6** — ✅ 6.1 validateur données · ✅ 6.2 smoke test (quickjs, 71 chapitres × 10 passes = 0 problème) · ✅ 6.3 PWA installable + offline (SW ne touche jamais l'audio TTS) · ✅ 6.4 garde-fous leçon · ✅ 6.5 aria-labels + focus clavier.
 > - **Contraintes dures respectées** : moteur TTS `playTTS` / `_playGoogleTTS` / meta `no-referrer` **strictement intacts** ; aucun id supprimé ; persistance via `State` ; vanilla statique ; cache-bust systématique.
