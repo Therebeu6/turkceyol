@@ -40,6 +40,9 @@ window.Stats = {
         </div>
       </div>
 
+      <!-- Radar de compétences (v7 AXE 5.1) -->
+      ${this._buildSkillRadar()}
+
       <!-- Alerte items fragiles -->
       ${fragileHtml}
 
@@ -74,6 +77,90 @@ window.Stats = {
             </div>
           `;
         }).join('')}
+      </div>
+    `;
+  },
+
+  // Radar de compétences (v7 AXE 5.1) : 5 dimensions, toutes calculées depuis
+  // des données réelles déjà trackées (jamais de valeur inventée) :
+  //   Vocabulaire/Grammaire = % d'items maîtrisés (SRS) sur le total de l'app,
+  //   Conjugaison = précision réelle sur les exos verbe_fill (tenseStats),
+  //   Rétention = SRS.getRetentionRate() existant,
+  //   Lecture = % d'histoires terminées.
+  _buildSkillRadar() {
+    if (!window.SRS) return '';
+    const queue = State.data.reviewQueue || [];
+
+    const masteredRatio = (type, total) => {
+      if (!total) return 0;
+      const mastered = queue.filter(i => i.type === type && SRS.getMasteryLevel(i) >= 3).length;
+      return Math.round((mastered / total) * 100);
+    };
+
+    const vocabScore = masteredRatio('vocabulary', (window.AppVocabulary || []).length);
+    const grammarScore = masteredRatio('grammar', (window.AppGrammar || []).length);
+
+    const tenseStats = State.data.tenseStats || {};
+    let tCorrect = 0, tTotal = 0;
+    Object.keys(tenseStats).forEach(k => { tCorrect += tenseStats[k].correct || 0; tTotal += tenseStats[k].total || 0; });
+    const conjScore = tTotal > 0 ? Math.round((tCorrect / tTotal) * 100) : 0;
+
+    const retentionScore = SRS.getRetentionRate();
+
+    const storiesRead = (State.data.storiesRead || []).length;
+    const storiesTotal = (window.AppStories || []).length;
+    const readingScore = storiesTotal > 0 ? Math.round((storiesRead / storiesTotal) * 100) : 0;
+
+    const axes = [
+      { label: 'Vocabulaire', value: vocabScore },
+      { label: 'Conjugaison', value: conjScore },
+      { label: 'Grammaire', value: grammarScore },
+      { label: 'Rétention', value: retentionScore },
+      { label: 'Lecture', value: readingScore }
+    ];
+
+    const hasData = axes.some(a => a.value > 0);
+    if (!hasData) {
+      return `
+        <div class="section-row"><span class="section-lbl">Compétences</span></div>
+        <div class="card mb-4"><div class="empty-state-sm"><span>📊</span>Continue à apprendre pour voir ton profil de compétences !</div></div>
+      `;
+    }
+
+    const cx = 100, cy = 100, maxR = 68;
+    const n = axes.length;
+    const angleFor = i => (Math.PI * 2 * i / n) - Math.PI / 2;
+    const pointFor = (i, pct) => {
+      const r = (pct / 100) * maxR;
+      const a = angleFor(i);
+      return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+    };
+
+    const ringsSvg = [25, 50, 75, 100].map(pct =>
+      `<polygon points="${axes.map((_, i) => pointFor(i, pct).join(',')).join(' ')}" fill="none" stroke="var(--border)" stroke-width="1"/>`
+    ).join('');
+    const spokesSvg = axes.map((_, i) => {
+      const [x, y] = pointFor(i, 100);
+      return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--border)" stroke-width="1"/>`;
+    }).join('');
+    const dataSvg = `<polygon points="${axes.map((a, i) => pointFor(i, a.value).join(',')).join(' ')}" fill="var(--primary-glow)" stroke="var(--primary)" stroke-width="2"/>`;
+
+    const labelR = maxR + 22;
+    const labelsSvg = axes.map((a, i) => {
+      const ang = angleFor(i);
+      const x = cx + labelR * Math.cos(ang);
+      const y = cy + labelR * Math.sin(ang);
+      const cosA = Math.cos(ang);
+      const anchor = Math.abs(cosA) < 0.25 ? 'middle' : (cosA > 0 ? 'start' : 'end');
+      return `<text x="${x}" y="${y}" text-anchor="${anchor}" dominant-baseline="middle" class="radar-label">${a.label} <tspan class="radar-label-val">${a.value}%</tspan></text>`;
+    }).join('');
+
+    return `
+      <div class="section-row"><span class="section-lbl">Compétences</span></div>
+      <div class="card mb-4 skill-radar-card">
+        <svg viewBox="0 0 200 200" class="skill-radar-svg">
+          ${ringsSvg}${spokesSvg}${dataSvg}${labelsSvg}
+        </svg>
       </div>
     `;
   },

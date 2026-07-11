@@ -92,3 +92,13 @@
 .badge-icon { font-size: 1.8rem; margin-bottom: 4px; }
 .badge-name { font-size: 10px; font-weight: 700; color: var(--text-2); }
 
+
+/* v7 AXE 5.1 — Radar de compétences */
+.skill-radar-card { display: flex; justify-content: center; padding: var(--s3, 12px); }
+.skill-radar-svg { width: 100%; max-width: 320px; height: auto; }
+.radar-label {
+  font-size: 8.5px;
+  font-weight: 700;
+  fill: var(--text-2);
+}
+.radar-label-val { fill: var(--primary); font-weight: 800; }
