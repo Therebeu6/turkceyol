@@ -125,6 +125,10 @@ for (const u of AppUnits) {
           if (Array.isArray(s.options) && s.options.some(o => o === undefined || o === null || o === '')) {
             err(`chapitre "${c.id}" : ${s.type} contient une option vide`);
           }
+          // pas de doublon d'option (AXE 2.4 : distracteur = réponse déguisée)
+          if (Array.isArray(s.options) && new Set(s.options).size !== s.options.length) {
+            err(`chapitre "${c.id}" : ${s.type} a des options dupliquées → ${JSON.stringify(s.options)}`);
+          }
         }
 
         // Cohérence de thème (garantie v5)

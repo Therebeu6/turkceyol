@@ -793,11 +793,22 @@ window.Exercises = {
       !sameType.find(s => s.id === w.id) && w[field] !== targetWord[field]
     );
 
+    // AXE 2.4 — préférer des distracteurs de LONGUEUR proche de la réponse
+    // (plus plausibles, moins « devinables » par élimination visuelle).
+    const targetLen = String(targetWord[field] || '').length;
+    const byLenProximity = (arr) => this._shuffle(arr).sort((a, b) =>
+      Math.abs(String(a[field]).length - targetLen) - Math.abs(String(b[field]).length - targetLen)
+    );
+
     const result = [];
+    const targetVal = String(targetWord[field]).toLocaleLowerCase('tr-TR');
     const addUnique = (arr) => {
-      for (const w of this._shuffle(arr)) {
+      for (const w of byLenProximity(arr)) {
         if (result.length >= count) break;
-        if (!result.includes(w[field])) result.push(w[field]);
+        const val = w[field];
+        // jamais la bonne réponse déguisée (casse/espaces), jamais un doublon
+        if (String(val).toLocaleLowerCase('tr-TR') === targetVal) continue;
+        if (!result.includes(val)) result.push(val);
       }
     };
     addUnique(sameTopic);
