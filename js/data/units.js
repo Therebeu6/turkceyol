@@ -738,6 +738,7 @@ window.AppUnits = [
       },
       {
         id: 'u13_c2',
+        grammarIds: ['g_possessif'],
         canDo: 'Je peux nommer les parties du corps',
         title: 'Mon corps',
         goal: 'Nommer les parties du corps',
@@ -893,6 +894,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u16_c1',
+        grammarIds: ['g_possessif'],
         canDo: 'Je maîtrise le vocabulaire complet du corps humain',
         title: 'Le corps humain — approfondi',
         goal: 'Réviser et compléter les parties du corps',
