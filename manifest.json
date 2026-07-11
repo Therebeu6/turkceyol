@@ -1,0 +1,20 @@
+{
+  "name": "TürkçeYol — Apprendre le turc",
+  "short_name": "TürkçeYol",
+  "description": "Apprenez le turc progressivement : leçons, révision espacée, grammaire et prononciation.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0D0D14",
+  "theme_color": "#0D0D14",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

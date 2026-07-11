@@ -6,6 +6,9 @@
   <meta name="description" content="TürkçeYol — Apprenez le turc progressivement.">
   <meta name="theme-color" content="#0D0D14">
   <meta name="referrer" content="no-referrer">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
   <title>TürkçeYol — Apprendre le turc</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -400,5 +403,13 @@
 <script src="js/views/grammar.js?v=4"></script>
 <script src="js/state.js?v=12"></script>
 <script src="js/app.js?v=10"></script>
+<script>
+  /* Enregistrement du service worker (v6 AXE 6.3) — installable + offline */
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').catch(function () { /* silencieux */ });
+    });
+  }
+</script>
 </body>
 </html>
