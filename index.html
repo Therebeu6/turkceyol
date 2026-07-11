@@ -43,6 +43,7 @@
   <link rel="stylesheet" href="css/grammar-practice.css?v=1">
   <link rel="stylesheet" href="css/teaching-slides.css?v=1">
   <link rel="stylesheet" href="css/v6-features.css?v=1">
+  <link rel="stylesheet" href="css/stories.css?v=1">
   <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
@@ -141,6 +142,7 @@
           <button class="dash-mod-btn" onclick="App.navigate('#dialogues')"><span class="dmb-ico">🎭</span>Dialogues</button>
           <button class="dash-mod-btn" onclick="App.navigate('#grammar')"><span class="dmb-ico">📖</span>Grammaire</button>
           <button class="dash-mod-btn" onclick="App.navigate('#listening')"><span class="dmb-ico">🎧</span>Écoute</button>
+          <button class="dash-mod-btn" onclick="App.navigate('#stories')"><span class="dmb-ico">📗</span>Histoires</button>
         </div>
         <div class="section-row"><span class="section-lbl">Verbes à renforcer</span><button class="section-link" onclick="App.navigate('#verbs')">Module →</button></div>
         <div id="dash-weak-verbs" class="dash-weak-verbs">
@@ -326,6 +328,15 @@
       </div>
     </section>
 
+    <!-- HISTOIRES -->
+    <section id="view-stories" class="view" data-nav="none">
+      <div class="view-scroll">
+        <div class="view-hero"><h1 class="view-h1">Histoires 📖</h1><p class="view-sub">Lis, écoute et comprends de vraies petites histoires en turc</p></div>
+        <div id="stories-body"><div class="loading-spin-wrap"><div class="spin"></div></div></div>
+        <div class="spacer-nav"></div>
+      </div>
+    </section>
+
     <!-- PARAMÈTRES -->
     <section id="view-settings" class="view" data-nav="none">
       <div class="view-scroll">
@@ -408,6 +419,7 @@
 <script src="js/data/dialogues.js?v=13"></script>
 <script src="js/data/grammar.js?v=17"></script>
 <script src="js/data/achievements.js?v=11"></script>
+<script src="js/data/stories.js?v=1"></script>
 <script src="js/data/units.js?v=16"></script>
 <script src="js/engine/srs.js?v=12"></script>
 <script src="js/engine/phonetics.js?v=2"></script>
@@ -427,7 +439,8 @@
 <script src="js/views/stats.js?v=14"></script>
 <script src="js/views/grammar.js?v=4"></script>
 <script src="js/views/listening.js?v=1"></script>
-<script src="js/state.js?v=12"></script>
+<script src="js/views/stories.js?v=1"></script>
+<script src="js/state.js?v=13"></script>
 <script src="js/app.js?v=10"></script>
 <script>
   /* Enregistrement du service worker (v6 AXE 6.3) — installable + offline */

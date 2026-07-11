@@ -1,0 +1,110 @@
+/* ═══════════════════════════════════════════════
+   TürkçeYol — stories.css (v7 AXE 1)
+   Lecteur d'histoires : liste, lecture, questions.
+   ═══════════════════════════════════════════════ */
+
+.story-list { display: flex; flex-direction: column; gap: var(--s3, 12px); }
+
+.story-card {
+  display: flex;
+  align-items: center;
+  gap: var(--s3, 12px);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-lg, 16px);
+  padding: var(--s3, 12px) var(--s4, 16px);
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+.story-card:active { transform: scale(0.98); }
+.story-card:hover { border-color: var(--primary); }
+.story-card-icon { font-size: 2rem; flex-shrink: 0; }
+.story-card-info { flex: 1; min-width: 0; }
+.story-card-title { font-weight: 700; color: var(--text); font-size: var(--text-md, 1rem); }
+.story-done-badge { color: var(--success, #22C55E); font-weight: 800; }
+.story-card-sub { font-size: var(--text-sm, 0.85rem); color: var(--text-2); margin-top: 2px; }
+.story-card-meta { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.story-card-count { font-size: 11px; color: var(--text-3); }
+
+.story-level {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  border-radius: 6px;
+  padding: 1px 7px;
+}
+.story-level-a1 { background: rgba(34,197,94,0.15); color: #22C55E; }
+.story-level-a2 { background: rgba(99,102,241,0.15); color: #818CF8; }
+
+/* Lecteur */
+.story-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-sm, 0.85rem);
+  color: var(--text-2);
+  margin-bottom: var(--s3, 12px);
+  width: auto;
+  padding: 6px 10px;
+}
+.story-reader-header { text-align: center; margin-bottom: var(--s4, 16px); }
+.story-reader-icon { font-size: 2.5rem; margin-bottom: 4px; }
+.story-reader-title { font-size: var(--text-xl, 1.25rem); font-weight: 800; color: var(--text); }
+.story-reader-sub { font-size: var(--text-sm, 0.85rem); color: var(--text-2); margin-top: 2px; }
+
+.story-actions { display: flex; gap: 8px; justify-content: center; margin-bottom: var(--s4, 16px); }
+
+.story-lines { display: flex; flex-direction: column; gap: var(--s3, 12px); margin-bottom: var(--s4, 16px); }
+.story-line {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md, 12px);
+  padding: var(--s3, 12px);
+}
+.story-line-tr {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: var(--text-md, 1rem);
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0;
+}
+.story-line-tts { opacity: 0.6; font-size: 0.85rem; }
+.story-line-fr {
+  margin-top: 6px;
+  font-size: var(--text-sm, 0.85rem);
+  color: var(--text-2);
+  animation: gp-appear 0.2s ease-out;
+}
+.story-line-fr.hidden { display: none; }
+
+/* Questions */
+.story-q-progress {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-3);
+  margin-bottom: var(--s3, 12px);
+}
+.story-q-card { text-align: center; }
+.story-q-text {
+  font-size: var(--text-lg, 1.1rem);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: var(--s4, 16px);
+}
+
+/* Bilan */
+.story-finish { text-align: center; padding: var(--s6, 24px) var(--s4, 16px); }
+.story-finish-icon { font-size: 2.5rem; margin-bottom: var(--s2, 8px); }
+.story-finish-title { font-size: var(--text-xl, 1.25rem); font-weight: 800; color: var(--text); }
+.story-finish-sub { font-size: var(--text-md, 1rem); color: var(--primary); font-weight: 700; margin-top: 4px; margin-bottom: var(--s4, 16px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .story-line-fr { animation: none; }
+}
