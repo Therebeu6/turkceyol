@@ -863,11 +863,11 @@ window.AppUnits = [
         canDo: 'Je peux décrire les meubles et objets de la maison',
         grammarIds: ['g_yok_var'],
         title: 'Les meubles & objets',
-        goal: 'Décrire les objets de la maison',
+        goal: 'Compléter l\'ameublement : éclairage, décoration, rangement',
         xpReward: 80,
         time: 9,
         tags: ['Maison', 'A2'],
-        vocabIds: ['v_yatak', 'v_masa', 'v_sandalye', 'v_koltuk', 'v_dolap', 'v_buzdolabi', 'v_firin', 'v_televizyon', 'v_pencere', 'v_kapi'],
+        vocabIds: ['v_koltuk', 'v_dolap', 'v_buzdolabi', 'v_firin', 'v_televizyon', 'v_lamba', 'v_ayna', 'v_hali', 'v_perde', 'v_duvar'],
         verbIds: ['vb_olmak', 'vb_bakmak']
       },
       {
@@ -909,13 +909,13 @@ window.AppUnits = [
       {
         id: 'u16_c1',
         grammarIds: ['g_possessif'],
-        canDo: 'Je maîtrise le vocabulaire complet du corps humain',
+        canDo: 'Je peux nommer des parties du corps précises (articulations, organes)',
         title: 'Le corps humain — approfondi',
-        goal: 'Réviser et compléter les parties du corps',
+        goal: 'Aller au-delà des bases : articulations et détails utiles chez le médecin',
         xpReward: 70,
         time: 8,
         tags: ['Corps', 'A2'],
-        vocabIds: ['v_bas', 'v_goz', 'v_kulak', 'v_burun', 'v_agiz', 'v_dis', 'v_el', 'v_kol', 'v_ayak', 'v_bacak', 'v_sirt', 'v_karin'],
+        vocabIds: ['v_burun', 'v_bacak', 'v_boyun', 'v_omuz', 'v_dirsek', 'v_diz', 'v_bilek', 'v_gogus', 'v_kalp', 'v_parmak', 'v_sac', 'v_tirnak'],
         verbIds: []
       },
       {
@@ -998,11 +998,11 @@ window.AppUnits = [
         grammarIds: ['g_locatif'],
         dialogueIds: ['d_banque', 'd_cinema'],
         title: 'Lieux & commerces',
-        goal: 'S\'orienter en ville et faire des achats',
+        goal: 'Découvrir des commerces de proximité au-delà des lieux essentiels',
         xpReward: 80,
         time: 9,
         tags: ['Lieux', 'Commerce', 'A2'],
-        vocabIds: ['v_banka', 'v_postane', 'v_hastane', 'v_eczane', 'v_market', 'v_muze', 'v_sinema', 'v_kuafor', 'v_berber'],
+        vocabIds: ['v_postane', 'v_muze', 'v_sinema', 'v_kuafor', 'v_berber', 'v_pastane', 'v_kasap', 'v_dukkan', 'v_kutuphane'],
         verbIds: ['vb_gitmek', 'vb_bulmak', 'vb_almak', 'vb_odemek']
       },
       {
