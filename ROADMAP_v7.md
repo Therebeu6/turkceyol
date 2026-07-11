@@ -1,356 +1,222 @@
-# TürkçeYol — ROADMAP v7
+# TürkçeYol — ROADMAP v7 (élaguée)
 
-## « PARLER · COMPRENDRE · S'ADAPTER »
+## « PARLER (un peu) · COMPRENDRE · S'ENTRAÎNER MIEUX »
 
-> Séquence du projet : **v3** (Sessions A→G, bases produit) → **v4** (Blocs H→M, densité) →
-> **v5** (réparation des fondations : phases de leçon, cohérence, phonétique, CEFR) →
-> **v6** (approfondir la pédagogie + retenir : conjugaison, culture, chemin, PWA, thème, écoute) →
-> **v7 (les 3 frontières manquantes : production orale, immersion contextuelle, personnalisation)**.
+> Séquence : v3 (bases) → v4 (densité) → v5 (fondations : phases de leçon, cohérence, phonétique) →
+> v6 (profondeur : conjugaison, culture, chemin, PWA, thème, écoute) → **v7 (élaguée après revue critique)**.
 >
-> La v5 a rendu l'app **cohérente**. La v6 l'a rendue **profonde et engageante**. Mais après audit,
-> trois grandes capacités qui définissent les meilleures apps de 2026 sont **totalement absentes** :
+> **Ce fichier remplace la première version de la v7**, jugée trop généreuse après un audit technique
+> à tête reposée. Cinq axes ont été **coupés entièrement** (pas réduits — coupés), un axe a été
+> **fortement réduit** en portée. Le détail de ce qui a été retiré et pourquoi est en fin de fichier
+> (§ Annexe — Ce qui a été coupé et pourquoi), pour ne pas perdre la réflexion si on veut y revenir un jour.
 >
-> 1. **On ne parle jamais.** Zéro production orale, zéro retour sur la prononciation. C'est LE manque
->    n°1 relevé par toutes les comparatives 2026 : les apps qui font progresser vraiment font
->    **écouter, répéter, prononcer et corrigent l'accent** en temps réel.
-> 2. **On ne lit rien en contexte.** Pas d'histoires, pas de lecture guidée. Or « l'exposition
->    multi-modale (lecture + écoute + rappel actif) produit ~40 % de rétention en plus que le mono-mode ».
-> 3. **Tout le monde a le même parcours.** Pas d'onboarding, pas de test de niveau, pas de pratique
->    adaptée aux faiblesses. Les meilleures apps **adaptent le contenu, le rythme et la révision** au profil.
->
-> **La v7 attaque ces trois frontières**, sans jamais casser ce qui marche.
+> **Contexte qui a guidé l'élagage** : c'est un outil utilisé par une seule personne en local, pas un
+> produit avec plusieurs utilisateurs. Tout ce qui simule du social (ligues, partage) ou qui prépare
+> une généricité hypothétique (i18n, onboarding multi-profils) a été retiré : ça n'a de valeur que si
+> quelqu'un d'autre que toi ouvre l'app un jour, ce qui n'est pas le cas aujourd'hui.
 
 ---
 
-## 🧭 PHILOSOPHIE v7
+## 🧭 PHILOSOPHIE v7 (élaguée)
 
-> On ne refait rien de ce que v5/v6 ont posé. On **ajoute trois nouvelles couches** par-dessus des
-> fondations saines :
->
-> - **PARLER** — faire produire de l'oral (répéter, prononcer, se faire corriger), 100 % côté navigateur.
-> - **COMPRENDRE** — immersion par des histoires courtes et des dialogues vivants, avec vérification.
-> - **S'ADAPTER** — accueillir, situer le niveau, et orienter chacun vers ce qui lui manque.
->
-> **Mètre-étalon v7** : à la fin, un débutant peut **s'entendre parler turc et être corrigé**, **lire
-> une petite histoire turque et la comprendre**, et **recevoir un parcours qui lui ressemble**.
+On garde seulement ce qui a une valeur **concrète et vérifiable** pour un usage solo :
 
----
-
-## ⛔ CONTRAINTES DURES — NE JAMAIS ENFREINDRE
-
-> Ces règles priment sur **toute** tâche ci-dessous. Une amélioration qui les viole est un bug.
-
-1. **🔊 AUDIO / TTS INTOUCHABLE.** Ne **jamais** modifier `App.playTTS()`, `App._playGoogleTTS()`,
-   ni la balise `<meta name="referrer" content="no-referrer">`. Tout audio **sortant** passe par
-   `App.playTTS(text)`. ⚠️ La reconnaissance vocale (v7 AXE 1) utilise l'API **`SpeechRecognition`**,
-   qui est **entrante** et **totalement distincte** du TTS — elle ne touche donc pas au moteur audio,
-   mais on ne « refactore » pas le TTS au passage.
-2. **Zéro régression de progression.** Ne jamais supprimer/renommer un `id` déjà utilisé
-   (`v_*`, `vb_*`, `p_*`, `d_*`, `g_*`, `u*_c*`, `ach_*`, et les nouveaux `st_*` histoires). Recentrer
-   = changer le **contenu**, pas l'id.
-3. **Persistance uniquement via `State`.** Jamais de `localStorage` direct : `State.data` + `State.save()`.
-   Prévoir une **migration douce** pour toute nouvelle clé (valeur par défaut si absente).
-4. **Pas de build, pas de framework, pas d'ES modules, pas de backend.** Vanilla `window.Module`,
-   chargé par `<script>`, statique GitHub Pages. Aucune dépendance npm au runtime, aucun serveur.
-5. **Dégradation gracieuse obligatoire.** Toute API non universelle (reconnaissance vocale, notifications,
-   vibration) doit **détecter le support** et se désactiver proprement (message clair, pas d'erreur) si
-   absente. Firefox n'a pas `SpeechRecognition` → l'exercice oral propose une alternative « auto-évaluation ».
-6. **Mobile-first 375px** · **clair/sombre** · **`prefers-reduced-motion`** · **cache-bust `?v=N`** sur
-   tout fichier modifié · **CSS modulaire** (on continue le découpage v6, on ne recrée pas un monolithe).
-7. **Vie privée.** La reconnaissance vocale du navigateur peut router l'audio via un service tiers selon
-   le navigateur : le préciser dans un court avis, et rendre la fonction **opt-in** (désactivée par défaut,
-   activable dans Settings). Aucune donnée vocale n'est stockée.
-8. **Additif par défaut.** On enrichit ; un refactor n'est justifié que s'il ne change **aucun**
-   comportement observable (comme le découpage CSS v6, prouvé à l'octet près).
+1. **COMPRENDRE mieux** — des histoires courtes en turc (lecture + écoute + question), ça marche,
+   c'est sûr techniquement, et la recherche est unanime sur le gain de rétention. **Priorité n°1.**
+2. **COMBLER un vrai trou pédagogique** — l'app n'enseigne que le présent progressif `-iyor` et
+   ignore l'**aoriste `-er/-ir`**, pourtant un des temps les plus utilisés du turc courant.
+   **Priorité n°2, zéro risque.**
+3. **S'ENTRAÎNER plus intelligemment** — un hub qui regroupe les sessions déjà calculables par le
+   SRS existant (mots faibles, conjugaison à revoir, écoute), pour ne pas avoir à chercher où réviser quoi.
+4. **PARLER, mais en version bêta honnête** — reconnaissance vocale du navigateur, avec un **avertissement
+   clair sur ses limites réelles** (audio envoyé à Google, bugs connus sur iPhone), scope réduit au
+   strict minimum testable, pas de gros système de scoring tant qu'on n'a pas vérifié que ça marche.
 
 ---
 
-## 📊 ÉTAT RÉEL (audité le 11/07/2026, post-v6)
+## ⛔ CONTRAINTES DURES — INCHANGÉES
 
-| Ressource | Quantité | Note |
-|---|---|---|
-| Vocabulaire | **520 mots** | 100 % avec `example` ✅ |
-| Verbes | **44** | présent -iyor / passé -di / futur -acak + négation. **Manque l'aoriste -er/-ir (geniş zaman)** |
-| Phrases | **77** | |
-| Dialogues | **29** | rattachés aux chapitres, `dialogue_fill` cohérent. **Non interactifs / pas de shadowing** |
-| Unités / Chapitres | **18 / 71** | A1 (u1-12) / A2 (u13-18), doublons majeurs résolus ✅ |
-| Grammaire | **18 règles** | `drills` + `exercises` + `traps` + tableaux conjugaison ✅ |
-| Types d'exercices | **13 + 4 slides d'enseignement** | **aucun de production orale** |
-| Vues | **13** | dashboard, units, lesson, review, verbs, vocab, phrases, dialogues, stats, grammar, settings, daily, **listening** |
-| Moteurs | **6** | exercises, srs (SM-2), gamification, grading, phonetics, audio |
-| Rétention | streak + gel + objectif configurable + rapport hebdo ✅ | **pas de ligue / classement / quêtes** |
-| PWA | installable + offline ✅ | **pas de rappels/notifications** |
-| **Production orale** | **❌ ABSENTE** | le manque n°1 |
-| **Histoires / lecture guidée** | **❌ ABSENTE** | |
-| **Onboarding / test de niveau** | **❌ ABSENT** | premier lancement = dashboard brut |
-| **Parcours adaptatif / objectifs** | **❌ ABSENT** | tout le monde a le même parcours |
+1. **🔊 TTS INTOUCHABLE.** Ne jamais modifier `App.playTTS()` / `App._playGoogleTTS()` / la meta
+   `no-referrer`. La reconnaissance vocale (AXE 3) est un canal **entrant**, séparé, elle ne touche
+   pas au TTS — mais on ne « profite » pas d'y toucher au passage.
+2. **Zéro régression de progression.** Aucun `id` supprimé/renommé (`v_*`, `vb_*`, `p_*`, `d_*`, `g_*`,
+   `u*_c*`, `ach_*`, nouveaux `st_*` histoires).
+3. **Persistance via `State` uniquement.** Toute nouvelle clé a une valeur par défaut (merge existant).
+4. **Vanilla, statique, sans backend, sans build.** Comme toujours.
+5. **Dégradation gracieuse obligatoire** pour toute API non universelle, avec un message honnête —
+   pas juste un fallback silencieux qui laisse croire que ça marche partout pareil.
+6. **Mobile-first 375px, clair/sombre, `prefers-reduced-motion`, cache-bust, CSS modulaire** (v6 continue).
 
 ---
 
-## 🎙️ AXE 1 — PARLER : production orale (le manque n°1)
+## 📚 AXE 1 — COMPRENDRE : histoires courtes (priorité n°1)
 
-> Objectif : que l'utilisateur **répète, prononce et s'entende corriger**. 100 % navigateur, opt-in,
-> avec repli propre là où l'API n'existe pas.
+> Aucune API fragile, réutilise TTS/vocab/SRS existants, gain de rétention documenté (lecture + écoute
+> + rappel actif). C'est le meilleur rapport valeur/risque de toute la roadmap.
 
-### 1.1 — Moteur de reconnaissance vocale (`js/engine/speech.js`) · **M**
-- Nouveau module `window.Speech` encapsulant `SpeechRecognition` / `webkitSpeechRecognition` en `tr-TR`.
-- API : `Speech.isSupported()`, `Speech.listen({onResult, onError, onEnd})`, `Speech.stop()`.
-- **Détection de support** stricte + drapeau `settings.speaking` (opt-in, off par défaut, avis vie privée).
-- **Ne touche pas** au TTS ; c'est un canal entrant séparé.
-- **Accept.** : sur Chrome/Edge/Safari, capte la parole turque ; sur Firefox, `isSupported()===false`.
+### 1.1 — Données histoires (`js/data/stories.js`, ids `st_*`) · **L**
+- 8-10 mini-histoires A1→A2 (5-10 phrases), réutilisant le vocabulaire déjà enseigné : une journée à
+  Istanbul, au marché, chez le médecin, un trajet en bus, un café entre amis, la météo du week-end…
+- Schéma : `{ id:'st_*', title, level:'A1|A2', icon:'emoji', unitId, lines:[{tr, fr}],
+  questions:[{q, options[4], answer}] }`.
+- **Accept.** : `validate-data.js` étendu — ids uniques, questions bien formées (4 options, réponse incluse).
 
-### 1.2 — Scoring de prononciation tolérant (réutiliser `grading.js`) · **S/M**
-- Comparer la transcription obtenue à la cible via `Grading` (normalisation + Levenshtein déjà en place).
-- Score 0-100 + verdict (🟢 ≥80 « Excellent », 🟡 50-79 « Presque », 🔴 « Réessaie ») + **mot(s) à retravailler**
-  surlignés (diff au niveau mot).
-- **Accept.** : dire correctement « Günaydın » donne un vert ; une erreur nette donne un rouge ciblé.
+### 1.2 — Lecteur d'histoire (`js/views/stories.js`, `#stories`) · **M/L**
+- Liste des histoires → lecteur : chaque phrase turque cliquable (`App.playTTS`), bouton pour révéler
+  la traduction FR, « lire tout » en enchaînant l'audio. Fin : 2-3 questions QCM → XP + SRS des mots vus.
+- **Accept.** : lire une histoire du début à la fin, écouter chaque phrase, répondre aux questions, gagner de l'XP.
 
-### 1.3 — Nouveau type d'exercice `speak` (prononce le mot/la phrase) · **M**
-- Dans `exercises.js` : `createSpeak(item)` → affiche la cible + bouton 🎤. L'utilisateur écoute (TTS),
-  puis parle ; feedback via 1.2. Mis en phase **Production** (gating existant).
-- Repli sans micro/API : bouton « 🔊 Écouter puis auto-évaluer » (Je l'ai bien dit / Pas sûr) → SRS.
-- Généré **uniquement** si `Speech.isSupported()` **et** `settings.speaking` actif ; sinon omis.
-- **Accept.** : une leçon d'un utilisateur « oral activé » propose 1-2 exercices `speak` cohérents ;
-  aucun impact si oral désactivé. Smoke-test étendu (le type est facultatif).
-
-### 1.4 — Mode **Shadowing** (répétition guidée) — vue `#shadowing` · **M/L**
-- Sur les phrases et **dialogues** : écouter (`App.playTTS`, vitesse 🐢/🐇/⚡ existante) → répéter à voix
-  haute → (si oral activé) score, sinon simple validation → phrase suivante. Enchaîne une réplique après l'autre.
-- Idéal pour l'accent et le rythme ; réutilise le contenu des dialogues existants (29).
-- **Accept.** : on peut « shadow » un dialogue entier réplique par réplique, avec vitesse réglable.
-
-### 1.5 — Bouton micro optionnel sur `listening_transcribe` et `input` · **S**
-- Là où l'utilisateur tape déjà, offrir « ou dis-le 🎤 » qui remplit le champ par la transcription.
-- **Accept.** : dicter remplit le champ ; désactivé proprement si non supporté.
+### 1.3 — Accès depuis le dashboard · **S**
+- Une carte "Histoire du jour" (déterministe par date, comme le mot du jour) dans la rangée Explorer.
+- **Accept.** : change chaque jour, mène directement au lecteur.
 
 ---
 
-## 📖 AXE 2 — COMPRENDRE EN CONTEXTE : immersion & lecture
+## 📖 AXE 2 — GRAMMAIRE : combler le vrai trou (priorité n°2)
 
-> « Lecture + écoute + rappel actif = +40 % de rétention. » On crée de vraies **histoires** turques
-> pour débutants et on rend les **dialogues vivants**.
+### 2.1 — Aoriste (`geniş zaman`, `-er/-ir`) · **M**
+- Nouvelle règle `g_aorist` (rule + example + traps + drills), conjugaisons `aorist` ajoutées aux verbes
+  existants (au moins les 20-25 les plus fréquents), nouveau chapitre d'introduction rattaché.
+- **Piège central à documenter explicitement** : -iyor = action en cours/ponctuelle, aoriste = habitude/
+  vérité générale (« Ben çay içerim » = je bois du thé, en général — pas « je suis en train de boire »).
+- **Accept.** : un chapitre enseigne l'aoriste avec tableau de conjugaison + piège -iyor-vs-aoriste explicite ;
+  smoke-test toujours à 0 problème.
 
-### 2.1 — Données histoires (`js/data/stories.js`, ids `st_*`) · **L**
-- 8-12 mini-histoires narratives A1→A2 (5-10 phrases), thème par thème, réutilisant le vocab déjà appris :
-  une journée à Istanbul, au marché, chez le médecin, un voyage en bus, un café entre amis…
-- Schéma : `{ id:'st_*', title, level:'A1|A2', cover:'emoji', lines:[{tr, fr, vocab:[ids]}],
-  questions:[{q, options[4], answer}] }`. Chaque ligne a sa traduction + mots-clés liés au lexique.
-- **Accept.** : `validate-data.js` étendu vérifie ids uniques, refs vocab existantes, questions bien formées.
+### 2.2 — Un second mode utile : nécessitatif `-meli` (« je dois ») · **S/M**
+- Règle + drills + conjugaisons sur quelques verbes clés (gitmeliyim, yapmalıyım…). Utilité immédiate
+  (obligations, conseils), grammaticalement simple à ajouter par rapport à l'impératif/conditionnel.
+- **Accept.** : règle rattachée à un chapitre, exercices générables, smoke-test au vert.
 
-### 2.2 — Lecteur d'histoire (`js/views/stories.js`, `#stories`) · **L**
-- Liste des histoires (verrouillées par niveau/progression) → lecteur : chaque phrase turque **cliquable**
-  (`App.playTTS`), **tap long / bouton** révèle la traduction FR, mots connus surlignés. Bouton « lire tout ».
-- À la fin : **2-3 questions de compréhension** (QCM) → XP + comptabilisation SRS des mots vus.
-- **Accept.** : lire une histoire, écouter chaque phrase, révéler la trad, répondre aux questions, gagner de l'XP.
-
-### 2.3 — Type d'exercice `reading_comprehension` · **M**
-- Court paragraphe turc (tiré d'une histoire ou généré depuis un dialogue) + 1 question QCM.
-- Injecté en phase **Rappel/Contexte** des chapitres qui ont une histoire rattachée (`storyIds` sur le chapitre).
-- **Accept.** : cohérent avec le thème ; jamais hors-sujet (garanti par le même mécanisme que v5 Pilier B).
-
-### 2.4 — Dialogues vivants / jeu de rôle léger · **M/L**
-- Dans la vue Dialogues : mode « joue un rôle » — l'app lit les répliques d'un personnage, l'utilisateur
-  choisit/prononce celles de l'autre (QCM de réponse plausible, ou `speak` si oral activé).
-- Option **embranchements légers** (2-3 réponses possibles) pour le réemploi, comme prévu en v4.
-- **Accept.** : on peut « jouer » un dialogue de bout en bout en tenant un rôle.
-
-### 2.5 — Widget « Mot / phrase du jour » sur le dashboard · **S**
-- Une carte quotidienne (mot ou expression utile) avec audio + exemple, tirée du lexique, déterministe par date.
-- **Accept.** : change chaque jour, écoutable, sans casser la mise en page.
+> *(Impératif, conditionnel -se, et le reste des verbes A2/B1 : gardés en réserve, ajoutés au fil de
+> l'eau plutôt qu'en gros bloc — pas de sur-planification sur du contenu qui se fait bien incrémentalement.)*
 
 ---
 
-## 🧭 AXE 3 — S'ADAPTER : onboarding, niveau & parcours personnalisé
+## 🧠 AXE 3 — S'ENTRAÎNER MIEUX : hub Pratique adaptatif
 
-> Deux utilisateurs ne devraient plus avoir exactement le même parcours.
+> Zéro nouvelle donnée nécessaire : `SRS.getWeakItems / getFragileItems / getSessionMix` existent déjà
+> et sont sous-exploités (seulement 2 boutons dans Review). On les rend visibles et actionnables.
 
-### 3.1 — Onboarding premier lancement (`js/views/onboarding.js`) · **M**
-- 3-4 écrans au tout premier lancement : bienvenue → **pourquoi tu apprends** (voyage / travail / culture /
-  série & films / par curiosité) → **objectif quotidien** (Détente/Normal/Sérieux) → **oral on/off** (avis vie privée).
-- Stocké dans `State.data.profile` ; rejouable depuis Settings.
-- **Accept.** : au premier lancement seulement, fluide, 375px, skippable ; relançable dans Settings.
+### 3.1 — Vue `#practice` (hub d'entraînement) · **M**
+- Écran unique avec des cartes de session ciblée : **Mots fragiles**, **Conjugaison à revoir** (weakVerbs
+  déjà trackés), **Écoute** (renvoie vers `#listening`), **Mix rapide 5 min**. Chaque carte affiche un
+  compteur réel (« 6 mots », pas un chiffre en dur).
+- Accès depuis le dashboard, à côté de "Défi du jour".
+- **Accept.** : chaque carte lance une session réellement calculée sur les données actuelles de l'utilisateur.
 
-### 3.2 — Test de placement optionnel · **M**
-- Après l'onboarding : « Débuter du début » **ou** « J'ai déjà des bases → test rapide ». Le test (10-15
-  questions de difficulté croissante) débloque les premiers chapitres et pré-remplit le SRS.
-- **Accept.** : réussir le test place l'utilisateur plus loin dans le parcours sans casser le déblocage.
+### 3.2 — Densité de session réglable · **S**
+- Préférence Courte / Normale / Longue dans Settings (nombre de slides), respectée par `generateForChapter`.
+- **Accept.** : "Courte" produit visiblement moins de slides que "Longue".
 
-### 3.3 — Objectif d'apprentissage → priorisation du contenu · **M**
-- Le `profile.goal` réordonne les accès rapides et pondère les thèmes servis en révision (voyage → transport/
-  hôtel/directions en avant ; travail → métiers/bureau ; culture → dialogues/histoires).
-- **Accept.** : changer d'objectif change visiblement les suggestions du dashboard.
-
-### 3.4 — **Pratique adaptative** — vue `#practice` (le hub d'entraînement) · **M/L**
-- Un écran « S'entraîner » qui propose des sessions ciblées calculées depuis le SRS et les stats :
-  **Mes mots fragiles**, **Conjugaison à revoir**, **Écoute**, **Prononciation** (si oral), **Mix rapide 5 min**.
-- Réutilise `SRS.getWeakItems / getFragileItems / getSessionMix` (déjà présents).
-- **Accept.** : chaque bouton lance une session réellement ciblée sur les données de l'utilisateur.
-
-### 3.5 — Densité de session réglable · **S**
-- Préférence Courte / Normale / Longue (nombre de slides par leçon) dans Settings, respectée par `generateForChapter`.
-- **Accept.** : « Courte » sert des leçons visiblement plus rapides ; « Longue » plus fournies.
-
-### 3.6 — Favoris ⭐ + notes personnelles · **M**
-- Étoiler mots / verbes / phrases (`State.data.favorites`) + note perso par item ; mode de révision « Mes favoris ».
-- **Accept.** : étoiler un mot l'ajoute à une liste révisable ; la note s'affiche dans la fiche.
+### 3.3 — Favoris ⭐ sur mots/verbes/phrases · **S/M**
+- Bouton étoile dans les vues Vocabulaire/Verbes/Phrases (`State.data.favorites`), + carte "Mes favoris"
+  dans le hub Pratique qui lance une révision dessus.
+- **Accept.** : étoiler un mot l'ajoute à une liste révisable persistée.
 
 ---
 
-## 🔥 AXE 4 — ENGAGEMENT : ligues, quêtes, partage
+## 🎙️ AXE 4 — PARLER : bêta minimale, honnête sur ses limites
 
-> Sans backend, on reste **honnête** : pas de vrai classement multi-joueurs. On simule une cohorte
-> hebdomadaire crédible et on renforce la boucle personnelle.
+> Réduit au strict nécessaire pour **savoir si ça vaut le coup d'aller plus loin**, avant d'investir
+> dans un système de scoring ou un mode shadowing complet.
 
-### 4.1 — Ligue hebdomadaire (locale/simulée) · **M/L**
-- Divisions Bronze → Diamant. Classement de la semaine face à une **cohorte de bots** au comportement
-  plausible (progression pseudo-aléatoire bornée, graine déterministe par semaine). Montée/descente, reset lundi.
-- **Transparent** : petit « ⓘ Adversaires simulés hors-ligne » — aucune promesse de multijoueur réel.
-- **Accept.** : gagner de l'XP fait monter dans le classement de la semaine ; reset hebdo fonctionnel.
+### Ce qu'on sait, vérifié avant d'écrire une ligne de code
+- **L'audio est envoyé aux serveurs de Google** pour être transcrit (comportement par défaut de
+  `webkitSpeechRecognition` dans Chrome) — ce n'est pas local, contrairement au TTS. À dire clairement
+  dans l'UI, pas juste dans un commentaire de code.
+- **iOS Safari a des bugs connus et documentés** : l'événement de résultat ne se redéclenche parfois
+  qu'une fois, délais de 2-3 s avant capture, comportement instable. Sur une app mobile-first, c'est un
+  risque réel de frustration plus que d'aide.
+- **Qualité de reconnaissance en turc non garantie** (langue moins dotée que l'anglais/espagnol/français
+  dans ces moteurs).
 
-### 4.2 — Quêtes / missions courtes · **M**
-- Objectifs annexes tournants : « fais 3 exercices d'écoute », « 5 bonnes réponses d'affilée »,
-  « termine 1 histoire », « prononce 5 mots » → petites récompenses XP. Stockés dans `State.data.quests`.
-- **Accept.** : 2-3 quêtes du jour visibles, complétables, récompensées.
+### 4.1 — Bouton micro sur le champ de saisie existant (`input`, `listening_transcribe`) · **S**
+- **Seule feature de cet axe pour l'instant.** Pas de scoring, pas de nouveau type d'exercice, pas de
+  shadowing : juste un bouton 🎤 optionnel à côté des champs de saisie déjà existants, qui remplit le
+  champ texte avec ce que `SpeechRecognition` a compris. L'utilisateur valide ensuite normalement — le
+  circuit de correction existant (`Grading`) s'applique sans rien changer.
+- **Opt-in strict** : désactivé par défaut, activable dans Settings avec un texte clair : « Expérimental.
+  Ta voix est envoyée à un service de reconnaissance externe (navigateur). Peut mal fonctionner sur iPhone. »
+- Détection de support (`'webkitSpeechRecognition' in window`) → bouton absent si non supporté, aucune erreur.
+- **Accept.** : sur Chrome desktop/Android avec l'option activée, dicter remplit le champ correctement la
+  plupart du temps ; sur Firefox ou avec l'option désactivée, le bouton n'apparaît pas ; zéro erreur console.
 
-### 4.3 — Achievements enrichis + galerie · **S/M**
-- Nouveaux badges liés à v7 : 1re histoire lue, 10 mots prononcés, 1re ligue gagnée, oral 3 jours de suite…
-- **Accept.** : chaque nouvelle mécanique débloque au moins un badge évaluable réellement.
-
-### 4.4 — Carte de progression partageable (canvas → image) · **M**
-- Depuis l'écran de fin / stats : générer une image (canvas) « J'ai appris X mots · streak Y · niveau Z »
-  téléchargeable. Aucune donnée envoyée nulle part.
-- **Accept.** : bouton « Partager ma progression » produit une image propre en clair et sombre.
-
----
-
-## 📚 AXE 5 — CONTENU : combler les trous grammaticaux et pousser vers A2/B1
-
-> On vise un vrai A2 solide et un pied dans le B1.
-
-### 5.1 — **Aoriste (geniş zaman -er/-ir)** — le trou grammatical majeur · **M**
-- L'app n'enseigne que le présent progressif -iyor. L'aoriste (présent général/habituel : *içerim* = je bois /
-  j'ai l'habitude de boire) est **essentiel** et absent. Ajouter la règle `g_aorist`, les conjugaisons
-  `aorist` sur les verbes, et son chapitre d'introduction. Distinguer clairement -iyor vs -er/-ir (piège FR).
-- **Accept.** : un chapitre enseigne l'aoriste avec tableau + pièges ; les verbes ont la forme aoriste.
-
-### 5.2 — Modes A2/B1 supplémentaires · **M/L**
-- Impératif (*gel!*), nécessitatif -meli (*gitmeliyim* = je dois aller), conditionnel -se, capacité -abil
-  (déjà en règle, à outiller en conjugaison). Ajouter règles + drills + exemples.
-- **Accept.** : chaque mode a une règle, des pièges, et des exercices générables.
-
-### 5.3 — +15 verbes fréquents + formes complètes · **M**
-- Compléter les verbes A2/B1 courants manquants, tous avec présent/aoriste/passé/futur/négation + 3 exemples.
-- **Accept.** : `validate-data.js` : tout verbe a les temps requis + exemples.
-
-### 5.4 — +40 phrases, +10 dialogues situés, expressions idiomatiques · **M**
-- Situations réelles supplémentaires (pharmacie avancée, banque, location, rendez-vous), connecteurs
-  (*ama, çünkü, ama, sonra, önce*), et un petit lot d'expressions idiomatiques courantes avec sens.
-- **Accept.** : nouveau contenu rattaché à des chapitres/thèmes existants, jamais orphelin.
-
-### 5.5 — Entraîneurs spécialisés (nombres, heure, dates) · **S/M**
-- Mini-drills dédiés (dictée de nombres via TTS, « quelle heure est-il ? », jours/mois) accessibles depuis le hub Pratique.
-- **Accept.** : un drill « nombres » lit un nombre et l'utilisateur le saisit/choisit.
+### Décision différée, pas annulée
+> Scoring de prononciation, nouveau type d'exercice `speak`, mode shadowing : **repoussés à une v8**,
+> conditionnés à un retour d'usage réel sur 4.1. Construire un système de notation complet sur une API
+> dont on n'a pas encore vérifié la fiabilité en conditions réelles serait du temps perdu si la reconnaissance
+> s'avère trop mauvaise en turc pour être utilisable.
 
 ---
 
-## 📈 AXE 6 — INSIGHTS & MAÎTRISE
+## 📈 AXE 5 — UN SEUL insight visuel, pas une suite complète
 
-### 6.1 — Radar de compétences · **M**
-- Graphe radar (SVG) : Vocabulaire / Écoute / Conjugaison / Grammaire / (Oral) / Lecture, calculé depuis le SRS
-  et l'historique. Montre où l'on est fort/faible d'un coup d'œil.
-- **Accept.** : le radar reflète les vraies données ; se met à jour avec la progression.
+> L'axe "Insights" de la première version (radar + calendrier + timeline) était trois features pour un
+> seul vrai besoin : voir où on est faible d'un coup d'œil. On garde la plus utile, on jette les deux autres.
 
-### 6.2 — Prévision de révisions (calendrier) · **S/M**
-- Petit calendrier « combien de mots à revoir chaque jour cette semaine » depuis `SRS.getUpcomingCount`.
-- **Accept.** : chiffres cohérents avec la file SRS réelle.
-
-### 6.3 — Timeline de maîtrise & jalons · **S**
-- Frise des jalons (100 mots, 1re histoire, A1 validé…) + courbe XP 30 jours (déjà partiellement en heatmap).
-- **Accept.** : jalons débloqués affichés, aucune valeur factice.
+### 5.1 — Radar de compétences (Stats) · **M**
+- Graphe radar SVG (Vocabulaire / Écoute / Conjugaison / Grammaire / Lecture si histoires faites), calculé
+  depuis le SRS et l'historique réel — pas de valeur inventée.
+- **Accept.** : le radar reflète les vraies données et bouge quand la progression change.
 
 ---
 
-## ⚙️ AXE 7 — TECHNIQUE, QUALITÉ & PORTÉE
+## ⚙️ AXE 6 — TECHNIQUE : juste le filet de sécurité
 
-### 7.1 — Rappels & notifications (portée honnête) · **M**
-- `Notification` locale + relance douce quand l'app est ouverte / réouverte le soir sans activité.
-  ⚠️ Les vraies notifications push web hors-app nécessitent un service worker push + serveur (hors scope
-  statique) : le documenter clairement, ne pas sur-promettre. Proposer plutôt un rappel navigateur opt-in.
-- **Accept.** : opt-in, respecte le refus, aucune erreur si non supporté.
+### 6.1 — Étendre le filet de tests · **S**
+- `smoke-test.js` : valider le nouveau type facultatif et les histoires. `validate-data.js` : ids `st_*`,
+  refs, questions bien formées, aoriste présent sur les verbes qui le déclarent.
+- **Accept.** : `node tools/*.js` = 0 sur le dépôt après chaque ajout de contenu.
 
-### 7.2 — Extension du filet de tests · **S/M**
-- `smoke-test.js` : gérer les nouveaux types (`speak`, `reading_comprehension`) comme facultatifs, et valider
-  les histoires (`stories.js`). `validate-data.js` : ids `st_*`, refs, questions.
-- **Accept.** : `node tools/*.js` = 0 sur un dépôt sain, y compris nouveau contenu.
-
-### 7.3 — Robustesse données & migration d'état · **S**
-- Toute nouvelle clé `State` (profile, favorites, quests, league, speaking…) a une valeur par défaut au chargement
-  (merge déjà en place) → aucune sauvegarde ancienne ne casse.
-- **Accept.** : charger une vieille sauvegarde v6 marche sans perte ni erreur.
-
-### 7.4 — Accessibilité & i18n-ready · **S/M**
-- Poursuivre a11y (rôles ARIA sur les nouvelles vues, ordre de focus, annonces). Extraire les libellés d'UI
-  récurrents pour préparer une future traduction de l'interface (l'app enseigne le turc à des francophones,
-  mais l'UI pourrait un jour être multilingue).
-- **Accept.** : parcours clavier complet des nouvelles vues ; libellés centralisés.
-
-### 7.5 — Poursuite du découpage CSS · **S**
-- Les nouvelles vues (speak, stories, practice, onboarding, league) ont leur propre fichier CSS modulaire,
-  chargé dans l'ordre. On ne regonfle jamais un monolithe.
-- **Accept.** : chaque nouvelle vue < ~250 lignes CSS dédiées.
+### 6.2 — Migration d'état · **S**
+- Toute nouvelle clé `State` (favorites, densité de session, speaking opt-in) a une valeur par défaut au
+  chargement (le merge existant le fait déjà — juste s'assurer que rien n'oublie ce filet).
+- **Accept.** : charger une sauvegarde v6 fonctionne sans perte ni erreur après la v7.
 
 ---
 
 ## 🗓️ ORDRE D'EXÉCUTION CONSEILLÉ
 
-> Frontière par frontière, en livrant utilisable à chaque étape. On ne monte pas d'un étage tant que
-> celui du dessous n'est pas solide.
-
-1. **AXE 7.2/7.3** (filet de tests + migration) — sécuriser avant d'ajouter des mécaniques.
-2. **AXE 1 — PARLER** (speech engine → scoring → type `speak` → shadowing). La plus forte valeur perçue.
-3. **AXE 2 — COMPRENDRE** (histoires : données → lecteur → reading_comprehension → dialogues vivants).
-4. **AXE 3 — S'ADAPTER** (onboarding → placement → hub Pratique → objectif/densité/favoris).
-5. **AXE 5 — CONTENU** (aoriste d'abord — trou majeur —, puis modes A2/B1, verbes, dialogues).
-6. **AXE 4 — ENGAGEMENT** (ligue simulée, quêtes, badges, partage).
-7. **AXE 6 — INSIGHTS** (radar, prévisions, jalons).
-8. **AXE 7.1/7.4/7.5** (rappels, a11y/i18n, CSS) — finitions transverses.
+1. **AXE 6.1** (filet de tests étendu) — avant de toucher à la donnée.
+2. **AXE 2.1** (aoriste) — le gain le plus sûr et le plus rentable, à faire en premier.
+3. **AXE 1** (histoires) — le plus gros morceau, mais zéro risque technique.
+4. **AXE 3** (hub Pratique + densité + favoris) — réutilise l'existant, rapide.
+5. **AXE 5.1** (radar) — bonus visuel une fois qu'il y a plus de données à représenter (post-histoires).
+6. **AXE 4.1** (micro sur input) — en dernier, en bêta clairement affichée, pour voir si ça vaut le coup
+   d'aller plus loin un jour.
+7. **AXE 2.2** (nécessitatif) — au fil de l'eau, sans urgence.
 
 ---
 
 ## ✅ CRITÈRES D'ACCEPTATION GLOBAUX v7
 
-- ✅ On peut **parler** (Chrome/Edge/Safari) et recevoir un score de prononciation ciblé ; repli propre ailleurs.
-- ✅ On peut **lire une histoire** turque avec audio phrase-à-phrase, révélation FR, et questions de compréhension.
-- ✅ Le **premier lancement** propose onboarding + (option) test de niveau ; un **hub Pratique** cible les faiblesses.
-- ✅ L'**aoriste** et les modes A2/B1 clés sont enseignés (le trou grammatical est comblé).
-- ✅ **Ligue** hebdo honnête (simulée, transparente), **quêtes**, badges, **carte partageable**.
-- ✅ Le **moteur TTS** (`playTTS`/`_playGoogleTTS`/meta no-referrer) est **strictement identique** à v6.
-- ✅ Aucun `id` supprimé ; vieilles sauvegardes intactes ; `node tools/*.js` = 0 ; 375px & clair/sombre OK.
-- ✅ Toute API non universelle **détecte le support** et se désactive proprement (zéro erreur console).
+- ✅ On peut lire une histoire turque avec audio phrase-à-phrase et répondre à des questions dessus.
+- ✅ L'aoriste est enseigné avec un piège -iyor-vs-aoriste explicite.
+- ✅ Un hub unique regroupe les sessions de révision ciblées, avec des compteurs réels.
+- ✅ Le micro (si activé) remplit un champ de saisie existant, sans nouveau système de scoring.
+- ✅ Le moteur TTS est strictement identique à v6. Aucun id supprimé. `node tools/*.js` = 0.
+- ✅ Toute API non universelle se désactive proprement avec un message honnête, jamais une erreur silencieuse.
 
 ---
 
-## 🔎 SOURCES / INSPIRATION (recherche 2026)
+## Annexe — Ce qui a été coupé et pourquoi
 
-- Comparatifs de features 2026 (SRS, gamification, immersion, oral IA) — Lingopie, LingQ, BGR, Promova, TechTimes.
-- Rôle de l'**exposition multi-modale** (+40 % de rétention) et des **leçons situées** — synthèses comparatives 2026.
-- **Duolingo Stories / Advanced Stories** (lecture+écoute narrative, questions de compréhension) et
-  **Personalized Practice** (révision ciblée des points faibles) — blog Duolingo, Lingoly.
-- **LingoDeer** (structure « mini-cours » : notes de grammaire explicites, drills, prononciation liée aux phrases) —
-  comparatifs LingoDeer vs Duolingo/Babbel.
-- **Web Speech API** (reconnaissance + synthèse côté navigateur, gratuit, sans backend ; support Chrome/Edge/
-  Safari, Firefox derrière un flag) — MDN, guides Web Speech API.
+*(Gardé pour mémoire, pas pour être fait — à rouvrir seulement si le contexte change, ex. l'app sert un jour à quelqu'un d'autre.)*
 
-> Note : ces références ont guidé le **choix des axes** (oral, immersion, adaptation), pas le copiage. Tout
-> est implémentable **sans backend**, en vanilla, en respectant les contraintes dures ci-dessus.
+| Item retiré | Pourquoi |
+|---|---|
+| **Ligue hebdo simulée (bots)** | Théâtre : la valeur des ligues vient de la compétition sociale réelle. Contre des bots dont le dev connaît le mécanisme, aucun effet motivant. Gros travail pour zéro gain. |
+| **Carte de progression partageable** | Zéro destinataire identifié — usage strictement solo, pas de canal de partage réel. |
+| **Notifications / rappels** | Les vraies push notifications (app fermée) demandent un serveur, ce qui viole la contrainte statique. Les notifications en premier plan sont inutiles par construction (l'onglet ouvert = déjà dans l'app). Aucune version honnête et utile n'existe en statique pur. |
+| **i18n-ready (UI multilingue)** | Généralité spéculative pour un besoin hypothétique qui n'a aucune raison de survenir : app perso, un seul utilisateur francophone. |
+| **Onboarding + test de placement** | Utile pour accueillir de vrais nouveaux utilisateurs variés ; sans objet pour un usage solo où l'unique utilisateur connaît déjà tout le contexte. |
+| **Scoring de prononciation + type `speak` + shadowing complet (v7 initiale)** | Pas supprimés, **repoussés** : risque technique réel non vérifié (audio envoyé à Google, bugs iOS Safari documentés, qualité turque incertaine). On construit d'abord la version la plus simple possible (AXE 4.1) et on décide après avoir un vrai retour d'usage. |
+| **Dialogues vivants / jeu de rôle à embranchements** | Coût de rédaction de contenu élevé (plusieurs branches par dialogue) pour un gain incertain par rapport aux histoires (AXE 1), qui couvrent déjà l'objectif "lecture + écoute en contexte" avec beaucoup moins d'effort. |
+| **+40 phrases / +10 dialogues / +15 verbes en bloc** | Pas coupé sur le fond, juste dé-priorisé : ce type de contenu s'ajoute bien incrémentalement, pas besoin de le planifier en gros lot dans une roadmap. |
 
 ---
 
 ## Légende complexité
 - **S** — Small (~30 min, 1 fichier)
 - **M** — Medium (1-2 h, quelques fichiers)
-- **L** — Large (plusieurs sessions ou forte dépendance)
-
-## Rappel de philosophie v7
-> v5 a rendu l'app **cohérente**, v6 l'a rendue **profonde**. v7 la rend **vivante** : on y parle, on y lit
-> des histoires, et elle s'adapte à qui l'utilise. On ajoute trois couches — jamais au prix de ce qui marche déjà.
+- **L** — Large (plusieurs sessions)
