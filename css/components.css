@@ -1489,3 +1489,47 @@
   font-weight: 600;
   margin: 0 0 var(--s3, 0.75rem);
 }
+
+/* v6 AXE 3.3 — Sélecteur d'objectif quotidien (settings) */
+.goal-select-row { display: flex; gap: 8px; }
+.goal-opt {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 6px;
+  background: var(--surface-2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md, 12px);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.goal-opt-active { border-color: var(--primary); background: var(--primary-glow); }
+.goal-opt-xp { font-weight: 800; font-size: var(--text-md, 1rem); color: var(--text); }
+.goal-opt-lbl { font-size: 11px; color: var(--text-3); }
+.goal-opt-active .goal-opt-xp { color: var(--primary); }
+
+/* v6 AXE 3.3 — Rapport hebdomadaire (stats) */
+.wr-summary { display: flex; gap: 8px; margin-bottom: var(--s3, 0.75rem); }
+.wr-kpi {
+  flex: 1;
+  text-align: center;
+  background: var(--surface-2);
+  border-radius: var(--r-md, 12px);
+  padding: 10px 6px;
+}
+.wr-kpi-val { font-weight: 800; font-size: var(--text-lg, 1.1rem); color: var(--primary); }
+.wr-kpi-lbl { font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; }
+.wr-bars { display: flex; align-items: flex-end; gap: 6px; height: 80px; }
+.wr-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; }
+.wr-bar-wrap { flex: 1; width: 100%; display: flex; align-items: flex-end; justify-content: center; }
+.wr-bar {
+  width: 70%;
+  min-height: 2px;
+  background: var(--border);
+  border-radius: 4px 4px 0 0;
+  transition: height 0.4s ease;
+}
+.wr-bar-today { background: var(--primary); }
+.wr-bar-lbl { font-size: 10px; color: var(--text-3); }

@@ -713,6 +713,7 @@ window.Lesson = {
         this._showComboToast(this._comboCount);
       }
       if (window.AudioEngine) AudioEngine.playCorrect();
+      this._haptic(true);
 
       fbBar.classList.add('correct');
       document.getElementById('fb-icon').textContent = '✓';
@@ -721,6 +722,7 @@ window.Lesson = {
     } else {
       this._comboCount = 0;
       if (window.AudioEngine) AudioEngine.playWrong();
+      this._haptic(false);
 
       // Track mistake (pour "Revoir les erreurs")
       if (exo.data && exo.data.id) {
@@ -1095,6 +1097,7 @@ window.Lesson = {
         this._showComboToast(this._comboCount);
       }
       if (window.AudioEngine) AudioEngine.playCorrect();
+      this._haptic(true);
       fbBar.classList.add('correct');
       document.getElementById('fb-icon').textContent = '✓';
       document.getElementById('fb-title').textContent = ['Parfait !', 'Excellent !', 'Bravo !', 'Super !'][Math.floor(Math.random() * 4)];
@@ -1102,6 +1105,7 @@ window.Lesson = {
     } else {
       this._comboCount = 0;
       if (window.AudioEngine) AudioEngine.playWrong();
+      this._haptic(false);
       if (exo.data && exo.data.id) {
         this._mistakes.push({
           id: exo.data.id,
@@ -1202,6 +1206,7 @@ window.Lesson = {
       this._showComboToast(this._comboCount);
     }
     if (window.AudioEngine) AudioEngine.playCorrect();
+      this._haptic(true);
 
     if (window.SRS) {
       const q = this._comboCount >= 3 ? 5 : 4;
@@ -1251,5 +1256,11 @@ window.Lesson = {
 
   _escapeHtml(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  },
+
+  // Retour haptique mobile (AXE 4.4) : no-op propre sur desktop / si désactivé
+  _haptic(ok) {
+    const on = !(State.data && State.data.settings && State.data.settings.haptics === false);
+    if (on && navigator.vibrate) navigator.vibrate(ok ? 15 : [10, 40, 10]);
   }
 };

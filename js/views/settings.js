@@ -8,13 +8,34 @@ window.Settings = {
     const s = (State.data && State.data.settings) || {};
     const soundOn = s.soundEffects !== false;
     const reminderOn = s.dailyReminder !== false;
+    const hapticsOn = s.haptics !== false;
+    const goal = State.data.dailyGoal || 50;
+    const goalOpts = [[20, 'Détente'], [50, 'Normal'], [100, 'Sérieux']];
 
     document.getElementById('settings-body').innerHTML = `
       <div class="card mb-4">
+        <h3 class="font-bold text-sm text-muted uppercase mb-3">Objectif quotidien</h3>
+        <div class="goal-select-row">
+          ${goalOpts.map(([v, lbl]) => `
+            <button class="goal-opt ${goal === v ? 'goal-opt-active' : ''}" onclick="Settings.setGoal(${v})">
+              <span class="goal-opt-xp">${v} XP</span>
+              <span class="goal-opt-lbl">${lbl}</span>
+            </button>
+          `).join('')}
+        </div>
+        <hr class="border-t border-border my-4" style="border-color: var(--border);">
+
         <div class="flex justify-between items-center mb-4">
           <span class="font-bold">Sons de feedback</span>
           <label class="switch">
             <input type="checkbox" ${soundOn ? 'checked' : ''} onchange="Settings.toggleSound(this.checked)">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="flex justify-between items-center mb-4">
+          <span class="font-bold">Vibrations (mobile)</span>
+          <label class="switch">
+            <input type="checkbox" ${hapticsOn ? 'checked' : ''} onchange="Settings.toggleHaptics(this.checked)">
             <span class="slider"></span>
           </label>
         </div>
@@ -54,5 +75,21 @@ window.Settings = {
   toggleReminder(enabled) {
     State.updateSetting('dailyReminder', enabled);
     App.showToast(`Rappels ${enabled ? 'activés' : 'désactivés'}`);
+  },
+
+  toggleHaptics(enabled) {
+    State.updateSetting('haptics', enabled);
+    if (enabled && navigator.vibrate) navigator.vibrate(15);
+    App.showToast(`Vibrations ${enabled ? 'activées' : 'désactivées'}`);
+  },
+
+  setGoal(value) {
+    State.data.dailyGoal = value;
+    State.save();
+    this.render();
+    App.showToast(`Objectif : ${value} XP / jour`);
+    if (window.Dashboard && typeof Dashboard.render === 'function') {
+      // rafraîchit l'anneau si on revient au dashboard
+    }
   }
 };

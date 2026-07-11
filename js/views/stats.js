@@ -50,6 +50,9 @@ window.Stats = {
       <div class="section-row"><span class="section-lbl">Activité (7 jours)</span></div>
       <div class="card mb-4">${activityHtml}</div>
 
+      <!-- Rapport hebdomadaire (AXE 3.3) -->
+      ${this._buildWeeklyReport()}
+
       <!-- Conjugaison par temps -->
       ${tenseHtml}
 
@@ -71,6 +74,48 @@ window.Stats = {
             </div>
           `;
         }).join('')}
+      </div>
+    `;
+  },
+
+  // Rapport hebdomadaire : XP par jour, jours actifs, meilleur jour, total (AXE 3.3)
+  _buildWeeklyReport() {
+    const heat = State.data.heatmap || {};
+    const today = new Date();
+    const dayLbls = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+    let weekXP = 0, activeDays = 0, best = { xp: 0, label: '—' };
+    const bars = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      const key = d.toISOString().split('T')[0];
+      const xp = heat[key] || 0;
+      weekXP += xp;
+      if (xp > 0) activeDays++;
+      if (xp > best.xp) best = { xp, label: dayLbls[d.getDay()] };
+      bars.push({ lbl: dayLbls[d.getDay()], xp, today: i === 0 });
+    }
+    const maxXP = Math.max(1, ...bars.map(b => b.xp));
+    const barsHtml = bars.map(b => {
+      const h = Math.round((b.xp / maxXP) * 100);
+      return `
+        <div class="wr-bar-col">
+          <div class="wr-bar-wrap">
+            <div class="wr-bar ${b.today ? 'wr-bar-today' : ''}" style="height:${b.xp > 0 ? Math.max(6, h) : 2}%"></div>
+          </div>
+          <div class="wr-bar-lbl">${b.lbl[0]}</div>
+        </div>
+      `;
+    }).join('');
+    return `
+      <div class="section-row"><span class="section-lbl">Rapport de la semaine</span></div>
+      <div class="card mb-4">
+        <div class="wr-summary">
+          <div class="wr-kpi"><div class="wr-kpi-val">${weekXP}</div><div class="wr-kpi-lbl">XP 7 j</div></div>
+          <div class="wr-kpi"><div class="wr-kpi-val">${activeDays}/7</div><div class="wr-kpi-lbl">Jours actifs</div></div>
+          <div class="wr-kpi"><div class="wr-kpi-val">${best.label}</div><div class="wr-kpi-lbl">Meilleur jour</div></div>
+        </div>
+        <div class="wr-bars">${barsHtml}</div>
       </div>
     `;
   },
