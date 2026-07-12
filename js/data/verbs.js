@@ -28,6 +28,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'olurum', sen: 'olursun', o: 'olur',
         biz: 'oluruz', siz: 'olursunuz', onlar: 'olurlar'
+      },
+      pastNarrative: {
+        ben: 'olmuşum', sen: 'olmuşsun', o: 'olmuş',
+        biz: 'olmuşuz', siz: 'olmuşsunuz', onlar: 'olmuşlar'
       }
     },
     negations: {
@@ -60,6 +64,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'yaparım', sen: 'yaparsın', o: 'yapar',
         biz: 'yaparız', siz: 'yaparsınız', onlar: 'yaparlar'
+      },
+      pastNarrative: {
+        ben: 'yapmışım', sen: 'yapmışsın', o: 'yapmış',
+        biz: 'yapmışız', siz: 'yapmışsınız', onlar: 'yapmışlar'
       }
     },
     negations: {
@@ -93,6 +101,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'giderim', sen: 'gidersin', o: 'gider',
         biz: 'gideriz', siz: 'gidersiniz', onlar: 'giderler'
+      },
+      pastNarrative: {
+        ben: 'gitmişim', sen: 'gitmişsin', o: 'gitmiş',
+        biz: 'gitmişiz', siz: 'gitmişsiniz', onlar: 'gitmişler'
       }
     },
     negations: {
@@ -125,6 +137,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'gelirim', sen: 'gelirsin', o: 'gelir',
         biz: 'geliriz', siz: 'gelirsiniz', onlar: 'gelirler'
+      },
+      pastNarrative: {
+        ben: 'gelmişim', sen: 'gelmişsin', o: 'gelmiş',
+        biz: 'gelmişiz', siz: 'gelmişsiniz', onlar: 'gelmişler'
       }
     },
     negations: {
@@ -157,6 +173,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'konuşurum', sen: 'konuşursun', o: 'konuşur',
         biz: 'konuşuruz', siz: 'konuşursunuz', onlar: 'konuşurlar'
+      },
+      pastNarrative: {
+        ben: 'konuşmuşum', sen: 'konuşmuşsun', o: 'konuşmuş',
+        biz: 'konuşmuşuz', siz: 'konuşmuşsunuz', onlar: 'konuşmuşlar'
       }
     },
     negations: {
@@ -195,6 +215,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'yerim', sen: 'yersin', o: 'yer',
         biz: 'yeriz', siz: 'yersiniz', onlar: 'yerler'
+      },
+      pastNarrative: {
+        ben: 'yemişim', sen: 'yemişsin', o: 'yemiş',
+        biz: 'yemişiz', siz: 'yemişsiniz', onlar: 'yemişler'
       }
     },
     negations: {
@@ -227,6 +251,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'içerim', sen: 'içersin', o: 'içer',
         biz: 'içeriz', siz: 'içersiniz', onlar: 'içerler'
+      },
+      pastNarrative: {
+        ben: 'içmişim', sen: 'içmişsin', o: 'içmiş',
+        biz: 'içmişiz', siz: 'içmişsiniz', onlar: 'içmişler'
       }
     },
     negations: {
@@ -260,6 +288,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'isterim', sen: 'istersin', o: 'ister',
         biz: 'isteriz', siz: 'istersiniz', onlar: 'isterler'
+      },
+      pastNarrative: {
+        ben: 'istemişim', sen: 'istemişsin', o: 'istemiş',
+        biz: 'istemişiz', siz: 'istemişsiniz', onlar: 'istemişler'
       }
     },
     negations: {
@@ -292,6 +324,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'anlarım', sen: 'anlarsın', o: 'anlar',
         biz: 'anlarız', siz: 'anlarsınız', onlar: 'anlarlar'
+      },
+      pastNarrative: {
+        ben: 'anlamışım', sen: 'anlamışsın', o: 'anlamış',
+        biz: 'anlamışız', siz: 'anlamışsınız', onlar: 'anlamışlar'
       }
     },
     negations: {
@@ -329,6 +365,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'çalışırım', sen: 'çalışırsın', o: 'çalışır',
         biz: 'çalışırız', siz: 'çalışırsınız', onlar: 'çalışırlar'
+      },
+      pastNarrative: {
+        ben: 'çalışmışım', sen: 'çalışmışsın', o: 'çalışmış',
+        biz: 'çalışmışız', siz: 'çalışmışsınız', onlar: 'çalışmışlar'
       }
     },
     negations: {
@@ -361,6 +401,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'severim', sen: 'seversin', o: 'sever',
         biz: 'severiz', siz: 'seversiniz', onlar: 'severler'
+      },
+      pastNarrative: {
+        ben: 'sevmişim', sen: 'sevmişsin', o: 'sevmiş',
+        biz: 'sevmişiz', siz: 'sevmişsiniz', onlar: 'sevmişler'
       }
     },
     negations: {
@@ -393,6 +437,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'uyurum', sen: 'uyursun', o: 'uyur',
         biz: 'uyuruz', siz: 'uyursunuz', onlar: 'uyurlar'
+      },
+      pastNarrative: {
+        ben: 'uyumuşum', sen: 'uyumuşsun', o: 'uyumuş',
+        biz: 'uyumuşuz', siz: 'uyumuşsunuz', onlar: 'uyumuşlar'
       }
     },
     negations: {
@@ -425,6 +473,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'kalkarım', sen: 'kalkarsın', o: 'kalkar',
         biz: 'kalkarız', siz: 'kalkarsınız', onlar: 'kalkarlar'
+      },
+      pastNarrative: {
+        ben: 'kalkmışım', sen: 'kalkmışsın', o: 'kalkmış',
+        biz: 'kalkmışız', siz: 'kalkmışsınız', onlar: 'kalkmışlar'
       }
     },
     negations: {
@@ -457,6 +509,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'bilirim', sen: 'bilirsin', o: 'bilir',
         biz: 'biliriz', siz: 'bilirsiniz', onlar: 'bilirler'
+      },
+      pastNarrative: {
+        ben: 'bilmişim', sen: 'bilmişsin', o: 'bilmiş',
+        biz: 'bilmişiz', siz: 'bilmişsiniz', onlar: 'bilmişler'
       }
     },
     negations: {
@@ -489,6 +545,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'alırım', sen: 'alırsın', o: 'alır',
         biz: 'alırız', siz: 'alırsınız', onlar: 'alırlar'
+      },
+      pastNarrative: {
+        ben: 'almışım', sen: 'almışsın', o: 'almış',
+        biz: 'almışız', siz: 'almışsınız', onlar: 'almışlar'
       }
     },
     negations: {
@@ -526,6 +586,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'veririm', sen: 'verirsin', o: 'verir',
         biz: 'veririz', siz: 'verirsiniz', onlar: 'verirler'
+      },
+      pastNarrative: {
+        ben: 'vermişim', sen: 'vermişsin', o: 'vermiş',
+        biz: 'vermişiz', siz: 'vermişsiniz', onlar: 'vermişler'
       }
     },
     negations: {
@@ -563,6 +627,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'bakarım', sen: 'bakarsın', o: 'bakar',
         biz: 'bakarız', siz: 'bakarsınız', onlar: 'bakarlar'
+      },
+      pastNarrative: {
+        ben: 'bakmışım', sen: 'bakmışsın', o: 'bakmış',
+        biz: 'bakmışız', siz: 'bakmışsınız', onlar: 'bakmışlar'
       }
     },
     negations: {
@@ -600,6 +668,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'beklerim', sen: 'beklersin', o: 'bekler',
         biz: 'bekleriz', siz: 'beklersiniz', onlar: 'beklerler'
+      },
+      pastNarrative: {
+        ben: 'beklemişim', sen: 'beklemişsin', o: 'beklemiş',
+        biz: 'beklemişiz', siz: 'beklemişsiniz', onlar: 'beklemişler'
       }
     },
     negations: {
@@ -637,6 +709,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'okurum', sen: 'okursun', o: 'okur',
         biz: 'okuruz', siz: 'okursunuz', onlar: 'okurlar'
+      },
+      pastNarrative: {
+        ben: 'okumuşum', sen: 'okumuşsun', o: 'okumuş',
+        biz: 'okumuşuz', siz: 'okumuşsunuz', onlar: 'okumuşlar'
       }
     },
     negations: {
@@ -674,6 +750,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'yazarım', sen: 'yazarsın', o: 'yazar',
         biz: 'yazarız', siz: 'yazarsınız', onlar: 'yazarlar'
+      },
+      pastNarrative: {
+        ben: 'yazmışım', sen: 'yazmışsın', o: 'yazmış',
+        biz: 'yazmışız', siz: 'yazmışsınız', onlar: 'yazmışlar'
       }
     },
     negations: {
@@ -713,6 +793,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'duyarım', sen: 'duyarsın', o: 'duyar',
         biz: 'duyarız', siz: 'duyarsınız', onlar: 'duyarlar'
+      },
+      pastNarrative: {
+        ben: 'duymuşum', sen: 'duymuşsun', o: 'duymuş',
+        biz: 'duymuşuz', siz: 'duymuşsunuz', onlar: 'duymuşlar'
       }
     },
     negations: {
@@ -750,6 +834,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'görürüm', sen: 'görürsün', o: 'görür',
         biz: 'görürüz', siz: 'görürsünüz', onlar: 'görürler'
+      },
+      pastNarrative: {
+        ben: 'görmüşüm', sen: 'görmüşsün', o: 'görmüş',
+        biz: 'görmüşüz', siz: 'görmüşsünüz', onlar: 'görmüşler'
       }
     },
     negations: {
@@ -787,6 +875,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'ararım', sen: 'ararsın', o: 'arar',
         biz: 'ararız', siz: 'ararsınız', onlar: 'ararlar'
+      },
+      pastNarrative: {
+        ben: 'aramışım', sen: 'aramışsın', o: 'aramış',
+        biz: 'aramışız', siz: 'aramışsınız', onlar: 'aramışlar'
       }
     },
     negations: {
@@ -824,6 +916,10 @@ window.AppVerbs = [
       aorist: {
         ben: 'açarım', sen: 'açarsın', o: 'açar',
         biz: 'açarız', siz: 'açarsınız', onlar: 'açarlar'
+      },
+      pastNarrative: {
+        ben: 'açmışım', sen: 'açmışsın', o: 'açmış',
+        biz: 'açmışız', siz: 'açmışsınız', onlar: 'açmışlar'
       }
     },
     negations: {

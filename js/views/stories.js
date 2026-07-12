@@ -184,6 +184,14 @@ window.Stories = {
     }
 
     const perfect = total > 0 && this._qCorrect === total;
+    if (perfect && window.State && s) {
+      if (!State.data.storiesPerfect) State.data.storiesPerfect = [];
+      if (!State.data.storiesPerfect.includes(s.id)) {
+        State.data.storiesPerfect.push(s.id);
+        State.save();
+      }
+    }
+    if (window.Gamification) Gamification.checkAchievements();
     const container = document.getElementById('stories-body');
     if (!container) return;
     container.innerHTML = `

@@ -15,5 +15,8 @@ window.AppAchievements = [
   { id: 'ach_perfect_3', icon: '🎯', title: 'Perfectionniste', description: '3 leçons terminées à 100%.', condition: { type: 'perfect_lessons', value: 3 } },
   { id: 'ach_dialogues_5', icon: '📖', title: 'Lecteur', description: '5 dialogues lus.', condition: { type: 'dialogues_read', value: 5 } },
   { id: 'ach_combo_10', icon: '⚡', title: 'Série', description: '10 réponses consécutives correctes.', condition: { type: 'max_combo', value: 10 } },
-  { id: 'ach_voyageur', icon: '🌍', title: 'Voyageur', description: 'Unité Transport terminée.', condition: { type: 'unit_completed', unitId: 'u7' } }
+  { id: 'ach_voyageur', icon: '🌍', title: 'Voyageur', description: 'Unité Transport terminée.', condition: { type: 'unit_completed', unitId: 'u7' } },
+  { id: 'ach_conteur', icon: '📖', title: 'Conteur', description: '3 histoires terminées avec 100% aux questions.', condition: { type: 'stories_perfect', value: 3 } },
+  { id: 'ach_habitue', icon: '🔁', title: 'Habitué(e)', description: 'Chapitre de l\'aoriste (habitudes) terminé.', condition: { type: 'chapter_completed', chapterId: 'u18_c5' } },
+  { id: 'ach_curateur', icon: '⭐', title: 'Curateur', description: '10 favoris ajoutés (vocabulaire + verbes).', condition: { type: 'favorites_count', value: 10 } }
 ];

@@ -17,6 +17,8 @@ window.Settings = {
     const densityOpts = [['short', 'Courte'], ['normal', 'Normale'], ['long', 'Longue']];
     const speechOn = s.speechInput === true;
     const speechSupported = window.Speech && Speech.isSupported();
+    const streakPaused = State.data.streakPaused === true;
+    const streakDiscreet = s.streakDiscreet === true;
 
     document.getElementById('settings-body').innerHTML = `
       <div class="card mb-4">
@@ -44,6 +46,24 @@ window.Settings = {
               <span class="goal-opt-lbl" style="font-size:var(--text-sm)">${lbl}</span>
             </button>
           `).join('')}
+        </div>
+        <hr class="border-t border-border my-4" style="border-color: var(--border);">
+
+        <h3 class="font-bold text-sm text-muted uppercase mb-2">Série (streak)</h3>
+        <p class="text-xs text-muted mb-3">Mets ta série en pause pour les vacances ou les périodes chargées — ni gain ni perte tant qu'elle est en pause.</p>
+        <div class="flex justify-between items-center mb-4">
+          <span class="font-bold">Mettre le streak en pause</span>
+          <label class="switch">
+            <input type="checkbox" ${streakPaused ? 'checked' : ''} onchange="Settings.toggleStreakPaused(this.checked)">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="flex justify-between items-center mb-4">
+          <span class="font-bold">Affichage discret (sans 🔥)</span>
+          <label class="switch">
+            <input type="checkbox" ${streakDiscreet ? 'checked' : ''} onchange="Settings.toggleStreakDiscreet(this.checked)">
+            <span class="slider"></span>
+          </label>
         </div>
         <hr class="border-t border-border my-4" style="border-color: var(--border);">
 
@@ -112,6 +132,18 @@ window.Settings = {
   toggleSpeech(enabled) {
     State.updateSetting('speechInput', enabled);
     App.showToast(`Micro ${enabled ? 'activé' : 'désactivé'}`);
+  },
+
+  toggleStreakPaused(enabled) {
+    State.setStreakPaused(enabled);
+    if (window.App) App.updateHeaderUI();
+    App.showToast(enabled ? 'Streak en pause — reprends quand tu veux' : 'Streak réactivé');
+  },
+
+  toggleStreakDiscreet(enabled) {
+    State.updateSetting('streakDiscreet', enabled);
+    if (window.App) App.updateHeaderUI();
+    App.showToast(`Affichage ${enabled ? 'discret' : 'normal'}`);
   },
 
   toggleReminder(enabled) {

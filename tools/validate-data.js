@@ -183,8 +183,9 @@ console.log('─'.repeat(56));
 console.log('TürkçeYol — validation des données');
 console.log('─'.repeat(56));
 const verbsWithAorist = verbs.filter(v => v.conjugations && v.conjugations.aorist).length;
+const verbsWithPastNarrative = verbs.filter(v => v.conjugations && v.conjugations.pastNarrative).length;
 console.log(`Vocabulaire : ${vocab.length} (avec example : ${vocabWithExample})`);
-console.log(`Verbes : ${verbs.length} (avec aoriste : ${verbsWithAorist}) · Phrases : ${phrases.length} · Dialogues : ${dialogues.length}`);
+console.log(`Verbes : ${verbs.length} (avec aoriste : ${verbsWithAorist}, avec passé narratif : ${verbsWithPastNarrative}) · Phrases : ${phrases.length} · Dialogues : ${dialogues.length}`);
 console.log(`Grammaire : ${grammar.length} · Unités : ${units.length} · Chapitres : ${chapterCount} · Histoires : ${stories.length}`);
 console.log('─'.repeat(56));
 

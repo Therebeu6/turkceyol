@@ -66,12 +66,15 @@ window.Dashboard = {
     if (pct >= 100) {
       document.getElementById('goal-status').textContent = "Objectif atteint ! 🔥" + freezeLabel;
       document.getElementById('goal-status').classList.add('text-success');
-    } else if (hour >= 18 && data.dailyXP === 0 && data.streak > 0) {
-      // Alerte streak en danger (v5 — Pilier G) ; rassure si un gel protège
+    } else if (hour >= 18 && data.dailyXP === 0 && data.streak > 0 && !data.streakPaused) {
+      // Rappel du soir, ton neutre/encourageant (v8 AXE 3.1 — pas de vocabulaire de perte/danger)
       const msg = freezes > 0
-        ? `⚠️ Streak de ${data.streak} j — ❄️×${freezes} te protège, mais joue quand même !`
-        : `⚠️ Streak de ${data.streak} j en danger — une leçon rapide ?`;
+        ? `❄️×${freezes} te couvre aujourd'hui — une petite session reste sympa pour ta série de ${data.streak} j !`
+        : `Une petite session avant ce soir pour ta série de ${data.streak} j ? 🌙`;
       document.getElementById('goal-status').textContent = msg;
+      document.getElementById('goal-status').classList.remove('text-success');
+    } else if (data.streakPaused) {
+      document.getElementById('goal-status').textContent = `Série en pause — reprends quand tu veux !`;
       document.getElementById('goal-status').classList.remove('text-success');
     } else {
       document.getElementById('goal-status').textContent = `Encore ${data.dailyGoal - data.dailyXP} XP !` + freezeLabel;

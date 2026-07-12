@@ -27,7 +27,7 @@ window.Stats = {
           <div class="stat-lbl">XP Total</div>
         </div>
         <div class="stat-card">
-          <div class="stat-val" style="color:var(--gold)">🔥 ${d.streak}</div>
+          <div class="stat-val" style="${d.settings && d.settings.streakDiscreet ? '' : 'color:var(--gold)'}">${d.settings && d.settings.streakDiscreet ? '' : '🔥 '}${d.streak}</div>
           <div class="stat-lbl">Jours de suite</div>
         </div>
         <div class="stat-card">

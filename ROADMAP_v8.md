@@ -2,6 +2,14 @@
 
 ## « CONSOLIDER · APPROFONDIR · ALLÉGER »
 
+> **Statut : 100% livrée** (12/07/2026)
+> ✅ AXE 1 — Passé narratif -mış (règle + 24 verbes vérifiés + chapitre u18_c6)
+> ✅ AXE 2 — Interleaving réel (diversité de type + anti-répétition de thème dans le Mix rapide)
+> ✅ AXE 3 — Streak plus sain (message neutre, mode pause, affichage discret)
+> ✅ AXE 4 — 3 badges d'apprentissage (Conteur, Habitué(e), Curateur)
+> ✅ AXE 5 — Les 3 bugs corrigés (garde micro, contraste bandeau gel, audit clair v7)
+> ⏸️ AXE 6 — Contenu en réserve (non traité, explicitement optionnel dès la rédaction)
+
 > Séquence : v3 (bases) → v4 (densité) → v5 (fondations) → v6 (profondeur + rétention) →
 > v7 (parler/comprendre/s'entraîner, élaguée après revue critique) → **v8**.
 >

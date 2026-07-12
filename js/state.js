@@ -23,12 +23,14 @@ const State = {
     achievementIds: [],
     readDialogueIds: [],
     storiesRead: [],
+    storiesPerfect: [],
     favorites: [],
 
     perfectLessons: 0,
     dialoguesRead: 0,
     maxCombo: 0,
     streakFreezes: 0,
+    streakPaused: false,
     sessionDensity: 'normal',
 
     heatmap: {},
@@ -38,7 +40,8 @@ const State = {
       dailyReminder: true,
       haptics: true,
       theme: 'dark',
-      speechInput: false
+      speechInput: false,
+      streakDiscreet: false
     }
   },
 
@@ -70,12 +73,14 @@ const State = {
         this.data.achievementIds = parsed.achievementIds || [];
         this.data.readDialogueIds = parsed.readDialogueIds || [];
         this.data.storiesRead = parsed.storiesRead || [];
+        this.data.storiesPerfect = parsed.storiesPerfect || [];
         this.data.favorites = parsed.favorites || [];
         this.data.heatmap = parsed.heatmap || {};
         this.data.perfectLessons = parsed.perfectLessons || 0;
         this.data.dialoguesRead = parsed.dialoguesRead || 0;
         this.data.maxCombo = parsed.maxCombo || 0;
         this.data.streakFreezes = parsed.streakFreezes || 0;
+        this.data.streakPaused = parsed.streakPaused || false;
         this.data.sessionDensity = parsed.sessionDensity || 'normal';
       } catch (e) {
         console.error("Error parsing saved data, resetting to default.", e);
@@ -107,6 +112,14 @@ const State = {
     }
 
     if (lastDateStr !== today) {
+      // Mode pause (v8 AXE 3.2) : ni gain ni perte tant que l'utilisateur ne réactive pas
+      if (this.data.streakPaused) {
+        this.data.dailyXP = 0;
+        this.data.lastSessionDate = today;
+        this.save();
+        return;
+      }
+
       // Nouveau jour
       const lastDate = new Date(lastDateStr);
       const currDate = new Date(today);
@@ -133,7 +146,17 @@ const State = {
   },
 
   // ── Actions principales ──
-  
+
+  // Mode pause du streak (v8 AXE 3.2) : suspend gains/pertes jusqu'à réactivation manuelle
+  setStreakPaused(paused) {
+    this.data.streakPaused = paused;
+    if (!paused) {
+      // Réactivation : on repart d'aujourd'hui, aucun jour passé en pause ne compte contre la série
+      this.data.lastSessionDate = new Date().toISOString().split('T')[0];
+    }
+    this.save();
+  },
+
   addXP(amount) {
     this.data.totalXP += amount;
     this.data.dailyXP += amount;

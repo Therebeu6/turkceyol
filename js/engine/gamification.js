@@ -73,6 +73,9 @@ window.Gamification = {
         case 'verbs_mastered':  return this._countMastered('verb') >= cond.value;
         case 'words_seen':      return this._countSeenVocab() >= cond.value;
         case 'unit_completed':  return this._isUnitCompleted(cond.unitId);
+        case 'chapter_completed': return (state.completedChapters || []).includes(cond.chapterId);
+        case 'stories_perfect': return (state.storiesPerfect || []).length >= cond.value;
+        case 'favorites_count': return (state.favorites || []).length >= cond.value;
       }
       return false;
     }

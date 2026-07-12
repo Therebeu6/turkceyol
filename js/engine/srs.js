@@ -144,12 +144,17 @@ window.SRS = {
   },
 
   // ── Session mix optimal : dus prioritaires + quelques "neufs" (peu vus) ──
+  // v8 AXE 2 : le "Mix rapide" garantit la diversité de type (round-robin plutôt
+  // qu'un simple top-N par urgence qui peut exclure des types entiers) et évite
+  // deux items consécutifs du même thème/type (interleaving).
   getSessionMix(opts) {
     const cfg = this.CONFIG;
     const maxNew     = (opts && opts.maxNew     != null) ? opts.maxNew     : cfg.maxNewPerSession;
     const maxReviews = (opts && opts.maxReviews != null) ? opts.maxReviews : cfg.maxReviewsPerSession;
 
-    const due = this.getDueItems().slice(0, maxReviews);
+    // Répartit les items dus par type puis pioche en round-robin (urgence
+    // respectée à l'intérieur de chaque type, diversité entre les types).
+    const due = this._interleaveByKey(this.getDueItems(), (i) => i.type).slice(0, maxReviews);
 
     // "Neufs" = items présents mais encore très peu maîtrisés
     const queue = State.data.reviewQueue || [];
@@ -165,7 +170,45 @@ window.SRS = {
       })
       .slice(0, maxNew);
 
-    return { due, fresh, all: [...due, ...fresh] };
+    const all = this._interleaveByKey([...due, ...fresh], (i) => this._diversityKey(i));
+
+    return { due, fresh, all };
+  },
+
+  // Clé de diversité : thème pour le vocabulaire, type sinon (verbe/grammaire)
+  _diversityKey(item) {
+    if (item.type === 'vocabulary') {
+      const word = window.AppVocabulary && AppVocabulary.find(w => w.id === item.id);
+      return 'topic:' + ((word && word.topic) || 'base');
+    }
+    return 'type:' + item.type;
+  },
+
+  // Regroupe par clé (ordre interne préservé) puis pioche en round-robin entre
+  // les groupes — garantit qu'aucune clé ne se répète consécutivement sauf si
+  // elle représente à elle seule plus de la moitié des items (cas mathématiquement
+  // inévitable).
+  _interleaveByKey(list, keyFn) {
+    const buckets = new Map();
+    const order = [];
+    list.forEach(item => {
+      const k = keyFn(item);
+      if (!buckets.has(k)) { buckets.set(k, []); order.push(k); }
+      buckets.get(k).push(item);
+    });
+    const result = [];
+    let idx = 0;
+    let remaining = list.length;
+    while (remaining > 0) {
+      const k = order[idx % order.length];
+      const bucket = buckets.get(k);
+      if (bucket.length > 0) {
+        result.push(bucket.shift());
+        remaining--;
+      }
+      idx++;
+    }
+    return result;
   },
 
   // ── Maîtrise du vocabulaire par thème ──

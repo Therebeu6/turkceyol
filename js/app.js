@@ -165,6 +165,10 @@ const App = {
   updateHeaderUI() {
     this.els.headerStreakVal.textContent = State.data.streak;
     this.els.headerXpVal.textContent = State.data.totalXP;
+    const streakPill = document.getElementById('header-streak');
+    if (streakPill) {
+      streakPill.classList.toggle('discreet', !!(State.data.settings && State.data.settings.streakDiscreet));
+    }
   },
 
   // ── Toasts ──
@@ -197,6 +201,7 @@ const App = {
     if (idx >= 0) { State.data.favorites.splice(idx, 1); nowFav = false; }
     else { State.data.favorites.push({ id, type }); nowFav = true; }
     State.save();
+    if (nowFav && window.Gamification) Gamification.checkAchievements();
     return nowFav;
   },
 

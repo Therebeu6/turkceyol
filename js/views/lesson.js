@@ -1283,6 +1283,8 @@ window.Lesson = {
 
   _startMic(inputId) {
     if (!window.Speech || !Speech.isSupported()) return;
+    if (this._micActive) return;
+    this._micActive = true;
     const btn = document.getElementById('mic-btn-' + inputId);
     const input = document.getElementById(inputId);
     if (btn) btn.classList.add('mic-listening');
@@ -1291,10 +1293,12 @@ window.Lesson = {
         if (input && text) { input.value = text; input.focus(); }
       },
       onError: () => {
+        this._micActive = false;
         if (btn) btn.classList.remove('mic-listening');
         App.showToast('Micro indisponible ou non autorisé', 'info');
       },
       onEnd: () => {
+        this._micActive = false;
         if (btn) btn.classList.remove('mic-listening');
       }
     });

@@ -83,9 +83,9 @@
 
 /* v6 AXE 3.5 — Bandeau gel de série sur l'écran de fin */
 .sm-freeze-banner {
-  background: rgba(56,189,248,0.12);
-  border: 1px solid rgba(56,189,248,0.4);
-  color: #38BDF8;
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
+  color: var(--info);
   border-radius: var(--r-md, 12px);
   padding: 8px 12px;
   font-size: var(--text-sm, 0.85rem);

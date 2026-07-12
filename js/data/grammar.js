@@ -625,5 +625,46 @@ window.AppGrammar = [
         explanation: 'içerim (aoriste) = habitude générale. içiyorum serait "je suis en train de boire".'
       }
     ]
+  },
+  {
+    id: 'g_gecmis_mis',
+    title: 'Passé narratif -mış/-miş/-muş/-müş (le "on-dit")',
+    rule: 'Le passé narratif s\'emploie pour un fait rapporté, déduit ou découvert après coup — jamais pour un fait vu ou vécu directement (ça, c\'est -dı). Formation : radical + -mış/-miş/-muş/-müş (harmonie sur 4 voyelles selon la dernière voyelle du radical) + terminaison personnelle. Aucune irrégularité de type liste fermée ici (contrairement à l\'aoriste) : la difficulté est de sens, pas de forme.',
+    example: 'Yağmur yağmış (il a plu, je le déduis/on me l\'a dit — je n\'ai pas vu la pluie tomber) | Ali gitmiş (il paraît qu\'Ali est parti) | Çok yorulmuşum (je me rends compte que je suis épuisé, en me regardant)',
+    traps: [
+      '"Yağmur yağdı" (-dı, j\'ai VU/VÉCU la pluie) vs "Yağmur yağmış" (-mış, je découvre le sol mouillé en sortant mais je n\'ai pas vu tomber la pluie) — le français ne distingue jamais ça grammaticalement, seulement par le contexte ou des mots comme "apparemment".',
+      '-mış sert aussi pour la surprise sur sa propre action : "Uyuyakalmışım" (je me suis endormi sans m\'en rendre compte). Ce n\'est pas un temps "pour les autres seulement".',
+      'Pas de liste d\'irréguliers à mémoriser ici (contrairement aux 13 verbes de l\'aoriste) — seule l\'harmonie vocalique à 4 voyelles s\'applique.'
+    ],
+    exercises: [
+      {
+        prompt: '"gitmek" (aller) au passé narratif, "il/elle" (o) ?',
+        answer: 'gitmiş',
+        options: ['gitmiş', 'gitmış', 'gitti', 'gidermiş'],
+        hint: 'git → dernière voyelle i (avant, non arrondie) → -miş',
+        explanation: '"git" a pour dernière voyelle "i" → harmonie -miş. "gitti" serait le passé -dı (vécu), pas -mış.'
+      },
+      {
+        prompt: '"okumak" (lire) au passé narratif, "je" (ben) ?',
+        answer: 'okumuşum',
+        options: ['okumuşum', 'okumışım', 'okurmuşum', 'okudumuş'],
+        hint: 'oku → dernière voyelle u (arrière, arrondie) → -muş + -um',
+        explanation: '"oku" → dernière voyelle "u" → -muş, puis terminaison "je" = -um : okumuşum.'
+      },
+      {
+        prompt: '"görmek" (voir) au passé narratif, "ils/elles" (onlar) ?',
+        answer: 'görmüşler',
+        options: ['görmüşler', 'görmüşlar', 'görmüşlerdi', 'görürlermiş'],
+        hint: 'gör → voyelle ö (avant, arrondie) → -müş ; "onlar" est front → -ler',
+        explanation: '"gör" → -müş (harmonie ö→ü), puis "onlar" prend -ler (classe avant) : görmüşler.'
+      },
+      {
+        prompt: 'Tu sors et le sol est mouillé, mais tu n\'as pas vu la pluie tomber. Que dis-tu ?',
+        answer: 'Yağmur yağmış',
+        options: ['Yağmur yağmış', 'Yağmur yağdı', 'Yağmur yağıyor', 'Yağmur yağacak'],
+        hint: 'Fait déduit, pas vu directement → passé narratif -mış',
+        explanation: '"yağmış" (déduction/découverte après coup) est le seul choix cohérent avec "je n\'ai pas vu la pluie tomber".'
+      }
+    ]
   }
 ];

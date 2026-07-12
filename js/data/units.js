@@ -1095,6 +1095,20 @@ window.AppUnits = [
         vocabIds: [],
         verbIds: ['vb_yemek', 'vb_icmek', 'vb_okumak', 'vb_calismak', 'vb_uyumak', 'vb_yazmak'],
         tenses: ['aorist']
+      },
+      {
+        id: 'u18_c6',
+        tips: [{ icon: '💬', text: '-mış sert pour un fait rapporté, déduit ou découvert après coup — pas pour un fait vu ou vécu directement (ça, c\'est -dı).' }],
+        canDo: 'Je peux raconter un fait rapporté ou déduit avec le passé narratif (-mış)',
+        grammarIds: ['g_gecmis_mis'],
+        title: 'On raconte (le passé narratif)',
+        goal: 'Distinguer -dı (vécu) et -mış (rapporté, déduit, surprise) avec le passé narratif -mış/-miş/-muş/-müş',
+        xpReward: 110,
+        time: 11,
+        tags: ['Grammaire', 'A2'],
+        vocabIds: [],
+        verbIds: ['vb_gitmek', 'vb_gormek', 'vb_almak', 'vb_duymak', 'vb_gelmek', 'vb_yapmak'],
+        tenses: ['pastNarrative']
       }
     ]
   }
