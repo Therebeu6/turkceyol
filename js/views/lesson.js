@@ -176,6 +176,7 @@ window.Lesson = {
                      placeholder="Écrivez en turc…" autocomplete="off" autocorrect="off" spellcheck="false">
               ${this._micButtonHtml('exo-input')}
             </div>
+            ${this._virtualKeyboardHtml('exo-input')}
             <button class="btn btn-primary btn-full mt-4" onclick="Lesson.checkInput()">Valider</button>
           </div>
         </div>
@@ -348,11 +349,7 @@ window.Lesson = {
                 <input type="text" id="lt-input" class="answer-input" placeholder="Écris ce que tu entends…" autocomplete="off" autocorrect="off" spellcheck="false" style="width:100%">
                 ${this._micButtonHtml('lt-input')}
               </div>
-              <div class="virtual-keyboard" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:0.75rem">
-                ${['ş','ğ','ç','ö','ü','ı','İ'].map(k =>
-                  `<button class="btn-vk" style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2,#2a2a2a);color:#fff;cursor:pointer;font-size:1rem;font-weight:600;" onclick="(function(){var el=document.getElementById('lt-input');el.value+=('${k}');el.focus();})()">${k}</button>`
-                ).join('')}
-              </div>
+              ${this._virtualKeyboardHtml('lt-input')}
               <button class="btn btn-primary btn-full mt-4" onclick="Lesson._ltValidate()" style="margin-top:1rem">Valider</button>
             </div>
           </div>
@@ -1255,6 +1252,19 @@ window.Lesson = {
       toast.classList.add('fade-out');
       setTimeout(() => { if (toast.parentNode) toast.remove(); }, 320);
     }, 1200);
+  },
+
+  // Clavier turc virtuel (fix v8) : disponible sur TOUT champ de saisie libre en
+  // turc, pas seulement l'écoute-transcription — sinon impossible de taper ş/ğ/ç/
+  // ö/ü/ı/İ sur un clavier physique standard quand on répond de mémoire.
+  _virtualKeyboardHtml(inputId) {
+    return `
+      <div class="virtual-keyboard">
+        ${['ş','ğ','ç','ö','ü','ı','İ'].map(k =>
+          `<button type="button" class="btn-vk" onclick="(function(){var el=document.getElementById('${inputId}');el.value+=('${k}');el.focus();})()">${k}</button>`
+        ).join('')}
+      </div>
+    `;
   },
 
   // Bouton micro optionnel (v7 AXE 4.1) : opt-in strict + détection de support.
