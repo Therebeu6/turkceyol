@@ -37,8 +37,13 @@ window.Exercises = {
       verbs = chapter.verbIds.map(id => window.AppVerbs && AppVerbs.find(v => v.id === id)).filter(Boolean);
     }
 
-    // Temps autorisés (présent_neg inclus pour u10_c3)
-    const allowedTenses = (chapter && chapter.tenses) || ['present', 'past', 'future'];
+    // Temps autorisés (v10 AXE 1.1) : le champ `tenses` explicite du chapitre reste
+    // prioritaire (ex. u10_c3 isole 'present_neg' pour se concentrer sur la négation).
+    // Sans `tenses` explicite, on n'autorise QUE les temps déjà enseignés par un chapitre
+    // antérieur dans le parcours — plus de présent/passé/futur par défaut dès l'unité 2.
+    const allowedTenses = (chapter && Array.isArray(chapter.tenses) && chapter.tenses.length > 0)
+      ? chapter.tenses
+      : Array.from(this._unlockedTensesBefore(chapterId));
 
     // Gating production (Pilier E) : u1 = reconnaissance pure,
     // u2 = saisie simple ok, u3+ = tout
@@ -90,15 +95,15 @@ window.Exercises = {
       else practice.push(this.createAudioQCM(word));
     });
 
-    // 5) Conjugaison → rappel
-    if (verbs.length > 0) {
+    // 5) Conjugaison → rappel (rien à conjuguer si aucun temps n'est encore enseigné)
+    if (verbs.length > 0 && allowedTenses.length > 0) {
       const persons = ['ben', 'sen', 'o', 'biz', 'siz', 'onlar'];
       const count = !hasExplicitVocab ? Math.min(8, verbs.length * 2 + 1) : Math.min(3, verbs.length + 1);
       for (let i = 0; i < count; i++) {
         const verb = verbs[i % verbs.length];
         const person = persons[i % persons.length];
         const tense = allowedTenses[i % allowedTenses.length];
-        const ex = this.createVerbFill(verb, person, tense);
+        const ex = this.createVerbFill(verb, person, tense, allowedTenses);
         if (ex) recall.push(ex);
       }
     }
@@ -117,7 +122,7 @@ window.Exercises = {
 
     // 8) Cloze (exemples des verbes du chapitre) → rappel
     if (verbs.length > 0) {
-      const cz = this.createCloze(verbs);
+      const cz = this.createCloze(verbs, allowedTenses);
       if (cz) recall.push(cz);
     }
 
@@ -130,16 +135,16 @@ window.Exercises = {
     // 10) Production (si niveau suffisant)
     if (prodLevel >= 2) {
       if (verbs.length > 0) {
-        const wo = this.createWordOrder(verbs, null);
+        const wo = this.createWordOrder(verbs, null, allowedTenses);
         if (wo) produce.push(wo);
       }
-      const sb = this.createSentenceBuilder(chapter);
+      const sb = this.createSentenceBuilder(chapter, allowedTenses);
       if (sb) produce.push(sb);
-      const lt = this.createListeningTranscribe(chapter);
+      const lt = this.createListeningTranscribe(chapter, allowedTenses);
       if (lt) produce.push(lt);
     } else if (prodLevel === 1) {
       // Écoute d'un mot simple dès u2 (transcription courte)
-      const lt = this.createListeningTranscribe(chapter);
+      const lt = this.createListeningTranscribe(chapter, allowedTenses);
       if (lt && lt.text && lt.text.split(' ').length <= 2) produce.push(lt);
     }
 
@@ -279,6 +284,44 @@ window.Exercises = {
     return result;
   },
 
+  // ── v10 AXE 1.1 — Temps déjà enseignés avant un chapitre donné ──
+  // Parcourt AppUnits dans l'ordre du parcours et unionne les `tenses` explicites de
+  // chaque chapitre rencontré AVANT le chapitre visé (jamais celui-ci ni les suivants).
+  // Sert de valeur par défaut aux chapitres qui n'ont pas leur propre champ `tenses`.
+  _unlockedTensesBefore(chapterId) {
+    const unlocked = new Set();
+    for (const u of AppUnits) {
+      for (const c of u.chapters) {
+        if (c.id === chapterId) return unlocked;
+        if (Array.isArray(c.tenses)) {
+          for (const t of c.tenses) unlocked.add(t);
+        }
+      }
+    }
+    return unlocked;
+  },
+
+  // ── v10 AXE 1.2 — Détecte le temps d'un exemple, UNIQUEMENT via les formes propres
+  // au verbe testé (jamais celles d'un autre verbe de la phrase, ex. "konuşmak istiyorum"
+  // ne doit jamais être classé comme un présent de konuşmak). Retourne null si aucune
+  // forme ne correspond (temps absent des données, ex. futur négatif) : l'exemple est
+  // alors exclu par prudence des générateurs filtrés par temps, jamais classé au hasard.
+  _detectExampleTense(verb, exampleTr) {
+    if (!verb || !exampleTr) return null;
+    const strip = s => s.replace(/[.!?,;:'"]/g, '').toLocaleLowerCase('tr-TR');
+    const words = exampleTr.split(/\s+/).map(strip);
+    const tables = { ...(verb.conjugations || {}) };
+    if (verb.negations && verb.negations.present) tables.present_neg = verb.negations.present;
+    for (const tense of Object.keys(tables)) {
+      const table = tables[tense];
+      for (const p of Object.keys(table)) {
+        const form = table[p] && strip(table[p]);
+        if (form && words.includes(form)) return tense;
+      }
+    }
+    return null;
+  },
+
   generateForReview(reviewItems) {
     const exercises = [];
     for (const item of reviewItems) {
@@ -394,14 +437,20 @@ window.Exercises = {
     };
   },
 
-  createWordOrder(verbsPool, phrasesPool) {
+  createWordOrder(verbsPool, phrasesPool, allowedTenses) {
     const withEx = (verbsPool || []).filter(v => v.examples && v.examples.length > 0);
     let source = null;
     if (withEx.length > 0) {
       const candidates = [];
       for (const v of this._shuffle(withEx)) {
         for (const ex of v.examples) {
-          if (ex.tr && ex.tr.split(' ').length >= 3) candidates.push(ex);
+          if (!(ex.tr && ex.tr.split(' ').length >= 3)) continue;
+          // v10 AXE 1.2 : jamais un temps pas encore enseigné.
+          if (allowedTenses) {
+            const t = this._detectExampleTense(v, ex.tr);
+            if (!t || !allowedTenses.includes(t)) continue;
+          }
+          candidates.push(ex);
         }
       }
       if (candidates.length > 0) source = candidates[Math.floor(Math.random() * candidates.length)];
@@ -422,7 +471,7 @@ window.Exercises = {
     };
   },
 
-  createSentenceBuilder(chapter) {
+  createSentenceBuilder(chapter, allowedTenses) {
     const chapterVerbIds = (chapter && chapter.verbIds) || [];
     let verbPool = (window.AppVerbs || []).filter(v =>
       (v.examples || []).some(ex => ex.tr && ex.tr.split(' ').length >= 3)
@@ -434,9 +483,20 @@ window.Exercises = {
     }
     if (verbPool.length === 0) return null;
 
-    const verb = verbPool[Math.floor(Math.random() * verbPool.length)];
-    const example = (verb.examples || []).find(ex => ex.tr && ex.tr.split(' ').length >= 3);
-    if (!example) return null;
+    // v10 AXE 1.2 : jamais un exemple dont le temps n'a pas encore été enseigné.
+    const candidates = [];
+    for (const v of verbPool) {
+      for (const ex of (v.examples || [])) {
+        if (!(ex.tr && ex.tr.split(' ').length >= 3)) continue;
+        if (allowedTenses) {
+          const t = this._detectExampleTense(v, ex.tr);
+          if (!t || !allowedTenses.includes(t)) continue;
+        }
+        candidates.push({ verb: v, example: ex });
+      }
+    }
+    if (candidates.length === 0) return null;
+    const { verb, example } = candidates[Math.floor(Math.random() * candidates.length)];
 
     const correctBlocks = example.tr.split(' ');
 
@@ -594,7 +654,7 @@ window.Exercises = {
   },
 
   // ── Cloze : phrase à trou avec UN mot masqué (verbe conjugué) ──
-  createCloze(verbsPool) {
+  createCloze(verbsPool, allowedTenses) {
     const candidates = [];
     for (const v of (verbsPool || [])) {
       if (!v.examples || !v.examples.length) continue;
@@ -602,6 +662,11 @@ window.Exercises = {
         if (!ex.tr) continue;
         const words = ex.tr.split(/\s+/);
         if (words.length < 3) continue;
+        // v10 AXE 1.2 : jamais un exemple dont le temps n'a pas encore été enseigné.
+        if (allowedTenses) {
+          const t = this._detectExampleTense(v, ex.tr);
+          if (!t || !allowedTenses.includes(t)) continue;
+        }
         candidates.push({ verb: v, example: ex, words });
       }
     }
@@ -609,17 +674,17 @@ window.Exercises = {
 
     const { verb, example, words } = candidates[Math.floor(Math.random() * candidates.length)];
 
-    // Collecter toutes les formes conjuguées (positive + négative présent)
+    // Collecter les formes conjuguées (positive + négative présent), limitées aux temps
+    // déjà enseignés quand une restriction est fournie (v10 AXE 1.2) — sinon un distracteur
+    // (ou le mot masqué lui-même) pourrait venir d'un temps jamais vu.
     const allForms = new Set();
-    for (const tense of Object.keys(verb.conjugations || {})) {
-      for (const p of Object.keys(verb.conjugations[tense])) {
-        const f = verb.conjugations[tense][p];
-        if (f) allForms.add(f.toLocaleLowerCase('tr-TR'));
-      }
-    }
-    if (verb.negations && verb.negations.present) {
-      for (const p of Object.keys(verb.negations.present)) {
-        const f = verb.negations.present[p];
+    const tenseTables = { ...(verb.conjugations || {}) };
+    if (verb.negations && verb.negations.present) tenseTables.present_neg = verb.negations.present;
+    for (const tense of Object.keys(tenseTables)) {
+      if (allowedTenses && !allowedTenses.includes(tense)) continue;
+      const table = tenseTables[tense];
+      for (const p of Object.keys(table)) {
+        const f = table[p];
         if (f) allForms.add(f.toLocaleLowerCase('tr-TR'));
       }
     }
@@ -659,7 +724,7 @@ window.Exercises = {
     };
   },
 
-  createVerbFill(verb, person, tense) {
+  createVerbFill(verb, person, tense, allowedTenses) {
     const personFr = { ben: 'Je', sen: 'Tu', o: 'Il / Elle', biz: 'Nous', siz: 'Vous', onlar: 'Ils / Elles' };
     const tenseLabel = {
       present: 'présent',
@@ -688,10 +753,12 @@ window.Exercises = {
       .map(p => conjugTable[p])
       .filter(f => f && f !== correct);
 
-    // Distracteurs : même personne, autre temps (confusion temps/mode)
-    const otherTenses = tense === 'present_neg'
+    // Distracteurs : même personne, autre temps (confusion temps/mode) — v10 AXE 1.2 :
+    // jamais un temps pas encore enseigné (ex. aoriste/-mış proposés dès u10).
+    let otherTenses = tense === 'present_neg'
       ? ['present', 'past']
       : Object.keys(verb.conjugations).filter(t => t !== tense);
+    if (allowedTenses) otherTenses = otherTenses.filter(t => allowedTenses.includes(t));
     const wrongByTense = otherTenses
       .map(t => {
         const tbl = verb.conjugations && verb.conjugations[t];
@@ -711,9 +778,17 @@ window.Exercises = {
     const distractors = this._shuffle(candidates).slice(0, 3);
     if (distractors.length === 0) return null;
 
-    // Exemple contextuel aléatoire si disponible
-    const example = verb.examples && verb.examples.length > 0
-      ? verb.examples[Math.floor(Math.random() * verb.examples.length)]
+    // Exemple contextuel aléatoire si disponible — v10 AXE 1.2 : jamais un exemple dont
+    // le temps propre au verbe n'a pas encore été enseigné.
+    let exampleChoices = verb.examples || [];
+    if (allowedTenses) {
+      exampleChoices = exampleChoices.filter(ex => {
+        const t = this._detectExampleTense(verb, ex.tr);
+        return t && allowedTenses.includes(t);
+      });
+    }
+    const example = exampleChoices.length > 0
+      ? exampleChoices[Math.floor(Math.random() * exampleChoices.length)]
       : null;
     const hintText = example
       ? `${verb.fr} — <em>${example.tr}</em>`
@@ -744,7 +819,7 @@ window.Exercises = {
     };
   },
 
-  createListeningTranscribe(chapter) {
+  createListeningTranscribe(chapter, allowedTenses) {
     const chapterVocabIds = (chapter && chapter.vocabIds) || [];
     const chapterVerbIds  = (chapter && chapter.verbIds)  || [];
 
@@ -778,9 +853,13 @@ window.Exercises = {
       : (chapter ? [] : verbs);
     for (const verb of verbsPool) {
       for (const ex of (verb.examples || [])) {
-        if (ex && ex.tr && ex.tr.split(' ').length <= 4) {
-          verbExamples.push({ id: 'lt_' + verb.id, tr: ex.tr, fr: ex.fr });
+        if (!(ex && ex.tr && ex.tr.split(' ').length <= 4)) continue;
+        // v10 AXE 1.2 : jamais un exemple dont le temps n'a pas encore été enseigné.
+        if (allowedTenses) {
+          const t = this._detectExampleTense(verb, ex.tr);
+          if (!t || !allowedTenses.includes(t)) continue;
         }
+        verbExamples.push({ id: 'lt_' + verb.id, tr: ex.tr, fr: ex.fr });
       }
     }
     if (verbExamples.length > 0) {

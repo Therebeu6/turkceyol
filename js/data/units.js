@@ -96,12 +96,13 @@ window.AppUnits = [
         time: 7,
         tags: ['Identité', 'A1'],
         vocabIds: ['v_ben', 'v_sen', 'v_o', 'v_isim', 'v_arkadas'],
-        verbIds: ['vb_olmak']
+        verbIds: []
       },
       {
         id: 'u2_c2',
         tips: [{ icon: '🌍', text: 'Pas de masculin/féminin en turc : Fransız = français ET française. Le genre grammatical n\'existe pas !' }],
         canDo: 'Je peux dire ma nationalité et ma langue',
+        grammarIds: ['g_copule'],
         dialogueIds: ['d_nationalite'],
         title: 'Ma nationalité',
         goal: 'Pays, origines, langues et nationalités',
@@ -109,18 +110,19 @@ window.AppUnits = [
         time: 8,
         tags: ['Identité', 'A1'],
         vocabIds: ['v_fransiz', 'v_turk', 'v_ingiliz', 'v_alman', 'v_italyan', 'v_ispanyol', 'v_fransa', 'v_turkiye', 'v_ingiltere', 'v_almanya', 'v_dil', 'v_ulke', 'v_nerelisiniz'],
-        verbIds: ['vb_olmak', 'vb_konusmak']
+        verbIds: ['vb_konusmak']
       },
       {
         id: 'u2_c3',
         canDo: 'Je peux dire et demander l\'âge',
+        grammarIds: ['g_copule'],
         title: 'Mon âge',
         goal: 'Dire et demander l\'âge avec des chiffres',
         xpReward: 50,
         time: 6,
         tags: ['Identité', 'A1'],
         vocabIds: ['v_yas', 'v_bir', 'v_iki', 'v_uc', 'v_dort', 'v_bes', 'v_alti', 'v_yedi', 'v_sekiz', 'v_dokuz', 'v_on', 'v_yirmi', 'v_otuz'],
-        verbIds: ['vb_olmak']
+        verbIds: []
       },
       {
         id: 'u2_c4',
@@ -137,7 +139,7 @@ window.AppUnits = [
       {
         id: 'u2_c5',
         canDo: 'Je peux me présenter en 4 phrases',
-        grammarIds: ['g_ordre_mots'],
+        grammarIds: ['g_ordre_mots', 'g_copule'],
         dialogueIds: ['d_rencontre', 'd_nationalite'],
         title: 'Mini présentation',
         goal: 'Enchaîner 4 phrases sur soi',
@@ -145,7 +147,7 @@ window.AppUnits = [
         time: 10,
         tags: ['Identité', 'A1'],
         vocabIds: ['v_ben', 'v_isim', 'v_yas', 'v_fransiz', 'v_turk', 'v_ingiliz', 'v_doktor', 'v_ogretmen', 'v_dil', 'v_ulke'],
-        verbIds: ['vb_olmak', 'vb_konusmak', 'vb_calismak']
+        verbIds: ['vb_konusmak', 'vb_calismak']
       }
     ]
   },
@@ -230,13 +232,14 @@ window.AppUnits = [
       {
         id: 'u4_c2',
         canDo: 'Je peux décrire l\'apparence de quelqu\'un',
+        grammarIds: ['g_copule'],
         title: 'Décrire quelqu\'un',
         goal: 'Taille, apparence et caractère',
         xpReward: 80,
         time: 9,
         tags: ['Adjectifs', 'A1'],
         vocabIds: ['v_guzel', 'v_iyi', 'v_buyuk', 'v_kucuk', 'v_genc', 'v_yasli', 'v_uzun', 'v_kisa', 'v_zeki'],
-        verbIds: ['vb_olmak']
+        verbIds: []
       },
       {
         id: 'u4_c3',
@@ -921,13 +924,14 @@ window.AppUnits = [
       {
         id: 'u16_c2',
         canDo: 'Je peux exprimer mon état physique et émotionnel',
+        grammarIds: ['g_copule'],
         title: 'Comment vous sentez-vous ?',
         goal: 'Exprimer son état physique et émotionnel',
         xpReward: 80,
         time: 9,
         tags: ['Santé', 'Émotions', 'A2'],
         vocabIds: ['v_hasta', 'v_yorgun', 'v_agri', 'v_ates', 'v_iyi', 'v_kotu', 'v_mutlu', 'v_uzgun', 'v_endiseli'],
-        verbIds: ['vb_olmak', 'vb_sevmek']
+        verbIds: []
       },
       {
         id: 'u16_c3',

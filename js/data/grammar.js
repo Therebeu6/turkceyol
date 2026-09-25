@@ -666,5 +666,52 @@ window.AppGrammar = [
         explanation: '"yağmış" (déduction/découverte après coup) est le seul choix cohérent avec "je n\'ai pas vu la pluie tomber".'
       }
     ]
+  },
+  {
+    id: 'g_copule',
+    title: 'La copule — dire "je suis" sans verbe',
+    rule: '« Être » au présent ne se dit PAS avec un verbe séparé : on colle un suffixe personnel directement au nom ou à l\'adjectif. Après une consonne : -(y)ım/-im/-um/-üm (je), -sın/-sin/-sun/-sün (tu), rien à l\'oral (il/elle), -(y)ız/-iz/-uz/-üz (nous), -sınız/-siniz/-sunuz/-sünüz (vous). Après une voyelle, on ajoute un -y- de liaison avant le suffixe (öğrenci+yim, hasta+yım). Harmonie sur les 4 voyelles selon la dernière voyelle du mot, comme pour le possessif.',
+    example: 'Fransızım (je suis français(e)) | Öğretmenim (je suis professeur) | Öğrenciyim (je suis étudiant(e)) | Yirmi yaşındayım (j\'ai vingt ans) | O doktor (il/elle est médecin — rien à l\'oral pour "il/elle")',
+    traps: [
+      '« Je suis » ne se traduit JAMAIS par une forme d\'olmak (oluyorum). Olmak veut dire « devenir » ou « se produire » : "Doktor oluyorum" = "je deviens médecin", pas "je suis médecin". Pour l\'identité, la nationalité, l\'âge ou le métier au présent, on utilise uniquement le suffixe de ce chapitre.',
+      'À la 3e personne (il/elle, ils/elles), rien n\'est ajouté à l\'oral : "O Türk" (il/elle est turc), pas "O Türktür" — cette forme en -dır existe mais reste surtout écrite/formelle.'
+    ],
+    exercises: [
+      {
+        prompt: '"Fransız" (français) + "je" ?',
+        answer: 'Fransızım',
+        options: ['Fransızım', 'Fransızsın', 'Fransız oluyorum', 'Fransızlar'],
+        hint: '"ı" = voyelle arrière non arrondie → suffixe -ım',
+        explanation: 'Dernière voyelle "ı" → -ım : Fransızım. "Fransız oluyorum" voudrait dire "je deviens français".'
+      },
+      {
+        prompt: '"Öğretmen" (professeur) + "tu" ?',
+        answer: 'Öğretmensin',
+        options: ['Öğretmensin', 'Öğretmenim', 'Öğretmensiniz', 'Öğretmen oluyorsun'],
+        hint: '"tu" → suffixe -sin (harmonie "e" avant)',
+        explanation: 'Öğretmen + sin (2e personne) = Öğretmensin.'
+      },
+      {
+        prompt: '"Öğrenci" (étudiant, finit par une voyelle) + "je" ?',
+        answer: 'Öğrenciyim',
+        options: ['Öğrenciyim', 'Öğrencim', 'Öğrenciim', 'Öğrenci oluyorum'],
+        hint: 'Le mot finit par une voyelle → -y- de liaison avant le suffixe',
+        explanation: 'öğrenci se termine par "i" (voyelle) → on insère "y" : öğrenci + yim = öğrenciyim.'
+      },
+      {
+        prompt: 'Comment dit-on "il/elle est médecin" ?',
+        answer: 'O doktor',
+        options: ['O doktor', 'O doktordur', 'O doktorum', 'O doktor oluyor'],
+        hint: 'À la 3e personne, rien ne s\'ajoute à l\'oral',
+        explanation: 'La copule à la 3e personne est vide à l\'oral : "O doktor" suffit. "Doktorum" voudrait dire "JE suis médecin".'
+      },
+      {
+        prompt: 'Quelle phrase veut dire "je suis étudiant(e)" (identité actuelle, pas un changement) ?',
+        answer: 'Öğrenciyim',
+        options: ['Öğrenciyim', 'Öğrenci oluyorum', 'Öğrenci olacağım', 'Öğrenci oldum'],
+        hint: '« être » = copule ; olmak = « devenir »',
+        explanation: '"Öğrenciyim" (copule) = je suis étudiant(e) maintenant. Les formes d\'olmak décriraient un changement (je deviens/deviendrai/suis devenu étudiant).'
+      }
+    ]
   }
 ];

@@ -9,9 +9,10 @@ window.AppVerbs = [
     id: 'vb_olmak',
     infinitive: 'Olmak',
     stem: 'Ol',
-    fr: 'Être / Devenir',
+    fr: 'Devenir / Se produire',
     difficulty: 1,
     isFrequent: true,
+    note: 'Pour dire "je suis" (identité, métier, âge, nationalité) au présent, on n\'utilise PAS olmak : oluyorum veut dire "je deviens". La bonne forme est la copule (voir la règle "La copule").',
     conjugations: {
       present: {
         ben: 'oluyorum', sen: 'oluyorsun', o: 'oluyor',
