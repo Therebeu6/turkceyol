@@ -110,7 +110,7 @@
 
 ## 🅰️ AXE 1 — N'évaluer que ce qui a été enseigné (priorité pédagogique n°1)
 
-> **État (commit `5c82b5a`, corrigé par `c36d3ae`)** : 1.1 et 1.2 sont faits et vérifiés (voir
+> **État (commits `5c82b5a` et `9988d59`)** : 1.1 et 1.2 sont faits et vérifiés (voir
 > encadré de méthode sous 1.2). **1.3, 1.4 et 1.5 restent à faire** — en particulier,
 > `generateForReview` (la révision quotidienne) tire toujours son temps dans
 > `['present', 'past', 'future']` sans tenir compte de la progression réelle : la garantie de
