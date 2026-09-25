@@ -37,13 +37,22 @@ window.Exercises = {
       verbs = chapter.verbIds.map(id => window.AppVerbs && AppVerbs.find(v => v.id === id)).filter(Boolean);
     }
 
-    // Temps autorisés (v10 AXE 1.1) : le champ `tenses` explicite du chapitre reste
-    // prioritaire (ex. u10_c3 isole 'present_neg' pour se concentrer sur la négation).
-    // Sans `tenses` explicite, on n'autorise QUE les temps déjà enseignés par un chapitre
-    // antérieur dans le parcours — plus de présent/passé/futur par défaut dès l'unité 2.
-    const allowedTenses = (chapter && Array.isArray(chapter.tenses) && chapter.tenses.length > 0)
+    // Temps (v10 AXE 1.1) — deux notions distinctes :
+    // - `drillTenses` : quel(s) temps CE chapitre fait pratiquer en priorité dans sa boucle
+    //   de conjugaison. Le champ `tenses` explicite reste prioritaire quand il existe
+    //   (ex. u10_c3 isole 'present_neg' pour se concentrer sur la négation) ; sans lui, ce
+    //   sont les temps déjà enseignés par un chapitre antérieur (plus de présent/passé/futur
+    //   par défaut dès l'unité 2).
+    // - `allowedTenses` : tout ce que l'apprenant est censé DÉJÀ connaître à ce stade
+    //   (cumul des chapitres précédents ∪ drillTenses). C'est cette liste, plus large, qui
+    //   borne les distracteurs et les exemples (AXE 1.2) — un présent affirmatif reste un
+    //   distracteur légitime pour la négation présente de u10_c3, puisque le présent a été
+    //   enseigné juste avant ; seul un temps jamais enseigné (aoriste, -mış…) doit disparaître.
+    const unlockedBefore = Array.from(this._unlockedTensesBefore(chapterId));
+    const drillTenses = (chapter && Array.isArray(chapter.tenses) && chapter.tenses.length > 0)
       ? chapter.tenses
-      : Array.from(this._unlockedTensesBefore(chapterId));
+      : unlockedBefore;
+    const allowedTenses = Array.from(new Set([...unlockedBefore, ...drillTenses]));
 
     // Gating production (Pilier E) : u1 = reconnaissance pure,
     // u2 = saisie simple ok, u3+ = tout
@@ -96,13 +105,13 @@ window.Exercises = {
     });
 
     // 5) Conjugaison → rappel (rien à conjuguer si aucun temps n'est encore enseigné)
-    if (verbs.length > 0 && allowedTenses.length > 0) {
+    if (verbs.length > 0 && drillTenses.length > 0) {
       const persons = ['ben', 'sen', 'o', 'biz', 'siz', 'onlar'];
       const count = !hasExplicitVocab ? Math.min(8, verbs.length * 2 + 1) : Math.min(3, verbs.length + 1);
       for (let i = 0; i < count; i++) {
         const verb = verbs[i % verbs.length];
         const person = persons[i % persons.length];
-        const tense = allowedTenses[i % allowedTenses.length];
+        const tense = drillTenses[i % drillTenses.length];
         const ex = this.createVerbFill(verb, person, tense, allowedTenses);
         if (ex) recall.push(ex);
       }
@@ -439,21 +448,25 @@ window.Exercises = {
 
   createWordOrder(verbsPool, phrasesPool, allowedTenses) {
     const withEx = (verbsPool || []).filter(v => v.examples && v.examples.length > 0);
-    let source = null;
+    let source = null, sourceVerb = null, sourceTense = null;
     if (withEx.length > 0) {
       const candidates = [];
       for (const v of this._shuffle(withEx)) {
         for (const ex of v.examples) {
           if (!(ex.tr && ex.tr.split(' ').length >= 3)) continue;
           // v10 AXE 1.2 : jamais un temps pas encore enseigné.
+          let t = null;
           if (allowedTenses) {
-            const t = this._detectExampleTense(v, ex.tr);
+            t = this._detectExampleTense(v, ex.tr);
             if (!t || !allowedTenses.includes(t)) continue;
           }
-          candidates.push(ex);
+          candidates.push({ verb: v, example: ex, tense: t });
         }
       }
-      if (candidates.length > 0) source = candidates[Math.floor(Math.random() * candidates.length)];
+      if (candidates.length > 0) {
+        const pick = candidates[Math.floor(Math.random() * candidates.length)];
+        source = pick.example; sourceVerb = pick.verb; sourceTense = pick.tense;
+      }
     }
     if (!source && phrasesPool && phrasesPool.length > 0) {
       const pool = phrasesPool.filter(p => p.tr && p.tr.split(' ').length >= 3);
@@ -467,6 +480,11 @@ window.Exercises = {
       hint: source.fr,
       words: this._shuffle([...words]),
       answer: source.tr,
+      // v10 AXE 1.2 : traçabilité explicite pour la vérification (tools/verify-tense-gating.js)
+      // plutôt que de faire deviner l'origine via data.id — absents quand la source est une
+      // phrase du hub Pratique (aucune notion de temps).
+      sourceVerbId: sourceVerb ? sourceVerb.id : null,
+      sourceTense: sourceTense,
       data: { id: 'wo_phrase', tr: source.tr, fr: source.fr, type: 'phrase' }
     };
   },
@@ -488,15 +506,16 @@ window.Exercises = {
     for (const v of verbPool) {
       for (const ex of (v.examples || [])) {
         if (!(ex.tr && ex.tr.split(' ').length >= 3)) continue;
+        let t = null;
         if (allowedTenses) {
-          const t = this._detectExampleTense(v, ex.tr);
+          t = this._detectExampleTense(v, ex.tr);
           if (!t || !allowedTenses.includes(t)) continue;
         }
-        candidates.push({ verb: v, example: ex });
+        candidates.push({ verb: v, example: ex, tense: t });
       }
     }
     if (candidates.length === 0) return null;
-    const { verb, example } = candidates[Math.floor(Math.random() * candidates.length)];
+    const { verb, example, tense: sourceTense } = candidates[Math.floor(Math.random() * candidates.length)];
 
     const correctBlocks = example.tr.split(' ');
 
@@ -527,6 +546,9 @@ window.Exercises = {
       blocks: allBlocks,
       correct: correctBlocks,
       hint: example.fr,
+      // v10 AXE 1.2 : traçabilité explicite pour tools/verify-tense-gating.js.
+      sourceVerbId: verb.id,
+      sourceTense,
       data: { id: 'sb_' + verb.id, tr: example.tr, fr: example.fr, type: 'phrase' }
     };
   },
@@ -855,11 +877,12 @@ window.Exercises = {
       for (const ex of (verb.examples || [])) {
         if (!(ex && ex.tr && ex.tr.split(' ').length <= 4)) continue;
         // v10 AXE 1.2 : jamais un exemple dont le temps n'a pas encore été enseigné.
+        let t = null;
         if (allowedTenses) {
-          const t = this._detectExampleTense(verb, ex.tr);
+          t = this._detectExampleTense(verb, ex.tr);
           if (!t || !allowedTenses.includes(t)) continue;
         }
-        verbExamples.push({ id: 'lt_' + verb.id, tr: ex.tr, fr: ex.fr });
+        verbExamples.push({ id: 'lt_' + verb.id, tr: ex.tr, fr: ex.fr, verbId: verb.id, tense: t });
       }
     }
     if (verbExamples.length > 0) {
@@ -868,6 +891,9 @@ window.Exercises = {
         type: 'listening_transcribe',
         text: pick.tr,
         hint: pick.fr,
+        // v10 AXE 1.2 : traçabilité explicite pour tools/verify-tense-gating.js.
+        sourceVerbId: pick.verbId,
+        sourceTense: pick.tense,
         data: { id: pick.id, tr: pick.tr, fr: pick.fr, type: 'phrase' }
       };
     }

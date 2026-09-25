@@ -110,6 +110,22 @@
 
 ## 🅰️ AXE 1 — N'évaluer que ce qui a été enseigné (priorité pédagogique n°1)
 
+> **État (commit `5c82b5a`, corrigé par `c36d3ae`)** : 1.1 et 1.2 sont faits et vérifiés (voir
+> encadré de méthode sous 1.2). **1.3, 1.4 et 1.5 restent à faire** — en particulier,
+> `generateForReview` (la révision quotidienne) tire toujours son temps dans
+> `['present', 'past', 'future']` sans tenir compte de la progression réelle : la garantie de
+> cette section ne couvre encore que les **leçons**, pas la révision.
+>
+> **Résidu connu, dans le périmètre de 1.4/3.2, pas de 1.1/1.2** : les dialogues eux-mêmes
+> peuvent encore exposer des formes conjuguées non enseignées (*d_nationalite* en u2_c2 :
+> *Türkçe konuşuyor musunuz?*, présent, avant que u9_c3 ne l'enseigne formellement). Ce n'est
+> **pas** hors scoring : `createDialogueFill` peut très bien piocher cette réplique et la
+> transformer en exercice à trous **noté**, compté par `lesson.js` comme un `realExo` normal,
+> avec impact sur le score et l'XP. 1.1/1.2 ne portent que sur les exercices de conjugaison et
+> les exemples de verbes isolés (`verb.examples`), pas sur les répliques des dialogues, qui
+> restent un contenu à part (voir la slide `dialogue_read` prévue en 1.4 pour les exposer avant
+> de les tester, et 3.2 pour la relecture linguistique des dialogues eux-mêmes).
+
 ### 1.1 — Temps autorisés par défaut = temps déjà enseignés · **M**
 - Remplacer le défaut figé de `exercises.js:41` par un calcul : les temps introduits par les
   chapitres **situés avant** le chapitre courant dans le parcours (en parcourant `AppUnits`
@@ -132,6 +148,14 @@
     Un chapitre sans `tenses` situé après u10_c3 peut donc tester la négation au présent,
     alors que le défaut actuel l'exclut : c'est un changement voulu. La même règle vaudra pour
     les négations passé/futur de v9 AXE 2, dès le chapitre qui les enseigne.
+  - **Précision découverte à l'implémentation** : un chapitre à `tenses` explicite étroit
+    (ex. u10_c3 = `['present_neg']` seul) a en réalité DEUX notions distinctes, pas une :
+    `drillTenses` (ce que la boucle de conjugaison teste en priorité — reste l'array explicite
+    tel quel) et `allowedTenses` (tout ce que l'apprenant connaît déjà = `drillTenses` ∪ les
+    temps des chapitres précédents — sert de plafond pour les distracteurs/exemples, AXE 1.2).
+    Sans cette distinction, le distracteur « présent affirmatif » déjà codé en dur pour la
+    négation présente (`exercises.js`, bloc `if (tense === 'present_neg' && ...)`) aurait été
+    supprimé à tort : le présent EST déjà connu à ce stade, ce n'est pas une fuite.
 
 ### 1.2 — Distracteurs et cloze limités aux temps connus · **S**
 - `createVerbFill` : `otherTenses` (`exercises.js:692-694`) est filtré sur les temps
@@ -141,18 +165,40 @@
 - `createWordOrder`, `createSentenceBuilder` et `createListeningTranscribe` (pool 2) puisent
   aussi dans `verb.examples`, sans aucun filtre de temps. Ils appliquent donc le même filtre
   que le cloze.
-- **Prérequis de données : un champ `tense` explicite sur chaque exemple de verbe.**
-  Aujourd'hui, aucun des exemples de `verbs.js` n'indique son temps. Une détection automatique
-  n'est pas fiable. Par exemple, dans les exemples de *konuşmak*, *Seninle konuşmak
-  **istiyorum*** porte un présent qui appartient à *istemek*, pas à *konuşmak*. On ajoute donc
-  `tense: 'present' | 'past' | 'future' | 'present_neg' | 'aorist' | 'pastNarrative'` à chaque
-  exemple, pré-rempli par script, puis relu à la main.
-  - Un exemple qui combine plusieurs structures (infinitif + *istemek*, négation du futur,
-    *-abil*) reçoit le temps **le plus avancé** qu'il contient, ou `tense: 'other'`.
-  - Un exemple sans champ, ou `other`, est exclu des générateurs filtrés.
-  - Ajout de champ optionnel : aucun id touché, aucune donnée existante cassée.
+- **Décision d'implémentation, différente du plan initial de cette section — détection à
+  l'exécution plutôt qu'un champ de données.** Le plan initial ci-dessous demandait un champ
+  `tense` explicite sur chaque exemple de verbe (96 exemples à relire à la main), au motif
+  qu'« une détection automatique n'est pas fiable » (ex. dans *Seninle konuşmak **istiyorum***,
+  un détecteur naïf pourrait rattacher ce présent à *konuşmak* alors qu'il appartient à
+  *istemek*). En pratique, une détection automatique **restreinte aux formes propres au verbe
+  testé** (jamais à un autre verbe de la phrase) évite exactement ce piège : elle ne compare
+  *konuşmak* qu'à SES PROPRES formes conjuguées, et *istiyorum* n'en fait pas partie — le
+  détecteur renvoie alors `null` (temps inconnu) plutôt qu'un mauvais temps, et l'exemple est
+  écarté par prudence, avec le même résultat que le comportement `other` prévu ci-dessous.
+  C'est ce qu'implémente `Exercises._detectExampleTense(verb, exampleTr)`
+  (`js/engine/exercises.js`) : elle ne renvoie **jamais** une mauvaise classification, seulement
+  une classification correcte ou une absence de classification (exclusion). Ce choix évite la
+  relecture manuelle de 96 exemples sans rouvrir le risque que le plan initial voulait éviter.
+  Un futur ajout de données pourra toujours introduire un champ `tense` explicite pour les cas
+  où la détection échoue par manque de forme reconnaissable (ex. formes composées comme
+  *yardım etmek*, ou négations passé/futur avant que v9 AXE 2 ne les ajoute aux données) —
+  non bloquant, à réévaluer si ces cas s'avèrent fréquents en usage réel.
+  - Plan initial conservé pour mémoire : `tense: 'present' | 'past' | 'future' |
+    'present_neg' | 'aorist' | 'pastNarrative' | 'other'` par exemple, un exemple combinant
+    plusieurs structures reçoit le temps le plus avancé ou `'other'`, un exemple `other` ou
+    sans champ est exclu des générateurs filtrés — objectif final identique à la solution
+    retenue, méthode différente.
 - **Accept.** : sur la même simulation, 0 distracteur, cloze, remise en ordre, construction de
   phrase ou écoute ne porte sur un temps non appris.
+- **Vérifié par** `node tools/verify-tense-gating.js` (nouvel outil, même famille que
+  `tools/validate-data.js` et `tools/smoke-test.js` : charge les données et le moteur dans un
+  faux `window` via `vm`, sans navigateur). Il rejoue, chapitre par chapitre, 20 générations et
+  vérifie qu'aucun exercice ni distracteur ne dépasse l'ensemble des temps déjà enseignés (voir
+  la note sous 1.1 sur `drillTenses` vs `allowedTenses`), plus la validité de `g_copule`. Sur
+  cette machine, `node` n'est pas sur le PATH standard ; utiliser le binaire fourni par
+  Playwright si besoin, ex. trouvé ici lors de cette session :
+  `C:\Users\<user>\AppData\Local\ms-playwright-go\<version>\node.exe`, ou tout Node ≥ 18
+  installé normalement ailleurs.
 
 ### 1.3 — Révision quotidienne bornée à la progression · **M** (remplace v9 AXE 1.1)
 - `generateForReview` tire le temps d'un verbe dans l'intersection « temps présents sur le
@@ -208,6 +254,15 @@
 
 ## 🅱️ AXE 2 — Enseigner « être » (la copule), retirer *olmak* là où il est faux
 
+> **État (commit `5c82b5a`)** : fait. Une précision par rapport au plan initial : u2_c1
+> (« Je m'appelle… ») ne porte finalement **pas** `g_copule`, contrairement à ce que 2.2
+> prévoyait. Raison : `createGrammarNote` n'affiche jamais qu'**une seule** fiche de
+> grammaire par chapitre (la première de `grammarIds`) ; comme u2_c1 avait déjà
+> `g_ordre_mots`, y ajouter `g_copule` en second l'aurait rendue invisible dans ce
+> chapitre. Or le contenu réel d'u2_c1 (dire son prénom) est à copule zéro dans le dialogue
+> `d_rencontre` (*Ben Sophie*, sans suffixe) : la copule n'y est donc pas requise. Son
+> premier enseignement réel reste u2_c2 (*Fransızım*), qui n'a pas ce conflit.
+
 ### 2.1 — Nouvelle règle `g_copule` · **M**
 - Suffixe personnel de « être » avec harmonie à 4 voyelles et *-y-* de liaison après voyelle :
   *-(y)Im, -sIn, ∅/-dIr, -(y)Iz, -sInIz, -lAr*.
@@ -222,7 +277,8 @@
 
 ### 2.2 — Rattacher la copule et retirer *olmak* des chapitres concernés · **S**
 - `grammarIds += 'g_copule'` et retrait de `vb_olmak` des `verbIds` pour :
-  - u2_c1 « Je m'appelle… » ;
+  - u2_c1 « Je m'appelle… » — **retrait de `vb_olmak` fait, mais pas de `g_copule`** (voir
+    l'état ci-dessus : conflit avec `g_ordre_mots`, déjà là, et non nécessaire au contenu) ;
   - u2_c2 « Ma nationalité » ;
   - u2_c3 « Mon âge » ;
   - u2_c5 « Mini présentation » ;
