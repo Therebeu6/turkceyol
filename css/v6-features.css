@@ -110,8 +110,9 @@
 }
 .goal-opt-active { border-color: var(--primary); background: var(--primary-glow); }
 .goal-opt-xp { font-weight: 800; font-size: var(--text-md, 1rem); color: var(--text); }
-.goal-opt-lbl { font-size: 11px; color: var(--text-3); }
+.goal-opt-lbl { font-size: 11px; color: var(--text-2); font-weight: 600; }
 .goal-opt-active .goal-opt-xp { color: var(--primary); }
+.goal-opt-active .goal-opt-lbl { color: var(--text); }
 
 /* v6 AXE 3.3 — Rapport hebdomadaire (stats) */
 .wr-summary { display: flex; gap: 8px; margin-bottom: var(--s3, 0.75rem); }
