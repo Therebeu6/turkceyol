@@ -268,6 +268,12 @@ window.AppVocabulary = [
   { id: 'v_anliyorum', tr: 'Anlıyorum', fr: 'Je comprends', topic: 'communication', type: 'expression', difficulty: 2, example: { tr: 'Şimdi anlıyorum.', fr: 'Maintenant je comprends.' } },
   { id: 'v_biliyorum', tr: 'Biliyorum', fr: 'Je sais', topic: 'communication', type: 'expression', difficulty: 2, example: { tr: 'Cevabı biliyorum.', fr: 'Je connais la réponse.' } },
   { id: 'v_bir_dakika', tr: 'Bir dakika', fr: 'Une minute / Attendez', topic: 'chunks', type: 'expression', difficulty: 2, example: { tr: 'Bir dakika, geliyorum.', fr: 'Une minute, j\'arrive.' } },
+  // v10 AXE 1.5 — expressions figées (chunks) : présentées comme un bloc avant que le
+  // présent -iyor (u9_c3) et sa négation (u10_c3) ne soient formellement enseignés.
+  { id: 'v_seviyorum', tr: 'Seviyorum', fr: 'J\'aime', topic: 'chunks', type: 'expression', difficulty: 1, example: { tr: 'Bu yemeği seviyorum.', fr: 'J\'aime ce plat.' } },
+  { id: 'v_sevmiyorum', tr: 'Sevmiyorum', fr: 'Je n\'aime pas', topic: 'chunks', type: 'expression', difficulty: 1, example: { tr: 'Balık sevmiyorum.', fr: 'Je n\'aime pas le poisson.' } },
+  { id: 'v_istiyorum_chunk', tr: 'İstiyorum', fr: 'Je voudrais / Je veux', topic: 'chunks', type: 'expression', difficulty: 1, example: { tr: 'Bir su istiyorum.', fr: 'Je voudrais une eau.' } },
+  { id: 'v_alabilir_miyim', tr: 'Alabilir miyim?', fr: 'Puis-je avoir… ?', topic: 'chunks', type: 'expression', difficulty: 2, example: { tr: 'Bir kahve alabilir miyim?', fr: 'Puis-je avoir un café ?' } },
 
   // ── Locatifs ──
   { id: 'v_icinde', tr: 'İçinde', fr: 'Dans / À l\'intérieur de', topic: 'locatifs', type: 'expression', difficulty: 2, example: { tr: 'Kalem çantanın içinde.', fr: 'Le stylo est dans le sac.' } },

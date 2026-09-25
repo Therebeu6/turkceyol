@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* ═══════════════════════════════════════════════
-   TürkçeYol — tools/verify-tense-gating.js  (v10 AXE 1.1 + 1.2)
+   TürkçeYol — tools/verify-tense-gating.js  (v10 AXE 1.1 + 1.2 + 1.3 + 1.4)
    Vérifie, hors runtime, que le moteur ne teste jamais un temps
    verbal avant que le chapitre qui l'enseigne n'ait été atteint :
      • pour CHAQUE chapitre, generateForChapter ne produit aucun
@@ -13,6 +13,18 @@
        restreints (ex. u10_c2 = présent seul), aucune mauvaise
        réponse (distracteur) proposée n'est une forme d'un temps
        non autorisé du même verbe ;
+     • AXE 1.3 : sur un profil simulé (chapitres terminés arrêtés
+       juste avant u10_c3), generateForReview() ne produit aucun
+       exercice hors de la progression réelle, même en le forçant
+       à réviser tout le vocabulaire et tous les verbes du jeu ;
+       et un profil sans aucun chapitre terminé ne reçoit aucun
+       grammar_fill / dialogue_fill / sentence_builder (pas de
+       repli global vers tout le contenu) ;
+     • AXE 1.4 : un mot de match_pairs / d'écoute de vocabulaire a
+       été enseigné ailleurs dans la même génération (jamais
+       au-delà du strict échantillon enseigné) ; un dialogue_fill
+       est toujours précédé, dans la même génération, d'une slide
+       dialogue_read qui montre le dialogue en entier ;
      • la règle g_copule existe, avec ≥4 exercices dont la
        réponse figure bien dans ses propres options.
 
@@ -87,7 +99,7 @@ if (!Exercises || typeof Exercises.generateForChapter !== 'function' || typeof E
 }
 
 const RUNS = 20;
-let chapterCount = 0, tenseExerciseCount = 0;
+let chapterCount = 0, tenseExerciseCount = 0, contentExerciseCount = 0;
 
 for (const u of AppUnits) {
   for (const c of (u.chapters || [])) {
@@ -161,11 +173,136 @@ for (const u of AppUnits) {
           }
         }
       }
+
+      // 5) v10 AXE 1.4 — un mot testé en match_pairs / écoute de vocabulaire doit avoir été
+      // enseigné ailleurs DANS LA MÊME session (intro_card ou exercice individuel), jamais
+      // piocher au-delà de l'échantillon réellement enseigné (chapter.vocabIds/l'unité
+      // entière peuvent dépasser ce qui est montré dans une seule génération).
+      const taughtVocabIds = new Set(
+        slides.filter(s => s.data && s.data.type === 'vocabulary').map(s => s.data.id)
+      );
+      const mp = slides.find(s => s.type === 'match_pairs');
+      if (mp) {
+        contentExerciseCount++;
+        for (const p of mp.pairs) {
+          if (!taughtVocabIds.has(p.id)) {
+            err(`"${c.id}" : match_pairs contient "${p.id}", jamais enseigné ailleurs dans cette génération`);
+          }
+        }
+      }
+      const ltVocab = slides.find(s => s.type === 'listening_transcribe' && s.data && s.data.type === 'vocabulary');
+      if (ltVocab) {
+        contentExerciseCount++;
+        if (!taughtVocabIds.has(ltVocab.data.id)) {
+          err(`"${c.id}" : listening_transcribe (vocab) porte sur "${ltVocab.data.id}", jamais enseigné ailleurs dans cette génération`);
+        }
+      }
+
+      // 6) v10 AXE 1.4 — dialogue_fill ne doit jamais porter sur un dialogue qui n'a pas
+      // d'abord été montré en entier via une slide dialogue_read (dans CETTE génération),
+      // et cette lecture doit précéder l'exercice dans l'ordre des slides.
+      const dialogueReads = slides.filter(s => s.type === 'dialogue_read');
+      const firstFillIdx = slides.findIndex(s => s.type === 'dialogue_fill');
+      if (firstFillIdx !== -1) {
+        contentExerciseCount++;
+        const df = slides[firstFillIdx];
+        const matchingRead = dialogueReads.find(dr => dr.data.id === df.data.id);
+        if (!matchingRead) {
+          err(`"${c.id}" : dialogue_fill sur "${df.data.id}" sans dialogue_read correspondant dans cette génération`);
+        } else if (slides.indexOf(matchingRead) > firstFillIdx) {
+          err(`"${c.id}" : dialogue_read pour "${df.data.id}" apparaît APRÈS le dialogue_fill`);
+        }
+      }
     }
   }
 }
 
-// 4) La copule doit exister et être correcte.
+// 5) v10 AXE 1.3 — La révision quotidienne (generateForReview) ne doit jamais dépasser la
+// progression RÉELLE d'un profil simulé, arrêté juste avant u10_c3 (donc 'present' débloqué,
+// 'present_neg'/'past'/'future'/'aorist'/'pastNarrative' PAS encore). On force artificiellement
+// reviewItems à couvrir tout le vocabulaire et tous les verbes du jeu (pire cas), pour vérifier
+// que le moteur borne bien la sortie à la progression, pas aux données saisies en entrée.
+if (typeof Exercises.generateForReview === 'function') {
+  const cutoffChapters = [];
+  outer:
+  for (const u of AppUnits) {
+    for (const c of u.chapters) {
+      if (c.id === 'u10_c3') break outer;
+      cutoffChapters.push(c.id);
+    }
+  }
+  sandbox.State.data.completedChapters = cutoffChapters;
+  const reviewAllowed = ['present']; // seul temps débloqué avant u10_c3
+  const reviewGrammarIds = new Set();
+  const reviewDialogueIds = new Set();
+  for (const u of AppUnits) {
+    for (const c of u.chapters) {
+      if (!cutoffChapters.includes(c.id)) continue;
+      for (const g of (c.grammarIds || [])) reviewGrammarIds.add(g);
+      for (const d of (c.dialogueIds || [])) reviewDialogueIds.add(d);
+    }
+  }
+  const reviewItems = [
+    ...sandbox.AppVocabulary.map(w => ({ id: w.id, type: 'vocabulary' })),
+    ...AppVerbs.map(v => ({ id: v.id, type: 'verb' })),
+  ];
+  let reviewExerciseCount = 0;
+  for (let pass = 0; pass < 30; pass++) {
+    let exs;
+    try {
+      exs = Exercises.generateForReview(reviewItems);
+    } catch (e) {
+      err(`generateForReview a levé (pass ${pass}) : ${e.message}`);
+      continue;
+    }
+    for (const s of exs) {
+      reviewExerciseCount++;
+      if (s.subtype === 'verb_fill' && s.verbMeta) {
+        if (!reviewAllowed.includes(s.verbMeta.tense)) {
+          err(`révision : verb_fill teste "${s.verbMeta.tense}" (verbe ${s.data.id}), hors de [${reviewAllowed}] pour ce profil`);
+        }
+      }
+      if (s.type === 'cloze' && s.data && s.data.type === 'verb') {
+        const verb = AppVerbs.find(v => v.id === s.data.id);
+        const t = verb && Exercises._detectExampleTense(verb, s.data.tr);
+        if (t && !reviewAllowed.includes(t)) {
+          err(`révision : cloze utilise "${s.data.tr}" (${verb.id}, temps "${t}"), hors de [${reviewAllowed}] pour ce profil`);
+        }
+      }
+      if (['word_order', 'sentence_builder', 'listening_transcribe'].includes(s.type) && s.sourceVerbId && s.sourceTense) {
+        if (!reviewAllowed.includes(s.sourceTense)) {
+          err(`révision : ${s.type} utilise le verbe ${s.sourceVerbId} au temps "${s.sourceTense}", hors de [${reviewAllowed}] pour ce profil`);
+        }
+      }
+      if (s.type === 'grammar_fill') {
+        const rid = s.ruleId || (s.data && s.data.id);
+        if (rid && !reviewGrammarIds.has(rid)) {
+          err(`révision : grammar_fill utilise la règle "${rid}", non enseignée par les chapitres terminés de ce profil`);
+        }
+      }
+      if (s.type === 'dialogue_fill') {
+        const did = s.data && s.data.id;
+        if (did && !reviewDialogueIds.has(did)) {
+          err(`révision : dialogue_fill utilise "${did}", non enseigné par les chapitres terminés de ce profil`);
+        }
+      }
+    }
+  }
+  console.log(`Révision (profil simulé, arrêté avant u10_c3) : ${reviewExerciseCount} exercices sur 30 passes.`);
+
+  // Profil sans aucun chapitre terminé : aucun exercice de grammaire/dialogue/phrase/écoute
+  // ne doit être produit (aucun repli global vers tout le contenu du jeu).
+  sandbox.State.data.completedChapters = [];
+  const exsEmpty = Exercises.generateForReview(reviewItems);
+  const leakedTypes = exsEmpty.filter(s => ['grammar_fill', 'dialogue_fill', 'sentence_builder'].includes(s.type));
+  if (leakedTypes.length > 0) {
+    err(`révision, profil sans chapitre terminé : ${leakedTypes.length} exercice(s) produit(s) au lieu de 0 (${leakedTypes.map(s => s.type).join(', ')})`);
+  }
+} else {
+  err('Exercises.generateForReview introuvable.');
+}
+
+// 6) La copule doit exister et être correcte.
 const copule = AppGrammar.find(g => g.id === 'g_copule');
 if (!copule) {
   err('Règle "g_copule" introuvable.');
@@ -186,6 +323,7 @@ console.log('TürkçeYol — vérification du filtrage par temps (v10 AXE 1.1/1.
 console.log('─'.repeat(56));
 console.log(`Chapitres testés : ${chapterCount} × ${RUNS} passes`);
 console.log(`Exercices liés à un temps inspectés : ${tenseExerciseCount}`);
+console.log(`Exercices de contenu (match_pairs/écoute/dialogue) inspectés : ${contentExerciseCount}`);
 console.log('─'.repeat(56));
 
 if (errors.length) {

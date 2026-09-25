@@ -70,7 +70,10 @@ window.AppGrammar = [
     title: 'Le présent progressif (-iyor)',
     rule: 'Pour dire "je suis en train de faire", on ajoute -iyor au radical du verbe, puis la terminaison personnelle (ex: -um pour "Je").',
     example: 'Yapmak (Faire) -> Yap + ı + yor + um = Yapıyorum.',
-    traps: ['Attention aux consonnes qui changent devant -iyor : git- devient gid-iyor (t→d devant voyelle).'],
+    traps: [
+      'Attention aux consonnes qui changent devant -iyor : git- devient gid-iyor (t→d devant voyelle).',
+      'Tu connais déjà des mots comme "Seviyorum" (j\'aime) ou "İstiyorum" (je voudrais), appris comme des blocs tout faits avant ce chapitre : ce sont en réalité sev + iyor + um et iste + iyor + um. Cette règle, c\'est le mécanisme derrière ces mots.'
+    ],
     exercises: [
       {
         prompt: '"gitmek" (aller) conjugué à "je" (ben) ?',

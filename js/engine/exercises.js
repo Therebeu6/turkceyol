@@ -66,6 +66,17 @@ window.Exercises = {
     // ── Échantillon : on enseigne EXACTEMENT ce qu'on teste ──
     const vocabSample = this._shuffle(vocab).slice(0, vocabSampleSize);
 
+    // v10 AXE 1.4 : mots "connus" à ce stade = enseignés dans CETTE session (vocabSample) ou
+    // déjà maîtrisés lors d'une session précédente (reviewQueue, step >= 2 — même seuil que
+    // createIntroCards). Sert à borner les exercices qui, sinon, piochent au-delà du strict
+    // échantillon enseigné (association de paires, écoute de vocabulaire).
+    const reviewKnownIds = new Set(
+      ((window.State && State.data && State.data.reviewQueue) || [])
+        .filter(it => (it.step || 0) >= 2)
+        .map(it => it.id)
+    );
+    const knownVocabIds = new Set([...vocabSample.map(w => w.id), ...reviewKnownIds]);
+
     const discover = [];  // enseigner
     const practice = [];  // reconnaître (niv 1)
     const recall   = [];  // rappeler   (niv 2)
@@ -90,6 +101,16 @@ window.Exercises = {
     // 3b) Note culturelle du chapitre (AXE 2.2) — en fin de découverte
     if (chapter && chapter.culture) {
       discover.push({ type: 'culture_note', isTeaching: true, text: chapter.culture });
+    }
+
+    // 3c) Lecture du/des dialogue(s) du chapitre AVANT tout exercice dessus (v10 AXE 1.4) :
+    // createDialogueFill (étape 7) masque une réplique de l'un de ces dialogues — il ne doit
+    // jamais porter sur une réplique que l'apprenant n'a pas encore lue.
+    if (chapter && Array.isArray(chapter.dialogueIds)) {
+      for (const did of chapter.dialogueIds) {
+        const dr = this.createDialogueRead(did);
+        if (dr) discover.push(dr);
+      }
     }
 
     // 4) Exercices de vocabulaire répartis par difficulté
@@ -135,9 +156,10 @@ window.Exercises = {
       if (cz) recall.push(cz);
     }
 
-    // 9) Match pairs (vocab du chapitre) → pratique
-    if (vocab.length >= 4) {
-      const mp = this.createMatchPairs(vocab);
+    // 9) Match pairs (v10 AXE 1.4 : uniquement le vocab déjà enseigné/connu) → pratique
+    const knownVocabForPairs = vocab.filter(w => knownVocabIds.has(w.id));
+    if (knownVocabForPairs.length >= 4) {
+      const mp = this.createMatchPairs(knownVocabForPairs);
       if (mp) practice.push(mp);
     }
 
@@ -149,11 +171,11 @@ window.Exercises = {
       }
       const sb = this.createSentenceBuilder(chapter, allowedTenses);
       if (sb) produce.push(sb);
-      const lt = this.createListeningTranscribe(chapter, allowedTenses);
+      const lt = this.createListeningTranscribe(chapter, allowedTenses, knownVocabIds);
       if (lt) produce.push(lt);
     } else if (prodLevel === 1) {
       // Écoute d'un mot simple dès u2 (transcription courte)
-      const lt = this.createListeningTranscribe(chapter, allowedTenses);
+      const lt = this.createListeningTranscribe(chapter, allowedTenses, knownVocabIds);
       if (lt && lt.text && lt.text.split(' ').length <= 2) produce.push(lt);
     }
 
@@ -331,8 +353,28 @@ window.Exercises = {
     return null;
   },
 
+  // v10 AXE 1.3 — Temps débloqués par la progression RÉELLE (chapitres terminés), et non
+  // plus tout ce qui existe dans les données. Remplace v9 AXE 1.1 (qui aurait fait réviser
+  // tous les temps de la fiche du verbe, y compris ceux jamais enseignés) sans son effet de
+  // bord : seuls les temps enseignés par un chapitre déjà TERMINÉ sont éligibles.
+  _unlockedTensesFromCompleted(completedChapters) {
+    const done = new Set(completedChapters || []);
+    const unlocked = new Set();
+    for (const u of AppUnits) {
+      for (const c of u.chapters) {
+        if (done.has(c.id) && Array.isArray(c.tenses)) {
+          for (const t of c.tenses) unlocked.add(t);
+        }
+      }
+    }
+    return unlocked;
+  },
+
   generateForReview(reviewItems) {
     const exercises = [];
+    const completedChapters = (window.State && State.data && State.data.completedChapters) || [];
+    const unlockedTenses = Array.from(this._unlockedTensesFromCompleted(completedChapters));
+
     for (const item of reviewItems) {
       const word = AppVocabulary.find(w => w.id === item.id);
       if (word) {
@@ -342,16 +384,22 @@ window.Exercises = {
       if (window.AppVerbs) {
         const verb = AppVerbs.find(v => v.id === item.id);
         if (verb) {
-          const persons = ['ben', 'sen', 'o', 'biz'];
-          const tenses = ['present', 'past', 'future'];
-          const person = persons[Math.floor(Math.random() * persons.length)];
-          const tense = tenses[Math.floor(Math.random() * tenses.length)];
-          const ex = this.createVerbFill(verb, person, tense);
-          if (ex) exercises.push(ex);
+          // Intersection « temps propres au verbe ∩ temps débloqués » : un verbe appris via
+          // l'aoriste/-mış n'est retesté sur ces temps qu'une fois réellement enseignés,
+          // jamais avant (objectif de v9 AXE 1.1, sans son effet de bord).
+          const verbTenses = Object.keys(verb.conjugations || {}).filter(t => unlockedTenses.includes(t));
+          if (verbTenses.length > 0) {
+            const persons = ['ben', 'sen', 'o', 'biz'];
+            const person = persons[Math.floor(Math.random() * persons.length)];
+            const tense = verbTenses[Math.floor(Math.random() * verbTenses.length)];
+            const ex = this.createVerbFill(verb, person, tense, unlockedTenses);
+            if (ex) exercises.push(ex);
+          }
         }
       }
     }
-    // Bonus word_order + match_pairs sur le vocab de révision
+    // Bonus word_order + match_pairs sur le vocab de révision — déjà borné : un item ne
+    // rejoint reviewItems qu'après avoir été présenté dans une leçon.
     const revVocab = reviewItems.map(it => AppVocabulary.find(w => w.id === it.id)).filter(Boolean);
     const revVerbs = window.AppVerbs ? reviewItems.map(it => AppVerbs.find(v => v.id === it.id)).filter(Boolean) : [];
     if (revVocab.length >= 4) {
@@ -359,20 +407,39 @@ window.Exercises = {
       if (mp) exercises.push(mp);
     }
     if (revVerbs.length > 0) {
-      const wo = this.createWordOrder(revVerbs, null);
+      const wo = this.createWordOrder(revVerbs, null, unlockedTenses);
       if (wo) exercises.push(wo);
     }
     if (revVerbs.length > 0) {
-      const cz = this.createCloze(revVerbs);
+      const cz = this.createCloze(revVerbs, unlockedTenses);
       if (cz) exercises.push(cz);
     }
-    const sbRev = this.createSentenceBuilder(null);
+
+    // v10 AXE 1.3 — grammaire / dialogue / phrase / écoute bornés aux chapitres TERMINÉS.
+    // Un "chapitre virtuel" agrège les grammarIds/dialogueIds/verbIds/vocabIds de tous les
+    // chapitres terminés : les fonctions déjà contextualisées par chapitre (createGrammarFill,
+    // createDialogueFill, createSentenceBuilder, createListeningTranscribe) s'appliquent alors
+    // SANS aucune modification de leur logique de filtrage — et renvoient naturellement `null`
+    // si l'utilisateur n'a encore terminé aucun chapitre (tableaux vides), sans repli global.
+    const completedSet = new Set(completedChapters);
+    const virtualChapter = { grammarIds: [], dialogueIds: [], verbIds: [], vocabIds: [] };
+    for (const u of AppUnits) {
+      for (const c of u.chapters) {
+        if (!completedSet.has(c.id)) continue;
+        if (c.grammarIds) virtualChapter.grammarIds.push(...c.grammarIds);
+        if (c.dialogueIds) virtualChapter.dialogueIds.push(...c.dialogueIds);
+        if (c.verbIds) virtualChapter.verbIds.push(...c.verbIds);
+        if (c.vocabIds) virtualChapter.vocabIds.push(...c.vocabIds);
+      }
+    }
+
+    const sbRev = this.createSentenceBuilder(virtualChapter, unlockedTenses);
     if (sbRev) exercises.push(sbRev);
-    const gf = this.createGrammarFill();
+    const gf = this.createGrammarFill(virtualChapter);
     if (gf) exercises.push(gf);
-    const df = this.createDialogueFill();
+    const df = this.createDialogueFill(virtualChapter);
     if (df) exercises.push(df);
-    const lt = this.createListeningTranscribe(null);
+    const lt = this.createListeningTranscribe(virtualChapter, unlockedTenses);
     if (lt) exercises.push(lt);
 
     return this._shuffle(exercises);
@@ -567,6 +634,22 @@ window.Exercises = {
       question: 'Associe chaque mot à sa traduction :',
       pairs: pairs.map(w => ({ id: w.id, tr: w.tr, fr: w.fr })),
       data: { id: pairs[0].id, tr: '', fr: '', type: 'vocabulary' }
+    };
+  },
+
+  // ── Dialogue read : montre le dialogue COMPLET, avec traduction (v10 AXE 1.4) ──
+  // Carte de découverte (isTeaching), à placer AVANT tout exercice sur ce dialogue, pour que
+  // createDialogueFill ne masque jamais une réplique que l'apprenant n'a pas encore lue.
+  createDialogueRead(dialogueId) {
+    if (!window.AppDialogues) return null;
+    const dialogue = AppDialogues.find(d => d.id === dialogueId);
+    if (!dialogue || !Array.isArray(dialogue.turns) || dialogue.turns.length === 0) return null;
+    return {
+      type: 'dialogue_read',
+      isTeaching: true,
+      title: dialogue.title || '',
+      turns: dialogue.turns.map(t => ({ speaker: t.speaker, tr: t.tr, fr: t.fr })),
+      data: { id: dialogue.id, tr: '', fr: '', type: 'dialogue' }
     };
   },
 
@@ -841,14 +924,17 @@ window.Exercises = {
     };
   },
 
-  createListeningTranscribe(chapter, allowedTenses) {
+  createListeningTranscribe(chapter, allowedTenses, knownVocabIds) {
     const chapterVocabIds = (chapter && chapter.vocabIds) || [];
     const chapterVerbIds  = (chapter && chapter.verbIds)  || [];
 
-    // Pool 1a : vocab DIRECT du chapitre (≤ 3 mots turcs)
+    // Pool 1a : vocab DIRECT du chapitre (≤ 3 mots turcs), limité à ce qui est déjà enseigné
+    // ou connu (v10 AXE 1.4) — `chapter.vocabIds` peut dépasser l'échantillon réellement
+    // enseigné (vocabSample), notamment quand l'unité complète du vocab a été utilisée.
     let shortVocab = chapterVocabIds.length > 0
       ? (window.AppVocabulary || []).filter(v =>
           chapterVocabIds.includes(v.id) && v.tr && v.tr.split(' ').length <= 3
+          && (!knownVocabIds || knownVocabIds.has(v.id))
         )
       : [];
     // Pool 1b : fallback global UNIQUEMENT hors leçon (révision) — Pilier B

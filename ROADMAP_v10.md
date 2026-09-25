@@ -110,14 +110,14 @@
 
 ## 🅰️ AXE 1 — N'évaluer que ce qui a été enseigné (priorité pédagogique n°1)
 
-> **État (commits `5c82b5a` et `9988d59`)** : 1.1 et 1.2 sont faits et vérifiés (voir
-> encadré de méthode sous 1.2). **1.3, 1.4 et 1.5 restent à faire** — en particulier,
-> `generateForReview` (la révision quotidienne) tire toujours son temps dans
-> `['present', 'past', 'future']` sans tenir compte de la progression réelle : la garantie de
-> cette section ne couvre encore que les **leçons**, pas la révision.
+> **État** : **1.1 à 1.5 sont tous faits et vérifiés** (commits `5c82b5a`, `9988d59`, et le
+> commit qui suit ce paragraphe pour 1.3/1.4/1.5 — voir `tools/verify-tense-gating.js`, qui
+> couvre maintenant les quatre). La révision quotidienne (`generateForReview`) est bornée à
+> `State.data.completedChapters`, plutôt qu'au jeu de données entier.
 >
-> **Résidu connu, dans le périmètre de 1.4/3.2, pas de 1.1/1.2** : les dialogues eux-mêmes
-> peuvent encore exposer des formes conjuguées non enseignées (*d_nationalite* en u2_c2 :
+> **Résidu connu, hors du périmètre de 1.1–1.4** : les dialogues eux-mêmes (le contenu de
+> leurs répliques, pas les exercices qui les exploitent) peuvent encore exposer des formes
+> conjuguées non enseignées (*d_nationalite* en u2_c2 :
 > *Türkçe konuşuyor musunuz?*, présent, avant que u9_c3 ne l'enseigne formellement). Ce n'est
 > **pas** hors scoring : `createDialogueFill` peut très bien piocher cette réplique et la
 > transformer en exercice à trous **noté**, compté par `lesson.js` comme un `realExo` normal,
@@ -201,6 +201,17 @@
   installé normalement ailleurs.
 
 ### 1.3 — Révision quotidienne bornée à la progression · **M** (remplace v9 AXE 1.1)
+
+> **Fait.** Implémentation légèrement différente du plan : plutôt que de dupliquer la logique
+> de filtrage par chapitre pour un contexte "révision" (sans chapitre), `generateForReview`
+> construit un **chapitre virtuel** (`grammarIds`/`dialogueIds`/`verbIds`/`vocabIds` = union de
+> tous les chapitres de `State.data.completedChapters`) et le passe tel quel à
+> `createGrammarFill`, `createDialogueFill` et `createSentenceBuilder`, qui appliquent alors
+> **sans aucune modification** leur filtrage déjà existant "par chapitre". Un profil sans
+> aucun chapitre terminé reçoit un chapitre virtuel aux tableaux vides, et ces fonctions
+> renvoient naturellement `null` (comportement déjà existant pour `ids.length === 0`) — aucun
+> repli vers le contenu global n'a été nécessaire à coder séparément.
+
 - `generateForReview` tire le temps d'un verbe dans l'intersection « temps présents sur le
   verbe ∩ temps débloqués ». Les temps débloqués sont déduits de
   `State.data.completedChapters`, sans nouvelle clé persistante. Cela couvre l'objectif de v9
@@ -212,6 +223,13 @@
   règle *-ki*, ni dialogue *d_apartman*. Un profil qui a fini u18 reçoit bien les 5 temps.
 
 ### 1.4 — Chaque élément testé a été présenté ou appris · **S**
+
+> **Fait.** `dialogue_read` est un nouveau type de slide d'enseignement (comme `intro_card`),
+> rendu dans `js/views/lesson.js` avec les mêmes bulles de dialogue que `dialogue_fill` (audio
+> par réplique au clic). Il est structurellement impossible qu'il apparaisse après un
+> `dialogue_fill` du même dialogue : la phase Découverte est toujours concaténée en premier
+> dans le tableau final de `generateForChapter`, avant Pratique/Rappel/Production.
+
 - `createMatchPairs` et `createListeningTranscribe` en leçon puisent dans
   `vocabSample ∪ mots déjà appris` (items `reviewQueue` avec `step >= 2`), et plus dans tout
   `chapter.vocabIds`.
@@ -229,6 +247,12 @@
   n'a été ni présenté dans la session, ni appris auparavant.
 
 ### 1.5 — Politique des expressions figées (« chunks ») · **S** (décision, puis données)
+
+> **Fait, avec une différence mineure sur u6_c4** : `g_yok_var` n'a **pas** été remplacé par
+> `g_accusatif` dans cette section — ce changement de règle grammaticale relève de l'AXE 3.4,
+> pas de 1.5, qui ne portait que sur le vocabulaire figé. u6_c4 garde `g_yok_var` pour
+> l'instant ; AXE 3.4 reste à faire pour ce point précis.
+
 - Problème : l'AXE 1.1 supprime la conjugaison avant u9_c3, alors que certains chapitres
   promettent déjà des énoncés conjugués. C'est le cas d'u6_c4 « Goûts et préférences »
   (« j'aime, je n'aime pas ») et d'u6_c3 « Au restaurant », dont l'astuce enseigne

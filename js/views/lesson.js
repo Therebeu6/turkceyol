@@ -555,6 +555,33 @@ window.Lesson = {
           </div>
         </div>
       `;
+    } else if (exo.type === 'dialogue_read') {
+      const turnsHtml = (exo.turns || []).map((t, i) => {
+        const isLeft = i % 2 === 0;
+        const align = isLeft ? 'flex-start' : 'flex-end';
+        return `
+          <div style="display:flex;justify-content:${align};margin-bottom:var(--s2)">
+            <div class="dr-bubble" style="max-width:80%;background:var(--surface-2);border-radius:var(--r-md);padding:var(--s2) var(--s3);cursor:pointer"
+                 onclick="App.playTTS('${this._escape(t.tr)}')">
+              <div style="font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;margin-bottom:2px">${t.speaker}</div>
+              <div style="font-size:var(--text-sm);color:var(--text)">${t.tr} <span style="opacity:.6">🔊</span></div>
+              <div style="font-size:var(--text-xs);color:var(--text-2);margin-top:2px">${t.fr || ''}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      html = `
+        <div class="exercise-container exo-slide-in">
+          <div class="exercise-header">
+            <div class="exo-type-label">💬 Dialogue</div>
+            ${exo.title ? `<h2 class="exercise-prompt">${exo.title}</h2>` : ''}
+          </div>
+          <div class="exercise-content" style="justify-content:flex-start">
+            <div style="width:100%">${turnsHtml}</div>
+            <button class="btn btn-primary btn-full mt-4" onclick="Lesson.nextStep()">Continuer</button>
+          </div>
+        </div>
+      `;
     } else { // tip_callout
       html = `
         <div class="exercise-container exo-slide-in">

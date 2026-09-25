@@ -362,7 +362,7 @@ window.AppUnits = [
         xpReward: 100,
         time: 11,
         tags: ['Restaurant', 'A1'],
-        vocabIds: ['v_su', 'v_cay', 'v_kahve', 'v_ekmek', 'v_et', 'v_tavuk', 'v_para', 'v_hesap', 'v_fiyat'],
+        vocabIds: ['v_su', 'v_cay', 'v_kahve', 'v_ekmek', 'v_et', 'v_tavuk', 'v_para', 'v_hesap', 'v_fiyat', 'v_istiyorum_chunk', 'v_alabilir_miyim'],
         verbIds: ['vb_istemek', 'vb_yemek', 'vb_icmek']
       },
       {
@@ -375,7 +375,7 @@ window.AppUnits = [
         xpReward: 80,
         time: 9,
         tags: ['Nourriture', 'A1'],
-        vocabIds: ['v_lezzetli', 'v_tatli', 'v_aci', 'v_guzel', 'v_iyi', 'v_ucuz', 'v_pahali', 'v_ekmek', 'v_et', 'v_tavuk', 'v_su', 'v_cay'],
+        vocabIds: ['v_lezzetli', 'v_tatli', 'v_aci', 'v_guzel', 'v_iyi', 'v_ucuz', 'v_pahali', 'v_ekmek', 'v_et', 'v_tavuk', 'v_su', 'v_cay', 'v_seviyorum', 'v_sevmiyorum'],
         verbIds: ['vb_sevmek', 'vb_istemek', 'vb_yemek', 'vb_icmek']
       }
     ]
