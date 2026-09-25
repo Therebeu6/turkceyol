@@ -576,7 +576,13 @@ svg { flex-shrink: 0; }
 .text-xs { font-size: var(--text-xs); }
 .mt-2 { margin-top: var(--s2); }
 .mt-4 { margin-top: var(--s4); }
+.mt-6 { margin-top: var(--s6); }
+.mb-3 { margin-bottom: var(--s3); }
 .mb-4 { margin-bottom: var(--s4); }
+.my-4 { margin-top: var(--s4); margin-bottom: var(--s4); }
+.uppercase { text-transform: uppercase; letter-spacing: 0.04em; }
+.border-t { border: 0; border-top: 1px solid var(--border); }
+.border-border { border-color: var(--border); }
 .w-full { width: 100%; }
 
 /* ── Responsive (tablette/desktop) ── */

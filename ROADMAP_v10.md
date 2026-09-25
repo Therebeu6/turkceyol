@@ -483,6 +483,21 @@
 - **Homonyme *Yüz*** (`v_yuz` = cent, `v_yuz_corps` = visage) : vérifier que le Vrai/Faux ne
   peut pas déclarer « Faux » un sens pourtant correct.
 
+### 6.7 — Rappels quotidiens : une vraie fonctionnalité ou rien · **M** (optionnel)
+- Constat (AXE 0) : le réglage `dailyReminder` était enregistré, mais aucun code ne demandait
+  ni ne programmait de notification. En attendant, l'interrupteur est affiché désactivé, avec
+  la mention « Bientôt disponible ». La clé `State` est conservée (contrainte 2).
+- Pour le rendre réel sans backend (contrainte 4), la seule voie est une notification
+  **locale** : `Notification.requestPermission()` au moment où l'utilisateur active
+  l'interrupteur, puis un rappel à l'ouverture suivante ou via le service worker.
+  - Sans serveur de push, aucune notification n'est garantie quand l'app est fermée.
+  - La Periodic Background Sync n'est disponible que sur Chromium, et seulement pour une PWA
+    installée.
+  - Il faut le dire dans l'interface plutôt que promettre un rappel fiable.
+- **Accept.** : soit l'interrupteur déclenche une notification réelle (permission demandée,
+  rappel reçu dans les conditions annoncées), soit il reste marqué « Bientôt disponible ».
+  Jamais un réglage qui a l'air actif mais ne fait rien.
+
 ---
 
 ## 🗓️ ORDRE D'EXÉCUTION CONSEILLÉ

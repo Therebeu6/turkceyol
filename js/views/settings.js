@@ -7,7 +7,6 @@ window.Settings = {
   render() {
     const s = (State.data && State.data.settings) || {};
     const soundOn = s.soundEffects !== false;
-    const reminderOn = s.dailyReminder !== false;
     const hapticsOn = s.haptics !== false;
     const theme = s.theme || 'dark';
     const goal = State.data.dailyGoal || 50;
@@ -96,10 +95,13 @@ window.Settings = {
             <span class="slider"></span>
           </label>
         </div>
-        <div class="flex justify-between items-center mb-4">
-          <span class="font-bold">Rappels quotidiens</span>
+        <div class="flex justify-between items-center mb-4" style="opacity:0.5">
+          <div>
+            <span class="font-bold">Rappels quotidiens</span>
+            <div class="text-xs text-muted">Bientôt disponible</div>
+          </div>
           <label class="switch">
-            <input type="checkbox" ${reminderOn ? 'checked' : ''} onchange="Settings.toggleReminder(this.checked)">
+            <input type="checkbox" disabled aria-label="Rappels quotidiens (bientôt disponible)">
             <span class="slider"></span>
           </label>
         </div>
@@ -144,11 +146,6 @@ window.Settings = {
     State.updateSetting('streakDiscreet', enabled);
     if (window.App) App.updateHeaderUI();
     App.showToast(`Affichage ${enabled ? 'discret' : 'normal'}`);
-  },
-
-  toggleReminder(enabled) {
-    State.updateSetting('dailyReminder', enabled);
-    App.showToast(`Rappels ${enabled ? 'activés' : 'désactivés'}`);
   },
 
   toggleHaptics(enabled) {
