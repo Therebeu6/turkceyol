@@ -363,6 +363,9 @@ window.AppUnits = [
         time: 11,
         tags: ['Restaurant', 'A1'],
         vocabIds: ['v_su', 'v_cay', 'v_kahve', 'v_ekmek', 'v_et', 'v_tavuk', 'v_para', 'v_hesap', 'v_fiyat', 'v_istiyorum_chunk', 'v_alabilir_miyim'],
+        // v10 AXE 1.5 : ces 2 chunks portent le canDo ("commander") — toujours enseignés,
+        // jamais laissés au tirage aléatoire de l'échantillon.
+        requiredVocabIds: ['v_istiyorum_chunk', 'v_alabilir_miyim'],
         verbIds: ['vb_istemek', 'vb_yemek', 'vb_icmek']
       },
       {
@@ -376,6 +379,9 @@ window.AppUnits = [
         time: 9,
         tags: ['Nourriture', 'A1'],
         vocabIds: ['v_lezzetli', 'v_tatli', 'v_aci', 'v_guzel', 'v_iyi', 'v_ucuz', 'v_pahali', 'v_ekmek', 'v_et', 'v_tavuk', 'v_su', 'v_cay', 'v_seviyorum', 'v_sevmiyorum'],
+        // v10 AXE 1.5 : ces 2 chunks portent le canDo ("dire ce que j'aime") — toujours
+        // enseignés, jamais laissés au tirage aléatoire de l'échantillon.
+        requiredVocabIds: ['v_seviyorum', 'v_sevmiyorum'],
         verbIds: ['vb_sevmek', 'vb_istemek', 'vb_yemek', 'vb_icmek']
       }
     ]

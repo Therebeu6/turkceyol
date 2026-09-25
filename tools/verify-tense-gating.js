@@ -235,11 +235,15 @@ if (typeof Exercises.generateForReview === 'function') {
   const reviewAllowed = ['present']; // seul temps débloqué avant u10_c3
   const reviewGrammarIds = new Set();
   const reviewDialogueIds = new Set();
+  const reviewKnownVocabIds = new Set();
+  const reviewKnownVerbIds = new Set();
   for (const u of AppUnits) {
     for (const c of u.chapters) {
       if (!cutoffChapters.includes(c.id)) continue;
       for (const g of (c.grammarIds || [])) reviewGrammarIds.add(g);
       for (const d of (c.dialogueIds || [])) reviewDialogueIds.add(d);
+      for (const v of (c.vocabIds || [])) reviewKnownVocabIds.add(v);
+      for (const v of (c.verbIds || [])) reviewKnownVerbIds.add(v);
     }
   }
   const reviewItems = [
@@ -286,6 +290,27 @@ if (typeof Exercises.generateForReview === 'function') {
           err(`révision : dialogue_fill utilise "${did}", non enseigné par les chapitres terminés de ce profil`);
         }
       }
+      // 5bis) Le mot/verbe RÉVISÉ lui-même doit venir d'un chapitre terminé — reviewItems
+      // contient volontairement TOUT le vocabulaire et TOUS les verbes du jeu (y compris ceux
+      // d'u18, jamais enseignés à ce stade) : sans ce contrôle, un mot ou verbe non appris
+      // pourrait quand même être révisé si la file de révision le contenait par erreur
+      // (import de sauvegarde, ancien état, réorganisation du parcours).
+      if (s.data && s.data.type === 'vocabulary' && !reviewKnownVocabIds.has(s.data.id)) {
+        err(`révision : ${s.type} porte sur le mot "${s.data.id}", non enseigné par les chapitres terminés de ce profil`);
+      }
+      if ((s.subtype === 'verb_fill' || s.sourceVerbId) && s.data) {
+        const vid = s.sourceVerbId || s.data.id;
+        if (vid && !reviewKnownVerbIds.has(vid)) {
+          err(`révision : ${s.type} porte sur le verbe "${vid}", non enseigné par les chapitres terminés de ce profil`);
+        }
+      }
+      if (s.type === 'match_pairs') {
+        for (const p of s.pairs) {
+          if (!reviewKnownVocabIds.has(p.id)) {
+            err(`révision : match_pairs contient "${p.id}", non enseigné par les chapitres terminés de ce profil`);
+          }
+        }
+      }
     }
   }
   console.log(`Révision (profil simulé, arrêté avant u10_c3) : ${reviewExerciseCount} exercices sur 30 passes.`);
@@ -300,6 +325,24 @@ if (typeof Exercises.generateForReview === 'function') {
   }
 } else {
   err('Exercises.generateForReview introuvable.');
+}
+
+// 6bis) v10 AXE 1.5 — un chapitre qui déclare `requiredVocabIds` (expressions figées dont
+// dépend son canDo, ex. u6_c3/u6_c4) doit les enseigner à CHAQUE génération, jamais seulement
+// "parfois" au gré du tirage aléatoire de l'échantillon.
+for (const u of AppUnits) {
+  for (const c of u.chapters) {
+    if (!Array.isArray(c.requiredVocabIds) || c.requiredVocabIds.length === 0) continue;
+    for (let pass = 0; pass < 20; pass++) {
+      const exs = Exercises.generateForChapter(c.id);
+      const taughtIds = new Set(exs.filter(s => s.data && s.data.type === 'vocabulary').map(s => s.data.id));
+      for (const rid of c.requiredVocabIds) {
+        if (!taughtIds.has(rid)) {
+          err(`"${c.id}" : "${rid}" est déclaré requiredVocabIds mais absent de la génération (pass ${pass})`);
+        }
+      }
+    }
+  }
 }
 
 // 6) La copule doit exister et être correcte.

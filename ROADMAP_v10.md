@@ -211,6 +211,17 @@
 > aucun chapitre terminé reçoit un chapitre virtuel aux tableaux vides, et ces fonctions
 > renvoient naturellement `null` (comportement déjà existant pour `ids.length === 0`) — aucun
 > repli vers le contenu global n'a été nécessaire à coder séparément.
+>
+> **Faille trouvée en relecture externe (Codex), corrigée** : la version initiale ne bornait
+> QUE la grammaire/le dialogue/la phrase/l'écoute de fin de révision au chapitre virtuel — pas
+> `reviewItems` lui-même. Un mot ou verbe présent dans `reviewItems` sans venir d'un chapitre
+> terminé (sauvegarde importée, ancien état, réorganisation du parcours) pouvait donc quand
+> même être révisé, sans qu'aucun test ne le détecte. Corrigé : `reviewItems` est maintenant
+> filtré par `virtualChapter.vocabIds`/`virtualChapter.verbIds` **avant** toute génération.
+> `tools/verify-tense-gating.js` le vérifie en injectant volontairement tout le vocabulaire et
+> tous les verbes du jeu dans `reviewItems` (y compris du contenu d'u18, jamais enseigné à ce
+> stade) : le nombre d'exercices produits est passé de 17 250 à 6 120 sur 30 passes une fois le
+> filtre en place, signe que la faille était réelle et pas seulement théorique.
 
 - `generateForReview` tire le temps d'un verbe dans l'intersection « temps présents sur le
   verbe ∩ temps débloqués ». Les temps débloqués sont déduits de
@@ -252,6 +263,14 @@
 > `g_accusatif` dans cette section — ce changement de règle grammaticale relève de l'AXE 3.4,
 > pas de 1.5, qui ne portait que sur le vocabulaire figé. u6_c4 garde `g_yok_var` pour
 > l'instant ; AXE 3.4 reste à faire pour ce point précis.
+>
+> **Faille trouvée en relecture externe (Codex), corrigée** : les 4 chunks avaient été
+> ajoutés aux `vocabIds` d'u6_c3/u6_c4 (14 mots chacun), mais rien ne garantissait leur
+> présence dans une session donnée — `vocabSample` n'en tire que 3 à 7 au hasard. Un nouveau
+> champ optionnel `chapter.requiredVocabIds` force ces mots précis dans l'échantillon avant de
+> compléter aléatoirement avec le reste ; posé sur u6_c3 (*İstiyorum*, *Alabilir miyim?*) et
+> u6_c4 (*Seviyorum*, *Sevmiyorum*), dont le `canDo` en dépend directement.
+> `tools/verify-tense-gating.js` le vérifie sur 20 générations de chaque chapitre concerné.
 
 - Problème : l'AXE 1.1 supprime la conjugaison avant u9_c3, alors que certains chapitres
   promettent déjà des énoncés conjugués. C'est le cas d'u6_c4 « Goûts et préférences »

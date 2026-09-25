@@ -64,7 +64,17 @@ window.Exercises = {
     const vocabSampleSize = density === 'short' ? 3 : density === 'long' ? 7 : 5;
 
     // ── Échantillon : on enseigne EXACTEMENT ce qu'on teste ──
-    const vocabSample = this._shuffle(vocab).slice(0, vocabSampleSize);
+    // v10 AXE 1.5 : certains mots (souvent des expressions figées indispensables au canDo,
+    // ex. "Seviyorum" pour "dire ce que j'aime") ne doivent PAS dépendre du tirage aléatoire —
+    // `chapter.requiredVocabIds` (optionnel) les garantit toujours dans l'échantillon, avant
+    // de compléter aléatoirement avec le reste, comme avant.
+    const requiredIds = (chapter && Array.isArray(chapter.requiredVocabIds)) ? chapter.requiredVocabIds : [];
+    const requiredVocab = requiredIds.map(id => vocab.find(w => w.id === id)).filter(Boolean);
+    const restVocab = vocab.filter(w => !requiredIds.includes(w.id));
+    const vocabSample = [
+      ...requiredVocab,
+      ...this._shuffle(restVocab).slice(0, Math.max(0, vocabSampleSize - requiredVocab.length))
+    ];
 
     // v10 AXE 1.4 : mots "connus" à ce stade = enseignés dans CETTE session (vocabSample) ou
     // déjà maîtrisés lors d'une session précédente (reviewQueue, step >= 2 — même seuil que
@@ -375,7 +385,28 @@ window.Exercises = {
     const completedChapters = (window.State && State.data && State.data.completedChapters) || [];
     const unlockedTenses = Array.from(this._unlockedTensesFromCompleted(completedChapters));
 
-    for (const item of reviewItems) {
+    // v10 AXE 1.3 — "chapitre virtuel" : union des grammarIds/dialogueIds/verbIds/vocabIds
+    // de tous les chapitres TERMINÉS. Calculé ici, EN PREMIER, pour deux usages :
+    // (a) plus bas, borner grammaire/dialogue/phrase/écoute exactement comme un vrai chapitre ;
+    // (b) filtrer `reviewItems` lui-même AVANT toute génération — un item ne devrait jamais
+    // pouvoir sortir d'un chapitre non terminé, mais on ne fait plus confiance à cette seule
+    // hypothèse (import de sauvegarde, ancien état, réorganisation du parcours) : on vérifie.
+    const completedSet = new Set(completedChapters);
+    const virtualChapter = { grammarIds: [], dialogueIds: [], verbIds: [], vocabIds: [] };
+    for (const u of AppUnits) {
+      for (const c of u.chapters) {
+        if (!completedSet.has(c.id)) continue;
+        if (c.grammarIds) virtualChapter.grammarIds.push(...c.grammarIds);
+        if (c.dialogueIds) virtualChapter.dialogueIds.push(...c.dialogueIds);
+        if (c.verbIds) virtualChapter.verbIds.push(...c.verbIds);
+        if (c.vocabIds) virtualChapter.vocabIds.push(...c.vocabIds);
+      }
+    }
+    const knownVocabSet = new Set(virtualChapter.vocabIds);
+    const knownVerbSet = new Set(virtualChapter.verbIds);
+    const safeReviewItems = reviewItems.filter(it => knownVocabSet.has(it.id) || knownVerbSet.has(it.id));
+
+    for (const item of safeReviewItems) {
       const word = AppVocabulary.find(w => w.id === item.id);
       if (word) {
         exercises.push(Math.random() > 0.5 ? this.createQCMTrFr(word) : this.createQCMFrTr(word));
@@ -398,10 +429,9 @@ window.Exercises = {
         }
       }
     }
-    // Bonus word_order + match_pairs sur le vocab de révision — déjà borné : un item ne
-    // rejoint reviewItems qu'après avoir été présenté dans une leçon.
-    const revVocab = reviewItems.map(it => AppVocabulary.find(w => w.id === it.id)).filter(Boolean);
-    const revVerbs = window.AppVerbs ? reviewItems.map(it => AppVerbs.find(v => v.id === it.id)).filter(Boolean) : [];
+    // Bonus word_order + match_pairs sur le vocab de révision (bornés via safeReviewItems).
+    const revVocab = safeReviewItems.map(it => AppVocabulary.find(w => w.id === it.id)).filter(Boolean);
+    const revVerbs = window.AppVerbs ? safeReviewItems.map(it => AppVerbs.find(v => v.id === it.id)).filter(Boolean) : [];
     if (revVocab.length >= 4) {
       const mp = this.createMatchPairs(revVocab);
       if (mp) exercises.push(mp);
@@ -415,24 +445,11 @@ window.Exercises = {
       if (cz) exercises.push(cz);
     }
 
-    // v10 AXE 1.3 — grammaire / dialogue / phrase / écoute bornés aux chapitres TERMINÉS.
-    // Un "chapitre virtuel" agrège les grammarIds/dialogueIds/verbIds/vocabIds de tous les
-    // chapitres terminés : les fonctions déjà contextualisées par chapitre (createGrammarFill,
-    // createDialogueFill, createSentenceBuilder, createListeningTranscribe) s'appliquent alors
-    // SANS aucune modification de leur logique de filtrage — et renvoient naturellement `null`
-    // si l'utilisateur n'a encore terminé aucun chapitre (tableaux vides), sans repli global.
-    const completedSet = new Set(completedChapters);
-    const virtualChapter = { grammarIds: [], dialogueIds: [], verbIds: [], vocabIds: [] };
-    for (const u of AppUnits) {
-      for (const c of u.chapters) {
-        if (!completedSet.has(c.id)) continue;
-        if (c.grammarIds) virtualChapter.grammarIds.push(...c.grammarIds);
-        if (c.dialogueIds) virtualChapter.dialogueIds.push(...c.dialogueIds);
-        if (c.verbIds) virtualChapter.verbIds.push(...c.verbIds);
-        if (c.vocabIds) virtualChapter.vocabIds.push(...c.vocabIds);
-      }
-    }
-
+    // Grammaire / dialogue / phrase / écoute : les fonctions déjà contextualisées par
+    // chapitre (createGrammarFill, createDialogueFill, createSentenceBuilder,
+    // createListeningTranscribe) s'appliquent au `virtualChapter` calculé plus haut, SANS
+    // aucune modification de leur logique de filtrage — et renvoient naturellement `null` si
+    // l'utilisateur n'a encore terminé aucun chapitre (tableaux vides), sans repli global.
     const sbRev = this.createSentenceBuilder(virtualChapter, unlockedTenses);
     if (sbRev) exercises.push(sbRev);
     const gf = this.createGrammarFill(virtualChapter);
