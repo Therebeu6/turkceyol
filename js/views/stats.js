@@ -6,6 +6,10 @@ window.Stats = {
   render() {
     const d = State.data;
     const container = document.getElementById('stats-body');
+    // v10 AXE 6.3 : même calcul que le dashboard (Gamification.getLevelInfo), plus
+    // d.level (barème à 500 XP/niveau, différent) ni getLevelName(d.level) (qui attendait
+    // des XP, pas un numéro de niveau).
+    const levelInfo = window.Gamification ? Gamification.getLevelInfo(d.totalXP || 0) : { level: 0, name: '' };
 
     // Activité des 7 derniers jours
     const activityHtml = this._buildActivityRow();
@@ -35,8 +39,8 @@ window.Stats = {
           <div class="stat-lbl">Chapitres</div>
         </div>
         <div class="stat-card">
-          <div class="stat-val" style="color:var(--secondary)">Niv. ${d.level}</div>
-          <div class="stat-lbl">${window.Gamification ? Gamification.getLevelName(d.level) : ''}</div>
+          <div class="stat-val" style="color:var(--secondary)">Niv. ${levelInfo.level + 1}</div>
+          <div class="stat-lbl">${levelInfo.name}</div>
         </div>
       </div>
 

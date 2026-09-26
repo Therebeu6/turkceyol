@@ -11,6 +11,16 @@ const State = {
     dailyXP: 0,
     dailyGoal: 50,
     lastSessionDate: null,
+    // v10 AXE 6.4 : distinct de lastSessionDate (dernier jour où l'app a été OUVERTE, sert
+    // juste à remettre dailyXP à zéro). lastGoalMetDate ne bouge que quand l'objectif est
+    // réellement atteint — c'est lui qui doit décider si la série se casse, jamais une
+    // simple ouverture de l'app un jour sans rien faire.
+    lastGoalMetDate: null,
+    // v10 AXE 6.4 : garde de migration à usage unique (voir checkNewDay). Une sauvegarde
+    // d'avant ce correctif peut avoir perdu, via l'ancien bug, toute trace fiable du dernier
+    // jour où l'objectif a été atteint — cette clé garantit qu'on ne retente la migration
+    // qu'une seule fois, jamais à chaque ouverture.
+    streakMigrated: false,
     level: 1,
     
     currentUnit: 'u1',
@@ -97,38 +107,78 @@ const State = {
     localStorage.setItem('turkceyol_data', JSON.stringify(this.data));
   },
 
+  // v10 AXE 6.4 : date LOCALE (YYYY-MM-DD), pas UTC — toISOString() décale une session de
+  // 00h-2h heure de Paris sur la veille. Utilisée pour lastSessionDate, lastGoalMetDate et
+  // le heatmap, pour que les trois s'accordent toujours sur "quel jour on est".
+  _localDateStr(date) {
+    const d = date || new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  },
+
+  // Différence en jours entre deux dates locales "YYYY-MM-DD" (minuit local des deux côtés,
+  // donc pas de dérive liée au fuseau horaire).
+  _daysBetween(dateStrA, dateStrB) {
+    const a = new Date(dateStrA + 'T00:00:00');
+    const b = new Date(dateStrB + 'T00:00:00');
+    return Math.round((b - a) / (1000 * 60 * 60 * 24));
+  },
+
   // ── Vérification journalière (streak & dailyXP) ──
   checkNewDay() {
-    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-    const lastSession = this.data.lastSessionDate;
-    // Normalise : "2026-05-23_goal_met" → "2026-05-23"
-    const lastDateStr = lastSession ? lastSession.split('_')[0] : null;
+    const today = this._localDateStr();
+    const lastOpen = this.data.lastSessionDate;
 
-    if (!lastDateStr) {
+    // v10 AXE 6.4 — migration à usage unique, AVANT toute autre logique (voir
+    // tools/verify-streak.js, scénario "migration"). Une ancienne sauvegarde peut avoir :
+    // (a) lastSessionDate = "2026-05-23_goal_met" encore intact → on récupère cette date ;
+    // (b) le suffixe déjà perdu par l'ANCIEN bug lui-même (une simple ouverture de l'app,
+    //     un jour sans jouer, écrasait "date_goal_met" par "date" avant même ce correctif) →
+    //     dans ce cas, avec un streak non nul, impossible de reconstruire fidèlement le
+    //     dernier jour réussi. Plutôt que de laisser la série gelée indéfiniment (plus aucune
+    //     rupture ne se déclencherait, faute de lastGoalMetDate) ou repartir artificiellement
+    //     de sa valeur au prochain objectif atteint, on la remet à 0 une seule fois : c'est
+    //     le choix honnête, une perte de série plutôt qu'une série non méritée.
+    if (!this.data.streakMigrated) {
+      this.data.streakMigrated = true;
+      if (!this.data.lastGoalMetDate) {
+        if (lastOpen && lastOpen.includes('_goal_met')) {
+          this.data.lastGoalMetDate = lastOpen.split('_')[0];
+        } else if (this.data.streak > 0) {
+          this.data.streak = 0;
+          this._lastStreakEvent = 'migration_reset';
+        }
+      }
+    }
+
+    if (!lastOpen) {
       // Pas de session précédente
       this.data.lastSessionDate = today;
       this.save();
       return;
     }
 
-    if (lastDateStr !== today) {
-      // Mode pause (v8 AXE 3.2) : ni gain ni perte tant que l'utilisateur ne réactive pas
-      if (this.data.streakPaused) {
-        this.data.dailyXP = 0;
-        this.data.lastSessionDate = today;
-        this.save();
-        return;
-      }
+    if (lastOpen === today) { this.save(); return; } // déjà vu aujourd'hui (persiste la migration)
 
-      // Nouveau jour
-      const lastDate = new Date(lastDateStr);
-      const currDate = new Date(today);
-      const diffTime = Math.abs(currDate - lastDate);
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    // Mode pause (v8 AXE 3.2) : ni gain ni perte tant que l'utilisateur ne réactive pas
+    if (this.data.streakPaused) {
+      this.data.dailyXP = 0;
+      this.data.lastSessionDate = today;
+      this.save();
+      return;
+    }
 
-      this._lastStreakEvent = null;
-      if (diffDays === 1) {
-        // Streak maintenue (l'incrément se fait dans addXP à l'atteinte de l'objectif)
+    // Rupture de série : basée UNIQUEMENT sur le dernier jour où l'objectif a été atteint —
+    // jamais sur le dernier jour où l'app a simplement été ouverte. Sans ça, ouvrir l'app
+    // chaque jour sans rien faire avance quand même "le dernier jour vu" d'un jour à la
+    // fois, et la condition de rupture ne se déclenche jamais.
+    this._lastStreakEvent = null;
+    if (this.data.lastGoalMetDate) {
+      const diffDays = this._daysBetween(this.data.lastGoalMetDate, today);
+      if (diffDays <= 1) {
+        // Objectif atteint hier (ou aujourd'hui déjà) : série intacte.
       } else if (diffDays === 2 && (this.data.streakFreezes || 0) > 0) {
         // Un seul jour manqué + gel disponible → on consomme un gel et on garde la série
         this.data.streakFreezes -= 1;
@@ -137,12 +187,12 @@ const State = {
         // Streak brisée (aucun gel, ou trop de jours manqués)
         this.data.streak = 0;
       }
-
-      // Reset daily XP
-      this.data.dailyXP = 0;
-      this.data.lastSessionDate = today;
-      this.save();
     }
+
+    // Reset daily XP (nouveau jour, quel que soit l'état de la série)
+    this.data.dailyXP = 0;
+    this.data.lastSessionDate = today;
+    this.save();
   },
 
   // ── Actions principales ──
@@ -151,8 +201,11 @@ const State = {
   setStreakPaused(paused) {
     this.data.streakPaused = paused;
     if (!paused) {
-      // Réactivation : on repart d'aujourd'hui, aucun jour passé en pause ne compte contre la série
-      this.data.lastSessionDate = new Date().toISOString().split('T')[0];
+      // Réactivation : on repart d'aujourd'hui, aucun jour passé en pause ne compte contre
+      // la série (report du dernier jour "réussi" à aujourd'hui, pas seulement de l'ouverture).
+      const today = this._localDateStr();
+      this.data.lastSessionDate = today;
+      this.data.lastGoalMetDate = today;
     }
     this.save();
   },
@@ -161,22 +214,26 @@ const State = {
     this.data.totalXP += amount;
     this.data.dailyXP += amount;
     
-    // Check level up (simpliste : 1 niveau = 500 XP)
-    const newLevel = Math.floor(this.data.totalXP / 500) + 1;
-    if (newLevel > this.data.level) {
-      this.data.level = newLevel;
-      // TODO: déclencher event level up
-    }
+    // v10 AXE 6.3 : même barème que Gamification.LEVELS (utilisé par le dashboard et les
+    // stats), plus le calcul à 500 XP/niveau qui divergeait du reste de l'app. +1 car
+    // Gamification.getLevelInfo est 0-indexé, alors que State.data.level démarre à 1.
+    // Toujours réassigné (pas seulement si newLevel > l'ancien) : une sauvegarde existante,
+    // calculée avec l'ancienne formule sans plafond, peut afficher un niveau plus HAUT que
+    // le nouveau barème pour un gros total d'XP (celui-ci plafonne à 10 au-delà de 10 000 XP,
+    // l'ancien continuait de grimper indéfiniment) — il faut pouvoir la corriger vers le bas.
+    this.data.level = (window.Gamification ? Gamification.getLevelInfo(this.data.totalXP).level : Math.floor(this.data.totalXP / 500)) + 1;
 
-    // Heatmap : toute activité XP
-    const today = new Date().toISOString().split('T')[0];
+    // Heatmap : toute activité XP (date locale, v10 AXE 6.4)
+    const today = this._localDateStr();
     if (!this.data.heatmap[today]) this.data.heatmap[today] = 0;
     this.data.heatmap[today] += amount;
 
-    // Gestion streak : objectif journalier
-    if (this.data.dailyXP >= this.data.dailyGoal && this.data.lastSessionDate !== today + '_goal_met') {
+    // Gestion streak : objectif journalier — lastGoalMetDate (pas lastSessionDate, qui ne
+    // suit que la dernière OUVERTURE de l'app, v10 AXE 6.4) garde une date propre, sans le
+    // suffixe "_goal_met" qui servait avant à faire porter les deux sens par une seule clé.
+    if (this.data.dailyXP >= this.data.dailyGoal && this.data.lastGoalMetDate !== today) {
       this.data.streak += 1;
-      this.data.lastSessionDate = today + '_goal_met';
+      this.data.lastGoalMetDate = today;
       // Gel de série : 1 gagné tous les 7 jours de série, plafonné à 2 (AXE 3.5)
       if (this.data.streak > 0 && this.data.streak % 7 === 0 && (this.data.streakFreezes || 0) < 2) {
         this.data.streakFreezes = (this.data.streakFreezes || 0) + 1;

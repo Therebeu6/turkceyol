@@ -613,6 +613,13 @@
 ## 🅵️ AXE 6 — Interface : cohérence et bugs
 
 ### 6.1 — Filtres de phrases cassés · **S**
+
+> ✅ **Fait.** `#phrases-filters` ajouté, chips générés dynamiquement depuis les 12 `topic`
+> réellement présents dans `AppPhrases` (au lieu des 4 codés en dur), un seul écouteur
+> délégué sur le conteneur (`_initialized`, comme `vocabulary.js`/`verbs.js`). Vérifié en
+> navigateur headless : 3 appels à `render()` (3 visites de l'écran) ne créent qu'un seul
+> écouteur — un clic ne déclenche qu'un seul rendu — et le filtre "Restaurant" affiche
+> exactement ses 11 phrases.
 - `phrases.js:11` cherche `#phrases-filters .chip`, mais la rangée de filtres
   (`index.html:270`) n'a pas cet id : les filtres ne font rien. Ajouter l'id.
 - Ne sont proposés que 4 thèmes sur 12 (dont *voyage*, qui n'a que 2 phrases). Générer les
@@ -631,6 +638,13 @@
   est livré.
 
 ### 6.3 — Un seul calcul de niveau · **S**
+
+> ✅ **Fait.** `stats.js` utilise désormais `Gamification.getLevelInfo(d.totalXP)`, comme le
+> dashboard, au lieu de `d.level` (barème à 500 XP/niveau) et de `getLevelName(d.level)` (qui
+> recevait un numéro de niveau là où la fonction attend des XP). `State.addXP` recalcule
+> aussi `this.data.level` à partir du même barème que `Gamification.LEVELS` (la clé reste
+> conservée, contrainte 2, mais son calcul n'est plus indépendant). Vérifié en navigateur
+> headless avec 5 283 XP : dashboard et stats affichent tous les deux "Niveau 8 · Şair".
 - `State.addXP` calcule un niveau tous les 500 XP (`state.js:165`), alors que le dashboard
   utilise les seuils de `gamification.js:6` (0, 100, 300, 600…).
 - `stats.js:38` appelle `getLevelName(d.level)` avec un **numéro de niveau**, alors que la
@@ -642,6 +656,31 @@
   soit le total d'XP.
 
 ### 6.4 — Streak : date locale et jour « réellement actif » · **M**
+
+> ✅ **Fait.** Nouvelle clé `lastGoalMetDate` (valeur par défaut `null`, contrainte 3),
+> distincte de `lastSessionDate` : cette dernière ne sert plus qu'à savoir si l'app a été
+> ouverte aujourd'hui (remise à zéro de `dailyXP`) ; c'est `lastGoalMetDate` qui décide de la
+> rupture de série, et elle ne bouge QUE quand l'objectif est réellement atteint. L'ancien
+> hack `lastSessionDate = "date_goal_met"` disparaît (les deux notions étaient portées par
+> une seule clé, source du bug) ; une migration en douceur récupère cette date une seule fois
+> pour les sauvegardes existantes qui l'ont encore. `toISOString()` (UTC) remplacé par un
+> utilitaire de date locale (`_localDateStr`), réutilisé par `checkNewDay`, `addXP` (heatmap
+> et objectif) et `setStreakPaused`, comme demandé.
+> **Correctif de migration (relecture externe, Codex)** : cas réel non couvert par la première
+> version — une ancienne sauvegarde peut avoir un `streak` non nul mais avoir DÉJÀ perdu le
+> suffixe `_goal_met` à cause de l'ANCIEN bug lui-même (une simple ouverture de l'app, un jour
+> sans jouer, l'effaçait avant même ce correctif). Dans ce cas, aucune `lastGoalMetDate` n'est
+> reconstructible fidèlement : plutôt que de geler la série indéfiniment ou de la faire
+> repartir artificiellement plus tard, elle est honnêtement remise à 0 une seule fois, via un
+> nouveau flag one-shot `streakMigrated` (valeur par défaut `false`, contrainte 3) qui empêche
+> toute nouvelle exécution de cette logique par la suite.
+> **Vérifié par un nouvel outil committé**, `tools/verify-streak.js` (même famille que les
+> autres outils `tools/`, horloge simulée, aucune dépendance à l'heure réelle de la machine) :
+> 7 scénarios, dont le bug ciblé (ouvrir l'app un jour sans rien faire ne bloque plus la
+> rupture de série au jour suivant), une session à 00h30 heure locale qui compte pour le bon
+> jour, la migration positive (suffixe encore intact) et la migration piégée trouvée par Codex
+> (suffixe déjà perdu par l'ancien bug → remise à 0 unique, puis reconstruction normale de la
+> série).
 - `checkNewDay` (`state.js:101`) utilise `toISOString()`, qui donne la date UTC : en France,
   une session vers 1 h du matin compte pour la veille. Utiliser la date **locale** (un seul
   utilitaire, réutilisé par la heatmap `state.js:171` et `setStreakPaused`).
