@@ -30,7 +30,9 @@ window.AppUnits = [
         id: 'u1_c2',
         culture: 'En Turquie, on salue chaleureusement : une poignée de main ferme, souvent deux bises entre proches. « Merhaba » marche à toute heure ; « Selam » est plus familier entre jeunes.',
         canDo: 'Je peux saluer et prendre congé',
-        dialogueIds: ['d_rencontre'],
+        // v10 AXE 3.3 : d_rencontre (prénom, origine, nationalité) est le programme de l'unité 2,
+        // pas de ce chapitre — remplacé par un dialogue limité aux salutations.
+        dialogueIds: ['d_selamlama'],
         title: 'Bonjour et au revoir',
         goal: 'Saluer et prendre congé',
         xpReward: 50,
@@ -127,7 +129,9 @@ window.AppUnits = [
       {
         id: 'u2_c4',
         canDo: 'Je peux dire mon métier',
-        dialogueIds: ['d_calisma'],
+        // v10 AXE 3.3 : d_calisma (futur, -abil, kadar) est niveau B1 — remplacé par un
+        // dialogue à la copule, cohérent avec ce qui est enseigné jusqu'ici.
+        dialogueIds: ['d_meslek_ne'],
         title: 'Mon métier',
         goal: 'Professions fréquentes',
         xpReward: 70,
@@ -175,7 +179,9 @@ window.AppUnits = [
         id: 'u3_c2',
         canDo: 'Je peux nommer les pièces et objets de base de la maison',
         grammarIds: ['g_pluriel'],
-        dialogueIds: ['d_apartman'],
+        // v10 AXE 3.3 : d_apartman (participes relatifs, -abil, conditionnel, aidat,
+        // sözleşme) est bien trop avancé ici — il reste en u15, où il est à sa place.
+        dialogueIds: ['d_ev_turu'],
         title: 'Mots de la maison',
         goal: 'Pièces et objets du quotidien',
         xpReward: 80,
@@ -456,7 +462,9 @@ window.AppUnits = [
       {
         id: 'u8_c1',
         canDo: 'Je peux faire répéter et demander de parler lentement',
-        dialogueIds: ['d_telefon'],
+        // v10 AXE 3.3 : d_telefon est une réservation de restaurant B1, sans aucune demande
+        // de répétition — remplacé par un dialogue qui correspond au canDo du chapitre.
+        dialogueIds: ['d_anlamadim'],
         title: 'Faire répéter',
         goal: 'Pardon ? Pouvez-vous répéter / parler plus lentement ?',
         xpReward: 60,
@@ -467,11 +475,13 @@ window.AppUnits = [
       },
       {
         id: 'u8_c2',
-        culture: 'Le numéro d\'urgence unique en Turquie est le 112 (police, pompiers, ambulance). « İmdat ! » veut dire « au secours ! ».',
         canDo: 'Je peux demander de l\'aide',
-        dialogueIds: ['d_eczane'],
+        // v10 AXE 3.3 : un achat de médicament n'est pas une demande d'aide générale — ce
+        // chapitre devient l'aide NON urgente (l'urgence proprement dite est en u8_c4/u16_c4,
+        // qui reprend ici la note culturelle 112/İmdat, mieux à sa place).
+        dialogueIds: ['d_yardim_rica'],
         title: 'Demander de l\'aide',
-        goal: 'J\'ai besoin de... Au secours ! C\'est urgent',
+        goal: 'Demander un service ou un renseignement à quelqu\'un',
         xpReward: 80,
         time: 9,
         tags: ['Urgences', 'A2'],
@@ -481,7 +491,9 @@ window.AppUnits = [
       {
         id: 'u8_c3',
         canDo: 'Je peux gérer une incompréhension',
-        dialogueIds: ['d_telefon'],
+        // v10 AXE 3.3 : même remplacement qu'u8_c1 — d_anlamadim couvre aussi la demande
+        // de sens ("ne demek?"), pas seulement la répétition.
+        dialogueIds: ['d_anlamadim'],
         title: 'Je ne comprends pas',
         goal: 'Gérer l\'incompréhension en turc',
         xpReward: 60,
@@ -492,8 +504,11 @@ window.AppUnits = [
       },
       {
         id: 'u8_c4',
+        culture: 'Le numéro d\'urgence unique en Turquie est le 112 (police, pompiers, ambulance). « İmdat ! » veut dire « au secours ! ».',
         canDo: 'Je peux réagir face à une urgence',
-        dialogueIds: ['d_eczane'],
+        // v10 AXE 3.3 : un achat de médicament n'appelait aucun secours — remplacé par un
+        // vrai dialogue d'urgence (İmdat, ambulance, 112).
+        dialogueIds: ['d_acil_yardim'],
         title: 'Urgences',
         goal: 'Médecin, police, pharmacie : les mots qui sauvent',
         xpReward: 90,
@@ -788,7 +803,9 @@ window.AppUnits = [
         id: 'u13_c3',
         tips: [{ icon: '🏥', text: 'Pour dire où vous avez mal : partie du corps + ağrıyor → Başım ağrıyor = j\'ai mal à la tête.' }],
         canDo: 'Je peux décrire un symptôme',
-        dialogueIds: ['d_saglik'],
+        // v10 AXE 3.3 : d_eczane s'ouvre sur "Başım ağrıyor", exactement ce canDo — il rejoint
+        // d_saglik ici plutôt qu'en u16_c3, où il ne faisait que le répéter.
+        dialogueIds: ['d_saglik', 'd_eczane'],
         title: 'Je ne me sens pas bien',
         goal: 'Décrire un symptôme chez le médecin',
         xpReward: 90,
@@ -956,7 +973,9 @@ window.AppUnits = [
       {
         id: 'u16_c3',
         canDo: 'Je peux consulter un médecin et comprendre une ordonnance',
-        dialogueIds: ['d_medecin', 'd_saglik'],
+        // v10 AXE 3.3 : d_saglik reprenait exactement le même dialogue qu'u13_c3, sans rien
+        // ajouter — d_medecin seul suffit et correspond au lieu annoncé par ce chapitre.
+        dialogueIds: ['d_medecin'],
         title: 'Chez le médecin',
         goal: 'Décrire ses symptômes et comprendre une ordonnance',
         xpReward: 100,
@@ -969,7 +988,9 @@ window.AppUnits = [
         id: 'u16_c4',
         culture: 'En cas d\'urgence médicale, composez le 112. Les pharmacies (eczane) de garde (« nöbetçi eczane ») assurent un service de nuit, affiché sur chaque devanture.',
         canDo: 'Je peux appeler les secours et réagir en urgence',
-        dialogueIds: ['d_eczane'],
+        // v10 AXE 3.3 : même remplacement qu'u8_c4 — un achat de médicament n'est pas un
+        // appel aux secours.
+        dialogueIds: ['d_acil_yardim'],
         title: 'Urgences & secours',
         goal: 'Réagir en cas d\'urgence',
         xpReward: 90,

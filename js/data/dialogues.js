@@ -261,7 +261,7 @@ window.AppDialogues = [
     level: 2,
     tags: ['Famille', 'A2'],
     turns: [
-      { speaker: 'Fatma', tr: 'Ailemizi tanıtayım. Bu dedem ve ninem.', fr: 'Laissez-moi vous présenter ma famille. Voici mon grand-père et ma grand-mère.' },
+      { speaker: 'Fatma', tr: 'Ailemizi tanıtayım. Bu dedem ve ninem.', fr: 'Laissez-moi vous présenter notre famille. Voici mon grand-père et ma grand-mère.' },
       { speaker: 'Sophie', tr: 'Merhaba! Tanıştığımıza memnun oldum.', fr: 'Bonjour ! Ravie de vous rencontrer.' },
       { speaker: 'Dede', tr: 'Hoş geldiniz! İzmir\'e ilk kez mi geldiniz?', fr: 'Bienvenue ! C\'est votre première visite à Izmir ?' },
       { speaker: 'Sophie', tr: 'Evet, ilk kez. Çok güzel bir şehir!', fr: 'Oui, la première fois. C\'est une très belle ville !' },
@@ -313,7 +313,7 @@ window.AppDialogues = [
       { speaker: 'Kasiyer', tr: 'Bugünkü kur bir euro yirmi lira.', fr: 'Le taux de change aujourd\'hui est de vingt lires pour un euro.' },
       { speaker: 'Müşteri', tr: 'Tamam. Beş yüz euro bozdurayım. ATM nerede?', fr: 'D\'accord. Je vais changer cinq cents euros. Où est le distributeur ?' },
       { speaker: 'Kasiyer', tr: 'Girişin sağında. Banka kartı çıkarmak ister misiniz?', fr: 'À droite de l\'entrée. Souhaitez-vous obtenir une carte bancaire ?' },
-      { speaker: 'Müşteri', tr: 'Evet, nasıl açabilirim hesap?', fr: 'Oui, comment puis-je ouvrir un compte ?' },
+      { speaker: 'Müşteri', tr: 'Evet, nasıl hesap açabilirim?', fr: 'Oui, comment puis-je ouvrir un compte ?' },
       { speaker: 'Kasiyer', tr: 'Pasaportunuz ve adres belgenizle başvurabilirsiniz.', fr: 'Vous pouvez faire une demande avec votre passeport et un justificatif de domicile.' }
     ]
   },
@@ -455,6 +455,98 @@ window.AppDialogues = [
       { speaker: 'Mehmet', tr: 'Tekrar gelecek misiniz?', fr: 'Reviendrez-vous ?' },
       { speaker: 'Claire', tr: 'Kesinlikle! Türkiye\'yi çok sevdim. İletişimde kalır mıyız?', fr: 'Absolument ! J\'ai adoré la Turquie. Resterons-nous en contact ?' },
       { speaker: 'Mehmet', tr: 'Tabii ki! Numaramı vereyim. İyi yolculuklar, Claire!', fr: 'Bien sûr ! Je vais vous donner mon numéro. Bon voyage, Claire !' }
+    ]
+  },
+
+  /* ── v10 AXE 3.3 — dialogues ajoutés pour remplacer un dialogue trop avancé
+     dans un chapitre donné. Les dialogues remplacés restent utilisés ailleurs,
+     là où leur niveau est approprié. ── */
+  {
+    id: 'd_selamlama',
+    title: 'Se saluer',
+    scenario: 'Ali et Sophie se croisent et échangent des salutations simples.',
+    level: 1,
+    tags: ['Salutations', 'A1'],
+    turns: [
+      { speaker: 'Ali', tr: 'Merhaba!', fr: 'Bonjour !' },
+      { speaker: 'Sophie', tr: 'Merhaba! Nasılsın?', fr: 'Bonjour ! Comment vas-tu ?' },
+      { speaker: 'Ali', tr: 'İyiyim, teşekkürler. Sen nasılsın?', fr: 'Je vais bien, merci. Et toi, comment vas-tu ?' },
+      { speaker: 'Sophie', tr: 'Ben de iyiyim, teşekkürler.', fr: 'Moi aussi je vais bien, merci.' },
+      { speaker: 'Ali', tr: 'Görüşürüz!', fr: 'À plus tard !' },
+      { speaker: 'Sophie', tr: 'Hoşça kal!', fr: 'Au revoir !' }
+    ]
+  },
+  {
+    id: 'd_meslek_ne',
+    title: 'Quel est votre métier ?',
+    scenario: 'Ayşe et Can discutent de leur métier.',
+    level: 1,
+    tags: ['Métiers', 'A1'],
+    turns: [
+      { speaker: 'Ayşe', tr: 'Merhaba! Ne iş yapıyorsunuz?', fr: 'Bonjour ! Quel est votre métier ?' },
+      { speaker: 'Can', tr: 'Öğretmenim. Siz?', fr: 'Je suis professeur. Et vous ?' },
+      { speaker: 'Ayşe', tr: 'Ben doktorum.', fr: 'Moi, je suis médecin.' },
+      { speaker: 'Can', tr: 'Nerede çalışıyorsunuz?', fr: 'Où travaillez-vous ?' },
+      { speaker: 'Ayşe', tr: 'Bir hastanede çalışıyorum.', fr: 'Je travaille dans un hôpital.' }
+    ]
+  },
+  {
+    id: 'd_ev_turu',
+    title: 'Visite de la maison',
+    scenario: 'Ali fait visiter sa maison à Sophie.',
+    level: 1,
+    tags: ['Maison', 'A1'],
+    turns: [
+      { speaker: 'Ali', tr: 'Burası benim evim.', fr: 'Voici ma maison.' },
+      { speaker: 'Sophie', tr: 'Çok güzel! Bu oda ne?', fr: 'Très joli ! Cette pièce, c\'est quoi ?' },
+      { speaker: 'Ali', tr: 'Bu mutfak. Şurada da banyo var.', fr: 'C\'est la cuisine. Et là-bas, il y a la salle de bain.' },
+      { speaker: 'Sophie', tr: 'Kaç oda var?', fr: 'Il y a combien de pièces ?' },
+      { speaker: 'Ali', tr: 'Üç oda var.', fr: 'Il y a trois pièces.' }
+    ]
+  },
+  {
+    id: 'd_anlamadim',
+    title: 'Je n\'ai pas compris',
+    scenario: 'Marc ne comprend pas bien ce que Zeynep vient de dire.',
+    level: 1,
+    tags: ['Communication', 'A2'],
+    turns: [
+      { speaker: 'Zeynep', tr: 'Yarın saat beşte okulda toplantı var.', fr: 'Demain à cinq heures, il y a une réunion à l\'école.' },
+      { speaker: 'Marc', tr: 'Affedersiniz, anlamıyorum. Tekrar eder misiniz?', fr: 'Excusez-moi, je ne comprends pas. Pouvez-vous répéter ?' },
+      { speaker: 'Zeynep', tr: 'Tabii. Yarın saat beşte okulda toplantı var.', fr: 'Bien sûr. Demain à cinq heures, il y a une réunion à l\'école.' },
+      { speaker: 'Marc', tr: 'Yavaş konuşun lütfen.', fr: 'Parlez lentement, s\'il vous plaît.' },
+      { speaker: 'Zeynep', tr: 'Tamam, yavaş konuşuyorum.', fr: 'D\'accord, je parle lentement.' },
+      { speaker: 'Marc', tr: '"Toplantı" ne demek? Bilmiyorum.', fr: 'Que veut dire « toplantı » ? Je ne sais pas.' },
+      { speaker: 'Zeynep', tr: 'Toplantı, "réunion" demek.', fr: '« Toplantı » veut dire « réunion ».' }
+    ]
+  },
+  {
+    id: 'd_yardim_rica',
+    title: 'Pourriez-vous m\'aider ?',
+    scenario: 'Un touriste demande un petit service à une passante, sans urgence.',
+    level: 1,
+    tags: ['Aide', 'A2'],
+    turns: [
+      { speaker: 'Turist', tr: 'Affedersiniz, yardım eder misiniz?', fr: 'Excusez-moi, pourriez-vous m\'aider ?' },
+      { speaker: 'Kadın', tr: 'Tabii, ne oldu?', fr: 'Bien sûr, que se passe-t-il ?' },
+      { speaker: 'Turist', tr: 'Bir sorum var. En yakın eczane nerede?', fr: 'J\'ai une question. Où est la pharmacie la plus proche ?' },
+      { speaker: 'Kadın', tr: 'Hemen şu köşede.', fr: 'Juste au coin, là.' },
+      { speaker: 'Turist', tr: 'Çok teşekkür ederim!', fr: 'Merci beaucoup !' }
+    ]
+  },
+  {
+    id: 'd_acil_yardim',
+    title: 'Appel d\'urgence',
+    scenario: 'Ali a un problème dans la rue et appelle à l\'aide ; un voisin réagit.',
+    level: 2,
+    tags: ['Urgences', 'A2'],
+    turns: [
+      { speaker: 'Ali', tr: 'İmdat! Yardım edin!', fr: 'Au secours ! Aidez-moi !' },
+      { speaker: 'Komşu', tr: 'Ne oldu? İyi misiniz?', fr: 'Qu\'est-ce qui s\'est passé ? Ça va ?' },
+      { speaker: 'Ali', tr: 'Hayır! Ambulans çağırın, lütfen!', fr: 'Non ! Appelez une ambulance, s\'il vous plaît !' },
+      { speaker: 'Komşu', tr: 'Tamam, hemen 112\'yi arıyorum.', fr: 'D\'accord, j\'appelle le 112 tout de suite.' },
+      { speaker: 'Komşu', tr: 'Ambulans geliyor. Polis de geliyor.', fr: 'L\'ambulance arrive. La police arrive aussi.' },
+      { speaker: 'Ali', tr: 'Çok teşekkür ederim!', fr: 'Merci beaucoup !' }
     ]
   }
 ];

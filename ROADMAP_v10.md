@@ -376,12 +376,37 @@
     automatiquement.
 
 ### 3.2 — Relecture linguistique des 192 répliques de dialogue · **M**
+
+> ✅ **Fait.** Les 29 dialogues (192 répliques) relus un par un, turc et traduction. 2 nouvelles
+> incohérences trouvées et corrigées, en plus des 5 déjà connues :
+> - `d_famille_elargie` : *Ailemizi tanıtayım* (« **notre** famille », possessif pluriel -miz)
+>   traduit par « ma famille » → corrigé en « notre famille ».
+> - `d_banque` : *nasıl açabilirim hesap?* plaçait l'objet **après** le verbe dans une question
+>   directe (ordre non naturel) → *nasıl hesap açabilirim?*.
+> Aucune autre incohérence turc/français trouvée sur les 192 répliques.
 - Les 5 erreurs de dialogue ci-dessus ont été trouvées sans relecture systématique : il y en a
   probablement d'autres. Relire les 29 dialogues réplique par réplique, turc **et**
   traduction, en vérifiant la cohérence entre les deux.
 - **Accept.** : relecture tracée (dialogue → OK / corrigé), 0 incohérence turc/français connue.
 
 ### 3.3 — Dialogues trop avancés ou hors sujet pour leur chapitre · **M**
+
+> ✅ **Fait**, exactement selon le tableau ci-dessous : 6 nouveaux dialogues créés
+> (`d_selamlama`, `d_meslek_ne`, `d_ev_turu`, `d_anlamadim`, `d_yardim_rica`, `d_acil_yardim`),
+> chacun réutilisant en priorité le vocabulaire déjà enseigné par le chapitre qui l'accueille
+> (ex. *d_anlamadim* reprend mot pour mot les chunks *Anlamıyorum* et *Yavaş konuşun* déjà dans
+> les `vocabIds` d'u8_c1/u8_c3, plutôt que d'inventer une autre formulation). Aucun dialogue
+> existant supprimé : `d_calisma` et `d_telefon` restent dans les données mais ne sont plus
+> référencés par aucun chapitre (comme du vocabulaire non utilisé) ; `d_rencontre`, `d_saglik`
+> et `d_apartman` restent utilisés là où ils étaient déjà à leur place.
+> **Écart mineur, pour la cohérence interne** : u8_c2 devenant une aide non urgente, son `goal`
+> ("Au secours ! C'est urgent") et sa note culturelle (112/İmdat) auraient contredit son
+> nouveau dialogue — le `goal` est reformulé et la note culturelle déplacée vers u8_c4, qui
+> devient le vrai chapitre d'urgence.
+> **u13_c3** : `d_eczane` y est ajouté (à côté de `d_saglik`) tel quel, sans simplifier
+> *Kaç gündür?* ni l'impératif *alın* comme envisagé plus bas — la slide `dialogue_read`
+> (AXE 1.4) expose déjà le dialogue en entier avant tout exercice, ce qui couvre le risque
+> réel (tester une forme jamais vue) sans appauvrir un dialogue par ailleurs naturel.
 | Chapitre | Dialogue | Problème | Action |
 |---|---|---|---|
 | u1_c2 « Bonjour et au revoir » | `d_rencontre` | prénom (*Benim adım*), origine (*Nerelisiniz?*, *Fransalıyım*), question (*İstanbullu musunuz?*) : c'est le programme de l'unité 2 | nouveau dialogue limité aux salutations : *Merhaba — Merhaba, nasılsın? — İyiyim, teşekkürler. Sen? — … — Görüşürüz! — Hoşça kal!* ; `d_rencontre` reste en u2_c1, u2_c5, u12_c3, u14_c2 |
