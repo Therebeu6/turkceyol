@@ -424,6 +424,9 @@
   dialogue correspond au `canDo` de son chapitre.
 
 ### 3.4 — Règles grammaticales mal rattachées · **S**
+
+> ✅ **Fait pour les 2 premières lignes** (u1_c1, u6_c4), traitées en même temps que l'AXE 4
+> ci-dessus. Les 2 dernières (u18_c3, u18_c4) restent liées à l'AXE 3.5, pas encore fait.
 | Chapitre | Règle actuelle | Problème | Action |
 |---|---|---|---|
 | u1_c1 « Sons et lettres » | `g_harmonie_majeure` | ses exercices testent le locatif (u5) et le pluriel (u3) | retirer ; la règle reste en u10_c1 |
@@ -449,6 +452,23 @@
 ---
 
 ## 🅳️ AXE 4 — Différencier les chapitres doublons (sans rien supprimer)
+
+> ✅ **Fait.** u8_c2/u8_c4 étaient à 100 % du même contenu pédagogique (même dialogue, mêmes
+> `vocabIds`) : maintenant deux dialogues différents (`d_yardim_rica` / `d_acil_yardim`) et un
+> vocabulaire qui ne se recoupe plus qu'à 25 % (*v_yardim* seul en commun, logique pour « aide »
+> au sens large). u5_c2/u5_c4, u8_c1/u8_c3, u12_c1/u17_c4, u13_c3/u16_c3, u1_c1/u1_c2 : chacun a
+> désormais son propre dialogue (5 nouveaux : `d_yol_sorma`, `d_tekrar_eder_misiniz`,
+> `d_ne_demek`, `d_otel_servis`, plus `d_yardim_rica`/`d_acil_yardim` déjà créés en 3.3).
+> u5_c4 gagne aussi 3 postpositions (`v_yaninda`, `v_onunde`, `v_arkasinda`), qui n'étaient
+> utilisées nulle part.
+> **Chevauchements de vocabulaire restants, examinés et marqués intentionnels** (aucun n'a
+> plus le même dialogue, donc plus "le même contenu pédagogique" au sens de l'accept.) :
+> u5_c2/u5_c4 (82 %, les mots de direction sont nécessaires aux deux) ; u8_c1/u8_c3 (80 %, les
+> chunks *Tekrar*/*Yavaş konuşun* sont les outils testés par les deux) ; u13_c3/u16_c3 (63 %,
+> spirale A2 assumée par la roadmap elle-même).
+> **Au passage (3.4)** : `g_harmonie_majeure` retiré d'u1_c1 (reste seul en u10_c1) ; `g_yok_var`
+> remplacé par `g_accusatif` en u6_c4 (déjà enseigné juste avant, cohérent avec les chunks
+> *Seviyorum*/*Sevmiyorum* de l'AXE 1.5).
 
 - **u8_c2 « Demander de l'aide » / u8_c4 « Urgences »** : titres et récompenses différents,
   mais contenu pédagogique identique (même dialogue, mêmes mots, mêmes verbes).

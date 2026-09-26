@@ -548,5 +548,65 @@ window.AppDialogues = [
       { speaker: 'Komşu', tr: 'Ambulans geliyor. Polis de geliyor.', fr: 'L\'ambulance arrive. La police arrive aussi.' },
       { speaker: 'Ali', tr: 'Çok teşekkür ederim!', fr: 'Merci beaucoup !' }
     ]
+  },
+
+  /* ── v10 AXE 4 — différencier des paires de chapitres quasi-doublons :
+     chacun garde son propre dialogue, plus proche de son propre canDo. ── */
+  {
+    id: 'd_yol_sorma',
+    title: 'Demander son chemin',
+    scenario: 'Un touriste demande son chemin dans la rue.',
+    level: 1,
+    tags: ['Directions', 'A1'],
+    turns: [
+      { speaker: 'Turist', tr: 'Affedersiniz, market nerede?', fr: 'Excusez-moi, où est le supermarché ?' },
+      { speaker: 'Kadın', tr: 'Market mi? Buradan uzak değil.', fr: 'Le supermarché ? Ce n\'est pas loin d\'ici.' },
+      { speaker: 'Turist', tr: 'Sağa mı, sola mı?', fr: 'À droite ou à gauche ?' },
+      { speaker: 'Kadın', tr: 'Düz gidin, sonra sağa dönün.', fr: 'Allez tout droit, puis tournez à droite.' },
+      { speaker: 'Turist', tr: 'Çok teşekkür ederim!', fr: 'Merci beaucoup !' }
+    ]
+  },
+  {
+    id: 'd_tekrar_eder_misiniz',
+    title: 'Pouvez-vous répéter ?',
+    scenario: 'Marc n\'a pas bien entendu ce que Zeynep vient de dire.',
+    level: 1,
+    tags: ['Communication', 'A2'],
+    turns: [
+      { speaker: 'Zeynep', tr: 'Yarın saat beşte okulda toplantı var.', fr: 'Demain à cinq heures, il y a une réunion à l\'école.' },
+      { speaker: 'Marc', tr: 'Affedersiniz? Tekrar eder misiniz lütfen?', fr: 'Pardon ? Pouvez-vous répéter, s\'il vous plaît ?' },
+      { speaker: 'Zeynep', tr: 'Tabii. Yarın saat beşte okulda toplantı var.', fr: 'Bien sûr. Demain à cinq heures, il y a une réunion à l\'école.' },
+      { speaker: 'Marc', tr: 'Yavaş konuşun lütfen.', fr: 'Parlez lentement, s\'il vous plaît.' },
+      { speaker: 'Zeynep', tr: 'Tamam, yavaş konuşuyorum.', fr: 'D\'accord, je parle lentement.' },
+      { speaker: 'Marc', tr: 'Şimdi anladım, teşekkürler.', fr: 'Maintenant j\'ai compris, merci.' }
+    ]
+  },
+  {
+    id: 'd_ne_demek',
+    title: 'Que veut dire ce mot ?',
+    scenario: 'Tom ne connaît pas un mot que vient d\'utiliser Ayşe.',
+    level: 1,
+    tags: ['Communication', 'A2'],
+    turns: [
+      { speaker: 'Ayşe', tr: 'Yarın saat onda toplantı var.', fr: 'Demain à dix heures, il y a une réunion.' },
+      { speaker: 'Tom', tr: 'Affedersiniz, anlamıyorum. "Toplantı" ne demek?', fr: 'Excusez-moi, je ne comprends pas. Que veut dire « toplantı » ?' },
+      { speaker: 'Ayşe', tr: '"Toplantı", "réunion" demek.', fr: '« Toplantı » veut dire « réunion ».' },
+      { speaker: 'Tom', tr: 'Ah, şimdi anlıyorum. Teşekkürler.', fr: 'Ah, maintenant je comprends. Merci.' }
+    ]
+  },
+  {
+    id: 'd_otel_servis',
+    title: 'Un problème à l\'hôtel',
+    scenario: 'Un client signale un problème de chambre à la réception.',
+    level: 2,
+    tags: ['Voyage', 'Hôtel', 'A2'],
+    turns: [
+      { speaker: 'Müşteri', tr: 'Merhaba, 205 numaralı odada bir sorun var.', fr: 'Bonjour, il y a un problème dans la chambre 205.' },
+      { speaker: 'Resepsiyonist', tr: 'Ne oldu? Nasıl yardımcı olabilirim?', fr: 'Qu\'est-ce qui s\'est passé ? Comment puis-je vous aider ?' },
+      { speaker: 'Müşteri', tr: 'Anahtarım çalışmıyor, kapı açılmıyor.', fr: 'Ma clé ne fonctionne pas, la porte ne s\'ouvre pas.' },
+      { speaker: 'Resepsiyonist', tr: 'Özür dilerim, hemen yeni bir anahtar getiriyorum.', fr: 'Je suis désolé, j\'apporte tout de suite une nouvelle clé.' },
+      { speaker: 'Müşteri', tr: 'Teşekkürler. Bu arada, çıkış saati kaçta?', fr: 'Merci. Au fait, à quelle heure est le check-out ?' },
+      { speaker: 'Resepsiyonist', tr: 'Çıkış saat on ikide.', fr: 'Le check-out est à midi.' }
+    ]
   }
 ];

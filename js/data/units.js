@@ -17,13 +17,16 @@ window.AppUnits = [
         id: 'u1_c1',
         tips: [{ icon: '🔤', text: 'Bonne nouvelle : le turc se lit EXACTEMENT comme il s\'écrit. Une lettre = un son, toujours. Apprenez les 6 lettres spéciales et vous savez tout lire !' }],
         canDo: 'Je peux lire et prononcer les sons spéciaux du turc',
-        grammarIds: ['g_harmonie_majeure'],
+        // v10 AXE 3.4 : g_harmonie_majeure retiré — ses exercices testent le locatif (u5) et
+        // le pluriel (u3), jamais enseignés à ce stade. La règle reste seule en u10_c1.
         title: 'Sons et lettres clés',
         goal: 'Lire les sons ç, ş, ğ, ı, ö, ü',
         xpReward: 50,
         time: 5,
         tags: ['Alphabet', 'A1'],
-        vocabIds: ['v_merhaba', 'v_gunaydin', 'v_iyi_aksamlar', 'v_iyi_geceler', 'v_evet', 'v_hayir', 'v_tamam'],
+        // v10 AXE 4 : un mot par son spécial (au lieu de réutiliser les salutations d'u1_c2),
+        // pour que ce chapitre tienne vraiment son objectif affiché.
+        vocabIds: ['v_cay', 'v_seker', 'v_dag', 'v_yil', 'v_goz', 'v_uc'],
         verbIds: []
       },
       {
@@ -287,7 +290,9 @@ window.AppUnits = [
         culture: 'Les Turcs sont réputés très serviables : demandez votre chemin et on vous accompagnera parfois sur plusieurs rues. Un « Affedersiniz » (excusez-moi) ouvre toutes les portes.',
         canDo: 'Je peux demander mon chemin',
         grammarIds: ['g_datif'],
-        dialogueIds: ['d_direction'],
+        // v10 AXE 4 : u5_c2 (poser la question) et u5_c4 (comprendre la réponse) partageaient
+        // le même dialogue — désormais différenciés.
+        dialogueIds: ['d_yol_sorma'],
         title: 'Demander son chemin',
         goal: 'Où est... ? À gauche, à droite, tout droit',
         xpReward: 90,
@@ -312,13 +317,17 @@ window.AppUnits = [
         id: 'u5_c4',
         canDo: 'Je peux comprendre des indications de direction',
         grammarIds: ['g_ablatif'],
+        // v10 AXE 4 : garde d_direction (déjà orienté "comprendre la réponse" : "Sonra sağa
+        // dönün"), tandis qu'u5_c2 obtient son propre dialogue de question.
         dialogueIds: ['d_direction'],
         title: 'Directions',
         goal: 'Tout droit, tournez à gauche, c\'est près',
         xpReward: 80,
         time: 9,
         tags: ['Directions', 'A1'],
-        vocabIds: ['v_sag', 'v_sol', 'v_duz', 'v_kose', 'v_yakin', 'v_uzak', 'v_karsisinda', 'v_ev', 'v_okul', 'v_market'],
+        // v10 AXE 4 : ajout des postpositions (thème locatifs, jusque-là inutilisé),
+        // pertinentes pour comprendre une direction ("à côté de", "devant", "derrière").
+        vocabIds: ['v_sag', 'v_sol', 'v_duz', 'v_kose', 'v_yakin', 'v_uzak', 'v_karsisinda', 'v_ev', 'v_okul', 'v_market', 'v_yaninda', 'v_onunde', 'v_arkasinda'],
         verbIds: ['vb_gitmek', 'vb_gelmek']
       }
     ]
@@ -378,7 +387,10 @@ window.AppUnits = [
         id: 'u6_c4',
         culture: 'Le petit-déjeuner turc (kahvaltı) est un festin : fromages, olives, tomates, concombre, miel, œufs, pain frais et çay. C\'est souvent le repas préféré des Turcs.',
         canDo: 'Je peux dire ce que j\'aime et ce que je n\'aime pas',
-        grammarIds: ['g_yok_var'],
+        // v10 AXE 3.4 : g_yok_var (il y a / il n'y a pas) n'a aucun rapport avec "j'aime" —
+        // remplacé par g_accusatif (déjà enseigné juste avant, u6_c3), pertinent pour
+        // "Çayı seviyorum" (accusatif défini avec le chunk "seviyorum", cf. AXE 1.5).
+        grammarIds: ['g_accusatif'],
         title: 'Goûts et préférences',
         goal: 'J\'aime, je n\'aime pas, c\'est délicieux',
         xpReward: 80,
@@ -462,9 +474,9 @@ window.AppUnits = [
       {
         id: 'u8_c1',
         canDo: 'Je peux faire répéter et demander de parler lentement',
-        // v10 AXE 3.3 : d_telefon est une réservation de restaurant B1, sans aucune demande
-        // de répétition — remplacé par un dialogue qui correspond au canDo du chapitre.
-        dialogueIds: ['d_anlamadim'],
+        // v10 AXE 3.3/4 : d_telefon (réservation de restaurant B1) puis d_anlamadim (partagé
+        // avec u8_c3) remplacés par un dialogue propre, focalisé sur la répétition seule.
+        dialogueIds: ['d_tekrar_eder_misiniz'],
         title: 'Faire répéter',
         goal: 'Pardon ? Pouvez-vous répéter / parler plus lentement ?',
         xpReward: 60,
@@ -484,16 +496,18 @@ window.AppUnits = [
         goal: 'Demander un service ou un renseignement à quelqu\'un',
         xpReward: 80,
         time: 9,
-        tags: ['Urgences', 'A2'],
-        vocabIds: ['v_yardim', 'v_acil', 'v_hastane', 'v_eczane', 'v_polis', 'v_doktor'],
+        // v10 AXE 4 : tag et vocabulaire alignés sur l'aide NON urgente (le tag "Urgences"
+        // et les mots médicaux appartiennent désormais à u8_c4).
+        tags: ['Aide', 'A2'],
+        vocabIds: ['v_yardim', 'v_eczane', 'v_yakin', 'v_kose'],
         verbIds: ['vb_istemek', 'vb_anlamak']
       },
       {
         id: 'u8_c3',
         canDo: 'Je peux gérer une incompréhension',
-        // v10 AXE 3.3 : même remplacement qu'u8_c1 — d_anlamadim couvre aussi la demande
-        // de sens ("ne demek?"), pas seulement la répétition.
-        dialogueIds: ['d_anlamadim'],
+        // v10 AXE 4 : dialogue propre, focalisé sur la demande de sens ("ne demek?"), pour ne
+        // plus partager le même dialogue qu'u8_c1.
+        dialogueIds: ['d_ne_demek'],
         title: 'Je ne comprends pas',
         goal: 'Gérer l\'incompréhension en turc',
         xpReward: 60,
@@ -514,7 +528,9 @@ window.AppUnits = [
         xpReward: 90,
         time: 10,
         tags: ['Urgences', 'A2'],
-        vocabIds: ['v_yardim', 'v_acil', 'v_hastane', 'v_eczane', 'v_polis', 'v_doktor'],
+        // v10 AXE 4 : v_eczane retiré (déjà propre à u8_c2 désormais) pour ne plus partager
+        // 100% de son vocabulaire avec u8_c2.
+        vocabIds: ['v_yardim', 'v_acil', 'v_hastane', 'v_polis', 'v_doktor'],
         verbIds: ['vb_anlamak', 'vb_istemek']
       }
     ]
@@ -1053,7 +1069,9 @@ window.AppUnits = [
       {
         id: 'u17_c4',
         canDo: 'Je peux gérer mon séjour à l\'hôtel de A à Z',
-        dialogueIds: ['d_hotel'],
+        // v10 AXE 4 : dialogue différent de d_hotel (u12_c1), axé sur les services et un
+        // problème de chambre plutôt que sur la réservation.
+        dialogueIds: ['d_otel_servis'],
         title: 'À l\'hôtel',
         goal: 'Réserver, s\'enregistrer et demander des services',
         xpReward: 90,
