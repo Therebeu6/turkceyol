@@ -716,5 +716,52 @@ window.AppGrammar = [
         explanation: '"Öğrenciyim" (copule) = je suis étudiant(e) maintenant. Les formes d\'olmak décriraient un changement (je deviens/deviendrai/suis devenu étudiant).'
       }
     ]
+  },
+  {
+    id: 'g_negatif_passe_futur',
+    title: 'Négation au passé et au futur (-medi/-madı, -meyecek/-mayacak)',
+    rule: 'Comme au présent (-miyor), la négation reste TOUJOURS collée au verbe, jamais un mot séparé. Au passé : radical + -me/-ma (harmonie sur 2 voyelles selon la dernière voyelle du radical) + -di/-dı + terminaison personnelle — jamais -du/-dü, car -me/-ma ne sont pas des voyelles arrondies. Au futur : radical + -me/-ma + -y- + -ecek/-acak + terminaison, avec le même k→ğ qu\'au futur affirmatif pour "je" et "nous".',
+    example: 'Gitmedim (je ne suis pas allé) | Yapmadı (il/elle n\'a pas fait) | Gitmeyeceğim (je n\'irai pas) | Yapmayacak (il/elle ne fera pas)',
+    traps: [
+      'La négation reste DANS le verbe : "gitmedim", jamais un mot "pas" séparé.',
+      'Au passé négatif, aucune consonne ne se durcit devant -di/-dı, contrairement à l\'affirmatif : "gittim" double le t, mais "gitmedim" garde -me- intact devant -di. Le -me/-ma qui s\'intercale change la construction.'
+    ],
+    exercises: [
+      {
+        prompt: '"gitmek" (aller) au passé négatif, "je" (ben) ?',
+        answer: 'gitmedim',
+        options: ['gitmedim', 'gitmiyorum', 'gittim', 'gitmeyeceğim'],
+        hint: 'git + me (voyelle avant) + di + m',
+        explanation: 'git + medim = gitmedim. "gittim" est l\'affirmatif, "gitmiyorum" est le présent négatif.'
+      },
+      {
+        prompt: '"yapmak" (faire) au passé négatif, "il/elle" (o) ?',
+        answer: 'yapmadı',
+        options: ['yapmadı', 'yapmıyor', 'yaptı', 'yapmayacak'],
+        hint: 'yap + ma (voyelle arrière) + dı',
+        explanation: 'yap + madı = yapmadı, sans terminaison à la 3e personne.'
+      },
+      {
+        prompt: '"gitmek" (aller) au futur négatif, "je" (ben) ?',
+        answer: 'gitmeyeceğim',
+        options: ['gitmeyeceğim', 'gideceğim', 'gitmedim', 'gitmiyorum'],
+        hint: 'git + me + yeceğim (k→ğ devant la voyelle de "je")',
+        explanation: 'git + me + yeceğim = gitmeyeceğim. "gideceğim" serait l\'affirmatif.'
+      },
+      {
+        prompt: '"yemek" (manger) au futur négatif, "ils/elles" (onlar) ?',
+        answer: 'yemeyecekler',
+        options: ['yemeyecekler', 'yiyecekler', 'yemediler', 'yemiyorlar'],
+        hint: 'ye + me + yecek + ler — pas de mutation ye→yi devant une consonne',
+        explanation: '"yiyecekler" (affirmatif) mute ye→yi devant la voyelle -ecek. Devant -me (consonne), aucune mutation : yemeyecekler.'
+      },
+      {
+        prompt: 'Comment dit-on "Je n\'ai pas vu ce film" ?',
+        answer: 'Bu filmi görmedim',
+        options: ['Bu filmi görmedim', 'Bu filmi görmüyorum', 'Bu filmi görmeyeceğim', 'Bu filmi gördüm'],
+        hint: 'Action passée niée → -medi, pas -miyor (présent) ni -meyecek (futur)',
+        explanation: '"görmedim" (passé négatif) = je n\'ai pas vu. "görmüyorum" serait "je ne vois pas" (présent).'
+      }
+    ]
   }
 ];

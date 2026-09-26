@@ -146,8 +146,13 @@
     débloqués.
   - **Décision** : l'ensemble est **cumulatif**, et `present_neg` en fait partie dès u10_c3.
     Un chapitre sans `tenses` situé après u10_c3 peut donc tester la négation au présent,
-    alors que le défaut actuel l'exclut : c'est un changement voulu. La même règle vaudra pour
-    les négations passé/futur de v9 AXE 2, dès le chapitre qui les enseigne.
+    alors que le défaut actuel l'exclut : c'est un changement voulu. **Confirmé en pratique** :
+    v9 AXE 2.1 (négation passé/futur, chapitre u11_c5, `tenses: ['past_neg', 'future_neg']`)
+    s'est branché sur ce mécanisme sans aucune modification de la logique cumulative — seule
+    une petite généralisation a été nécessaire côté moteur (`_NEG_TENSES` dans
+    `exercises.js`), pour que `past_neg`/`future_neg` bénéficient du même traitement que
+    `present_neg` (résolution de table, distracteurs, détection du temps d'un exemple,
+    révision), sans dupliquer le code trois fois.
   - **Précision découverte à l'implémentation** : un chapitre à `tenses` explicite étroit
     (ex. u10_c3 = `['present_neg']` seul) a en réalité DEUX notions distinctes, pas une :
     `drillTenses` (ce que la boucle de conjugaison teste en priorité — reste l'array explicite

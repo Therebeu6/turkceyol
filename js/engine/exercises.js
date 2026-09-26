@@ -270,7 +270,8 @@ window.Exercises = {
     g_passe_di:     { verbId: 'vb_gitmek', tense: 'past', label: 'Passé (-di) — aller' },
     g_futur_acak:   { verbId: 'vb_gelmek', tense: 'future', label: 'Futur (-ecek) — venir' },
     g_aorist:       { verbId: 'vb_yapmak', tense: 'aorist', label: 'Aoriste (-Ar/-Ir) — faire' },
-    g_gecmis_mis:   { verbId: 'vb_gitmek', tense: 'pastNarrative', label: 'Passé narratif (-mış) — aller' }
+    g_gecmis_mis:   { verbId: 'vb_gitmek', tense: 'pastNarrative', label: 'Passé narratif (-mış) — aller' },
+    g_negatif_passe_futur: { verbId: 'vb_gitmek', tense: 'future_neg', label: 'Futur négatif — aller' }
   },
 
   _buildConjTable(ruleId) {
@@ -278,8 +279,9 @@ window.Exercises = {
     if (!map || !window.AppVerbs) return null;
     const verb = AppVerbs.find(v => v.id === map.verbId);
     if (!verb) return null;
-    const table = map.tense === 'present_neg'
-      ? (verb.negations && verb.negations.present)
+    const negBase = this._NEG_TENSES[map.tense];
+    const table = negBase
+      ? (verb.negations && verb.negations[negBase])
       : (verb.conjugations && verb.conjugations[map.tense]);
     if (!table) return null;
     const persons = [['ben', 'je'], ['sen', 'tu'], ['o', 'il/elle'], ['biz', 'nous'], ['siz', 'vous'], ['onlar', 'ils/elles']];
@@ -342,6 +344,22 @@ window.Exercises = {
     return unlocked;
   },
 
+  // ── v9 AXE 2.1 — Table des 3 négations possibles (présent/passé/futur), toutes rangées
+  // sous `verb.negations` avec le NOM DE LA BASE comme clé ('present'/'past'/'future') ;
+  // le nom de temps utilisé partout ailleurs dans le moteur est cette base + '_neg'.
+  _NEG_TENSES: { present_neg: 'present', past_neg: 'past', future_neg: 'future' },
+
+  // Rassemble, pour un verbe donné, toutes les tables de temps utilisables (conjugaisons
+  // affirmatives + négations connues), avec les mêmes noms de temps que ceux utilisés
+  // partout dans le moteur (ex. 'past_neg', jamais juste 'neg').
+  _allTenseTables(verb) {
+    const tables = { ...(verb.conjugations || {}) };
+    for (const [negTense, base] of Object.entries(this._NEG_TENSES)) {
+      if (verb.negations && verb.negations[base]) tables[negTense] = verb.negations[base];
+    }
+    return tables;
+  },
+
   // ── v10 AXE 1.2 — Détecte le temps d'un exemple, UNIQUEMENT via les formes propres
   // au verbe testé (jamais celles d'un autre verbe de la phrase, ex. "konuşmak istiyorum"
   // ne doit jamais être classé comme un présent de konuşmak). Retourne null si aucune
@@ -351,8 +369,7 @@ window.Exercises = {
     if (!verb || !exampleTr) return null;
     const strip = s => s.replace(/[.!?,;:'"]/g, '').toLocaleLowerCase('tr-TR');
     const words = exampleTr.split(/\s+/).map(strip);
-    const tables = { ...(verb.conjugations || {}) };
-    if (verb.negations && verb.negations.present) tables.present_neg = verb.negations.present;
+    const tables = this._allTenseTables(verb);
     for (const tense of Object.keys(tables)) {
       const table = tables[tense];
       for (const p of Object.keys(table)) {
@@ -418,7 +435,7 @@ window.Exercises = {
           // Intersection « temps propres au verbe ∩ temps débloqués » : un verbe appris via
           // l'aoriste/-mış n'est retesté sur ces temps qu'une fois réellement enseignés,
           // jamais avant (objectif de v9 AXE 1.1, sans son effet de bord).
-          const verbTenses = Object.keys(verb.conjugations || {}).filter(t => unlockedTenses.includes(t));
+          const verbTenses = Object.keys(this._allTenseTables(verb)).filter(t => unlockedTenses.includes(t));
           if (verbTenses.length > 0) {
             const persons = ['ben', 'sen', 'o', 'biz'];
             const person = persons[Math.floor(Math.random() * persons.length)];
@@ -796,12 +813,11 @@ window.Exercises = {
 
     const { verb, example, words } = candidates[Math.floor(Math.random() * candidates.length)];
 
-    // Collecter les formes conjuguées (positive + négative présent), limitées aux temps
-    // déjà enseignés quand une restriction est fournie (v10 AXE 1.2) — sinon un distracteur
-    // (ou le mot masqué lui-même) pourrait venir d'un temps jamais vu.
+    // Collecter les formes conjuguées (positives + négatives), limitées aux temps déjà
+    // enseignés quand une restriction est fournie (v10 AXE 1.2) — sinon un distracteur (ou le
+    // mot masqué lui-même) pourrait venir d'un temps jamais vu.
     const allForms = new Set();
-    const tenseTables = { ...(verb.conjugations || {}) };
-    if (verb.negations && verb.negations.present) tenseTables.present_neg = verb.negations.present;
+    const tenseTables = this._allTenseTables(verb);
     for (const tense of Object.keys(tenseTables)) {
       if (allowedTenses && !allowedTenses.includes(tense)) continue;
       const table = tenseTables[tense];
@@ -853,17 +869,19 @@ window.Exercises = {
       past: 'passé',
       future: 'futur',
       present_neg: 'présent négatif',
+      past_neg: 'passé négatif',
+      future_neg: 'futur négatif',
       aorist: 'aoriste (habitude)',
       pastNarrative: 'passé narratif (-mış)'
     };
+    // v9 AXE 2.1 : 'present_neg'/'past_neg'/'future_neg' partagent tous la même mécanique —
+    // leur table vient de verb.negations[base], jamais de verb.conjugations.
+    const negBase = this._NEG_TENSES[tense];
 
     // Résoudre la table de conjugaison (normale ou négative)
-    let conjugTable;
-    if (tense === 'present_neg') {
-      conjugTable = verb.negations && verb.negations.present;
-    } else {
-      conjugTable = verb.conjugations && verb.conjugations[tense];
-    }
+    const conjugTable = negBase
+      ? (verb.negations && verb.negations[negBase])
+      : (verb.conjugations && verb.conjugations[tense]);
     if (!conjugTable || !conjugTable[person]) return null;
 
     const correct = conjugTable[person];
@@ -876,9 +894,10 @@ window.Exercises = {
       .filter(f => f && f !== correct);
 
     // Distracteurs : même personne, autre temps (confusion temps/mode) — v10 AXE 1.2 :
-    // jamais un temps pas encore enseigné (ex. aoriste/-mış proposés dès u10).
-    let otherTenses = tense === 'present_neg'
-      ? ['present', 'past']
+    // jamais un temps pas encore enseigné (ex. aoriste/-mış proposés dès u10). Une négation
+    // se confond surtout avec le présent/passé (selon le cas) — jamais avec une autre négation.
+    let otherTenses = negBase
+      ? ['present', 'past'].filter(t => t !== negBase)
       : Object.keys(verb.conjugations).filter(t => t !== tense);
     if (allowedTenses) otherTenses = otherTenses.filter(t => allowedTenses.includes(t));
     const wrongByTense = otherTenses
@@ -888,9 +907,10 @@ window.Exercises = {
       })
       .filter(f => f && f !== correct);
 
-    // Pour le présent négatif : ajouter la forme affirmative du même temps comme distractor clé
-    if (tense === 'present_neg' && verb.conjugations && verb.conjugations.present) {
-      const affirmatif = verb.conjugations.present[person];
+    // Pour une négation : ajouter la forme AFFIRMATIVE du même temps comme distracteur clé
+    // (le piège pédagogique le plus utile pour ce genre d'exercice).
+    if (negBase && verb.conjugations && verb.conjugations[negBase]) {
+      const affirmatif = verb.conjugations[negBase][person];
       if (affirmatif && affirmatif !== correct && !wrongByTense.includes(affirmatif)) {
         wrongByTense.unshift(affirmatif);
       }
@@ -936,7 +956,7 @@ window.Exercises = {
         tr: correct,
         fr: verb.fr,
         type: 'verb',
-        tense: tense === 'present_neg' ? 'present' : tense
+        tense: negBase || tense
       }
     };
   },

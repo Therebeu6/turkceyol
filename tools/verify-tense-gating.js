@@ -131,13 +131,16 @@ for (const u of AppUnits) {
           if (!drillTenses.includes(s.verbMeta.tense)) {
             err(`"${c.id}" : verb_fill teste "${s.verbMeta.tense}" (verbe ${s.data.id}), hors de [${drillTenses}]`);
           }
-          // 2) Aucun distracteur ne doit être une forme d'un temps NON autorisé du même verbe.
+          // 2) Aucun distracteur ne doit être une forme d'un temps NON autorisé du même verbe
+          // — y compris les négations (v9 AXE 2.1 : present_neg/past_neg/future_neg), pas
+          // seulement les temps affirmatifs de `verb.conjugations`.
           const verb = AppVerbs.find(v => v.id === s.data.id);
-          if (verb && verb.conjugations) {
+          if (verb) {
+            const tables = Exercises._allTenseTables(verb);
             const forbiddenForms = new Set();
-            for (const t of Object.keys(verb.conjugations)) {
+            for (const t of Object.keys(tables)) {
               if (allowed.includes(t)) continue;
-              for (const p of Object.keys(verb.conjugations[t])) forbiddenForms.add(verb.conjugations[t][p]);
+              for (const p of Object.keys(tables[t])) forbiddenForms.add(tables[t][p]);
             }
             for (const opt of (s.options || [])) {
               if (forbiddenForms.has(opt)) {

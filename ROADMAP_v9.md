@@ -106,6 +106,31 @@
 > négation au présent progressif existe, `g_negatif_fiil`).
 
 ### 2.1 — Négation passé (-medi/-madı) et futur (-meyecek/-mayacak) · **M**
+
+> ✅ **Fait.** Implémentation légèrement différente du plan initial, documentée ici :
+> - Les formes vivent dans `verb.negations.past` / `verb.negations.future` (même convention
+>   que `verb.negations.present`, déjà en place), pas dans `conjugations.pastNeg`/`futureNeg`
+>   comme esquissé ci-dessus — cohérence avec l'existant plutôt qu'un second système parallèle.
+> - Posé sur **12 verbes** (`gitmek, gelmek, yapmak, yemek, içmek, istemek, olmak, çalışmak,
+>   görmek, almak, bilmek, sevmek`), pas "un sous-ensemble" non précisé : ce sont les verbes
+>   déjà les plus travaillés dans le parcours (sous-ensemble des 24 qui ont déjà
+>   aoriste/passé narratif).
+> - Nouveau chapitre **u11_c5** (« Je n'ai pas... / Je ne ferai pas... »), juste après u11_c4 —
+>   ajout pur, aucun chapitre existant renommé/déplacé. Nouvelle règle dédiée
+>   `g_negatif_passe_futur` (5 exercices vérifiés) plutôt qu'une extension de `g_negatif_fiil`
+>   (celle-ci reste focalisée sur le présent, comme son titre le promet).
+> - Le moteur (`js/engine/exercises.js`) généralise le mécanisme déjà existant pour
+>   `present_neg` à `past_neg`/`future_neg` (résolution de table, distracteurs, détection du
+>   temps d'un exemple, révision) via une seule table `_NEG_TENSES` — pas de duplication de
+>   code à 3 endroits.
+> - **Rigueur** : 144 formes (12 verbes × 2 temps × 6 personnes) dérivées par script à partir
+>   de la règle 2 voyelles/-di-dı/-y-buffer/k→ğ (aucune irrégularité pour cette construction en
+>   turc, à la différence de l'aoriste), puis vérifiées contre les 2 formes de référence
+>   ci-dessus (`gitmedim`, `yapmayacağım`) qui correspondent exactement.
+> - `tools/verify-tense-gating.js` étendu pour scanner aussi `verb.negations` (pas seulement
+>   `verb.conjugations`) lors du contrôle anti-fuite de distracteurs — sans cette extension,
+>   une fuite sur ces nouveaux temps serait passée inaperçue.
+
 - `conjugations.pastNeg` / `futureNeg` sur un sous-ensemble de verbes vérifiés (même rigueur :
   dérivation + contrôle contre formes connues — ex. `gitmedim`, `yapmayacağım`).
 - Extension de `g_negatif_fiil` (ou nouvelle règle dédiée) avec les deux formations + piège

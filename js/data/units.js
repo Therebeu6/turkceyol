@@ -675,6 +675,20 @@ window.AppUnits = [
         vocabIds: ['v_yarin', 'v_hafta', 'v_ay', 'v_yil'],
         verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_calismak', 'vb_istemek', 'vb_sevmek'],
         tenses: ['future']
+      },
+      {
+        id: 'u11_c5',
+        tips: [{ icon: '🚫', text: 'La négation reste collée au verbe, comme au présent : "gitmedim" (je n\'y suis pas allé), "gitmeyeceğim" (je n\'irai pas) — jamais un mot "pas" séparé.' }],
+        canDo: 'Je peux dire ce que je n\'ai pas fait et ce que je ne ferai pas',
+        grammarIds: ['g_negatif_passe_futur'],
+        title: 'Je n\'ai pas... / Je ne ferai pas...',
+        goal: 'Nier une action au passé et au futur',
+        xpReward: 100,
+        time: 10,
+        tags: ['Négation', 'A2'],
+        vocabIds: [],
+        verbIds: ['vb_gitmek', 'vb_yapmak', 'vb_yemek', 'vb_gormek'],
+        tenses: ['past_neg', 'future_neg']
       }
     ]
   },

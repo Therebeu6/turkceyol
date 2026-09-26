@@ -2,6 +2,8 @@
    TürkçeYol — verbs.js
    Base de données des verbes avec conjugaison
    Champ `negations.present` pour le présent négatif (-miyor)
+   Champ `negations.past`/`negations.future` (v9 AXE 2.1, 12 verbes) pour la
+   négation passé (-medi/-madı) et futur (-meyecek/-mayacak)
    ═══════════════════════════════════════════════ */
 
 window.AppVerbs = [
@@ -39,7 +41,9 @@ window.AppVerbs = [
       present: {
         ben: 'olmuyorum', sen: 'olmuyorsun', o: 'olmuyor',
         biz: 'olmuyoruz', siz: 'olmuyorsunuz', onlar: 'olmuyorlar'
-      }
+      },
+      past: { ben: 'olmadım', sen: 'olmadın', o: 'olmadı', biz: 'olmadık', siz: 'olmadınız', onlar: 'olmadılar' },
+      future: { ben: 'olmayacağım', sen: 'olmayacaksın', o: 'olmayacak', biz: 'olmayacağız', siz: 'olmayacaksınız', onlar: 'olmayacaklar' }
     }
   },
   {
@@ -75,7 +79,9 @@ window.AppVerbs = [
       present: {
         ben: 'yapmıyorum', sen: 'yapmıyorsun', o: 'yapmıyor',
         biz: 'yapmıyoruz', siz: 'yapmıyorsunuz', onlar: 'yapmıyorlar'
-      }
+      },
+      past: { ben: 'yapmadım', sen: 'yapmadın', o: 'yapmadı', biz: 'yapmadık', siz: 'yapmadınız', onlar: 'yapmadılar' },
+      future: { ben: 'yapmayacağım', sen: 'yapmayacaksın', o: 'yapmayacak', biz: 'yapmayacağız', siz: 'yapmayacaksınız', onlar: 'yapmayacaklar' }
     }
   },
   {
@@ -112,7 +118,9 @@ window.AppVerbs = [
       present: {
         ben: 'gitmiyorum', sen: 'gitmiyorsun', o: 'gitmiyor',
         biz: 'gitmiyoruz', siz: 'gitmiyorsunuz', onlar: 'gitmiyorlar'
-      }
+      },
+      past: { ben: 'gitmedim', sen: 'gitmedin', o: 'gitmedi', biz: 'gitmedik', siz: 'gitmediniz', onlar: 'gitmediler' },
+      future: { ben: 'gitmeyeceğim', sen: 'gitmeyeceksin', o: 'gitmeyecek', biz: 'gitmeyeceğiz', siz: 'gitmeyeceksiniz', onlar: 'gitmeyecekler' }
     }
   },
   {
@@ -148,7 +156,9 @@ window.AppVerbs = [
       present: {
         ben: 'gelmiyorum', sen: 'gelmiyorsun', o: 'gelmiyor',
         biz: 'gelmiyoruz', siz: 'gelmiyorsunuz', onlar: 'gelmiyorlar'
-      }
+      },
+      past: { ben: 'gelmedim', sen: 'gelmedin', o: 'gelmedi', biz: 'gelmedik', siz: 'gelmediniz', onlar: 'gelmediler' },
+      future: { ben: 'gelmeyeceğim', sen: 'gelmeyeceksin', o: 'gelmeyecek', biz: 'gelmeyeceğiz', siz: 'gelmeyeceksiniz', onlar: 'gelmeyecekler' }
     }
   },
   {
@@ -226,7 +236,9 @@ window.AppVerbs = [
       present: {
         ben: 'yemiyorum', sen: 'yemiyorsun', o: 'yemiyor',
         biz: 'yemiyoruz', siz: 'yemiyorsunuz', onlar: 'yemiyorlar'
-      }
+      },
+      past: { ben: 'yemedim', sen: 'yemedin', o: 'yemedi', biz: 'yemedik', siz: 'yemediniz', onlar: 'yemediler' },
+      future: { ben: 'yemeyeceğim', sen: 'yemeyeceksin', o: 'yemeyecek', biz: 'yemeyeceğiz', siz: 'yemeyeceksiniz', onlar: 'yemeyecekler' }
     }
   },
   {
@@ -262,7 +274,9 @@ window.AppVerbs = [
       present: {
         ben: 'içmiyorum', sen: 'içmiyorsun', o: 'içmiyor',
         biz: 'içmiyoruz', siz: 'içmiyorsunuz', onlar: 'içmiyorlar'
-      }
+      },
+      past: { ben: 'içmedim', sen: 'içmedin', o: 'içmedi', biz: 'içmedik', siz: 'içmediniz', onlar: 'içmediler' },
+      future: { ben: 'içmeyeceğim', sen: 'içmeyeceksin', o: 'içmeyecek', biz: 'içmeyeceğiz', siz: 'içmeyeceksiniz', onlar: 'içmeyecekler' }
     }
   },
   {
@@ -299,7 +313,9 @@ window.AppVerbs = [
       present: {
         ben: 'istemiyorum', sen: 'istemiyorsun', o: 'istemiyor',
         biz: 'istemiyoruz', siz: 'istemiyorsunuz', onlar: 'istemiyorlar'
-      }
+      },
+      past: { ben: 'istemedim', sen: 'istemedin', o: 'istemedi', biz: 'istemedik', siz: 'istemediniz', onlar: 'istemediler' },
+      future: { ben: 'istemeyeceğim', sen: 'istemeyeceksin', o: 'istemeyecek', biz: 'istemeyeceğiz', siz: 'istemeyeceksiniz', onlar: 'istemeyecekler' }
     }
   },
   {
@@ -376,7 +392,9 @@ window.AppVerbs = [
       present: {
         ben: 'çalışmıyorum', sen: 'çalışmıyorsun', o: 'çalışmıyor',
         biz: 'çalışmıyoruz', siz: 'çalışmıyorsunuz', onlar: 'çalışmıyorlar'
-      }
+      },
+      past: { ben: 'çalışmadım', sen: 'çalışmadın', o: 'çalışmadı', biz: 'çalışmadık', siz: 'çalışmadınız', onlar: 'çalışmadılar' },
+      future: { ben: 'çalışmayacağım', sen: 'çalışmayacaksın', o: 'çalışmayacak', biz: 'çalışmayacağız', siz: 'çalışmayacaksınız', onlar: 'çalışmayacaklar' }
     }
   },
   {
@@ -412,7 +430,9 @@ window.AppVerbs = [
       present: {
         ben: 'sevmiyorum', sen: 'sevmiyorsun', o: 'sevmiyor',
         biz: 'sevmiyoruz', siz: 'sevmiyorsunuz', onlar: 'sevmiyorlar'
-      }
+      },
+      past: { ben: 'sevmedim', sen: 'sevmedin', o: 'sevmedi', biz: 'sevmedik', siz: 'sevmediniz', onlar: 'sevmediler' },
+      future: { ben: 'sevmeyeceğim', sen: 'sevmeyeceksin', o: 'sevmeyecek', biz: 'sevmeyeceğiz', siz: 'sevmeyeceksiniz', onlar: 'sevmeyecekler' }
     }
   },
   {
@@ -520,7 +540,9 @@ window.AppVerbs = [
       present: {
         ben: 'bilmiyorum', sen: 'bilmiyorsun', o: 'bilmiyor',
         biz: 'bilmiyoruz', siz: 'bilmiyorsunuz', onlar: 'bilmiyorlar'
-      }
+      },
+      past: { ben: 'bilmedim', sen: 'bilmedin', o: 'bilmedi', biz: 'bilmedik', siz: 'bilmediniz', onlar: 'bilmediler' },
+      future: { ben: 'bilmeyeceğim', sen: 'bilmeyeceksin', o: 'bilmeyecek', biz: 'bilmeyeceğiz', siz: 'bilmeyeceksiniz', onlar: 'bilmeyecekler' }
     }
   },
   {
@@ -556,7 +578,9 @@ window.AppVerbs = [
       present: {
         ben: 'almıyorum', sen: 'almıyorsun', o: 'almıyor',
         biz: 'almıyoruz', siz: 'almıyorsunuz', onlar: 'almıyorlar'
-      }
+      },
+      past: { ben: 'almadım', sen: 'almadın', o: 'almadı', biz: 'almadık', siz: 'almadınız', onlar: 'almadılar' },
+      future: { ben: 'almayacağım', sen: 'almayacaksın', o: 'almayacak', biz: 'almayacağız', siz: 'almayacaksınız', onlar: 'almayacaklar' }
     },
     examples: [
       { tr: 'Her gün gazete alıyorum.', fr: 'J\'achète le journal tous les jours.' },
@@ -845,7 +869,9 @@ window.AppVerbs = [
       present: {
         ben: 'görmüyorum', sen: 'görmüyorsun', o: 'görmüyor',
         biz: 'görmüyoruz', siz: 'görmüyorsunuz', onlar: 'görmüyorlar'
-      }
+      },
+      past: { ben: 'görmedim', sen: 'görmedin', o: 'görmedi', biz: 'görmedik', siz: 'görmediniz', onlar: 'görmediler' },
+      future: { ben: 'görmeyeceğim', sen: 'görmeyeceksin', o: 'görmeyecek', biz: 'görmeyeceğiz', siz: 'görmeyeceksiniz', onlar: 'görmeyecekler' }
     },
     examples: [
       { tr: 'Her gün seni görüyorum.', fr: 'Je te vois tous les jours.' },
