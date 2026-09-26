@@ -132,6 +132,10 @@ window.Units = {
     // Barre de progression globale
     document.getElementById('global-prog-label').textContent = `${completedTotal} / ${totalChapters} chapitres`;
     document.getElementById('global-prog-fill').style.width = ((completedTotal / totalChapters) * 100) + '%';
+
+    // Sous-titre — nombre d'unités réel, jamais figé en dur (v10 AXE 6.5, relecture Codex)
+    const subEl = document.getElementById('units-sub');
+    if (subEl) subEl.textContent = `${AppUnits.length} unités · du zéro à A1 solide`;
   },
 
   startChapter(unitId, chapterId) {

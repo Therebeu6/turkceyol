@@ -7,6 +7,13 @@ window.Verbs = {
   _initialized: false,
 
   render() {
+    // Sous-titre — comptes réels, jamais figés en dur (v10 AXE 6.5, relecture Codex)
+    const subEl = document.getElementById('verbs-sub');
+    if (subEl) {
+      const maxTenses = AppVerbs.reduce((max, v) => Math.max(max, Object.keys(v.conjugations || {}).length), 0);
+      subEl.textContent = `${AppVerbs.length} verbes essentiels · jusqu'à ${maxTenses} temps · formes négatives`;
+    }
+
     this.renderList(AppVerbs);
 
     if (!this._initialized) {

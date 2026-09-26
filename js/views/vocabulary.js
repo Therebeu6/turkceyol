@@ -7,9 +7,9 @@ window.Vocabulary = {
   _initialized: false,
 
   render() {
-    // Mise à jour compteur
-    const sub = document.querySelector('#view-vocabulary .view-sub');
-    if (sub) sub.textContent = `${AppVocabulary.length} mots · par thème`;
+    // Mise à jour compteur — nombre réel, jamais figé en dur (v10 AXE 6.5, relecture Codex)
+    const sub = document.getElementById('vocabulary-sub');
+    if (sub) sub.textContent = `${AppVocabulary.length} mots par thème`;
 
     this.renderList(AppVocabulary);
 

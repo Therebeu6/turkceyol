@@ -641,10 +641,15 @@
 > "-" à la place d'une vraie forme) : aoriste + passé narratif pour les 24 verbes qui les ont
 > (v9 AXE), négation présent/passé/futur pour les verbes qui les ont (négation passé/futur
 > livrée par v9 AXE 2.1, 12 verbes).
-> **Vérifié** par un test hors-navigateur (DOM minimal simulé en `vm`, comme les autres outils)
-> sur deux cas réels : `vb_olmak` (couverture complète — les 5 sections s'affichent) et
-> `vb_kapatmak` (ni aoriste ni passé narratif, seule la négation présente existe — seule cette
-> section s'affiche). Plus les 4 outils `tools/` existants, tous verts.
+> **Correctif (relecture externe, Codex)** : la preuve initiale (DOM minimal simulé) n'existait
+> que sous forme de script jetable, non rejouable. Committée en tant que nouvel outil,
+> `tools/verify-verb-detail.js` (même famille que les autres `tools/`) : trouve dynamiquement
+> dans `AppVerbs` un verbe à couverture complète (aoriste + passé narratif + les 3 négations —
+> `vb_olmak` aujourd'hui) et vérifie que les 5 sections optionnelles s'affichent, puis un verbe
+> minimal (ni aoriste ni passé narratif, seule la négation présente — `vb_kapatmak` aujourd'hui)
+> et vérifie que SEULE cette section s'affiche. Les deux cas sont retrouvés par leurs propriétés
+> réelles (jamais par leur id en dur), donc le test reste valide même si ces verbes précis
+> changent de forme plus tard. Plus les 4 autres outils `tools/` existants, tous verts.
 
 ### 6.3 — Un seul calcul de niveau · **S**
 
@@ -711,14 +716,19 @@
 > (`daily.js`) : `« X / Y XP aujourd'hui »`, ou `« Défi réussi ! 🏆 »` + `« Y XP atteints
 > aujourd'hui »` une fois l'objectif atteint. Vérifié par dump DOM headless (Chrome) sur la
 > vue `#dashboard`.
-> Textes périmés corrigés en dur, tous recalculés depuis les vraies données actuelles
-> (`tools/validate-data.js`) plutôt que ré-inventés :
-> - `index.html:167` : « 12 unités » → **18 unités** (le « A1 solide » n'est pas retouché ici —
->   la vérification réelle des niveaux CECRL est le travail de 6.6, pas une simple retouche de
->   texte) ;
-> - `index.html:208` : « 20 verbes essentiels · 3 temps » → **« 48 verbes essentiels · jusqu'à
->   5 temps · formes négatives »** (48 verbes au total, dont 24 avec aoriste + passé narratif) ;
-> - `index.html:227` : « 308+ mots » → **524 mots** ;
+> **Correctif (relecture externe, Codex)** : la première version corrigeait les nombres mais
+> les laissait écrits en dur dans `index.html` — justes aujourd'hui, redevenant faux au
+> prochain ajout de contenu. Les 3 compteurs sont maintenant **réellement calculés à chaque
+> `render()`** depuis les données, jamais depuis une valeur figée :
+> - `index.html:167` (`#units-sub`) : `AppUnits.length` unités, mis à jour dans
+>   `units.js:_renderReal` (le « A1 solide » n'est pas retouché ici — la vérification réelle
+>   des niveaux CECRL est le travail de 6.6, pas une simple retouche de texte) ;
+> - `index.html:208` (`#verbs-sub`) : `AppVerbs.length` verbes et le nombre maximal réel de
+>   temps parmi tous les verbes (`Object.keys(v.conjugations).length`), mis à jour dans
+>   `verbs.js:render` ;
+> - `index.html:227` (`#vocabulary-sub`) : `AppVocabulary.length` mots — cette valeur était déjà
+>   recalculée dynamiquement par `vocabulary.js:render` (via `querySelector`), simplement
+>   basculée sur un `id` explicite pour rester cohérente avec les deux autres ;
 > - `index.html:269` : déjà à jour (77 expressions, corrigé lors de l'AXE 6.1) ;
 > - `index.html:169` (« 0 / 50 chapitres ») : confirmé déjà recalculé dynamiquement par
 >   `units.js:133`, aucun changement nécessaire ;
