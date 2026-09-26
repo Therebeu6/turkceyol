@@ -461,6 +461,18 @@
 ## 🅴️ AXE 5 — Combler les trous de contenu
 
 ### 5.1 — Exemples pour les 12 verbes `isFrequent` · **M**
+
+> ✅ **Fait.** 3 exemples (présent/passé/futur) ajoutés aux 12 verbes, chacun utilisant une
+> forme exacte tirée de `conjugations` (script `_detectExampleTense` relancé dessus : les 36
+> nouveaux exemples sont tous reconnus). 44/44 verbes ont maintenant des exemples.
+> **Résidu trouvé au passage, hors du périmètre de 5.1** : 8 exemples **déjà existants** avant
+> cette section (sur des verbes qui avaient déjà des exemples) restent non reconnus par le
+> détecteur — *vb_konusmak* ("Seninle konuşmak istiyorum", un présent d'*istemek* pas de
+> *konuşmak*), *vb_yardim_etmek* (verbe composé "yardım etmek", ses 3 exemples), *vb_unutmak*/
+> *vb_kaybetmek*/*vb_aglamak* (négation future, temps pas encore ajouté à leurs données), et
+> *vb_bulmak* ("bulamıyorum", négatif de capacité -abil, pas la négation simple). Le moteur les
+> exclut déjà par prudence (comportement voulu, cf. AXE 1.2) : ce n'est pas un bug, juste des
+> exemples qui pourraient être remplacés un jour par des versions plus simples.
 - *olmak, yapmak, gitmek, gelmek, yemek, içmek, istemek, çalışmak, sevmek, uyumak, kalkmak,
   bilmek* n'ont **aucun** tableau `examples`. Ces verbes ne peuvent donc pas **eux-mêmes**
   alimenter le cloze, la remise en ordre, la construction de phrase ni l'écoute de phrase.

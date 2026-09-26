@@ -44,7 +44,12 @@ window.AppVerbs = [
       },
       past: { ben: 'olmadım', sen: 'olmadın', o: 'olmadı', biz: 'olmadık', siz: 'olmadınız', onlar: 'olmadılar' },
       future: { ben: 'olmayacağım', sen: 'olmayacaksın', o: 'olmayacak', biz: 'olmayacağız', siz: 'olmayacaksınız', onlar: 'olmayacaklar' }
-    }
+    },
+    examples: [
+      { tr: 'Doktor oluyorum.', fr: 'Je deviens médecin.' },
+      { tr: 'Öğretmen oldum.', fr: 'Je suis devenu(e) professeur.' },
+      { tr: 'Mühendis olacağım.', fr: 'Je deviendrai ingénieur.' }
+    ]
   },
   {
     id: 'vb_yapmak',
@@ -82,7 +87,12 @@ window.AppVerbs = [
       },
       past: { ben: 'yapmadım', sen: 'yapmadın', o: 'yapmadı', biz: 'yapmadık', siz: 'yapmadınız', onlar: 'yapmadılar' },
       future: { ben: 'yapmayacağım', sen: 'yapmayacaksın', o: 'yapmayacak', biz: 'yapmayacağız', siz: 'yapmayacaksınız', onlar: 'yapmayacaklar' }
-    }
+    },
+    examples: [
+      { tr: 'Ne yapıyorsun?', fr: 'Qu\'est-ce que tu fais ?' },
+      { tr: 'Dün ne yaptın?', fr: 'Qu\'as-tu fait hier ?' },
+      { tr: 'Yarın ne yapacaksın?', fr: 'Que feras-tu demain ?' }
+    ]
   },
   {
     id: 'vb_gitmek',
@@ -121,7 +131,12 @@ window.AppVerbs = [
       },
       past: { ben: 'gitmedim', sen: 'gitmedin', o: 'gitmedi', biz: 'gitmedik', siz: 'gitmediniz', onlar: 'gitmediler' },
       future: { ben: 'gitmeyeceğim', sen: 'gitmeyeceksin', o: 'gitmeyecek', biz: 'gitmeyeceğiz', siz: 'gitmeyeceksiniz', onlar: 'gitmeyecekler' }
-    }
+    },
+    examples: [
+      { tr: 'Okula gidiyorum.', fr: 'Je vais à l\'école.' },
+      { tr: 'Dün okula gittim.', fr: 'Hier je suis allé(e) à l\'école.' },
+      { tr: 'Yarın okula gideceğim.', fr: 'Demain j\'irai à l\'école.' }
+    ]
   },
   {
     id: 'vb_gelmek',
@@ -159,7 +174,12 @@ window.AppVerbs = [
       },
       past: { ben: 'gelmedim', sen: 'gelmedin', o: 'gelmedi', biz: 'gelmedik', siz: 'gelmediniz', onlar: 'gelmediler' },
       future: { ben: 'gelmeyeceğim', sen: 'gelmeyeceksin', o: 'gelmeyecek', biz: 'gelmeyeceğiz', siz: 'gelmeyeceksiniz', onlar: 'gelmeyecekler' }
-    }
+    },
+    examples: [
+      { tr: 'Eve geliyorum.', fr: 'Je rentre à la maison.' },
+      { tr: 'Dün eve geldim.', fr: 'Hier je suis rentré(e) à la maison.' },
+      { tr: 'Yarın eve geleceğim.', fr: 'Demain je rentrerai à la maison.' }
+    ]
   },
   {
     id: 'vb_konusmak',
@@ -239,7 +259,12 @@ window.AppVerbs = [
       },
       past: { ben: 'yemedim', sen: 'yemedin', o: 'yemedi', biz: 'yemedik', siz: 'yemediniz', onlar: 'yemediler' },
       future: { ben: 'yemeyeceğim', sen: 'yemeyeceksin', o: 'yemeyecek', biz: 'yemeyeceğiz', siz: 'yemeyeceksiniz', onlar: 'yemeyecekler' }
-    }
+    },
+    examples: [
+      { tr: 'Elma yiyorum.', fr: 'Je mange une pomme.' },
+      { tr: 'Dün balık yedim.', fr: 'Hier j\'ai mangé du poisson.' },
+      { tr: 'Yarın tavuk yiyeceğim.', fr: 'Demain je mangerai du poulet.' }
+    ]
   },
   {
     id: 'vb_icmek',
@@ -277,7 +302,12 @@ window.AppVerbs = [
       },
       past: { ben: 'içmedim', sen: 'içmedin', o: 'içmedi', biz: 'içmedik', siz: 'içmediniz', onlar: 'içmediler' },
       future: { ben: 'içmeyeceğim', sen: 'içmeyeceksin', o: 'içmeyecek', biz: 'içmeyeceğiz', siz: 'içmeyeceksiniz', onlar: 'içmeyecekler' }
-    }
+    },
+    examples: [
+      { tr: 'Çay içiyorum.', fr: 'Je bois du thé.' },
+      { tr: 'Dün kahve içtim.', fr: 'Hier j\'ai bu du café.' },
+      { tr: 'Akşam çay içeceğim.', fr: 'Ce soir je boirai du thé.' }
+    ]
   },
   {
     id: 'vb_istemek',
@@ -316,7 +346,12 @@ window.AppVerbs = [
       },
       past: { ben: 'istemedim', sen: 'istemedin', o: 'istemedi', biz: 'istemedik', siz: 'istemediniz', onlar: 'istemediler' },
       future: { ben: 'istemeyeceğim', sen: 'istemeyeceksin', o: 'istemeyecek', biz: 'istemeyeceğiz', siz: 'istemeyeceksiniz', onlar: 'istemeyecekler' }
-    }
+    },
+    examples: [
+      { tr: 'Su istiyorum.', fr: 'Je veux de l\'eau.' },
+      { tr: 'Yardım istedim.', fr: 'J\'ai demandé de l\'aide.' },
+      { tr: 'Bilet isteyeceğim.', fr: 'Je voudrai un billet.' }
+    ]
   },
   {
     id: 'vb_anlamak',
@@ -395,7 +430,12 @@ window.AppVerbs = [
       },
       past: { ben: 'çalışmadım', sen: 'çalışmadın', o: 'çalışmadı', biz: 'çalışmadık', siz: 'çalışmadınız', onlar: 'çalışmadılar' },
       future: { ben: 'çalışmayacağım', sen: 'çalışmayacaksın', o: 'çalışmayacak', biz: 'çalışmayacağız', siz: 'çalışmayacaksınız', onlar: 'çalışmayacaklar' }
-    }
+    },
+    examples: [
+      { tr: 'Bankada çalışıyorum.', fr: 'Je travaille dans une banque.' },
+      { tr: 'Dün çok çalıştım.', fr: 'Hier j\'ai beaucoup travaillé.' },
+      { tr: 'Yarın çalışacağım.', fr: 'Demain je travaillerai.' }
+    ]
   },
   {
     id: 'vb_sevmek',
@@ -433,7 +473,12 @@ window.AppVerbs = [
       },
       past: { ben: 'sevmedim', sen: 'sevmedin', o: 'sevmedi', biz: 'sevmedik', siz: 'sevmediniz', onlar: 'sevmediler' },
       future: { ben: 'sevmeyeceğim', sen: 'sevmeyeceksin', o: 'sevmeyecek', biz: 'sevmeyeceğiz', siz: 'sevmeyeceksiniz', onlar: 'sevmeyecekler' }
-    }
+    },
+    examples: [
+      { tr: 'Seni seviyorum.', fr: 'Je t\'aime.' },
+      { tr: 'Onu çok sevdim.', fr: 'Je l\'ai beaucoup aimé(e).' },
+      { tr: 'Bu şehri seveceğim.', fr: 'J\'aimerai cette ville.' }
+    ]
   },
   {
     id: 'vb_uyumak',
@@ -469,7 +514,12 @@ window.AppVerbs = [
         ben: 'uyumuyorum', sen: 'uyumuyorsun', o: 'uyumuyor',
         biz: 'uyumuyoruz', siz: 'uyumuyorsunuz', onlar: 'uyumuyorlar'
       }
-    }
+    },
+    examples: [
+      { tr: 'Erken uyuyorum.', fr: 'Je dors tôt.' },
+      { tr: 'Dün geç uyudum.', fr: 'Hier je me suis couché(e) tard.' },
+      { tr: 'Bu gece erken uyuyacağım.', fr: 'Ce soir je dormirai tôt.' }
+    ]
   },
   {
     id: 'vb_kalkmak',
@@ -505,7 +555,12 @@ window.AppVerbs = [
         ben: 'kalkmıyorum', sen: 'kalkmıyorsun', o: 'kalkmıyor',
         biz: 'kalkmıyoruz', siz: 'kalkmıyorsunuz', onlar: 'kalkmıyorlar'
       }
-    }
+    },
+    examples: [
+      { tr: 'Sabah yedide kalkıyorum.', fr: 'Je me lève à sept heures le matin.' },
+      { tr: 'Bugün erken kalktım.', fr: 'Aujourd\'hui je me suis levé(e) tôt.' },
+      { tr: 'Yarın erken kalkacağım.', fr: 'Demain je me lèverai tôt.' }
+    ]
   },
   {
     id: 'vb_bilmek',
@@ -543,7 +598,12 @@ window.AppVerbs = [
       },
       past: { ben: 'bilmedim', sen: 'bilmedin', o: 'bilmedi', biz: 'bilmedik', siz: 'bilmediniz', onlar: 'bilmediler' },
       future: { ben: 'bilmeyeceğim', sen: 'bilmeyeceksin', o: 'bilmeyecek', biz: 'bilmeyeceğiz', siz: 'bilmeyeceksiniz', onlar: 'bilmeyecekler' }
-    }
+    },
+    examples: [
+      { tr: 'Adını biliyorum.', fr: 'Je connais son nom.' },
+      { tr: 'Cevabı hemen bildim.', fr: 'J\'ai tout de suite su la réponse.' },
+      { tr: 'Adresini bileceğim.', fr: 'Je saurai son adresse.' }
+    ]
   },
   {
     id: 'vb_almak',
