@@ -148,14 +148,24 @@ window.Verbs = {
     document.getElementById('vm-past').innerHTML = renderTenseSimple(verb.conjugations.past);
     document.getElementById('vm-fut').innerHTML = renderTenseSimple(verb.conjugations.future);
 
-    const negSection = document.getElementById('vm-neg-section');
-    const negEl = document.getElementById('vm-neg');
-    if (verb.negations && verb.negations.present) {
-      negEl.innerHTML = renderTenseSimple(verb.negations.present);
-      negSection.classList.remove('hidden');
-    } else {
-      negSection.classList.add('hidden');
-    }
+    // v10 AXE 6.2 — chaque temps/négation n'est affiché que s'il existe vraiment pour ce
+    // verbe (24/48 verbes ont l'aoriste et le passé narratif ; les négations passé/futur ne
+    // couvrent que 12 verbes) : pas de section vide ni de "-" à la place d'une vraie forme.
+    const showOptional = (sectionId, cellId, tenseObj) => {
+      const section = document.getElementById(sectionId);
+      if (tenseObj) {
+        document.getElementById(cellId).innerHTML = renderTenseSimple(tenseObj);
+        section.classList.remove('hidden');
+      } else {
+        section.classList.add('hidden');
+      }
+    };
+
+    showOptional('vm-aorist-section', 'vm-aorist', verb.conjugations.aorist);
+    showOptional('vm-narr-section', 'vm-narr', verb.conjugations.pastNarrative);
+    showOptional('vm-neg-pres-section', 'vm-neg-pres', verb.negations && verb.negations.present);
+    showOptional('vm-neg-past-section', 'vm-neg-past', verb.negations && verb.negations.past);
+    showOptional('vm-neg-fut-section', 'vm-neg-fut', verb.negations && verb.negations.future);
 
     document.getElementById('verb-modal').classList.remove('hidden');
   }

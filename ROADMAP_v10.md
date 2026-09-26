@@ -633,9 +633,18 @@
   plusieurs visites de l'écran, et tous les thèmes présents dans les données ont un filtre.
 
 ### 6.2 — Fiche verbe incomplète · **S**
-- `verbs.js:147-149` n'affiche que présent, passé et futur. Afficher aussi l'aoriste et le
-  passé narratif pour les 24 verbes qui les ont, et la négation des autres temps si v9 AXE 2
-  est livré.
+
+> ✅ **Fait.** `verbs.js:showDetail` n'affichait que présent/passé/futur + négatif présent.
+> Ajout de 5 sections optionnelles dans `index.html` (`vm-aorist-section`, `vm-narr-section`,
+> `vm-neg-pres-section`, `vm-neg-past-section`, `vm-neg-fut-section`), chacune affichée ou
+> masquée **individuellement selon les données réelles du verbe** (pas de section vide, pas de
+> "-" à la place d'une vraie forme) : aoriste + passé narratif pour les 24 verbes qui les ont
+> (v9 AXE), négation présent/passé/futur pour les verbes qui les ont (négation passé/futur
+> livrée par v9 AXE 2.1, 12 verbes).
+> **Vérifié** par un test hors-navigateur (DOM minimal simulé en `vm`, comme les autres outils)
+> sur deux cas réels : `vb_olmak` (couverture complète — les 5 sections s'affichent) et
+> `vb_kapatmak` (ni aoriste ni passé narratif, seule la négation présente existe — seule cette
+> section s'affiche). Plus les 4 outils `tools/` existants, tous verts.
 
 ### 6.3 — Un seul calcul de niveau · **S**
 
