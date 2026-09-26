@@ -1637,6 +1637,43 @@ window.AppVerbs = [
   },
 
   {
+    // v10 AXE 3.6 : nouveau verbe d'émotion, remplace taşımak (porter) — hors thème dans
+    // "Émotions en action". Formes dérivées par analogie avec kalkmak (même radical
+    // monosyllabique en -k, pas de mutation, k→ğ seulement au futur) et vérifiées.
+    id: 'vb_korkmak',
+    infinitive: 'korkmak',
+    stem: 'kork',
+    fr: 'Avoir peur',
+    difficulty: 2,
+    isFrequent: false,
+    conjugations: {
+      present: {
+        ben: 'korkuyorum', sen: 'korkuyorsun', o: 'korkuyor',
+        biz: 'korkuyoruz', siz: 'korkuyorsunuz', onlar: 'korkuyorlar'
+      },
+      past: {
+        ben: 'korktum', sen: 'korktun', o: 'korktu',
+        biz: 'korktuk', siz: 'korktunuz', onlar: 'korktular'
+      },
+      future: {
+        ben: 'korkacağım', sen: 'korkacaksın', o: 'korkacak',
+        biz: 'korkacağız', siz: 'korkacaksınız', onlar: 'korkacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'korkmuyorum', sen: 'korkmuyorsun', o: 'korkmuyor',
+        biz: 'korkmuyoruz', siz: 'korkmuyorsunuz', onlar: 'korkmuyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Köpekten korkuyorum.', fr: 'J\'ai peur du chien.' },
+      { tr: 'Dün çok korktum.', fr: 'Hier j\'ai eu très peur.' },
+      { tr: 'Karanlıktan korkacağım.', fr: 'J\'aurai peur de l\'obscurité.' }
+    ]
+  },
+
+  {
     id: 'vb_tasimak',
     infinitive: 'taşımak',
     stem: 'taşı',
@@ -1701,6 +1738,117 @@ window.AppVerbs = [
       { tr: 'Akşam yemeği hazırlıyorum.', fr: 'Je prépare le dîner.' },
       { tr: 'Sınav için sunum hazırladım.', fr: 'J\'ai préparé une présentation pour l\'examen.' },
       { tr: 'Yarın için plan hazırlayacağım.', fr: 'Je vais préparer un plan pour demain.' }
+    ]
+  },
+
+  /* ── v10 AXE 3.6 — u15_c3 "Tâches ménagères" n'avait aucun verbe de tâche concrète
+     (seulement faire/travailler/préparer/commencer/finir). Formes dérivées par analogie
+     avec başlamak/yıkamak/istemek pour -dı/-yacak, puis vérifiées.
+     ATTENTION (piège corrigé après relecture externe) — présent -Iyor d'un radical en
+     -a/-e à 2 voyelles ou plus : on retire d'abord le -a/-e final, PUIS l'harmonie de
+     -Iyor se recalcule sur la DERNIÈRE VOYELLE RESTANTE du radical tronqué, jamais sur la
+     voyelle qu'on vient de retirer. başlamak (başla → başl, dernière voyelle "a" → ı) et
+     yıkamak (yıka → yık, dernière voyelle "ı" → ı) ne suffisent pas à le prouver, car leur
+     voyelle retirée et leur voyelle restante sont dans la même catégorie par coïncidence.
+     toplamak (topla → topl, dernière voyelle "o" → u) le montre : topluyorum, jamais
+     "toplıyorum" — comme oynamak → oynuyorum, kutlamak → kutluyorum. ── */
+  {
+    id: 'vb_temizlemek',
+    infinitive: 'temizlemek',
+    stem: 'temizle',
+    fr: 'Nettoyer',
+    difficulty: 2,
+    isFrequent: false,
+    conjugations: {
+      present: {
+        ben: 'temizliyorum', sen: 'temizliyorsun', o: 'temizliyor',
+        biz: 'temizliyoruz', siz: 'temizliyorsunuz', onlar: 'temizliyorlar'
+      },
+      past: {
+        ben: 'temizledim', sen: 'temizledin', o: 'temizledi',
+        biz: 'temizledik', siz: 'temizlediniz', onlar: 'temizlediler'
+      },
+      future: {
+        ben: 'temizleyeceğim', sen: 'temizleyeceksin', o: 'temizleyecek',
+        biz: 'temizleyeceğiz', siz: 'temizleyeceksiniz', onlar: 'temizleyecekler'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'temizlemiyorum', sen: 'temizlemiyorsun', o: 'temizlemiyor',
+        biz: 'temizlemiyoruz', siz: 'temizlemiyorsunuz', onlar: 'temizlemiyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Evi temizliyorum.', fr: 'Je nettoie la maison.' },
+      { tr: 'Dün mutfağı temizledim.', fr: 'Hier j\'ai nettoyé la cuisine.' },
+      { tr: 'Yarın odamı temizleyeceğim.', fr: 'Demain je nettoierai ma chambre.' }
+    ]
+  },
+  {
+    id: 'vb_yikamak',
+    infinitive: 'yıkamak',
+    stem: 'yıka',
+    fr: 'Laver',
+    difficulty: 2,
+    isFrequent: false,
+    conjugations: {
+      present: {
+        ben: 'yıkıyorum', sen: 'yıkıyorsun', o: 'yıkıyor',
+        biz: 'yıkıyoruz', siz: 'yıkıyorsunuz', onlar: 'yıkıyorlar'
+      },
+      past: {
+        ben: 'yıkadım', sen: 'yıkadın', o: 'yıkadı',
+        biz: 'yıkadık', siz: 'yıkadınız', onlar: 'yıkadılar'
+      },
+      future: {
+        ben: 'yıkayacağım', sen: 'yıkayacaksın', o: 'yıkayacak',
+        biz: 'yıkayacağız', siz: 'yıkayacaksınız', onlar: 'yıkayacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'yıkamıyorum', sen: 'yıkamıyorsun', o: 'yıkamıyor',
+        biz: 'yıkamıyoruz', siz: 'yıkamıyorsunuz', onlar: 'yıkamıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Arabamı yıkıyorum.', fr: 'Je lave ma voiture.' },
+      { tr: 'Dün arabamı yıkadım.', fr: 'Hier j\'ai lavé ma voiture.' },
+      { tr: 'Yarın arabamı yıkayacağım.', fr: 'Demain je laverai ma voiture.' }
+    ]
+  },
+  {
+    id: 'vb_toplamak',
+    infinitive: 'toplamak',
+    stem: 'topla',
+    fr: 'Ranger / Rassembler',
+    difficulty: 2,
+    isFrequent: false,
+    conjugations: {
+      present: {
+        ben: 'topluyorum', sen: 'topluyorsun', o: 'topluyor',
+        biz: 'topluyoruz', siz: 'topluyorsunuz', onlar: 'topluyorlar'
+      },
+      past: {
+        ben: 'topladım', sen: 'topladın', o: 'topladı',
+        biz: 'topladık', siz: 'topladınız', onlar: 'topladılar'
+      },
+      future: {
+        ben: 'toplayacağım', sen: 'toplayacaksın', o: 'toplayacak',
+        biz: 'toplayacağız', siz: 'toplayacaksınız', onlar: 'toplayacaklar'
+      }
+    },
+    negations: {
+      present: {
+        ben: 'toplamıyorum', sen: 'toplamıyorsun', o: 'toplamıyor',
+        biz: 'toplamıyoruz', siz: 'toplamıyorsunuz', onlar: 'toplamıyorlar'
+      }
+    },
+    examples: [
+      { tr: 'Odamı topluyorum.', fr: 'Je range ma chambre.' },
+      { tr: 'Dün odamı topladım.', fr: 'Hier j\'ai rangé ma chambre.' },
+      { tr: 'Yarın odamı toplayacağım.', fr: 'Demain je rangerai ma chambre.' }
     ]
   }
 ];

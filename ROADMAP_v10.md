@@ -348,6 +348,14 @@
 > 26 avertissements restants sont antérieurs à ce lot (mots à consonne adoucie type
 > *kulak→kulağım*, hors périmètre de 3.1) et relèvent du critère d'acceptation plus large
 > décrit plus bas (validateur tolérant aux formes fléchies), pas encore implémenté.
+>
+> **Nuance de traduction trouvée en relecture externe (Codex), corrigée** : les exemples de
+> *v_sikilmis* et *v_utanmis* traduisaient *Bugün çok sıkılmışım* / *Çok utanmışım* par un
+> présent français plat ("je suis très ennuyé(e)", "j'ai tellement honte"). Or le passé
+> narratif -mış à la première personne sur un état a un sens de **réalisation soudaine**
+> ("je me rends compte que...", "je m'aperçois que..."), déjà documenté par l'app elle-même
+> dans la règle `g_gecmis_mis` ("Çok yorulmuşum" = "je me rends compte que je suis épuisé").
+> Traductions alignées sur cette même formulation.
 
 
 | Où | Erreur | Correction |
@@ -453,6 +461,23 @@
 - Vocabulaire ciblé, et au moins 3 exercices propres à chacun.
 
 ### 3.6 — Mots et verbes hors thème · **S**
+
+> ✅ **Fait**, les 5 lignes (`vb_sevmek` en u16_c2 était déjà réglé par l'AXE 2.2). Nouveau
+> verbe *korkmak* (avoir peur) pour u18_c4, dérivé par analogie avec *kalkmak* (même radical
+> monosyllabique en -k) et vérifié. 3 nouveaux verbes de tâches concrètes pour u15_c3 —
+> *temizlemek, yıkamak, toplamak* — dérivés par analogie avec *istemek*/*başlamak*/*yıkamak*.
+>
+> **Erreur de dérivation trouvée en relecture externe (Codex), corrigée** : le présent de
+> *toplamak* était donné comme *toplıyorum*, par analogie fautive avec *başlamak → başlıyorum*.
+> Cette analogie ne tient pas : la règle réelle est que le -a final tombe devant -Iyor, puis
+> l'harmonie se recalcule sur la **dernière voyelle qui reste** dans le radical tronqué — pas
+> sur la voyelle qu'on vient de retirer. *başla* → *başl* (dernière voyelle restante "a" → ı)
+> et *başlıyorum* coïncident par hasard avec l'ancienne règle fautive, ce qui l'a rendue
+> plausible ; *topla* → *topl* (dernière voyelle restante "o" → u) la contredit et donne
+> *topluyorum*, comme *oynamak → oynuyorum* ou *kutlamak → kutluyorum*. Le premier passage
+> de `_detectExampleTense` n'avait rien détecté car la table de conjugaison ET l'exemple
+> contenaient la même erreur — un script ne peut vérifier que la cohérence interne des
+> données, jamais leur exactitude linguistique absolue.
 | Chapitre | Hors thème | Action |
 |---|---|---|
 | u18_c4 « Émotions en action » | `vb_tasimak` (porter) | le remplacer par un verbe d'émotion (*korkmak*, *kızmak*), à dériver et vérifier |

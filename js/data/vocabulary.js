@@ -348,11 +348,11 @@ window.AppVocabulary = [
   { id: 'v_endiseli', tr: 'Endişeli', fr: 'Inquiet/Inquiète', topic: 'emotions', type: 'adjectif', difficulty: 2, example: { tr: 'Annem çok endişeli.', fr: 'Ma mère est très inquiète.' } },
   { id: 'v_korkmus', tr: 'Korkmuş', fr: 'Effrayé(e)', topic: 'emotions', type: 'adjectif', difficulty: 2, example: { tr: 'Çocuk korkmuş.', fr: 'L\'enfant est effrayé.' } },
   { id: 'v_heyecanli', tr: 'Heyecanlı', fr: 'Enthousiaste / Excité(e)', topic: 'emotions', type: 'adjectif', difficulty: 2, example: { tr: 'Yarın için çok heyecanlıyım.', fr: 'Je suis très enthousiaste pour demain.' } },
-  { id: 'v_sikilmis', tr: 'Sıkılmış', fr: 'Ennuyé(e)', topic: 'emotions', type: 'adjectif', difficulty: 2, example: { tr: 'Bugün çok sıkılmışım.', fr: 'Je suis très ennuyé(e) aujourd\'hui.' } },
+  { id: 'v_sikilmis', tr: 'Sıkılmış', fr: 'Ennuyé(e)', topic: 'emotions', type: 'adjectif', difficulty: 2, example: { tr: 'Bugün çok sıkılmışım.', fr: 'Je me rends compte que je m\'ennuie beaucoup aujourd\'hui.' } },
   { id: 'v_memnun', tr: 'Memnun', fr: 'Content(e) / Satisfait(e)', topic: 'emotions', type: 'adjectif', difficulty: 2, example: { tr: 'Sonuçtan memnunum.', fr: 'Je suis content(e) du résultat.' } },
   { id: 'v_kizgin', tr: 'Kızgın', fr: 'Fâché(e) / En colère', topic: 'emotions', type: 'adjectif', difficulty: 2, example: { tr: 'Ona çok kızgınım.', fr: 'Je suis très fâché(e) contre lui/elle.' } },
   { id: 'v_neseli', tr: 'Neşeli', fr: 'Joyeux/Joyeuse', topic: 'emotions', type: 'adjectif', difficulty: 2, example: { tr: 'O her zaman neşeli.', fr: 'Il/Elle est toujours joyeux/joyeuse.' } },
-  { id: 'v_utanmis', tr: 'Utanmış', fr: 'Honteux/Honteuse', topic: 'emotions', type: 'adjectif', difficulty: 3, example: { tr: 'Çok utanmışım.', fr: 'J\'ai tellement honte.' } },
+  { id: 'v_utanmis', tr: 'Utanmış', fr: 'Honteux/Honteuse', topic: 'emotions', type: 'adjectif', difficulty: 3, example: { tr: 'Çok utanmışım.', fr: 'Je me rends compte que j\'ai vraiment honte.' } },
   { id: 'v_merakli', tr: 'Meraklı', fr: 'Curieux/Curieuse', topic: 'emotions', type: 'adjectif', difficulty: 2, example: { tr: 'Çocuklar her şeye meraklı.', fr: 'Les enfants sont curieux de tout.' } },
   { id: 'v_rahat', tr: 'Rahat', fr: 'Détendu(e) / À l\'aise', topic: 'emotions', type: 'adjectif', difficulty: 2, example: { tr: 'Şimdi çok rahatım.', fr: 'Je suis très détendu(e) maintenant.' } },
 

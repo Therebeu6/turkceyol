@@ -396,7 +396,8 @@ window.AppUnits = [
         xpReward: 80,
         time: 9,
         tags: ['Nourriture', 'A1'],
-        vocabIds: ['v_lezzetli', 'v_tatli', 'v_aci', 'v_guzel', 'v_iyi', 'v_ucuz', 'v_pahali', 'v_ekmek', 'v_et', 'v_tavuk', 'v_su', 'v_cay', 'v_seviyorum', 'v_sevmiyorum'],
+        // v10 AXE 3.6 : Ucuz/Pahalı (prix) retirés — hors thème ici, déjà enseignés en u7.
+        vocabIds: ['v_lezzetli', 'v_tatli', 'v_aci', 'v_guzel', 'v_iyi', 'v_ekmek', 'v_et', 'v_tavuk', 'v_su', 'v_cay', 'v_seviyorum', 'v_sevmiyorum'],
         // v10 AXE 1.5 : ces 2 chunks portent le canDo ("dire ce que j'aime") — toujours
         // enseignés, jamais laissés au tirage aléatoire de l'échantillon.
         requiredVocabIds: ['v_seviyorum', 'v_sevmiyorum'],
@@ -765,7 +766,8 @@ window.AppUnits = [
         xpReward: 150,
         time: 12,
         tags: ['Conversation', 'B1'],
-        vocabIds: ['v_arkadas', 'v_bugun', 'v_yarin', 'v_dun', 'v_otel', 'v_saat'],
+        // v10 AXE 3.6 : Otel retiré — hors thème pour une rencontre informelle entre amis.
+        vocabIds: ['v_arkadas', 'v_bugun', 'v_yarin', 'v_dun', 'v_saat'],
         verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_olmak', 'vb_konusmak', 'vb_yapmak']
       },
       {
@@ -935,7 +937,9 @@ window.AppUnits = [
         time: 10,
         tags: ['Maison', 'Verbes', 'A2'],
         vocabIds: ['v_temiz', 'v_kirli', 'v_duzen', 'v_ev'],
-        verbIds: ['vb_yapmak', 'vb_calismak', 'vb_hazirlamak', 'vb_baslamak', 'vb_bitirmek'],
+        // v10 AXE 3.6 : "tâches ménagères" n'avait aucun verbe de tâche concrète — ajout de
+        // temizlemek/yıkamak/toplamak, à côté des verbes déjà présents.
+        verbIds: ['vb_yapmak', 'vb_calismak', 'vb_hazirlamak', 'vb_baslamak', 'vb_bitirmek', 'vb_temizlemek', 'vb_yikamak', 'vb_toplamak'],
         tenses: ['present', 'past']
       },
       {
@@ -1144,7 +1148,9 @@ window.AppUnits = [
         time: 11,
         tags: ['Verbes A2', 'Émotions', 'A2'],
         vocabIds: ['v_mutlu', 'v_uzgun', 'v_kizgin', 'v_saskin'],
-        verbIds: ['vb_aglamak', 'vb_gulmek', 'vb_tasimak', 'vb_sevmek'],
+        // v10 AXE 3.6 : vb_tasimak (porter) retiré — hors thème ; vb_korkmak (avoir peur) le
+        // remplace, un vrai verbe d'émotion.
+        verbIds: ['vb_aglamak', 'vb_gulmek', 'vb_korkmak', 'vb_sevmek'],
         tenses: ['present', 'past']
       },
       {
