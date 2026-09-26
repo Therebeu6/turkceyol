@@ -1121,7 +1121,8 @@ window.AppUnits = [
       {
         id: 'u18_c3',
         canDo: 'Je peux utiliser trouver, perdre, dire, préparer',
-        grammarIds: ['g_ki_relatif'],
+        // v10 AXE 3.4 : g_ki_relatif retiré (aucun rapport avec ces verbes) — il enseigne
+        // désormais u18_c8, où il a un vrai rôle.
         dialogueIds: ['d_telephone_portable'],
         title: 'Trouver, perdre, dire, préparer',
         goal: 'Verbes essentiels du quotidien',
@@ -1135,7 +1136,8 @@ window.AppUnits = [
       {
         id: 'u18_c4',
         canDo: 'Je peux exprimer des émotions avec des verbes',
-        grammarIds: ['g_suffixe_avec'],
+        // v10 AXE 3.4 : g_suffixe_avec retiré (aucun rapport avec les émotions) — il enseigne
+        // désormais u18_c7, où il a un vrai rôle.
         title: 'Émotions en action',
         goal: 'Exprimer des émotions avec des verbes',
         xpReward: 110,
@@ -1172,6 +1174,36 @@ window.AppUnits = [
         vocabIds: [],
         verbIds: ['vb_gitmek', 'vb_gormek', 'vb_almak', 'vb_duymak', 'vb_gelmek', 'vb_yapmak'],
         tenses: ['pastNarrative']
+      },
+      {
+        // v10 AXE 3.5 : nouveau chapitre, ajout pur — donne enfin une vraie place à
+        // g_suffixe_avec, jusqu'ici rattaché à u18_c4 sans aucun rapport.
+        id: 'u18_c7',
+        tips: [{ icon: '🤝', text: '-le/-la ("avec") se colle directement au mot, comme un suffixe de plus : arkadaşımla = avec mon ami. Après une voyelle, on ajoute un -y- : otobüsle mais arabayla.' }],
+        canDo: 'Je peux dire avec qui ou avec quoi je fais quelque chose',
+        grammarIds: ['g_suffixe_avec'],
+        title: 'Avec qui, avec quoi',
+        goal: 'Exprimer l\'accompagnement avec le suffixe -le/-la',
+        xpReward: 100,
+        time: 9,
+        tags: ['Grammaire', 'A2'],
+        vocabIds: ['v_arkadas', 'v_otobus', 'v_araba', 'v_cay', 'v_seker'],
+        verbIds: []
+      },
+      {
+        // v10 AXE 3.5 : nouveau chapitre, ajout pur — donne enfin une vraie place à
+        // g_ki_relatif, jusqu'ici rattaché à u18_c3 sans aucun rapport.
+        id: 'u18_c8',
+        tips: [{ icon: '📍', text: '-ki transforme un mot en "celui/celle de..." : evdeki = celui de la maison, benimki = le mien. Il ne change jamais de forme.' }],
+        canDo: 'Je peux dire "celui de..." avec le suffixe -ki',
+        grammarIds: ['g_ki_relatif'],
+        title: 'Celui de...',
+        goal: 'Utiliser le suffixe relatif -ki',
+        xpReward: 100,
+        time: 9,
+        tags: ['Grammaire', 'A2'],
+        vocabIds: ['v_ev', 'v_yarin', 'v_okul', 'v_masa'],
+        verbIds: []
       }
     ]
   }

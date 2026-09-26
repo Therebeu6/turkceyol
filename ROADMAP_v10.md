@@ -425,8 +425,8 @@
 
 ### 3.4 — Règles grammaticales mal rattachées · **S**
 
-> ✅ **Fait pour les 2 premières lignes** (u1_c1, u6_c4), traitées en même temps que l'AXE 4
-> ci-dessus. Les 2 dernières (u18_c3, u18_c4) restent liées à l'AXE 3.5, pas encore fait.
+> ✅ **Fait, les 4 lignes.** u1_c1/u6_c4 traitées avec l'AXE 4 ; u18_c3/u18_c4 traitées avec
+> l'AXE 3.5 ci-dessous, qui donne à `g_ki_relatif`/`g_suffixe_avec` leur propre chapitre.
 | Chapitre | Règle actuelle | Problème | Action |
 |---|---|---|---|
 | u1_c1 « Sons et lettres » | `g_harmonie_majeure` | ses exercices testent le locatif (u5) et le pluriel (u3) | retirer ; la règle reste en u10_c1 |
@@ -435,6 +435,18 @@
 | u18_c4 « Émotions en action » | `g_suffixe_avec` | aucun rapport | voir 3.5 |
 
 ### 3.5 — Donner une vraie place à `-ki` et `-le` · **M**
+
+> ✅ **Fait.** 2 nouveaux chapitres en fin d'u18 (ajout pur, aucun id existant renommé) :
+> u18_c7 « Avec qui, avec quoi » (`g_suffixe_avec`) et u18_c8 « Celui de... »
+> (`g_ki_relatif`). Les règles elles-mêmes existaient déjà avec ≥3 exercices vérifiés ; le
+> travail était de leur donner un chapitre où elles ont un vrai rapport avec le contenu.
+> `u18_c3`/`u18_c4` ont perdu ces `grammarIds` mal rattachés (AXE 3.4, 2 lignes restantes).
+> **Ajustement non prévu par le plan initial** : sans vocabulaire ni verbes propres
+> (`vocabIds`/`verbIds` vides), une leçon de suffixe pur ne produisait que 3 exercices contre
+> 15-17 pour les chapitres comparables (u18_c5/u18_c6, qui ont des verbes). Ajout de 4-5 mots
+> déjà connus et directement liés aux exemples de la règle (*arkadaş, otobüs, araba, çay,
+> şeker* pour -le ; *ev, yarın, okul, masa* pour -ki), ce qui porte chaque nouveau chapitre à
+> 15 exercices, du même ordre que le reste du parcours.
 - Nouveaux chapitres (nouveaux ids, rien de supprimé) en fin d'u18 :
   - `-le/-la` : *arkadaşımla, otobüsle, çayı şekerle* ;
   - `-ki` : *evdeki, yarınki, benimki*.
