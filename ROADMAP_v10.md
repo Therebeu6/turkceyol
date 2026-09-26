@@ -694,6 +694,35 @@
   heure de Paris compte pour le bon jour.
 
 ### 6.5 — Défi du jour et textes périmés · **S**
+
+> ✅ **Fait.** Carte « Défi du jour » (`index.html:136`) : le texte figé « 5 questions · ~3 min »
+> n'était en réalité JAMAIS mis à jour par le JS (vérifié — aucune référence à `dc-name`/
+> `dc-desc` ailleurs que le HTML statique). Remplacé par un vrai rendu dynamique dans
+> `dashboard.js` (`_renderReal`), aligné sur le même objectif d'XP que la vue Défi du jour
+> (`daily.js`) : `« X / Y XP aujourd'hui »`, ou `« Défi réussi ! 🏆 »` + `« Y XP atteints
+> aujourd'hui »` une fois l'objectif atteint. Vérifié par dump DOM headless (Chrome) sur la
+> vue `#dashboard`.
+> Textes périmés corrigés en dur, tous recalculés depuis les vraies données actuelles
+> (`tools/validate-data.js`) plutôt que ré-inventés :
+> - `index.html:167` : « 12 unités » → **18 unités** (le « A1 solide » n'est pas retouché ici —
+>   la vérification réelle des niveaux CECRL est le travail de 6.6, pas une simple retouche de
+>   texte) ;
+> - `index.html:208` : « 20 verbes essentiels · 3 temps » → **« 48 verbes essentiels · jusqu'à
+>   5 temps · formes négatives »** (48 verbes au total, dont 24 avec aoriste + passé narratif) ;
+> - `index.html:227` : « 308+ mots » → **524 mots** ;
+> - `index.html:269` : déjà à jour (77 expressions, corrigé lors de l'AXE 6.1) ;
+> - `index.html:169` (« 0 / 50 chapitres ») : confirmé déjà recalculé dynamiquement par
+>   `units.js:133`, aucun changement nécessaire ;
+> - `achievements.js:12` : « Maîtriser 10 verbes (3 temps) » → **« Maîtriser 10 verbes. »** — le
+>   qualificatif « (3 temps) » ne correspondait à aucune condition réelle (`_countMastered`
+>   compte des verbes maîtrisés au sens SRS, indépendamment du nombre de temps) ;
+> - `README.md` : « 12 unités » → 18 unités et 76 chapitres ; ajout des fonctionnalités
+>   introduites entre v5 et v8 qui manquaient (Phrases & mini-dialogues, Mode écoute &
+>   Histoires, gels de série et mode pause), et des comptes à jour (524 mots, 48 verbes, 77
+>   phrases).
+> **Vérifié par les 4 outils existants** (`validate-data.js`, `smoke-test.js`,
+> `verify-tense-gating.js`, `verify-streak.js`), tous verts, plus un test manuel headless du
+> rendu de la carte Défi du jour.
 - La carte d'accueil annonce « 5 questions · ~3 min » (`index.html:136`), alors que le défi
   suit l'objectif d'XP. Afficher l'objectif réel (ex. « 50 XP · objectif du jour »).
 - Textes périmés, à générer depuis les données plutôt qu'écrire en dur :

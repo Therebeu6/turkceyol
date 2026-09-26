@@ -81,6 +81,13 @@ window.Dashboard = {
       document.getElementById('goal-status').classList.remove('text-success');
     }
 
+    // 3b. Défi du jour (carte résumé) — objectif réel en XP, plus de texte figé (v10 AXE 6.5)
+    const dcDone = data.dailyXP >= data.dailyGoal;
+    document.getElementById('dc-name').textContent = dcDone ? 'Défi réussi ! 🏆' : 'Défi du jour';
+    document.getElementById('dc-desc').textContent = dcDone
+      ? `${data.dailyGoal} XP atteints aujourd'hui`
+      : `${data.dailyXP} / ${data.dailyGoal} XP aujourd'hui`;
+
     // 4. Continuer la leçon en cours
     this.renderContinueCard();
 

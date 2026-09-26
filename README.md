@@ -6,11 +6,13 @@ TürkçeYol est une application web d'apprentissage du turc conçue pour les fra
 
 ## 🚀 Fonctionnalités Principales
 
-- **Parcours Pédagogique (Units & Chapters)** : 12 unités progressives, allant des bases absolues jusqu'aux temps complexes (Passé, Futur).
+- **Parcours Pédagogique (Units & Chapters)** : 18 unités et 76 chapitres progressifs, allant des bases absolues jusqu'aux temps complexes (Passé, Futur, Aoriste, Passé narratif).
 - **Répétition Espacée (SRS)** : Un système intelligent de mémorisation qui vous représente les mots, verbes et phrases au bon moment pour ancrer l'apprentissage à long terme.
-- **Dictionnaire & Verbes** : Une base de vocabulaire classée par thèmes et un module de conjugaison dynamique pour s'entraîner aux différentes terminaisons.
+- **Dictionnaire & Verbes** : 524 mots classés par thèmes et 48 verbes avec un module de conjugaison dynamique (jusqu'à 5 temps et formes négatives) pour s'entraîner aux différentes terminaisons.
+- **Phrases & Mini-dialogues** : 77 expressions du quotidien et des dialogues en situations réelles pour s'entraîner à la compréhension et à l'usage.
+- **Mode Écoute & Histoires** : entraînement à la compréhension orale et petites histoires progressives en turc.
 - **Exercices Interactifs** : QCM, flashcards, et traductions inversées.
-- **Gamification** : Gagnez des XP, maintenez votre *streak* (série de jours) et débloquez des badges pour rester motivé au quotidien.
+- **Gamification** : Gagnez des XP, maintenez votre *streak* (série de jours, avec gels et mode pause) et débloquez des badges pour rester motivé au quotidien.
 - **Sauvegarde Locale Privée** : Toute votre progression est sauvegardée en toute sécurité directement dans la mémoire de votre navigateur (`localStorage`). Vous pouvez également importer ou exporter vos données depuis les paramètres !
 
 ## 🛠️ Architecture Technique
