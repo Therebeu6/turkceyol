@@ -64,7 +64,7 @@ window.AppUnits = [
       },
       {
         id: 'u1_c5',
-        tips: [{ icon: '🔢', text: 'Les nombres se combinent logiquement : on üç = 13 (dix-trois), yirmi bir = 21 (vingt-un). Aucune exception !' }],
+        tips: [{ icon: '🔢', text: 'Les nombres se combinent logiquement : on bir = 11 (dix-un), on üç = 13 (dix-trois). Aucune exception !' }],
         canDo: 'Je peux compter de 1 à 10',
         title: 'Les chiffres 1–10',
         goal: 'Compter jusqu\'à 10',

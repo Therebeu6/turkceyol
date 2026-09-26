@@ -341,6 +341,15 @@
 ## 🅲️ AXE 3 — Corriger les contenus faux ou mal placés
 
 ### 3.1 — 9 erreurs factuelles + 2 problèmes d'alignement (tous vérifiés) · **S**
+
+> ✅ **Fait.** Les 11 corrections sont appliquées telles que listées ci-dessous, sans écart.
+> `tools/validate-data.js` confirme : les avertissements passent de 29 à 26 (exactement les 3
+> mots d'émotion corrigés — *v_saskin*, *v_sikilmis*, *v_utanmis* — ne sont plus signalés). Les
+> 26 avertissements restants sont antérieurs à ce lot (mots à consonne adoucie type
+> *kulak→kulağım*, hors périmètre de 3.1) et relèvent du critère d'acceptation plus large
+> décrit plus bas (validateur tolérant aux formes fléchies), pas encore implémenté.
+
+
 | Où | Erreur | Correction |
 |---|---|---|
 | `vb_okumak`, exemple passé | *Dün iki saat ders **çalıştım*** entraîne *çalışmak* | *Dün bir kitap okudum.* / Hier j'ai lu un livre. |

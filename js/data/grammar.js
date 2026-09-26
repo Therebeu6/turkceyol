@@ -38,9 +38,9 @@ window.AppGrammar = [
   {
     id: 'g_ordre_mots',
     title: 'L\'ordre des mots (SOV)',
-    rule: 'La structure de base est Sujet + Objet + Verbe. Le verbe est toujours à la fin de la phrase.',
+    rule: 'L\'ordre neutre de base en turc est Sujet + Objet + Verbe : le verbe ferme la phrase. C\'est l\'ordre à utiliser par défaut, même si le turc autorise d\'autres ordres pour insister sur un mot (à l\'oral surtout) — au niveau A1, garde toujours le verbe à la fin.',
     example: 'Ben (Sujet) elma (Objet) yiyorum (Verbe). -> Je mange une pomme.',
-    traps: ['Ne calquez pas le français « Je mange une pomme » : en turc, le verbe ferme TOUJOURS la phrase (Ben elma yiyorum).'],
+    traps: ['Ne calquez pas le français « Je mange une pomme » : en turc, l\'ordre neutre place le verbe à la fin (Ben elma yiyorum).'],
     exercises: [
       {
         prompt: 'Ordre correct : "elma / yiyorum / Ben" ?',
@@ -136,16 +136,16 @@ window.AppGrammar = [
   {
     id: 'g_negatif_fiil',
     title: 'Négation du verbe (-me/-ma)',
-    rule: 'Pour nier un verbe au présent progressif, on insère -me (voyelle avant) ou -ma (voyelle arrière) entre le radical et -iyor. Le -e/-a tombe devant -iyor : -miyor/-mıyor.',
-    example: 'gidiyorum → gitmiyorum (je ne vais pas) | yapıyorum → yapmıyorum (je ne fais pas)',
+    rule: 'Pour nier un verbe au présent progressif, on insère -me (voyelle avant) ou -ma (voyelle arrière) entre le radical et -iyor. Le -e/-a tombe devant -iyor et se réduit sur les 4 voyelles selon la dernière voyelle du radical : -miyor/-mıyor/-muyor/-müyor.',
+    example: 'gidiyorum → gitmiyorum (je ne vais pas) | yapıyorum → yapmıyorum (je ne fais pas) | okuyorum → okumuyorum (je ne lis pas) | görüyorum → görmüyorum (je ne vois pas)',
     traps: ['Ne cherchez pas un mot « pas » : la négation est DANS le verbe (-mi-/-mı- inséré avant -yor).'],
     exercises: [
       {
         prompt: 'Négatif de "gidiyorum" (je vais) ?',
         answer: 'gitmiyorum',
         options: ['gitmiyorum', 'gidemiyorum', 'gidmiyorum', 'gitmiyor'],
-        hint: 'git + -mi- (e arrière→ma→mı) + yor + um',
-        explanation: 'Après consonne + voyelle arrière → -mı- : gitmiyorum.'
+        hint: 'git → dernière voyelle "i" (avant) → -mi- + yor + um',
+        explanation: '"i" est une voyelle avant → négation -mi- : gitmiyorum.'
       },
       {
         prompt: 'Négatif de "yapıyorum" (je fais) ?',

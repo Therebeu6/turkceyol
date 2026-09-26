@@ -137,7 +137,7 @@ window.AppDialogues = [
       { speaker: 'Müşteri', tr: 'İki kişilik lütfen.', fr: 'Pour deux personnes, s\'il vous plaît.' },
       { speaker: 'Garson', tr: 'Saat kaçta geleceksiniz?', fr: 'À quelle heure viendrez-vous ?' },
       { speaker: 'Müşteri', tr: 'Sekizde. Mümkün mü?', fr: 'À huit heures. C\'est possible ?' },
-      { speaker: 'Garson', tr: 'Evet, tablonuz hazır olacak. İsminiz?', fr: 'Oui, votre table sera prête. Votre nom ?' },
+      { speaker: 'Garson', tr: 'Evet, masanız hazır olacak. İsminiz?', fr: 'Oui, votre table sera prête. Votre nom ?' },
       { speaker: 'Müşteri', tr: 'Sophie Martin.', fr: 'Sophie Martin.' },
       { speaker: 'Garson', tr: 'Teşekkürler, görüşürüz!', fr: 'Merci, à ce soir !' }
     ]
@@ -278,8 +278,8 @@ window.AppDialogues = [
     tags: ['Transport', 'Gare', 'A2'],
     turns: [
       { speaker: 'Müşteri', tr: 'Ankara\'ya bilet istiyorum. Saat kaçta tren var?', fr: 'Je voudrais un billet pour Ankara. À quelle heure y a-t-il un train ?' },
-      { speaker: 'Gişe', tr: 'Sabah dokuzda ve öğleden sonra ikiyle bir tren var.', fr: 'Il y a un train à neuf heures du matin et un à quatorze heures.' },
-      { speaker: 'Müşteri', tr: 'Dokuzluk tren için gidiş-dönüş billet istiyorum.', fr: 'Je voudrais un billet aller-retour pour le train de neuf heures.' },
+      { speaker: 'Gişe', tr: 'Sabah dokuzda ve öğleden sonra ikide bir tren var.', fr: 'Il y a un train à neuf heures du matin et un à quatorze heures.' },
+      { speaker: 'Müşteri', tr: 'Dokuzluk tren için gidiş-dönüş bilet istiyorum.', fr: 'Je voudrais un billet aller-retour pour le train de neuf heures.' },
       { speaker: 'Gişe', tr: 'Birinci sınıf mı, ikinci sınıf mı?', fr: 'Première classe ou deuxième classe ?' },
       { speaker: 'Müşteri', tr: 'İkinci sınıf. Ne kadar tutar?', fr: 'Deuxième classe. Combien ça coûte ?' },
       { speaker: 'Gişe', tr: 'İki yüz elli lira. Kredi kartıyla ödeyebilirsiniz.', fr: 'Deux cent cinquante lires. Vous pouvez payer par carte bancaire.' },
@@ -421,7 +421,7 @@ window.AppDialogues = [
       { speaker: 'Kasiyer', tr: 'Yedide ve dokuzda seans var.', fr: 'Il y a des séances à sept heures et à neuf heures.' },
       { speaker: 'Müşteri', tr: 'Film Türkçe altyazılı mı, dublajlı mı?', fr: 'Le film est avec sous-titres en turc ou doublé ?' },
       { speaker: 'Kasiyer', tr: 'Yedideki orijinal dil, Türkçe altyazılı. Dokuzda Türkçe dublaj.', fr: 'Celui de sept heures est en langue originale avec sous-titres turcs. Celui de neuf heures est en turc doublé.' },
-      { speaker: 'Müşteri', tr: 'İkisi için iki bilet. Orta sıralar müsait mi?', fr: 'Deux billets pour celui de sept heures. Les rangées du milieu sont-elles disponibles ?' },
+      { speaker: 'Müşteri', tr: 'Saat yedideki seans için iki bilet. Orta sıralar müsait mi?', fr: 'Deux billets pour la séance de sept heures. Les rangées du milieu sont-elles disponibles ?' },
       { speaker: 'Kasiyer', tr: 'Evet. Bilet fiyatı kişi başı yüz lira. Mısır patlağı ister misiniz?', fr: 'Oui. Le prix du billet est cent lires par personne. Voulez-vous du pop-corn ?' }
     ]
   },

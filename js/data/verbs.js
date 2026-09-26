@@ -748,7 +748,7 @@ window.AppVerbs = [
     },
     examples: [
       { tr: 'Akşamları kitap okuyorum.', fr: 'Je lis un livre le soir.' },
-      { tr: 'Dün iki saat ders çalıştım.', fr: 'Hier j\'ai étudié pendant deux heures.' },
+      { tr: 'Dün bir kitap okudum.', fr: 'Hier j\'ai lu un livre.' },
       { tr: 'Yarın gazete okuyacağım.', fr: 'Demain je lirai le journal.' }
     ]
   },
@@ -1639,7 +1639,7 @@ window.AppVerbs = [
     },
     examples: [
       { tr: 'Akşam yemeği hazırlıyorum.', fr: 'Je prépare le dîner.' },
-      { tr: 'Sınav için hazırladım.', fr: 'J\'ai préparé pour l\'examen.' },
+      { tr: 'Sınav için sunum hazırladım.', fr: 'J\'ai préparé une présentation pour l\'examen.' },
       { tr: 'Yarın için plan hazırlayacağım.', fr: 'Je vais préparer un plan pour demain.' }
     ]
   }
