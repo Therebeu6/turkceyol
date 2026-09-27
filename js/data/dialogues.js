@@ -504,6 +504,11 @@ window.AppDialogues = [
       { speaker: 'Ali', tr: 'Üç oda var.', fr: 'Il y a trois pièces.' }
     ]
   },
+  // v10 (relecture Codex, post-clôture) : d_anlamadim est un dialogue de BIBLIOTHÈQUE, à dessein
+  // non rattaché à un chapitre — son contenu ("Tekrar eder misiniz?" + "... ne demek?") a été
+  // scindé en deux dialogues dédiés, d_tekrar_eder_misiniz (u8_c1) et d_ne_demek (u8_c3), pour ne
+  // plus répéter le même contenu pédagogique dans les deux chapitres (AXE 4). Il reste consultable
+  // dans l'onglet Dialogues comme révision combinée des deux, jamais comme exercice de leçon.
   {
     id: 'd_anlamadim',
     title: 'Je n\'ai pas compris',

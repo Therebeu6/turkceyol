@@ -21,12 +21,13 @@
    suivant (nouveau) de jamais recevoir sa carte dès que le premier candidat
    non requis était déjà maîtrisé.
 
-   Ce script vérifie spécifiquement les 5 verbes ajoutés par l'AXE 5.3
-   (vermek, satmak, açmak, kapatmak, düşünmek), dans leurs chapitres
-   respectifs, mais la vérification d'invariant (aucun verbe testé sans
-   carte) tourne sur TOUS les chapitres du jeu, pas seulement ces 4-là — et
-   couvre aussi sentence_builder/listening_transcribe, plus un scénario
-   multi-session (2 premiers verbes déjà maîtrisés) pour le bug break/continue.
+   Ce script vérifie TOUS les `chapter.requiredVerbIds` présents dans les données
+   (collectés dynamiquement, jamais une liste codée en dur) — donc les 5 verbes de
+   l'AXE 5.3, vb_tasimak (u12_c2) et tout futur verbe requis, sans qu'il faille
+   modifier ce fichier. La vérification d'invariant (aucun verbe testé sans carte)
+   tourne sur TOUS les chapitres du jeu, requis ou non — et couvre aussi
+   sentence_builder/listening_transcribe, plus un scénario multi-session (2 premiers
+   verbes déjà maîtrisés) pour le bug break/continue.
 
    Usage : node tools/verify-verb-intro-order.js
    Sortie : 0 si tout est cohérent, 1 sinon.
@@ -131,17 +132,22 @@ for (const u of AppUnits) {
   }
 }
 
-// ── 2. Preuve positive : les 5 verbes ajoutés par l'AXE 5.3 reçoivent bien une carte de
-// découverte dans leur chapitre respectif (sinon le correctif ne servirait à rien).
-const NEW_VERBS = [
-  { chapterId: 'u6_c3', verbId: 'vb_vermek' },
-  { chapterId: 'u7_c1', verbId: 'vb_satmak' },
-  { chapterId: 'u15_c2', verbId: 'vb_acmak' },
-  { chapterId: 'u15_c2', verbId: 'vb_kapatmak' },
-  { chapterId: 'u14_c3', verbId: 'vb_dusunmek' },
-];
+// ── 2. Preuve positive : TOUT verbe requis (`chapter.requiredVerbIds`, quel que soit le lot qui
+// l'a ajouté — AXE 5.3, vb_tasimak en u12_c2, ou un futur ajout) reçoit bien une carte de
+// découverte dans son chapitre (sinon requiredVerbIds ne servirait à rien). Collecté
+// dynamiquement depuis les données plutôt que codé en dur, pour couvrir automatiquement tout
+// nouveau verbe requis sans modifier ce fichier.
+const REQUIRED_VERBS = [];
+for (const u of AppUnits) {
+  for (const c of (u.chapters || [])) {
+    for (const verbId of (c.requiredVerbIds || [])) REQUIRED_VERBS.push({ chapterId: c.id, verbId });
+  }
+}
+if (REQUIRED_VERBS.length === 0) {
+  err('aucun chapter.requiredVerbIds trouvé dans les données — le test 2 ne vérifierait plus rien.');
+}
 
-for (const { chapterId, verbId } of NEW_VERBS) {
+for (const { chapterId, verbId } of REQUIRED_VERBS) {
   let seenAsCard = false;
   for (let run = 0; run < RUNS && !seenAsCard; run++) {
     const slides = Exercises.generateForChapter(chapterId);
@@ -193,7 +199,7 @@ console.log('─'.repeat(56));
 console.log('TürkçeYol — vérification ordre verbes découverte/exercices (v10 AXE 5.3)');
 console.log('─'.repeat(56));
 console.log(`Chapitres avec verbIds testés : ${chaptersChecked} × ${RUNS} passes · Slides inspectées : ${exercisesChecked}`);
-console.log(`Verbes ajoutés (5.3) vérifiés individuellement : ${NEW_VERBS.length}`);
+console.log(`Verbes requis (requiredVerbIds) vérifiés individuellement : ${REQUIRED_VERBS.length}`);
 console.log('─'.repeat(56));
 
 if (errors.length) {

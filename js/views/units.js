@@ -135,7 +135,7 @@ window.Units = {
 
     // Sous-titre — nombre d'unités réel, jamais figé en dur (v10 AXE 6.5, relecture Codex)
     const subEl = document.getElementById('units-sub');
-    if (subEl) subEl.textContent = `${AppUnits.length} unités · du zéro à A1 solide`;
+    if (subEl) subEl.textContent = `${AppUnits.length} unités · du zéro à A2`;
   },
 
   startChapter(unitId, chapterId) {

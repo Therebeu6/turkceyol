@@ -793,7 +793,11 @@ window.AppUnits = [
         time: 11,
         tags: ['Voyage', 'A1'],
         vocabIds: ['v_ucak', 'v_bilet', 'v_bagaj', 'v_pasaport', 'v_havalimani'],
-        verbIds: ['vb_gitmek', 'vb_olmak']
+        // v10 (relecture Codex, post-clôture) : vb_tasimak était le seul verbe jamais utilisé
+        // (« porter/transporter » — cohérent avec le bagage de ce chapitre). requiredVerbIds
+        // lui garantit une carte de découverte malgré le plafond de 2 verbes non requis.
+        verbIds: ['vb_gitmek', 'vb_olmak', 'vb_tasimak'],
+        requiredVerbIds: ['vb_tasimak']
       },
       {
         id: 'u12_c3',

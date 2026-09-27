@@ -128,7 +128,11 @@ const App = {
         'review': 'Révisions',
         'daily': 'Défi du jour',
         'stats': 'Statistiques',
-        'settings': 'Paramètres'
+        'settings': 'Paramètres',
+        'grammar': 'Grammaire',
+        'listening': 'Écoute',
+        'stories': 'Histoires',
+        'practice': 'Pratique'
       };
       this.els.headerTitle.textContent = titles[path] || (path.charAt(0).toUpperCase() + path.slice(1));
     }

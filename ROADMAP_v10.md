@@ -59,6 +59,27 @@
 > actuel (interrupteur désactivé, « Bientôt disponible », aucune notification promise) satisfait
 > déjà son critère d'acceptation sans qu'une vraie notification locale soit nécessaire pour
 > clore v10.
+>
+> **Lot de finition (relecture externe, Codex, post-clôture)** — audit global (chargement des
+> scripts, ids HTML, ressources locales, secrets) sans bug bloquant ni référence cassée. 4 petits
+> écarts corrigés :
+> - `js/views/units.js` annonçait « du zéro à A1 solide » alors que u13 à u18 sont A2 → « du zéro
+>   à A2 ».
+> - `App.handleRoute()` n'avait pas de titre FR pour `#grammar`/`#listening`/`#stories`/
+>   `#practice` (retombait sur le nom anglais capitalisé) → Grammaire / Écoute / Histoires /
+>   Pratique.
+> - `vb_tasimak` (porter/transporter) était le seul verbe encore jamais utilisé → rattaché à
+>   `u12_c2` (l'avion, cohérent avec le bagage), via `requiredVerbIds` pour lui garantir sa carte
+>   malgré le plafond de 2 verbes non requis.
+> - `d_anlamadim` (et, trouvés à la même occasion, `d_telefon`/`d_calisma`, niveau B1 — le parcours
+>   ne dépasse pas A2) n'étaient rattachés à aucun chapitre : volontaire (bibliothèque), mais non
+>   documenté. Commentaire ajouté dans `dialogues.js`, et **nouveau garde-fou** dans
+>   `validate-data.js` — tout dialogue non rattaché doit figurer dans `LIBRARY_ONLY_DIALOGUES`
+>   avec sa raison, sinon avertissement (même logique que `OFF_PATH` pour le vocabulaire, AXE 5.2).
+> Les 26 avertissements restants du validateur (mots dont l'exemple ne contient pas visiblement
+> la forme cible, ex. *Kulak → Kulağım*, *Neden?* en fin de phrase) sont des faux positifs de la
+> détection textuelle sur des formes fléchies, pas des erreurs linguistiques confirmées — laissés
+> tels quels, non bloquants.
 
 ---
 

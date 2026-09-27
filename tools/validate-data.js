@@ -169,6 +169,18 @@ for (const u of units) {
     checkRefs('grammarIds', grammarIds, 'grammarId');
     checkRefs('dialogueIds', dialogueIds, 'dialogueId');
     checkRefs('phraseIds', idSet(phrases), 'phraseId');
+
+    // v10 (relecture Codex, post-clôture) : requiredVerbIds doit référencer un verbe existant
+    // ET figurer dans verbIds du même chapitre — sinon createIntroCards l'ignore silencieusement
+    // (son garde-fou `for (const verb of allVerbs)` ne parcourt que verbIds), et le verbe requis
+    // ne reçoit jamais sa carte malgré l'intention affichée dans les données.
+    if (Array.isArray(c.requiredVerbIds)) {
+      const chapterVerbIds = new Set(c.verbIds || []);
+      for (const rid of c.requiredVerbIds) {
+        if (!verbIds.has(rid)) err(`chapitre "${c.id}" : requiredVerbId "${rid}" introuvable`);
+        else if (!chapterVerbIds.has(rid)) err(`chapitre "${c.id}" : requiredVerbId "${rid}" absent de verbIds — ignoré silencieusement par le moteur`);
+      }
+    }
   }
 }
 
@@ -252,6 +264,26 @@ if (vocabNoExample > 0) warn(`${vocabNoExample} mot(s) sans example (AXE 1.1) su
 const usedGrammar = new Set();
 for (const u of units) for (const c of (u.chapters || [])) for (const gid of (c.grammarIds || [])) usedGrammar.add(gid);
 for (const g of grammar) if (!usedGrammar.has(g.id)) warn(`règle "${g.id}" rattachée à aucun chapitre (AXE 1.3)`);
+
+// v10 (relecture Codex, post-clôture) : un dialogue non rattaché reste consultable dans
+// l'onglet Dialogues (pas une fuite), mais doit être VOLONTAIRE, jamais un oubli — la liste
+// documente pourquoi. Tout nouveau dialogue non rattaché et non listé produit un avertissement.
+const LIBRARY_ONLY_DIALOGUES = new Set([
+  'd_anlamadim', // scindé en d_tekrar_eder_misiniz (u8_c1) + d_ne_demek (u8_c3), cf. sa note (AXE 4)
+  'd_telefon', // B1 — le parcours (18 unités) ne dépasse pas A2 ; bonus de bibliothèque
+  'd_calisma', // B1 — idem : contenu volontairement au-delà du niveau enseigné
+]);
+const usedDialogues = new Set();
+for (const u of units) for (const c of (u.chapters || [])) for (const did of (c.dialogueIds || [])) usedDialogues.add(did);
+for (const d of dialogues) {
+  if (usedDialogues.has(d.id)) continue;
+  if (LIBRARY_ONLY_DIALOGUES.has(d.id)) continue;
+  warn(`dialogue "${d.id}" rattaché à aucun chapitre — le rattacher ou l'ajouter à LIBRARY_ONLY_DIALOGUES avec sa justification`);
+}
+for (const did of LIBRARY_ONLY_DIALOGUES) {
+  if (!dialogueById[did]) err(`LIBRARY_ONLY_DIALOGUES : dialogue "${did}" n'existe pas`);
+  else if (usedDialogues.has(did)) err(`LIBRARY_ONLY_DIALOGUES : "${did}" est pourtant rattaché à un chapitre — le retirer de la liste`);
+}
 
 // ── Rapport ──
 console.log('─'.repeat(56));
