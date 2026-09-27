@@ -516,10 +516,15 @@ window.Exercises = {
     if (useReal) {
       proposedFr = word.fr;
     } else {
+      // v10 AXE 6.6 — un homonyme (même `tr`, sens différent, ex. "Yüz" = cent/visage) ne doit
+      // jamais servir de distracteur : proposer sa traduction déclarerait "Faux" un sens
+      // pourtant correct pour ce même mot turc.
+      const sameTr = word.tr.toLocaleLowerCase('tr-TR');
+      const notHomonym = (w) => w.tr.toLocaleLowerCase('tr-TR') !== sameTr;
       const distractors = AppVocabulary.filter(w =>
-        w.id !== word.id && w.topic === word.topic && w.fr !== word.fr
+        w.id !== word.id && w.topic === word.topic && w.fr !== word.fr && notHomonym(w)
       );
-      const fallback = AppVocabulary.filter(w => w.id !== word.id && w.fr !== word.fr);
+      const fallback = AppVocabulary.filter(w => w.id !== word.id && w.fr !== word.fr && notHomonym(w));
       const pool = distractors.length > 0 ? distractors : fallback;
       const picked = pool[Math.floor(Math.random() * pool.length)];
       proposedFr = picked ? picked.fr : word.fr;
@@ -656,13 +661,27 @@ window.Exercises = {
 
   createMatchPairs(vocabPool) {
     if (!vocabPool || vocabPool.length < 4) return null;
-    const topics = [...new Set(vocabPool.map(w => w.topic))];
+    // v10 AXE 6.6 — deux homonymes (même `tr`, ex. "Yüz" = cent/visage) ne doivent jamais
+    // apparaître ensemble : deux cartes identiques à l'écran rendraient l'association
+    // impossible à deviner avec certitude.
+    const dedupByTr = (arr) => {
+      const seen = new Set();
+      return arr.filter(w => {
+        const key = w.tr.toLocaleLowerCase('tr-TR');
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    };
+    const pool = dedupByTr(vocabPool);
+    if (pool.length < 4) return null;
+    const topics = [...new Set(pool.map(w => w.topic))];
     let pairs = null;
     for (const topic of this._shuffle(topics)) {
-      const tw = vocabPool.filter(w => w.topic === topic);
+      const tw = pool.filter(w => w.topic === topic);
       if (tw.length >= 4) { pairs = this._shuffle(tw).slice(0, 4); break; }
     }
-    if (!pairs) pairs = this._shuffle(vocabPool).slice(0, 4);
+    if (!pairs) pairs = this._shuffle(pool).slice(0, 4);
     return {
       type: 'match_pairs',
       question: 'Associe chaque mot à sa traduction :',
@@ -1024,19 +1043,24 @@ window.Exercises = {
   },
 
   getSmartDistractors(targetWord, count, field) {
+    // v10 AXE 6.6 — un homonyme (même `tr`, sens différent, ex. "Yüz" = cent/visage) ne doit
+    // jamais servir de distracteur, dans aucun des 3 paliers : proposer "Visage" comme mauvaise
+    // réponse à "Que signifie Yüz ?" serait faux, puisque "Visage" est aussi un sens correct.
+    const sameTr = targetWord.tr.toLocaleLowerCase('tr-TR');
+    const notHomonym = (w) => w.tr.toLocaleLowerCase('tr-TR') !== sameTr;
     // P1 : même topic (confusion sémantique réelle)
     const sameTopic = AppVocabulary.filter(w =>
-      w.id !== targetWord.id && w.topic === targetWord.topic && w[field] !== targetWord[field]
+      w.id !== targetWord.id && w.topic === targetWord.topic && w[field] !== targetWord[field] && notHomonym(w)
     );
     // P2 : même type grammatical
     const sameType = AppVocabulary.filter(w =>
       w.id !== targetWord.id && w.type === targetWord.type &&
-      w.topic !== targetWord.topic && w[field] !== targetWord[field]
+      w.topic !== targetWord.topic && w[field] !== targetWord[field] && notHomonym(w)
     );
     // P3 : fallback difficulté similaire
     const similar = AppVocabulary.filter(w =>
       w.id !== targetWord.id && !sameTopic.find(s => s.id === w.id) &&
-      !sameType.find(s => s.id === w.id) && w[field] !== targetWord[field]
+      !sameType.find(s => s.id === w.id) && w[field] !== targetWord[field] && notHomonym(w)
     );
 
     // AXE 2.4 — préférer des distracteurs de LONGUEUR proche de la réponse

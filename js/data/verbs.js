@@ -1195,7 +1195,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_ogrenmek',
-    infinitive: 'öğrenmek',
+    infinitive: 'Öğrenmek',
     stem: 'öğren',
     fr: 'Apprendre',
     difficulty: 2,
@@ -1229,7 +1229,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_ogretmek',
-    infinitive: 'öğretmek',
+    infinitive: 'Öğretmek',
     stem: 'öğret',
     fr: 'Enseigner / Apprendre à quelqu\'un',
     difficulty: 2,
@@ -1263,7 +1263,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_hatirlamak',
-    infinitive: 'hatırlamak',
+    infinitive: 'Hatırlamak',
     stem: 'hatırla',
     fr: 'Se souvenir / Se rappeler',
     difficulty: 2,
@@ -1297,7 +1297,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_unutmak',
-    infinitive: 'unutmak',
+    infinitive: 'Unutmak',
     stem: 'unut',
     fr: 'Oublier',
     difficulty: 2,
@@ -1331,7 +1331,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_baslamak',
-    infinitive: 'başlamak',
+    infinitive: 'Başlamak',
     stem: 'başla',
     fr: 'Commencer / Débuter',
     difficulty: 2,
@@ -1365,7 +1365,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_bitirmek',
-    infinitive: 'bitirmek',
+    infinitive: 'Bitirmek',
     stem: 'bitir',
     fr: 'Finir / Terminer',
     difficulty: 2,
@@ -1399,7 +1399,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_sormak',
-    infinitive: 'sormak',
+    infinitive: 'Sormak',
     stem: 'sor',
     fr: 'Demander / Poser une question',
     difficulty: 1,
@@ -1433,7 +1433,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_cevaplamak',
-    infinitive: 'cevaplamak',
+    infinitive: 'Cevaplamak',
     stem: 'cevapla',
     fr: 'Répondre',
     difficulty: 2,
@@ -1467,7 +1467,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_bulmak',
-    infinitive: 'bulmak',
+    infinitive: 'Bulmak',
     stem: 'bul',
     fr: 'Trouver',
     difficulty: 1,
@@ -1501,7 +1501,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_kaybetmek',
-    infinitive: 'kaybetmek',
+    infinitive: 'Kaybetmek',
     stem: 'kaybet',
     fr: 'Perdre',
     difficulty: 2,
@@ -1536,7 +1536,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_soylemek',
-    infinitive: 'söylemek',
+    infinitive: 'Söylemek',
     stem: 'söyle',
     fr: 'Dire / Raconter',
     difficulty: 2,
@@ -1570,7 +1570,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_aglamak',
-    infinitive: 'ağlamak',
+    infinitive: 'Ağlamak',
     stem: 'ağla',
     fr: 'Pleurer',
     difficulty: 2,
@@ -1604,7 +1604,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_gulmek',
-    infinitive: 'gülmek',
+    infinitive: 'Gülmek',
     stem: 'gül',
     fr: 'Rire / Sourire',
     difficulty: 1,
@@ -1641,7 +1641,7 @@ window.AppVerbs = [
     // "Émotions en action". Formes dérivées par analogie avec kalkmak (même radical
     // monosyllabique en -k, pas de mutation, k→ğ seulement au futur) et vérifiées.
     id: 'vb_korkmak',
-    infinitive: 'korkmak',
+    infinitive: 'Korkmak',
     stem: 'kork',
     fr: 'Avoir peur',
     difficulty: 2,
@@ -1675,7 +1675,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_tasimak',
-    infinitive: 'taşımak',
+    infinitive: 'Taşımak',
     stem: 'taşı',
     fr: 'Porter / Transporter',
     difficulty: 2,
@@ -1709,7 +1709,7 @@ window.AppVerbs = [
 
   {
     id: 'vb_hazirlamak',
-    infinitive: 'hazırlamak',
+    infinitive: 'Hazırlamak',
     stem: 'hazırla',
     fr: 'Préparer',
     difficulty: 2,
@@ -1754,7 +1754,7 @@ window.AppVerbs = [
      "toplıyorum" — comme oynamak → oynuyorum, kutlamak → kutluyorum. ── */
   {
     id: 'vb_temizlemek',
-    infinitive: 'temizlemek',
+    infinitive: 'Temizlemek',
     stem: 'temizle',
     fr: 'Nettoyer',
     difficulty: 2,
@@ -1787,7 +1787,7 @@ window.AppVerbs = [
   },
   {
     id: 'vb_yikamak',
-    infinitive: 'yıkamak',
+    infinitive: 'Yıkamak',
     stem: 'yıka',
     fr: 'Laver',
     difficulty: 2,
@@ -1820,7 +1820,7 @@ window.AppVerbs = [
   },
   {
     id: 'vb_toplamak',
-    infinitive: 'toplamak',
+    infinitive: 'Toplamak',
     stem: 'topla',
     fr: 'Ranger / Rassembler',
     difficulty: 2,

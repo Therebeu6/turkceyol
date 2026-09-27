@@ -755,6 +755,66 @@
   - `README.md` : « 12 unités », fonctionnalités v5 à v8 absentes.
 
 ### 6.6 — Niveaux CECRL et « Test A1 » · **S**
+
+> ✅ **Fait.** Traité en 4 volets distincts, comme demandé.
+>
+> **1. « Test A1 » (u12_c4)** — option (a) choisie : `title` → « Révision mixte », `goal` →
+> « Révision mixte des unités 1 à 11 ». Aucun mode d'examen construit.
+>
+> **2. Niveaux CECRL** — démarche : d'abord déterminer le niveau réel du contenu (structures,
+> dialogues, vocabulaire), simplifier seulement ce qui est réellement trop avancé, aligner les
+> tags ensuite. Constats après lecture de tout le contenu d'u8 à u12 et comparaison directe avec
+> des dialogues/grammaires déjà correctement tagués ailleurs dans la même appli :
+> - **u8 à u11** (16 chapitres, grammaire de base : infinitifs, présent affirmatif/négatif,
+>   questions, passé, futur, négation ; communication de survie : faire répéter, demander de
+>   l'aide, urgences) : contenu réellement A1 — ce sont les toutes premières leçons de
+>   conjugaison de toute l'appli (rien avant u9 n'utilise encore de temps verbal), et les
+>   stratégies de communication (« pouvez-vous répéter ? », « je ne comprends pas ») sont des
+>   capacités A1 explicites du CECRL. Aucune simplification nécessaire : seuls les **tags**
+>   étaient faux (`A2` au lieu de `A1`) → corrigés dans `units.js`.
+> - **u12_c1 à c3** (missions hôtel/avion/rencontre informelle) : tagués **B1**, mais leur
+>   contenu (vocabulaire hôtel/aéroport, tournures de politesse comme « alabilir miyim ? »)
+>   est structurellement identique à des dialogues déjà tagués **A2** ailleurs dans l'appli
+>   (`d_avion`, `d_restaurant_complet`, `d_gare`, `d_soiree_amis`) — comparé phrase à phrase,
+>   rien ne justifie B1 (aucune subordination complexe, aucune opinion, aucun conditionnel,
+>   contrairement à `d_calisma`, le seul dialogue vraiment B1 de l'appli, déjà exclu de tout
+>   chapitre depuis l'AXE 3.3). Le tag du dialogue `d_hotel` était même incohérent avec son
+>   propre niveau numérique (`level: 3` = B1 affiché, alors que `d_avion`, tout aussi complexe,
+>   est `level: 2` = A2) : corrigé en `level: 2`, `tags: ['Voyage', 'A2']`.
+>   Cependant, la convention déjà utilisée partout ailleurs dans l'appli (vérifiée sur u4, u5,
+>   u6, u7, u8, u9, u11 : un chapitre A1 peut utiliser un dialogue tagué un cran au-dessus, A2,
+>   sans que le CHAPITRE lui-même ne change de tag) s'applique aussi ici : les tags de
+>   **chapitre** `u12_c1/c2/c3` restent alignés sur leur unité (`A1`), seul le tag du
+>   **dialogue** `d_hotel` est corrigé à `A2` (comme `d_avion`, son équivalent direct).
+> - **Nouvelle vérification permanente** dans `tools/validate-data.js` : le tag CECRL d'un
+>   chapitre doit toujours être identique au `cefr` de son unité (jamais plus haut) ; un
+>   dialogue qu'il utilise peut être un cran au-dessus, jamais deux (pas de B1 dans un
+>   chapitre A1). Empêche cette exacte régression de revenir silencieusement.
+>
+> **3. Casse des infinitifs** — 19 verbes (ajoutés en v9/v10) étaient en minuscule
+> (`hazırlamak`, `sormak`, `öğrenmek`…) alors que les 29 premiers sont en majuscule (`Olmak`,
+> `Gitmek`…). Uniformisés en majuscule pour cohérence avec la majorité déjà en place et avec le
+> titre de la fiche verbe (`<h2>${verb.infinitive}</h2>`).
+>
+> **4. Homonyme *Yüz*** (`v_yuz` = cent, `v_yuz_corps` = visage) — 3 vrais points d'entrée
+> vérifiés, 2 corrigés :
+> - `createTrueFalse` (Vrai/Faux) : pouvait piocher un distracteur cross-thème via son repli
+>   global et proposer « Visage » contre « Yüz » en répondant « Faux », alors que c'est un sens
+>   valide. Corrigé (exclusion des homonymes du pool de distracteurs).
+> - `getSmartDistractors` (utilisé par les 3 QCM et l'audio QCM) : même défaut potentiel au
+>   palier de repli (P3). Corrigé au même endroit.
+> - `createMatchPairs` (Associer les paires) : **bug confirmé activement reproductible**
+>   (275/500 tirages avec les deux "Yüz" ensemble, sur un pool de thèmes variés, avant
+>   correctif) — deux cartes affichant le même mot turc, association impossible à deviner avec
+>   certitude. Corrigé par dédoublonnage sur `tr` avant sélection ; revérifié à 0/500 après
+>   correctif.
+> **Vérifié par un nouvel outil committé**, `tools/verify-true-false-homonyms.js` : détecte
+> dynamiquement tous les groupes d'homonymes présents dans `AppVocabulary` (jamais une liste
+> d'ids figée) et vérifie les 3 points d'entrée ci-dessus. Testé pour être un vrai test : rejoué
+> avec chaque correctif annulé un par un, il échoue bien à chaque fois (et un piège découvert en
+> l'écrivant — un remplissage de thèmes non variés masque le bug de `createMatchPairs` au lieu
+> de le révéler — est documenté en commentaire dans le fichier).
+> Plus les 5 autres outils `tools/` existants, tous verts.
 - 18 chapitres d'unités A1 portent des tags A2 ou B1 (u8 à u11 : A2 ; u12 : **B1**).
   **Ne pas se contenter de retaguer.** Remettre « A1 » sur un contenu réellement A2/B1 masque
   le problème sans le résoudre. La démarche :

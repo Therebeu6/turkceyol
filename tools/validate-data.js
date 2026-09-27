@@ -171,6 +171,33 @@ for (const u of units) {
   }
 }
 
+// ── 4b. Cohérence des niveaux CECRL (v10 AXE 6.6) ──
+// Convention établie dans TOUTE la base (vérifiée avant d'écrire cette règle) : le tag CECRL
+// d'un CHAPITRE doit toujours être IDENTIQUE au `cefr` de son unité (jamais plus haut — un
+// chapitre A1 dans une unité A1, jamais A2/B1). Un DIALOGUE qu'il utilise peut légitimement
+// porter un tag un cran au-dessus (enrichissement, ex. un chapitre A1 utilisant un dialogue
+// A2), mais jamais plus d'un cran (pas de B1 dans un chapitre A1).
+const CEFR_ORDER = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+const extractCefr = (tags) => (tags || []).find(t => CEFR_ORDER.includes(t));
+const dialogueById = Object.fromEntries(dialogues.map(d => [d.id, d]));
+for (const u of units) {
+  for (const c of (u.chapters || [])) {
+    const chapterCefr = extractCefr(c.tags);
+    if (chapterCefr && chapterCefr !== u.cefr) {
+      err(`chapitre "${c.id}" : tag CECRL "${chapterCefr}" différent du niveau de son unité "${u.id}" (${u.cefr})`);
+    }
+    for (const did of (c.dialogueIds || [])) {
+      const d = dialogueById[did];
+      if (!d) continue;
+      const dialogueCefr = extractCefr(d.tags);
+      if (dialogueCefr && chapterCefr) {
+        const gap = CEFR_ORDER.indexOf(dialogueCefr) - CEFR_ORDER.indexOf(chapterCefr);
+        if (gap > 1) err(`chapitre "${c.id}" (${chapterCefr}) : dialogue "${did}" trop avancé (${dialogueCefr})`);
+      }
+    }
+  }
+}
+
 // ── 5. Couverture pédagogique (warnings, non bloquants) ──
 const vocabNoExample = vocab.length - vocabWithExample;
 if (vocabNoExample > 0) warn(`${vocabNoExample} mot(s) sans example (AXE 1.1) sur ${vocab.length}`);

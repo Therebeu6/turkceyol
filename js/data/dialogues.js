@@ -146,8 +146,8 @@ window.AppDialogues = [
     id: 'd_hotel',
     title: 'À l\'hôtel',
     scenario: 'Faire le check-in dans un hôtel d\'Istanbul.',
-    level: 3,
-    tags: ['Voyage', 'B1'],
+    level: 2,
+    tags: ['Voyage', 'A2'],
     turns: [
       { speaker: 'Resepsiyonist', tr: 'Hoş geldiniz! Rezervasyonunuz var mı?', fr: 'Bienvenue ! Avez-vous une réservation ?' },
       { speaker: 'Müşteri', tr: 'Evet, adım Sophie Martin.', fr: 'Oui, je m\'appelle Sophie Martin.' },

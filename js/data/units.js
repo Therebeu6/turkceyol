@@ -482,7 +482,7 @@ window.AppUnits = [
         goal: 'Pardon ? Pouvez-vous répéter / parler plus lentement ?',
         xpReward: 60,
         time: 6,
-        tags: ['Communication', 'A2'],
+        tags: ['Communication', 'A1'],
         vocabIds: ['v_tamam', 'v_affedersiniz', 'v_lutfen', 'v_tekrar', 'v_yavas_konusun'],
         verbIds: ['vb_anlamak', 'vb_konusmak']
       },
@@ -499,7 +499,7 @@ window.AppUnits = [
         time: 9,
         // v10 AXE 4 : tag et vocabulaire alignés sur l'aide NON urgente (le tag "Urgences"
         // et les mots médicaux appartiennent désormais à u8_c4).
-        tags: ['Aide', 'A2'],
+        tags: ['Aide', 'A1'],
         vocabIds: ['v_yardim', 'v_eczane', 'v_yakin', 'v_kose'],
         verbIds: ['vb_istemek', 'vb_anlamak']
       },
@@ -513,7 +513,7 @@ window.AppUnits = [
         goal: 'Gérer l\'incompréhension en turc',
         xpReward: 60,
         time: 7,
-        tags: ['Communication', 'A2'],
+        tags: ['Communication', 'A1'],
         vocabIds: ['v_anlamiyorum', 'v_bilmiyorum', 'v_tekrar', 'v_yavas_konusun', 'v_lutfen', 'v_affedersiniz'],
         verbIds: ['vb_anlamak', 'vb_bilmek']
       },
@@ -528,7 +528,7 @@ window.AppUnits = [
         goal: 'Médecin, police, pharmacie : les mots qui sauvent',
         xpReward: 90,
         time: 10,
-        tags: ['Urgences', 'A2'],
+        tags: ['Urgences', 'A1'],
         // v10 AXE 4 : v_eczane retiré (déjà propre à u8_c2 désormais) pour ne plus partager
         // 100% de son vocabulaire avec u8_c2.
         vocabIds: ['v_yardim', 'v_acil', 'v_hastane', 'v_polis', 'v_doktor'],
@@ -553,7 +553,7 @@ window.AppUnits = [
         goal: 'Se lever, dormir, manger, aller au travail',
         xpReward: 90,
         time: 10,
-        tags: ['Routine', 'A2'],
+        tags: ['Routine', 'A1'],
         vocabIds: ['v_sabah', 'v_aksam', 'v_gece', 'v_bugun', 'v_saat'],
         verbIds: ['vb_uyumak', 'vb_kalkmak', 'vb_yemek', 'vb_icmek', 'vb_gitmek']
       },
@@ -565,7 +565,7 @@ window.AppUnits = [
         goal: 'Aller, venir, partir — avec lieu et transport',
         xpReward: 90,
         time: 10,
-        tags: ['Verbes', 'A2'],
+        tags: ['Verbes', 'A1'],
         vocabIds: ['v_ev', 'v_okul', 'v_market', 'v_otobus', 'v_tren', 'v_araba'],
         verbIds: ['vb_gitmek', 'vb_gelmek']
       },
@@ -577,7 +577,7 @@ window.AppUnits = [
         goal: 'Introduction au présent progressif en contexte',
         xpReward: 100,
         time: 11,
-        tags: ['Verbes', 'A2'],
+        tags: ['Verbes', 'A1'],
         vocabIds: ['v_ben', 'v_sen', 'v_biz', 'v_sabah', 'v_aksam'],
         verbIds: ['vb_yapmak', 'vb_calismak', 'vb_yemek', 'vb_icmek', 'vb_uyumak'],
         tenses: ['present']
@@ -600,7 +600,7 @@ window.AppUnits = [
         goal: 'Comprendre les suffixes -mak et -mek',
         xpReward: 80,
         time: 8,
-        tags: ['Grammaire', 'A2'],
+        tags: ['Grammaire', 'A1'],
         vocabIds: [],
         verbIds: ['vb_olmak', 'vb_yapmak', 'vb_gitmek', 'vb_gelmek'],
         tenses: ['present']
@@ -614,7 +614,7 @@ window.AppUnits = [
         goal: 'Former le présent progressif avec -iyor',
         xpReward: 120,
         time: 12,
-        tags: ['Grammaire', 'A2'],
+        tags: ['Grammaire', 'A1'],
         vocabIds: [],
         verbIds: ['vb_yapmak', 'vb_gitmek', 'vb_gelmek', 'vb_konusmak', 'vb_yemek', 'vb_icmek'],
         tenses: ['present']
@@ -627,7 +627,7 @@ window.AppUnits = [
         goal: 'Former la négation avec -miyor (-mıyor, -muyor, -müyor)',
         xpReward: 100,
         time: 10,
-        tags: ['Grammaire', 'A2'],
+        tags: ['Grammaire', 'A1'],
         vocabIds: [],
         verbIds: ['vb_yapmak', 'vb_gitmek', 'vb_istemek', 'vb_anlamak'],
         tenses: ['present_neg']
@@ -640,7 +640,7 @@ window.AppUnits = [
         goal: 'La particule interrogative mi/mı/mu/mü',
         xpReward: 100,
         time: 10,
-        tags: ['Grammaire', 'A2'],
+        tags: ['Grammaire', 'A1'],
         vocabIds: [],
         verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_istemek', 'vb_olmak'],
         tenses: ['present']
@@ -663,7 +663,7 @@ window.AppUnits = [
         goal: 'Suffixe -di / -dı / -du / -dü',
         xpReward: 120,
         time: 11,
-        tags: ['Grammaire', 'A2'],
+        tags: ['Grammaire', 'A1'],
         vocabIds: ['v_dun', 'v_sabah', 'v_aksam'],
         verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_yapmak', 'vb_yemek'],
         tenses: ['past']
@@ -677,7 +677,7 @@ window.AppUnits = [
         goal: 'Enchaîner des actions passées en contexte',
         xpReward: 120,
         time: 12,
-        tags: ['Passé', 'A2'],
+        tags: ['Passé', 'A1'],
         vocabIds: ['v_bugun', 'v_dun', 'v_aksam', 'v_sabah'],
         verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_yemek', 'vb_icmek', 'vb_calismak', 'vb_uyumak'],
         tenses: ['past']
@@ -690,7 +690,7 @@ window.AppUnits = [
         goal: 'Suffixe -ecek / -acak — projets et intentions',
         xpReward: 120,
         time: 11,
-        tags: ['Grammaire', 'A2'],
+        tags: ['Grammaire', 'A1'],
         vocabIds: ['v_yarin', 'v_hafta', 'v_ay'],
         verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_yapmak', 'vb_olmak'],
         tenses: ['future']
@@ -703,7 +703,7 @@ window.AppUnits = [
         goal: 'Exprimer des intentions futures en contexte',
         xpReward: 100,
         time: 10,
-        tags: ['Futur', 'A2'],
+        tags: ['Futur', 'A1'],
         vocabIds: ['v_yarin', 'v_hafta', 'v_ay', 'v_yil'],
         verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_calismak', 'vb_istemek', 'vb_sevmek'],
         tenses: ['future']
@@ -717,7 +717,7 @@ window.AppUnits = [
         goal: 'Nier une action au passé et au futur',
         xpReward: 100,
         time: 10,
-        tags: ['Négation', 'A2'],
+        tags: ['Négation', 'A1'],
         vocabIds: [],
         verbIds: ['vb_gitmek', 'vb_yapmak', 'vb_yemek', 'vb_gormek'],
         tenses: ['past_neg', 'future_neg']
@@ -741,7 +741,7 @@ window.AppUnits = [
         goal: 'Réserver une chambre et gérer un problème',
         xpReward: 130,
         time: 12,
-        tags: ['Voyage', 'B1'],
+        tags: ['Voyage', 'A1'],
         vocabIds: ['v_otel', 'v_bilet', 'v_bagaj', 'v_para', 'v_hesap', 'v_gece', 'v_saat'],
         verbIds: ['vb_istemek', 'vb_olmak', 'vb_gitmek']
       },
@@ -753,7 +753,7 @@ window.AppUnits = [
         goal: 'Vocabulaire du voyage, douanes et aéroport',
         xpReward: 130,
         time: 11,
-        tags: ['Voyage', 'B1'],
+        tags: ['Voyage', 'A1'],
         vocabIds: ['v_ucak', 'v_bilet', 'v_bagaj', 'v_pasaport', 'v_havalimani'],
         verbIds: ['vb_gitmek', 'vb_olmak']
       },
@@ -765,7 +765,7 @@ window.AppUnits = [
         goal: 'Dialogue long multi-temps avec un natif',
         xpReward: 150,
         time: 12,
-        tags: ['Conversation', 'B1'],
+        tags: ['Conversation', 'A1'],
         // v10 AXE 3.6 : Otel retiré — hors thème pour une rencontre informelle entre amis.
         vocabIds: ['v_arkadas', 'v_bugun', 'v_yarin', 'v_dun', 'v_saat'],
         verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_olmak', 'vb_konusmak', 'vb_yapmak']
@@ -774,8 +774,8 @@ window.AppUnits = [
         id: 'u12_c4',
         canDo: 'Je valide mon niveau A1 !',
         grammarIds: ['g_present_iyor', 'g_passe_di', 'g_futur_acak', 'g_locatif'],
-        title: 'Test A1',
-        goal: 'Validation finale du niveau — 50 questions mixtes',
+        title: 'Révision mixte',
+        goal: 'Révision mixte des unités 1 à 11',
         xpReward: 200,
         time: 12,
         tags: ['Révision', 'A1'],
