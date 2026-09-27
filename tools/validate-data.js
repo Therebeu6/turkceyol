@@ -197,6 +197,28 @@ for (const u of units) {
 }
 for (const p of phrases) if (!phraseUse.has(p.id)) err(`phrase "${p.id}" rattachée à aucun chapitre (AXE 5.5)`);
 
+// ── 4d. Vocabulaire des chapitres : niveau et doublons (v10 AXE 5.2) ──
+// Un mot de difficulté 3 n'est pas enseigné dans une unité A1 — sauf ces 6 cas antérieurs à la
+// règle, conservés tels quels (nombres 80/90/1000 du chapitre des chiffres, « Havalimanı »,
+// « Karşısında », « Yavaş konuşun ») : tout NOUVEAU cas est une erreur. Deux mots de même forme
+// turque dans un même chapitre produiraient deux cartes et des exercices indiscernables.
+const LEGACY_A1_D3 = new Set(['v_seksen', 'v_doksan', 'v_bin', 'v_havalimani', 'v_karsisinda', 'v_yavas_konusun']);
+for (const u of units) {
+  for (const c of (u.chapters || [])) {
+    const seenTr = new Map();
+    for (const vid of (c.vocabIds || [])) {
+      const w = vocabById[vid];
+      if (!w) continue;
+      if (u.cefr === 'A1' && (w.difficulty || 1) >= 3 && !LEGACY_A1_D3.has(vid)) {
+        err(`chapitre "${c.id}" (A1) : mot "${vid}" de difficulté ${w.difficulty}, trop avancé`);
+      }
+      const k = normTr(w.tr);
+      if (seenTr.has(k)) err(`chapitre "${c.id}" : "${seenTr.get(k)}" et "${vid}" ont la même forme turque "${w.tr}"`);
+      seenTr.set(k, vid);
+    }
+  }
+}
+
 // ── 4b. Cohérence des niveaux CECRL (v10 AXE 6.6) ──
 // Convention établie dans TOUTE la base (vérifiée avant d'écrire cette règle) : le tag CECRL
 // d'un CHAPITRE doit toujours être IDENTIQUE au `cefr` de son unité (jamais plus haut — un

@@ -588,6 +588,44 @@
 - **Accept.** : 44/44 verbes avec exemples, chaque exemple contenant une forme du verbe.
 
 ### 5.2 — Intégrer le vocabulaire essentiel inutilisé · **M**
+
+> ✅ **Fait.** Audit après 5.5 : **205** mots sans chapitre sur 525. **131** sont maintenant rattachés
+> (+ 1 mot nouveau, *Eş*), dans 32 chapitres dont le thème ET le niveau correspondent ; **74** restent
+> volontairement dans le dictionnaire, chacun justifié. Couverture : 452/526 mots enseignés (320 avant).
+> - Tous les trous listés ci-dessous sont comblés : famille u4_c1 (*Çocuk, Dede, Nine, Amca, Teyze* — tous
+>   déjà présents dans son dialogue `d_famille_elargie` — plus *Koca* et *Eş*), heure u3_c1 (*Dakika, Yarım
+>   saat*) avec *Öğlen, Erken, Geç* en u9_c1 « Ma journée type », métier u2_c4 (*İş, Ofis, Şirket,
+>   Patron, Meslek, Maaş, Toplantı*), vêtements u7_c2, couleurs u7_c3 (+ *Orta* pour les tailles),
+>   transports u17_c1 (*Vapur, Tramvay, İstasyon, Şoför, Yolcu, Trafik, Üçüncü*).
+> - Postpositions : u5_c4 enseignait déjà *Yanında/Önünde/Arkasında/Karşısında* (AXE 4) ; *İçinde,
+>   Dışında, Üstünde, Altında* entrent en u15_c1 « Nommer et localiser les pièces » (A2 : 3 sont de
+>   difficulté 3).
+> - Autres placements : lieux → u5_c1 (*Park, Kafe, Cami, Pazar yeri*) / u17_c3 (*Tiyatro, Üniversite,
+>   Kilise, Bar, Spor salonu, Belediye*) / u15_c4 quartier (*Köprü, Cadde, Meydan, Kaldırım, Otopark,
+>   Daire, Merdiven, Sessiz, Gürültülü*) ; santé → u13_c3, u16_c2–c4 ; émotions → u16_c2 (« état
+>   émotionnel ») et u18_c4 ; corps → u13_c2 (*Yüz* visage, cf. 6.6) / u16_c1 ; adjectifs → u4_c2
+>   (décrire quelqu'un), u7_c4 (comparer), u14_c3 (*Kolay/Zor*), u15_c1/c2 (*Aydınlık/Karanlık*,
+>   *Açık/Kapalı* avec açmak/kapatmak, *Işık* « éclairage »), u16_c4 (*Güvenli/Tehlikeli*), u17_c4
+>   (*Dolu/Boş*) ; temps → u3_c3 (*Evvelki gün/Öbür gün*), u14_c4 « Avant et après » (semaine/mois
+>   dernier/prochain, *Artık, Şimdilik*) ; *Birinci/İkinci* en u5_c4 (« la 2e rue ») ; *Anlıyorum/
+>   Biliyorum* en u8_c3 à côté de leurs négations déjà présentes ; *Hadi* en u12_c3 ; *Karlı, Mont,
+>   Atkı* en u13_c1 météo.
+> - Aucun mot de difficulté 3 ajouté en unité A1 ; aucun chapitre sans vocabulaire (chapitres de
+>   conjugaison) touché, pour ne pas changer leur dosage d'exercices de verbes ; plus gros chapitre :
+>   17 mots (u3_c1), l'échantillon par leçon restant de 3/5/7 mots selon la densité.
+> - **Hors parcours** (74, liste justifiée dans `tools/verify-vocab-coverage.js`) : animaux (12),
+>   nature (14), formes (4) — choix de la roadmap ; adjectifs de texture/dimension (7), vêtements
+>   secondaires (13), école/bureau spécialisés (10), conduite/maritime (7), *Beyin/Kemik*, *Saniye*,
+>   *Çatı* ; *Karşıda* (quasi-doublon de *Karşısında*), *Çok daha* (tournure, pas un mot). **Karı** :
+>   seul, il peut sonner familier voire péjoratif ; plutôt que de l'enseigner, ajout de la forme
+>   neutre **`v_es` *Eş*** (conjoint·e, exemple *Eşim öğretmen.*) en u4_c1.
+> **Garde-fous** : `validate-data.js` (bloquant) — pas de mot de difficulté 3 en unité A1 (6 cas
+> antérieurs listés nommément, tout nouveau cas échoue), pas deux mots de même forme turque dans un
+> chapitre (ex. les deux *Yüz*). Nouvel outil `tools/verify-vocab-coverage.js` : chaque mot est
+> rattaché ou listé hors parcours avec raison (la liste échoue si elle vieillit), et chaque mot
+> rattaché reçoit réellement une carte dans son premier chapitre (452/452). L'absence de fuite est
+> couverte par `verify-vocab-intro-order.js` (3 densités) et `verify-phrase-coverage.js`. Mutations
+> vérifiées : mot détaché, mot difficile en A1, homonymes dans un même chapitre → échec à chaque fois.
 - 209 mots sur 520 n'apparaissent dans aucun chapitre : il y a un grand écart entre le
   « dictionnaire disponible » et le « contenu enseigné ». Priorité aux trous qui rendent un
   chapitre existant incomplet :

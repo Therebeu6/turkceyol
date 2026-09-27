@@ -148,7 +148,7 @@ window.AppUnits = [
         xpReward: 70,
         time: 8,
         tags: ['Métiers', 'A1'],
-        vocabIds: ['v_doktor', 'v_ogretmen', 'v_ogrenci', 'v_muhendis', 'v_avukat', 'v_asci'],
+        vocabIds: ['v_doktor', 'v_ogretmen', 'v_ogrenci', 'v_muhendis', 'v_avukat', 'v_asci', 'v_is', 'v_ofis', 'v_sirket', 'v_patron', 'v_meslek', 'v_maas', 'v_toplanti'],
         verbIds: ['vb_calismak']
       },
       {
@@ -184,7 +184,7 @@ window.AppUnits = [
         xpReward: 70,
         time: 9,
         tags: ['Temps', 'A1'],
-        vocabIds: ['v_saat', 'v_gun', 'v_sabah', 'v_aksam', 'v_gece', 'v_bugun', 'v_yarin', 'v_dun', 'v_pazartesi', 'v_sali', 'v_carsamba', 'v_persembe', 'v_cuma', 'v_cumartesi', 'v_pazar'],
+        vocabIds: ['v_saat', 'v_gun', 'v_sabah', 'v_aksam', 'v_gece', 'v_bugun', 'v_yarin', 'v_dun', 'v_pazartesi', 'v_sali', 'v_carsamba', 'v_persembe', 'v_cuma', 'v_cumartesi', 'v_pazar', 'v_dakika', 'v_yarim_saat'],
         verbIds: []
       },
       {
@@ -199,7 +199,7 @@ window.AppUnits = [
         xpReward: 80,
         time: 9,
         tags: ['Maison', 'A1'],
-        vocabIds: ['v_ev', 'v_kapi', 'v_pencere', 'v_masa', 'v_sandalye', 'v_yatak', 'v_mutfak', 'v_banyo'],
+        vocabIds: ['v_ev', 'v_kapi', 'v_pencere', 'v_masa', 'v_sandalye', 'v_yatak', 'v_mutfak', 'v_banyo', 'v_dus', 'v_kitap', 'v_kalem', 'v_bilgisayar'],
         verbIds: []
       },
       {
@@ -210,7 +210,7 @@ window.AppUnits = [
         xpReward: 70,
         time: 8,
         tags: ['Temps', 'A1'],
-        vocabIds: ['v_bugun', 'v_yarin', 'v_dun', 'v_simdi', 'v_sabah', 'v_aksam', 'v_hafta', 'v_ay', 'v_yil'],
+        vocabIds: ['v_bugun', 'v_yarin', 'v_dun', 'v_simdi', 'v_sabah', 'v_aksam', 'v_hafta', 'v_ay', 'v_yil', 'v_evvelki_gun', 'v_obur_gun'],
         verbIds: ['vb_gitmek', 'vb_gelmek']
       },
       {
@@ -244,7 +244,7 @@ window.AppUnits = [
         xpReward: 70,
         time: 8,
         tags: ['Famille', 'A1'],
-        vocabIds: ['v_aile', 'v_anne', 'v_baba', 'v_kardes', 'v_erkek_kardes', 'v_kiz_kardes', 'v_abi', 'v_abla'],
+        vocabIds: ['v_aile', 'v_anne', 'v_baba', 'v_kardes', 'v_erkek_kardes', 'v_kiz_kardes', 'v_abi', 'v_abla', 'v_cocuk', 'v_dede', 'v_nine', 'v_amca', 'v_teyze', 'v_koca', 'v_es'],
         verbIds: []
       },
       {
@@ -256,7 +256,7 @@ window.AppUnits = [
         xpReward: 80,
         time: 9,
         tags: ['Adjectifs', 'A1'],
-        vocabIds: ['v_guzel', 'v_iyi', 'v_buyuk', 'v_kucuk', 'v_genc', 'v_yasli', 'v_uzun', 'v_kisa', 'v_zeki'],
+        vocabIds: ['v_guzel', 'v_iyi', 'v_buyuk', 'v_kucuk', 'v_genc', 'v_yasli', 'v_uzun', 'v_kisa', 'v_zeki', 'v_guclu', 'v_zayif', 'v_ince'],
         verbIds: []
       },
       {
@@ -291,7 +291,7 @@ window.AppUnits = [
         xpReward: 80,
         time: 9,
         tags: ['Lieux', 'A1'],
-        vocabIds: ['v_ev', 'v_okul', 'v_hastane', 'v_sokak', 'v_market', 'v_havalimani', 'v_otel', 'v_restoran', 'v_banka', 'v_eczane', 'v_polis'],
+        vocabIds: ['v_ev', 'v_okul', 'v_hastane', 'v_sokak', 'v_market', 'v_havalimani', 'v_otel', 'v_restoran', 'v_banka', 'v_eczane', 'v_polis', 'v_park', 'v_kafe', 'v_cami', 'v_pazar_yeri'],
         verbIds: []
       },
       {
@@ -310,7 +310,7 @@ window.AppUnits = [
         tags: ['Directions', 'A1'],
         // v10 AXE 5.4 : v_nerede sert directement le goal « Où est... ? » — le dialogue
         // d_yol_sorma l'utilise déjà (« market nerede? ») mais il n'était pas rattaché ici.
-        vocabIds: ['v_nerede', 'v_sag', 'v_sol', 'v_duz', 'v_kose', 'v_yakin', 'v_uzak', 'v_karsisinda', 'v_hastane', 'v_okul', 'v_market', 'v_otel'],
+        vocabIds: ['v_nerede', 'v_sag', 'v_sol', 'v_duz', 'v_kose', 'v_yakin', 'v_uzak', 'v_karsisinda', 'v_hastane', 'v_okul', 'v_market', 'v_otel', 'v_yol_transport'],
         requiredVocabIds: ['v_nerede'],
         verbIds: ['vb_gitmek', 'vb_gelmek']
       },
@@ -324,7 +324,7 @@ window.AppUnits = [
         xpReward: 70,
         time: 8,
         tags: ['Transport', 'A1'],
-        vocabIds: ['v_otobus', 'v_metro', 'v_araba', 'v_taksi', 'v_tren', 'v_ucak', 'v_havalimani'],
+        vocabIds: ['v_otobus', 'v_metro', 'v_araba', 'v_taksi', 'v_tren', 'v_ucak', 'v_havalimani', 'v_bisiklet'],
         verbIds: ['vb_gitmek']
       },
       {
@@ -342,7 +342,7 @@ window.AppUnits = [
         tags: ['Directions', 'A1'],
         // v10 AXE 4 : ajout des postpositions (thème locatifs, jusque-là inutilisé),
         // pertinentes pour comprendre une direction ("à côté de", "devant", "derrière").
-        vocabIds: ['v_sag', 'v_sol', 'v_duz', 'v_kose', 'v_yakin', 'v_uzak', 'v_karsisinda', 'v_ev', 'v_okul', 'v_market', 'v_yaninda', 'v_onunde', 'v_arkasinda'],
+        vocabIds: ['v_sag', 'v_sol', 'v_duz', 'v_kose', 'v_yakin', 'v_uzak', 'v_karsisinda', 'v_ev', 'v_okul', 'v_market', 'v_yaninda', 'v_onunde', 'v_arkasinda', 'v_birinci', 'v_ikinci'],
         verbIds: ['vb_gitmek', 'vb_gelmek']
       }
     ]
@@ -465,7 +465,7 @@ window.AppUnits = [
         xpReward: 70,
         time: 8,
         tags: ['Vêtements', 'A1'],
-        vocabIds: ['v_gomlek', 'v_pantolon', 'v_elbise', 'v_ayakkabi', 'v_kazak', 'v_canta', 'v_yeni', 'v_eski', 'v_buyuk', 'v_kucuk'],
+        vocabIds: ['v_gomlek', 'v_pantolon', 'v_elbise', 'v_ayakkabi', 'v_kazak', 'v_canta', 'v_yeni', 'v_eski', 'v_buyuk', 'v_kucuk', 'v_tisort', 'v_ceket', 'v_etek', 'v_corap', 'v_sapka'],
         verbIds: []
       },
       {
@@ -477,7 +477,7 @@ window.AppUnits = [
         xpReward: 60,
         time: 7,
         tags: ['Couleurs', 'A1'],
-        vocabIds: ['v_kirmizi', 'v_mavi', 'v_yesil', 'v_sari', 'v_siyah', 'v_beyaz', 'v_buyuk', 'v_kucuk', 'v_uzun', 'v_kisa'],
+        vocabIds: ['v_kirmizi', 'v_mavi', 'v_yesil', 'v_sari', 'v_siyah', 'v_beyaz', 'v_buyuk', 'v_kucuk', 'v_uzun', 'v_kisa', 'v_gri', 'v_kahverengi', 'v_pembe', 'v_mor', 'v_turuncu', 'v_orta'],
         verbIds: []
       },
       {
@@ -489,7 +489,7 @@ window.AppUnits = [
         xpReward: 90,
         time: 10,
         tags: ['Adjectifs', 'A1'],
-        vocabIds: ['v_guzel', 'v_iyi', 'v_buyuk', 'v_kucuk', 'v_ucuz', 'v_pahali', 'v_hizli', 'v_yavas', 'v_uzun', 'v_kisa'],
+        vocabIds: ['v_guzel', 'v_iyi', 'v_buyuk', 'v_kucuk', 'v_ucuz', 'v_pahali', 'v_hizli', 'v_yavas', 'v_uzun', 'v_kisa', 'v_agir', 'v_hafif', 'v_genis', 'v_dar', 'v_yuksek', 'v_alcak'],
         verbIds: []
       }
     ]
@@ -547,7 +547,7 @@ window.AppUnits = [
         xpReward: 60,
         time: 7,
         tags: ['Communication', 'A1'],
-        vocabIds: ['v_anlamiyorum', 'v_bilmiyorum', 'v_tekrar', 'v_yavas_konusun', 'v_lutfen', 'v_affedersiniz'],
+        vocabIds: ['v_anlamiyorum', 'v_bilmiyorum', 'v_tekrar', 'v_yavas_konusun', 'v_lutfen', 'v_affedersiniz', 'v_anliyorum', 'v_biliyorum'],
         verbIds: ['vb_anlamak', 'vb_bilmek']
       },
       {
@@ -588,7 +588,7 @@ window.AppUnits = [
         xpReward: 90,
         time: 10,
         tags: ['Routine', 'A1'],
-        vocabIds: ['v_sabah', 'v_aksam', 'v_gece', 'v_bugun', 'v_saat'],
+        vocabIds: ['v_sabah', 'v_aksam', 'v_gece', 'v_bugun', 'v_saat', 'v_erken', 'v_gec', 'v_oglen'],
         verbIds: ['vb_uyumak', 'vb_kalkmak', 'vb_yemek', 'vb_icmek', 'vb_gitmek']
       },
       {
@@ -806,7 +806,7 @@ window.AppUnits = [
         time: 12,
         tags: ['Conversation', 'A1'],
         // v10 AXE 3.6 : Otel retiré — hors thème pour une rencontre informelle entre amis.
-        vocabIds: ['v_arkadas', 'v_bugun', 'v_yarin', 'v_dun', 'v_saat'],
+        vocabIds: ['v_arkadas', 'v_bugun', 'v_yarin', 'v_dun', 'v_saat', 'v_hadi'],
         verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_olmak', 'vb_konusmak', 'vb_yapmak']
       },
       {
@@ -841,7 +841,7 @@ window.AppUnits = [
         xpReward: 70,
         time: 8,
         tags: ['Météo', 'A2'],
-        vocabIds: ['v_hava', 'v_gunes', 'v_yagmur', 'v_kar', 'v_ruzgar', 'v_bulutlu', 'v_gunesli', 'v_yagmurlu', 'v_hava_sicak', 'v_hava_soguk', 'v_hava_guzel', 'v_sicak', 'v_soguk'],
+        vocabIds: ['v_hava', 'v_gunes', 'v_yagmur', 'v_kar', 'v_ruzgar', 'v_bulutlu', 'v_gunesli', 'v_yagmurlu', 'v_hava_sicak', 'v_hava_soguk', 'v_hava_guzel', 'v_sicak', 'v_soguk', 'v_karli', 'v_mont', 'v_atki'],
         verbIds: []
       },
       {
@@ -853,7 +853,7 @@ window.AppUnits = [
         xpReward: 70,
         time: 8,
         tags: ['Corps', 'A2'],
-        vocabIds: ['v_bas', 'v_el', 'v_goz', 'v_kulak', 'v_agiz', 'v_ayak', 'v_kol', 'v_dis', 'v_sirt', 'v_karin'],
+        vocabIds: ['v_bas', 'v_el', 'v_goz', 'v_kulak', 'v_agiz', 'v_ayak', 'v_kol', 'v_dis', 'v_sirt', 'v_karin', 'v_yuz_corps', 'v_dudak'],
         verbIds: []
       },
       {
@@ -869,7 +869,7 @@ window.AppUnits = [
         xpReward: 90,
         time: 10,
         tags: ['Santé', 'A2'],
-        vocabIds: ['v_hasta', 'v_ilac', 'v_agri', 'v_ates', 'v_bas_agrisi', 'v_karin_agrisi', 'v_iyi_degilim', 'v_yardim', 'v_doktor', 'v_eczane', 'v_hastane'],
+        vocabIds: ['v_hasta', 'v_ilac', 'v_agri', 'v_ates', 'v_bas_agrisi', 'v_karin_agrisi', 'v_iyi_degilim', 'v_yardim', 'v_doktor', 'v_eczane', 'v_hastane', 'v_grip', 'v_oksuruk', 'v_hap', 'v_saglik'],
         verbIds: ['vb_istemek', 'vb_anlamak']
       }
     ]
@@ -917,7 +917,7 @@ window.AppUnits = [
         xpReward: 90,
         time: 10,
         tags: ['Expressions', 'A2'],
-        vocabIds: ['v_cok', 'v_az', 'v_biraz', 'v_elbette', 'v_dogru', 'v_yanlis', 'v_gercekten', 'v_hic', 'v_bazen', 'v_hep'],
+        vocabIds: ['v_cok', 'v_az', 'v_biraz', 'v_elbette', 'v_dogru', 'v_yanlis', 'v_gercekten', 'v_hic', 'v_bazen', 'v_hep', 'v_kolay', 'v_zor'],
         // v10 AXE 5.3 : düşünmek (penser) était orphelin — c'est littéralement le verbe
         // pour exprimer une opinion, thème de ce chapitre. requiredVerbIds garantit sa carte
         // de découverte (4e verbe du chapitre, sinon jamais montré — relecture Codex).
@@ -933,7 +933,7 @@ window.AppUnits = [
         xpReward: 80,
         time: 9,
         tags: ['Temps', 'A2'],
-        vocabIds: ['v_once', 'v_sonra', 'v_simdi', 'v_bugun', 'v_yarin', 'v_dun', 'v_hemen', 'v_bir_dakika', 'v_sabah', 'v_aksam'],
+        vocabIds: ['v_once', 'v_sonra', 'v_simdi', 'v_bugun', 'v_yarin', 'v_dun', 'v_hemen', 'v_bir_dakika', 'v_sabah', 'v_aksam', 'v_gecen_hafta', 'v_gelecek_hafta', 'v_gecen_ay', 'v_gelecek_ay', 'v_artik', 'v_simdilik'],
         verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_yapmak']
       }
     ]
@@ -960,7 +960,7 @@ window.AppUnits = [
         xpReward: 80,
         time: 8,
         tags: ['Maison', 'A2'],
-        vocabIds: ['v_salon', 'v_mutfak', 'v_yatak_odasi', 'v_banyo', 'v_tuvalet', 'v_koridor', 'v_balkon', 'v_garaj', 'v_bahce', 'v_kat'],
+        vocabIds: ['v_salon', 'v_mutfak', 'v_yatak_odasi', 'v_banyo', 'v_tuvalet', 'v_koridor', 'v_balkon', 'v_garaj', 'v_bahce', 'v_kat', 'v_icinde', 'v_disinda', 'v_ustunde', 'v_altinda', 'v_aydinlik', 'v_karanlik'],
         verbIds: ['vb_olmak', 'vb_gitmek']
       },
       {
@@ -972,7 +972,7 @@ window.AppUnits = [
         xpReward: 80,
         time: 9,
         tags: ['Maison', 'A2'],
-        vocabIds: ['v_koltuk', 'v_dolap', 'v_buzdolabi', 'v_firin', 'v_televizyon', 'v_lamba', 'v_ayna', 'v_hali', 'v_perde', 'v_duvar'],
+        vocabIds: ['v_koltuk', 'v_dolap', 'v_buzdolabi', 'v_firin', 'v_televizyon', 'v_lamba', 'v_ayna', 'v_hali', 'v_perde', 'v_duvar', 'v_isik', 'v_zemin', 'v_acik', 'v_kapali'],
         // v10 AXE 5.3 : açmak/kapatmak (ouvrir/fermer) étaient orphelins — cohérents ici,
         // on les utilise justement avec ces objets (allumer/éteindre la lampe, la télé...).
         // requiredVerbIds garantit leurs cartes de découverte (3e/4e verbes du chapitre,
@@ -1004,7 +1004,7 @@ window.AppUnits = [
         xpReward: 100,
         time: 10,
         tags: ['Maison', 'Lieux', 'A2'],
-        vocabIds: ['v_komsu', 'v_apartman', 'v_bina', 'v_kira', 'v_adres', 'v_sehir', 'v_mahalle'],
+        vocabIds: ['v_komsu', 'v_apartman', 'v_bina', 'v_kira', 'v_adres', 'v_sehir', 'v_mahalle', 'v_kopru', 'v_cadde', 'v_meydan', 'v_kaldirim', 'v_otopark', 'v_daire', 'v_merdiven', 'v_sessiz', 'v_gurultulu'],
         verbIds: ['vb_olmak', 'vb_gitmek', 'vb_sormak']
       }
     ]
@@ -1028,7 +1028,7 @@ window.AppUnits = [
         xpReward: 70,
         time: 8,
         tags: ['Corps', 'A2'],
-        vocabIds: ['v_burun', 'v_bacak', 'v_boyun', 'v_omuz', 'v_dirsek', 'v_diz', 'v_bilek', 'v_gogus', 'v_kalp', 'v_parmak', 'v_sac', 'v_tirnak'],
+        vocabIds: ['v_burun', 'v_bacak', 'v_boyun', 'v_omuz', 'v_dirsek', 'v_diz', 'v_bilek', 'v_gogus', 'v_kalp', 'v_parmak', 'v_sac', 'v_tirnak', 'v_yanak', 'v_kas', 'v_kirpik', 'v_cilt'],
         verbIds: []
       },
       {
@@ -1040,7 +1040,7 @@ window.AppUnits = [
         xpReward: 80,
         time: 9,
         tags: ['Santé', 'Émotions', 'A2'],
-        vocabIds: ['v_hasta', 'v_yorgun', 'v_agri', 'v_ates', 'v_iyi', 'v_kotu', 'v_mutlu', 'v_uzgun', 'v_endiseli'],
+        vocabIds: ['v_hasta', 'v_yorgun', 'v_agri', 'v_ates', 'v_iyi', 'v_kotu', 'v_mutlu', 'v_uzgun', 'v_endiseli', 'v_sinirli', 'v_heyecanli', 'v_memnun', 'v_neseli', 'v_rahat', 'v_iyi_hissediyorum', 'v_dinlen'],
         verbIds: []
       },
       {
@@ -1055,7 +1055,7 @@ window.AppUnits = [
         xpReward: 100,
         time: 11,
         tags: ['Santé', 'Urgences', 'A2'],
-        vocabIds: ['v_doktor', 'v_ilac', 'v_recete', 'v_ameliyat', 'v_randevu', 'v_eczane', 'v_bas_agrisi', 'v_karin_agrisi'],
+        vocabIds: ['v_doktor', 'v_ilac', 'v_recete', 'v_ameliyat', 'v_randevu', 'v_eczane', 'v_bas_agrisi', 'v_karin_agrisi', 'v_hemsire', 'v_dis_hekim', 'v_alerji', 'v_sigorta', 'v_yorgunluk'],
         verbIds: ['vb_olmak', 'vb_sormak', 'vb_soylemek']
       },
       {
@@ -1071,7 +1071,7 @@ window.AppUnits = [
         xpReward: 90,
         time: 9,
         tags: ['Urgences', 'A2'],
-        vocabIds: ['v_yardim', 'v_acil', 'v_polis', 'v_ambulans', 'v_itfaiye', 'v_tehlike'],
+        vocabIds: ['v_yardim', 'v_acil', 'v_polis', 'v_ambulans', 'v_itfaiye', 'v_tehlike', 'v_yara', 'v_kanama', 'v_acil_servis', 'v_guvenli', 'v_tehlikeli'],
         verbIds: ['vb_aramak', 'vb_gelmek', 'vb_yardim_etmek']
       }
     ]
@@ -1098,7 +1098,7 @@ window.AppUnits = [
         xpReward: 80,
         time: 9,
         tags: ['Transport', 'A2'],
-        vocabIds: ['v_otobus', 'v_metro', 'v_taksi', 'v_tren', 'v_durak', 'v_bilet', 'v_aktarma', 'v_hat', 'v_saat'],
+        vocabIds: ['v_otobus', 'v_metro', 'v_taksi', 'v_tren', 'v_durak', 'v_bilet', 'v_aktarma', 'v_hat', 'v_saat', 'v_vapur', 'v_tramvay', 'v_istasyon', 'v_sofor', 'v_yolcu', 'v_trafik', 'v_ucuncu'],
         verbIds: ['vb_gitmek', 'vb_gelmek', 'vb_almak', 'vb_beklemek']
       },
       {
@@ -1125,7 +1125,7 @@ window.AppUnits = [
         xpReward: 80,
         time: 9,
         tags: ['Lieux', 'Commerce', 'A2'],
-        vocabIds: ['v_postane', 'v_muze', 'v_sinema', 'v_kuafor', 'v_berber', 'v_pastane', 'v_kasap', 'v_dukkan', 'v_kutuphane'],
+        vocabIds: ['v_postane', 'v_muze', 'v_sinema', 'v_kuafor', 'v_berber', 'v_pastane', 'v_kasap', 'v_dukkan', 'v_kutuphane', 'v_tiyatro', 'v_universite', 'v_kilise', 'v_bar', 'v_spor_salonu', 'v_belediye'],
         verbIds: ['vb_gitmek', 'vb_bulmak', 'vb_almak', 'vb_odemek']
       },
       {
@@ -1140,7 +1140,7 @@ window.AppUnits = [
         xpReward: 90,
         time: 10,
         tags: ['Voyage', 'Hôtel', 'A2'],
-        vocabIds: ['v_otel', 'v_oda', 'v_anahtar', 'v_rezervasyon', 'v_giris', 'v_cikis', 'v_kat', 'v_fiyat'],
+        vocabIds: ['v_otel', 'v_oda', 'v_anahtar', 'v_rezervasyon', 'v_giris', 'v_cikis', 'v_kat', 'v_fiyat', 'v_dolu', 'v_bos'],
         verbIds: ['vb_olmak', 'vb_istemek', 'vb_sormak', 'vb_odemek']
       }
     ]
@@ -1209,7 +1209,7 @@ window.AppUnits = [
         xpReward: 110,
         time: 11,
         tags: ['Verbes A2', 'Émotions', 'A2'],
-        vocabIds: ['v_mutlu', 'v_uzgun', 'v_kizgin', 'v_saskin'],
+        vocabIds: ['v_mutlu', 'v_uzgun', 'v_kizgin', 'v_saskin', 'v_korkmus', 'v_sikilmis', 'v_merakli', 'v_utanmis'],
         // v10 AXE 3.6 : vb_tasimak (porter) retiré — hors thème ; vb_korkmak (avoir peur) le
         // remplace, un vrai verbe d'émotion.
         verbIds: ['vb_aglamak', 'vb_gulmek', 'vb_korkmak', 'vb_sevmek'],

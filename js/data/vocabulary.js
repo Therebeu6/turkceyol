@@ -329,6 +329,8 @@ window.AppVocabulary = [
   { id: 'v_cocuk', tr: 'Çocuk', fr: 'Enfant', topic: 'famille', type: 'nom', difficulty: 1, example: { tr: 'Çocuk bahçede oynuyor.', fr: 'L\'enfant joue dans le jardin.' } },
   { id: 'v_koca', tr: 'Koca', fr: 'Mari', topic: 'famille', type: 'nom', difficulty: 2, example: { tr: 'Kocam doktor.', fr: 'Mon mari est médecin.' } },
   { id: 'v_karim', tr: 'Karı', fr: 'Femme (épouse)', topic: 'famille', type: 'nom', difficulty: 2, example: { tr: 'Karım çok güzel.', fr: 'Ma femme est très belle.' } },
+  // v10 AXE 5.2 — forme neutre et courante pour « conjoint(e) » ; « karı » seul peut sonner familier, voire péjoratif.
+  { id: 'v_es', tr: 'Eş', fr: 'Époux / Épouse (conjoint)', topic: 'famille', type: 'nom', difficulty: 1, example: { tr: 'Eşim öğretmen.', fr: 'Mon époux / Mon épouse est enseignant(e).' } },
   { id: 'v_dede', tr: 'Dede', fr: 'Grand-père', topic: 'famille', type: 'nom', difficulty: 1, example: { tr: 'Dedem çay içiyor.', fr: 'Mon grand-père boit du thé.' } },
   { id: 'v_nine', tr: 'Nine', fr: 'Grand-mère', topic: 'famille', type: 'nom', difficulty: 1, example: { tr: 'Ninem çok yaşlı.', fr: 'Ma grand-mère est très âgée.' } },
   { id: 'v_amca', tr: 'Amca', fr: 'Oncle (côté paternel)', topic: 'famille', type: 'nom', difficulty: 2, example: { tr: 'Amcam köyde yaşıyor.', fr: 'Mon oncle habite au village.' } },
