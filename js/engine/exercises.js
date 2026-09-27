@@ -114,6 +114,12 @@ window.Exercises = {
       ? { ...chapter, verbIds: drillableVerbs.map(v => v.id) }
       : chapter;
 
+    // 1b) v10 AXE 5.5 — phrases utiles du chapitre (`chapter.phraseIds`, 4 max, cf.
+    // validate-data) : TOUTES montrées en carte de découverte à chaque passage (les phrases ne
+    // sont pas suivies par le SRS, donc jamais "déjà connues"), avant tout exercice dessus.
+    const chapterPhrases = this._phrasesByIds(chapter && chapter.phraseIds);
+    for (const p of chapterPhrases) discover.push(this.createPhraseCard(p));
+
     // 2) Fiche grammaire du chapitre (1 max)
     const gn = this.createGrammarNote(chapter);
     if (gn) discover.push(gn);
@@ -206,6 +212,13 @@ window.Exercises = {
       // Écoute d'un mot simple dès u2 (transcription courte)
       const lt = this.createListeningTranscribe(chapterForProduction, allowedTenses, knownVocabIds);
       if (lt && lt.text && lt.text.split(' ').length <= 2) produce.push(lt);
+    }
+
+    // 11) v10 AXE 5.5 — exercices sur les phrases montrées plus haut (2 max par leçon, pour ne
+    // pas gonfler la session) : remise en ordre dès u3 si la phrase a >= 3 mots, sinon QCM de sens.
+    for (const p of this._shuffle(chapterPhrases).slice(0, 2)) {
+      const ex = this.createPhraseExercise(p, prodLevel >= 2);
+      if (ex) (ex.type === 'word_order' ? produce : practice).push(ex);
     }
 
     // Fallback sécurité (données cassées uniquement)
@@ -454,7 +467,7 @@ window.Exercises = {
     // pouvoir sortir d'un chapitre non terminé, mais on ne fait plus confiance à cette seule
     // hypothèse (import de sauvegarde, ancien état, réorganisation du parcours) : on vérifie.
     const completedSet = new Set(completedChapters);
-    const virtualChapter = { grammarIds: [], dialogueIds: [], verbIds: [], vocabIds: [] };
+    const virtualChapter = { grammarIds: [], dialogueIds: [], verbIds: [], vocabIds: [], phraseIds: [] };
     for (const u of AppUnits) {
       for (const c of u.chapters) {
         if (!completedSet.has(c.id)) continue;
@@ -462,6 +475,7 @@ window.Exercises = {
         if (c.dialogueIds) virtualChapter.dialogueIds.push(...c.dialogueIds);
         if (c.verbIds) virtualChapter.verbIds.push(...c.verbIds);
         if (c.vocabIds) virtualChapter.vocabIds.push(...c.vocabIds);
+        if (c.phraseIds) virtualChapter.phraseIds.push(...c.phraseIds);
       }
     }
     const knownVocabSet = new Set(virtualChapter.vocabIds);
@@ -520,6 +534,15 @@ window.Exercises = {
     if (df) exercises.push(df);
     const lt = this.createListeningTranscribe(virtualChapter, unlockedTenses);
     if (lt) exercises.push(lt);
+
+    // v10 AXE 5.5 — une phrase utile, tirée UNIQUEMENT des chapitres terminés (donc déjà montrée
+    // en carte de découverte). Rien si aucun chapitre terminé n'a de phraseIds.
+    const reviewPhrases = this._phrasesByIds([...new Set(virtualChapter.phraseIds)]);
+    if (reviewPhrases.length > 0) {
+      const p = reviewPhrases[Math.floor(Math.random() * reviewPhrases.length)];
+      const pe = this.createPhraseExercise(p, true);
+      if (pe) exercises.push(pe);
+    }
 
     return this._shuffle(exercises);
   },
@@ -597,9 +620,55 @@ window.Exercises = {
     };
   },
 
+  _phrasesByIds(ids) {
+    if (!Array.isArray(ids) || !window.AppPhrases) return [];
+    return ids.map(id => AppPhrases.find(p => p.id === id)).filter(Boolean);
+  },
+
+  // v10 AXE 5.5 — carte de découverte d'une phrase utile (même rendu que intro_card).
+  createPhraseCard(phrase) {
+    return {
+      type: 'intro_card',
+      isTeaching: true,
+      isPhrase: true,
+      tr: phrase.tr,
+      fr: phrase.fr,
+      phonetic: window.Phonetics ? Phonetics.toFrench(phrase.tr) : null,
+      soundHints: window.Phonetics ? Phonetics.soundHints(phrase.tr) : [],
+      example: null,
+      data: { id: phrase.id, tr: phrase.tr, fr: phrase.fr, type: 'phrase' }
+    };
+  },
+
+  // v10 AXE 5.5 — exercice sur une phrase déjà montrée : remise en ordre (>= 3 mots, si la
+  // production est autorisée), sinon QCM de sens avec les traductions d'autres phrases.
+  createPhraseExercise(phrase, allowWordOrder) {
+    if (allowWordOrder && phrase.tr.split(' ').length >= 3) {
+      const wo = this.createWordOrder([], [phrase], null);
+      if (wo) return wo;
+    }
+    const others = (window.AppPhrases || []).filter(p => p.id !== phrase.id && p.fr !== phrase.fr);
+    const sameTopic = this._shuffle(others.filter(p => p.topic === phrase.topic));
+    const rest = this._shuffle(others.filter(p => p.topic !== phrase.topic));
+    const distractors = [];
+    for (const p of [...sameTopic, ...rest]) {
+      if (distractors.length >= 3) break;
+      if (!distractors.includes(p.fr)) distractors.push(p.fr);
+    }
+    if (distractors.length < 3) return null;
+    return {
+      type: 'qcm',
+      question: `Que signifie <span class="exo-tr">${phrase.tr.replace(/\.$/, '')}</span> ?`,
+      options: this._shuffle([phrase.fr, ...distractors]),
+      answer: phrase.fr,
+      sourcePhraseId: phrase.id,
+      data: { id: phrase.id, tr: phrase.tr, fr: phrase.fr, type: 'phrase' }
+    };
+  },
+
   createWordOrder(verbsPool, phrasesPool, allowedTenses) {
     const withEx = (verbsPool || []).filter(v => v.examples && v.examples.length > 0);
-    let source = null, sourceVerb = null, sourceTense = null;
+    let source = null, sourceVerb = null, sourceTense = null, sourcePhrase = null;
     if (withEx.length > 0) {
       const candidates = [];
       for (const v of this._shuffle(withEx)) {
@@ -621,7 +690,7 @@ window.Exercises = {
     }
     if (!source && phrasesPool && phrasesPool.length > 0) {
       const pool = phrasesPool.filter(p => p.tr && p.tr.split(' ').length >= 3);
-      if (pool.length > 0) source = pool[Math.floor(Math.random() * pool.length)];
+      if (pool.length > 0) source = sourcePhrase = pool[Math.floor(Math.random() * pool.length)];
     }
     if (!source) return null;
     const words = source.tr.split(' ');
@@ -636,7 +705,8 @@ window.Exercises = {
       // phrase du hub Pratique (aucune notion de temps).
       sourceVerbId: sourceVerb ? sourceVerb.id : null,
       sourceTense: sourceTense,
-      data: { id: 'wo_phrase', tr: source.tr, fr: source.fr, type: 'phrase' }
+      sourcePhraseId: sourcePhrase ? sourcePhrase.id : null,
+      data: { id: sourcePhrase ? sourcePhrase.id : 'wo_phrase', tr: source.tr, fr: source.fr, type: 'phrase' }
     };
   },
 

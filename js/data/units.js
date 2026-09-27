@@ -31,6 +31,7 @@ window.AppUnits = [
       },
       {
         id: 'u1_c2',
+        phraseIds: ['p_iyiyim'],
         culture: 'En Turquie, on salue chaleureusement : une poignée de main ferme, souvent deux bises entre proches. « Merhaba » marche à toute heure ; « Selam » est plus familier entre jeunes.',
         canDo: 'Je peux saluer et prendre congé',
         // v10 AXE 3.3 : d_rencontre (prénom, origine, nationalité) est le programme de l'unité 2,
@@ -94,6 +95,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u2_c1',
+        phraseIds: ['p_adiniz_ne', 'p_benim_adim'],
         culture: 'Le turc distingue « sen » (tu, proches) et « siz » (vous, politesse). Avec un inconnu ou une personne plus âgée, utilisez toujours « siz » — c\'est une marque de respect essentielle.',
         canDo: 'Je peux dire mon prénom et demander celui de quelqu\'un',
         grammarIds: ['g_ordre_mots'],
@@ -108,6 +110,7 @@ window.AppUnits = [
       },
       {
         id: 'u2_c2',
+        phraseIds: ['p_fransaliyim'],
         tips: [{ icon: '🌍', text: 'Pas de masculin/féminin en turc : Fransız = français ET française. Le genre grammatical n\'existe pas !' }],
         canDo: 'Je peux dire ma nationalité et ma langue',
         grammarIds: ['g_copule'],
@@ -122,6 +125,7 @@ window.AppUnits = [
       },
       {
         id: 'u2_c3',
+        phraseIds: ['p_kac_yasindasin'],
         canDo: 'Je peux dire et demander l\'âge',
         grammarIds: ['g_copule'],
         title: 'Mon âge',
@@ -134,6 +138,7 @@ window.AppUnits = [
       },
       {
         id: 'u2_c4',
+        phraseIds: ['p_is_ne_yapiyorsunuz'],
         canDo: 'Je peux dire mon métier',
         // v10 AXE 3.3 : d_calisma (futur, -abil, kadar) est niveau B1 — remplacé par un
         // dialogue à la copule, cohérent avec ce qui est enseigné jusqu'ici.
@@ -148,6 +153,7 @@ window.AppUnits = [
       },
       {
         id: 'u2_c5',
+        phraseIds: ['p_tanistigimiza_memnun_oldum', 'p_nerelisiniz'],
         canDo: 'Je peux me présenter en 4 phrases',
         grammarIds: ['g_ordre_mots', 'g_copule'],
         dialogueIds: ['d_rencontre', 'd_nationalite'],
@@ -290,6 +296,7 @@ window.AppUnits = [
       },
       {
         id: 'u5_c2',
+        phraseIds: ['p_tuvalet_nerede', 'p_hastane_nerede', 'p_ne_kadar_uzakta'],
         culture: 'Les Turcs sont réputés très serviables : demandez votre chemin et on vous accompagnera parfois sur plusieurs rues. Un « Affedersiniz » (excusez-moi) ouvre toutes les portes.',
         canDo: 'Je peux demander mon chemin',
         grammarIds: ['g_datif'],
@@ -309,6 +316,7 @@ window.AppUnits = [
       },
       {
         id: 'u5_c3',
+        phraseIds: ['p_otobus_duragi_nerede', 'p_metro_nerede', 'p_bir_bilet_lutfen'],
         canDo: 'Je peux nommer les transports',
         dialogueIds: ['d_otobus', 'd_taksi'],
         title: 'Transports',
@@ -321,6 +329,7 @@ window.AppUnits = [
       },
       {
         id: 'u5_c4',
+        phraseIds: ['p_duz_gidin', 'p_saga_donun', 'p_ilk_sola_donun', 'p_cok_uzak_degil'],
         canDo: 'Je peux comprendre des indications de direction',
         grammarIds: ['g_ablatif'],
         // v10 AXE 4 : garde d_direction (déjà orienté "comprendre la réponse" : "Sonra sağa
@@ -348,6 +357,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u6_c1',
+        phraseIds: ['p_cok_tuzlu'],
         canDo: 'Je peux nommer les aliments de base',
         dialogueIds: ['d_marche'],
         title: 'Les aliments',
@@ -360,6 +370,7 @@ window.AppUnits = [
       },
       {
         id: 'u6_c2',
+        phraseIds: ['p_bir_cay_istiyorum'],
         culture: 'Le çay (thé) est une institution : servi dans un petit verre tulipe, offert partout, à toute heure, souvent gratuitement. Refuser un çay peut presque vexer — acceptez, c\'est un geste d\'hospitalité.',
         canDo: 'Je peux commander une boisson',
         dialogueIds: ['d_cafe'],
@@ -373,6 +384,7 @@ window.AppUnits = [
       },
       {
         id: 'u6_c3',
+        phraseIds: ['p_menu_lutfen', 'p_hesap_lutfen', 'p_iki_kisilik_masa'],
         culture: 'À table, on souhaite « Afiyet olsun » (bon appétit) et on remercie le cuisinier par « Elinize sağlık » (santé à vos mains). Le pain (ekmek) accompagne quasiment tout repas.',
         tips: [{ icon: '🍽️', text: 'Pour commander poliment : « … istiyorum » (je voudrais) ou « … alabilir miyim ? » (puis-je avoir ?).' }],
         canDo: 'Je peux commander au restaurant et demander l\'addition',
@@ -397,6 +409,7 @@ window.AppUnits = [
       },
       {
         id: 'u6_c4',
+        phraseIds: ['p_cok_lezzetli', 'p_vejeteryanim', 'p_asca_tebrikler'],
         culture: 'Le petit-déjeuner turc (kahvaltı) est un festin : fromages, olives, tomates, concombre, miel, œufs, pain frais et çay. C\'est souvent le repas préféré des Turcs.',
         canDo: 'Je peux dire ce que j\'aime et ce que je n\'aime pas',
         // v10 AXE 3.4 : g_yok_var (il y a / il n'y a pas) n'a aucun rapport avec "j'aime" —
@@ -427,6 +440,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u7_c1',
+        phraseIds: ['p_ne_kadar', 'p_cok_pahali', 'p_servis_dahil_mi'],
         culture: 'Au bazar et sur les marchés, marchander (pazarlık) est normal et attendu. Dans les magasins à prix fixe, non. Souriez, discutez : le prix baisse souvent avec la sympathie.',
         canDo: 'Je peux demander et comprendre un prix',
         dialogueIds: ['d_supermarche'],
@@ -443,6 +457,7 @@ window.AppUnits = [
       },
       {
         id: 'u7_c2',
+        phraseIds: ['p_indirim_var_mi'],
         canDo: 'Je peux nommer les vêtements courants',
         dialogueIds: ['d_kiyafet'],
         title: 'Vêtements',
@@ -489,6 +504,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u8_c1',
+        phraseIds: ['p_tekrar_eder_misiniz', 'p_yavas_konusur_musunuz', 'p_anlamiyorum'],
         canDo: 'Je peux faire répéter et demander de parler lentement',
         // v10 AXE 3.3/4 : d_telefon (réservation de restaurant B1) puis d_anlamadim (partagé
         // avec u8_c3) remplacés par un dialogue propre, focalisé sur la répétition seule.
@@ -503,6 +519,7 @@ window.AppUnits = [
       },
       {
         id: 'u8_c2',
+        phraseIds: ['p_yardim_eder_misiniz'],
         canDo: 'Je peux demander de l\'aide',
         // v10 AXE 3.3 : un achat de médicament n'est pas une demande d'aide générale — ce
         // chapitre devient l'aide NON urgente (l'urgence proprement dite est en u8_c4/u16_c4,
@@ -520,6 +537,7 @@ window.AppUnits = [
       },
       {
         id: 'u8_c3',
+        phraseIds: ['p_turkce_bilmiyorum', 'p_ingilizce_biliyor_musunuz'],
         canDo: 'Je peux gérer une incompréhension',
         // v10 AXE 4 : dialogue propre, focalisé sur la demande de sens ("ne demek?"), pour ne
         // plus partager le même dialogue qu'u8_c1.
@@ -534,6 +552,7 @@ window.AppUnits = [
       },
       {
         id: 'u8_c4',
+        phraseIds: ['p_yardim_edin', 'p_doktor_cagirin', 'p_eczane_nerede'],
         culture: 'Le numéro d\'urgence unique en Turquie est le 112 (police, pompiers, ambulance). « İmdat ! » veut dire « au secours ! ».',
         canDo: 'Je peux réagir face à une urgence',
         // v10 AXE 3.3 : un achat de médicament n'appelait aucun secours — remplacé par un
@@ -586,6 +605,7 @@ window.AppUnits = [
       },
       {
         id: 'u9_c3',
+        phraseIds: ['p_ise_gidiyorum', 'p_eve_geliyorum', 'p_kahve_iciyorum'],
         canDo: 'Je peux dire ce que je suis en train de faire',
         grammarIds: ['g_present_iyor'],
         title: 'Ce que je fais',
@@ -622,6 +642,7 @@ window.AppUnits = [
       },
       {
         id: 'u10_c2',
+        phraseIds: ['p_turkce_calisiyorum'],
         tips: [{ icon: '⚡', text: 'Le présent -iyor couvre à la fois « je mange » et « je suis en train de manger » : un seul temps pour les deux !' }],
         canDo: 'Je peux conjuguer au présent progressif (-iyor)',
         grammarIds: ['g_present_iyor'],
@@ -749,6 +770,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u12_c1',
+        phraseIds: ['p_rezervasyonum_var', 'p_oda_anahtari_lutfen', 'p_odamda_sorun_var', 'p_kahvalti_dahil_mi'],
         culture: 'Dans les hôtels, la carte d\'identité ou le passeport est demandé à l\'enregistrement (giriş). Le petit-déjeuner (kahvaltı dahil) est très souvent inclus.',
         canDo: 'Je peux réserver une chambre d\'hôtel',
         dialogueIds: ['d_hotel'],
@@ -762,6 +784,7 @@ window.AppUnits = [
       },
       {
         id: 'u12_c2',
+        phraseIds: ['p_bavulumu_birakabilir_miyim'],
         canDo: 'Je peux me débrouiller à l\'aéroport et dans l\'avion',
         dialogueIds: ['d_avion'],
         title: 'Dans l\'avion',
@@ -774,6 +797,7 @@ window.AppUnits = [
       },
       {
         id: 'u12_c3',
+        phraseIds: ['p_istanbul_ziyaret_ediyorum', 'p_cok_guzel_ulke'],
         canDo: 'Je peux tenir une conversation informelle simple',
         dialogueIds: ['d_soiree_amis', 'd_rencontre'],
         title: 'Rencontre informelle',
@@ -834,6 +858,7 @@ window.AppUnits = [
       },
       {
         id: 'u13_c3',
+        phraseIds: ['p_basim_agriyor', 'p_atesim_var', 'p_karnım_agriyor'],
         tips: [{ icon: '🏥', text: 'Pour dire où vous avez mal : partie du corps + ağrıyor → Başım ağrıyor = j\'ai mal à la tête.' }],
         canDo: 'Je peux décrire un symptôme',
         // v10 AXE 3.3 : d_eczane s'ouvre sur "Başım ağrıyor", exactement ce canDo — il rejoint
@@ -859,6 +884,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u14_c1',
+        phraseIds: ['p_buraya_nasil_gidebilirim', 'p_kac_dakika_yurumus'],
         canDo: 'Je peux poser les questions essentielles (où, quand, comment…)',
         grammarIds: ['g_soru_mi', 'g_yok_var'],
         title: 'Questions essentielles',
@@ -871,6 +897,7 @@ window.AppUnits = [
       },
       {
         id: 'u14_c2',
+        phraseIds: ['p_nasilsin'],
         culture: '« Nasılsın ? » (comment vas-tu ?) est un rituel : on répond souvent « İyiyim, teşekkürler, sen ? ». Répondre « şükür » (Dieu merci) est courant et chaleureux.',
         canDo: 'Je peux demander et dire comment ça va',
         dialogueIds: ['d_rencontre'],
@@ -899,6 +926,7 @@ window.AppUnits = [
       },
       {
         id: 'u14_c4',
+        phraseIds: ['p_ne_zamandan_beri'],
         canDo: 'Je peux situer des actions dans le temps (avant, après)',
         title: 'Avant et après',
         goal: 'Situer des actions dans le temps',
@@ -968,6 +996,7 @@ window.AppUnits = [
       },
       {
         id: 'u15_c4',
+        phraseIds: ['p_nerede_oturuyorsun', 'p_karsisinda', 'p_kopruyu_gecin'],
         canDo: 'Je peux parler de mon quartier et de mes voisins',
         dialogueIds: ['d_apartman'],
         title: 'Mon quartier & mes voisins',
@@ -1016,6 +1045,7 @@ window.AppUnits = [
       },
       {
         id: 'u16_c3',
+        phraseIds: ['p_alerjim_var', 'p_gluten_yiyemiyorum'],
         canDo: 'Je peux consulter un médecin et comprendre une ordonnance',
         // v10 AXE 3.3 : d_saglik reprenait exactement le même dialogue qu'u13_c3, sans rien
         // ajouter — d_medecin seul suffit et correspond au lieu annoncé par ce chapitre.
@@ -1030,6 +1060,7 @@ window.AppUnits = [
       },
       {
         id: 'u16_c4',
+        phraseIds: ['p_ambulans_cagirin'],
         culture: 'En cas d\'urgence médicale, composez le 112. Les pharmacies (eczane) de garde (« nöbetçi eczane ») assurent un service de nuit, affiché sur chaque devanture.',
         canDo: 'Je peux appeler les secours et réagir en urgence',
         // v10 AXE 3.3 : même remplacement qu'u8_c4 — un achat de médicament n'est pas un
@@ -1057,6 +1088,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u17_c1',
+        phraseIds: ['p_bu_otobus_gidiyor_mu', 'p_taksi_cagirabilir_misiniz', 'p_kac_dakika_suruyor'],
         culture: 'Dans les grandes villes, la carte Istanbulkart (ou équivalent local) sert pour bus, métro, tram et ferry. On dit « inecek var ! » (quelqu\'un descend !) pour signaler son arrêt dans le bus.',
         canDo: 'Je peux prendre les transports en commun',
         grammarIds: ['g_ablatif'],
@@ -1071,6 +1103,7 @@ window.AppUnits = [
       },
       {
         id: 'u17_c2',
+        phraseIds: ['p_tren_gari_nerede', 'p_son_otobus_kacta', 'p_otobus_gec_kaldi'],
         canDo: 'Je peux acheter un billet et m\'orienter en gare/aéroport',
         dialogueIds: ['d_gare', 'd_avion', 'd_voyage_retour'],
         title: 'À la gare & à l\'aéroport',
@@ -1083,6 +1116,7 @@ window.AppUnits = [
       },
       {
         id: 'u17_c3',
+        phraseIds: ['p_bunu_alacagim'],
         canDo: 'Je peux faire des achats et des démarches en ville',
         grammarIds: ['g_locatif'],
         dialogueIds: ['d_banque', 'd_cinema'],
@@ -1096,6 +1130,7 @@ window.AppUnits = [
       },
       {
         id: 'u17_c4',
+        phraseIds: ['p_kac_gecelik', 'p_kacta_check_in', 'p_kacta_check_out', 'p_erken_kacta_cikarsiniz'],
         canDo: 'Je peux gérer mon séjour à l\'hôtel de A à Z',
         // v10 AXE 4 : dialogue différent de d_hotel (u12_c1), axé sur les services et un
         // problème de chambre plutôt que sur la réservation.
@@ -1122,6 +1157,7 @@ window.AppUnits = [
     chapters: [
       {
         id: 'u18_c1',
+        phraseIds: ['p_turkce_ogreniyorum'],
         canDo: 'Je peux parler d\'apprendre, se souvenir, oublier',
         grammarIds: ['g_abilmek'],
         dialogueIds: ['d_universite'],
@@ -1136,6 +1172,7 @@ window.AppUnits = [
       },
       {
         id: 'u18_c2',
+        phraseIds: ['p_benimle_konusur_musunuz'],
         canDo: 'Je peux exprimer commencer, finir, demander, répondre',
         title: 'Commencer, finir, demander, répondre',
         goal: 'Verbes d\'action et d\'interaction',
@@ -1148,6 +1185,7 @@ window.AppUnits = [
       },
       {
         id: 'u18_c3',
+        phraseIds: ['p_wifi_sifresi_ne'],
         canDo: 'Je peux utiliser trouver, perdre, dire, préparer',
         // v10 AXE 3.4 : g_ki_relatif retiré (aucun rapport avec ces verbes) — il enseigne
         // désormais u18_c8, où il a un vrai rôle.

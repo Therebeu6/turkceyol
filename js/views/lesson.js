@@ -490,7 +490,7 @@ window.Lesson = {
           <div class="ic-ex-tr">📖 ${exo.example.tr} <span class="ic-ex-tts">🔊</span></div>
           <div class="ic-ex-fr">${exo.example.fr || ''}</div>
         </div>` : '';
-      const badge = exo.isVerb ? '⚡ Nouveau verbe' : '✨ Nouveau mot';
+      const badge = exo.isVerb ? '⚡ Nouveau verbe' : (exo.isPhrase ? '💬 Phrase utile' : '✨ Nouveau mot');
       html = `
         <div class="exercise-container exo-slide-in">
           <div class="exercise-header">

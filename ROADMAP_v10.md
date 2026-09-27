@@ -688,6 +688,41 @@
 - u14 devient une consolidation.
 
 ### 5.5 — Intégrer les phrases au parcours · **M**
+
+> ✅ **Fait.** Les **77/77** phrases sont rattachées, via un nouveau champ explicite
+> `chapter.phraseIds` (38 chapitres, 1 à 4 phrases chacun), aux chapitres dont le thème ET le niveau
+> correspondent (restaurant → u6_c1–c4, shopping → u7_c1/c2, transport → u5_c3/u17_c1/c2, hôtel →
+> u12_c1/u17_c4, santé/urgences → u8_c4/u13_c3/u16_c3/c4, directions → u5_c2/c4/u15_c4/u14_c1,
+> aide → u8_c1–c3, salutations/social → u1_c2/u2_c1–c5/u12_c3/u14_c2/c4/u18_c1/c2, routine →
+> u9_c3/u10_c2). Au-delà du plan (« thèmes restaurant, transport… ») : TOUS les thèmes, puisque
+> le but était qu'aucune phrase ne reste cantonnée à l'onglet. Choix notables :
+> - les phrases au présent de routine (*İşe gidiyorum*…) entrent en u9_c3, là où le présent est
+>   enseigné ; *Bunu alacağım* (futur) en u17_c3, après u11 ; les 3 phrases de difficulté 3
+>   uniquement dans des unités A2 (u14_c4, u17_c4, u18_c2) ;
+> - *Nerelisiniz?* et *Anlamıyorum.* existent aussi comme mots (`v_nerelisiniz`, `v_anlamiyorum`)
+>   dans u2_c2/u8_c3 : rattachées à u2_c5/u8_c1 pour éviter une carte en double dans la même leçon.
+>   *Nasılsın?* (mot en u1_c2) est rattachée à u14_c2 comme consolidation.
+> **Moteur** (`exercises.js`) : chaque phrase du chapitre reçoit une carte de découverte
+> (`intro_card` + `isPhrase`, badge « 💬 Phrase utile ») en phase Découverte, à chaque passage (les
+> phrases ne sont pas suivies par le SRS, donc jamais « déjà connues ») ; puis **2 exercices de
+> phrase max par leçon** : remise en ordre via le paramètre `phrasesPool` de `createWordOrder`
+> (enfin alimenté) si la phrase a ≥ 3 mots et que la production est permise (u3+), sinon QCM de sens
+> (distracteurs = traductions d'autres phrases, même thème d'abord). En **révision**, le chapitre
+> virtuel collecte aussi les `phraseIds` des chapitres **terminés** — donc déjà montrées — et une
+> phrase en est tirée par session. Aucune phrase n'entre dans le SRS (`data.type: 'phrase'`, déjà
+> exclu par `lesson.js`/`review.js`), aucune nouvelle clé de `State`.
+> **Garde-fous** : `validate-data.js` (bloquant) — `phraseIds` existants, ≤ 4 par chapitre, chaque
+> phrase rattachée au moins une fois, pas de doublon avec un mot du même chapitre, pas de difficulté 3
+> en unité A1. Nouvel outil `tools/verify-phrase-coverage.js` : profil neuf, sur tous les chapitres ×
+> 60 passes, aucun exercice de phrase sans sa carte dans la même génération ; chaque phrase
+> réellement exercée dans son chapitre ; en révision, jamais une phrase d'un chapitre non terminé
+> (mi-parcours, aucun chapitre) et toutes atteignables une fois le parcours terminé. Testé pour être
+> un vrai test : il échoue avec les cartes retirées, avec la révision non filtrée, sans exercices de
+> phrase, et avec une phrase détachée. Vérifié en Chrome headless : carte puis QCM (bonne réponse
+> acceptée, rien dans le SRS), remise en ordre validée, phrase proposée à l'écran de révision.
+> **Bug majeur découvert pendant ce test navigateur** (révision SRS entièrement vide dans le vrai
+> navigateur, `window.State` indéfini) : corrigé dans un commit séparé, cf. note en 1.3.
+
 - Les 77 phrases (`AppPhrases`) ne servent dans aucune leçon ni révision.
   `createWordOrder(verbs, null)` a pourtant déjà un paramètre `phrasesPool` jamais alimenté.
 - Ajouter `phraseIds` optionnels aux chapitres thématiques (restaurant, transport, hôtel,

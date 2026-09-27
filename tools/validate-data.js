@@ -168,8 +168,34 @@ for (const u of units) {
     checkRefs('verbIds', verbIds, 'verbId');
     checkRefs('grammarIds', grammarIds, 'grammarId');
     checkRefs('dialogueIds', dialogueIds, 'dialogueId');
+    checkRefs('phraseIds', idSet(phrases), 'phraseId');
   }
 }
+
+// ── 4c. Phrases utiles rattachées au parcours (v10 AXE 5.5) ──
+// Chaque phrase de l'onglet Phrases doit être enseignée par au moins un chapitre ; un chapitre
+// n'en porte que 4 au plus (toutes montrées en carte à chaque passage, sans gonfler la leçon) ;
+// une phrase identique à un mot du même chapitre ferait doublon de carte ; une phrase de
+// difficulté 3 n'a pas sa place dans une unité A1.
+const normTr = (t) => String(t || '').toLocaleLowerCase('tr-TR').replace(/[.!?,;:]/g, '').trim();
+const phraseById = Object.fromEntries(phrases.map(p => [p.id, p]));
+const vocabById = Object.fromEntries(vocab.map(w => [w.id, w]));
+const phraseUse = new Map();
+for (const u of units) {
+  for (const c of (u.chapters || [])) {
+    const pids = c.phraseIds || [];
+    if (pids.length > 4) err(`chapitre "${c.id}" : ${pids.length} phraseIds (4 max)`);
+    const chapterVocabTr = new Set((c.vocabIds || []).map(id => vocabById[id]).filter(Boolean).map(w => normTr(w.tr)));
+    for (const pid of pids) {
+      const p = phraseById[pid];
+      if (!p) continue;
+      phraseUse.set(pid, (phraseUse.get(pid) || 0) + 1);
+      if (chapterVocabTr.has(normTr(p.tr))) err(`chapitre "${c.id}" : phrase "${pid}" identique à un mot de ses vocabIds (doublon de carte)`);
+      if ((p.difficulty || 1) >= 3 && u.cefr === 'A1') err(`chapitre "${c.id}" (A1) : phrase "${pid}" de difficulté ${p.difficulty}, trop avancée`);
+    }
+  }
+}
+for (const p of phrases) if (!phraseUse.has(p.id)) err(`phrase "${p.id}" rattachée à aucun chapitre (AXE 5.5)`);
 
 // ── 4b. Cohérence des niveaux CECRL (v10 AXE 6.6) ──
 // Convention établie dans TOUTE la base (vérifiée avant d'écrire cette règle) : le tag CECRL
