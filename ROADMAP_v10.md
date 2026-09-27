@@ -241,6 +241,13 @@
 > statique, `tools/verify-globals.js` (tout `window.X` lu dans `js/` doit être assigné quelque
 > part) — il échoue sur le code d'avant correctif et passe après. Vérifié en Chrome headless :
 > `window.State` défini, et une révision avec `u1_c2` terminé produit bien 4 exercices (0 avant).
+>
+> ✅ **Conséquence directe, corrigée dans la foulée** : la densité de session redevenant active, une
+> fuite latente s'est réveillée — `createIntroCards` plafonnait les cartes de mots à 5 alors que la
+> densité « Longue » échantillonne 7 mots, tous testés ensuite (56 chapitres touchés). Plafond de
+> mots supprimé ; celui des cartes de verbes est recalculé à l'identique de l'ancien (au plus 5 mots
+> comptés). Nouvel outil `tools/verify-vocab-intro-order.js` : profil neuf, 3 densités × tous les
+> chapitres × 15 passes, aucun mot testé sans sa carte dans la même leçon (échoue sur l'ancien code).
 
 - `generateForReview` tire le temps d'un verbe dans l'intersection « temps présents sur le
   verbe ∩ temps débloqués ». Les temps débloqués sont déduits de

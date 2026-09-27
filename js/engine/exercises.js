@@ -272,8 +272,11 @@ window.Exercises = {
         example: word.example || null,
         data: { id: word.id, tr: word.tr, fr: word.fr, type: 'vocabulary' }
       });
-      if (cards.length >= 5) break;
     }
+    // Plus de plafond à 5 cartes de mots : en densité « Longue », l'échantillon compte 7 mots,
+    // tous testés ensuite — les 2 derniers l'étaient sans jamais avoir été présentés.
+    // Le plafond des cartes de verbes, lui, reste calculé comme avant (au plus 5 mots comptés).
+    const extraWordCards = Math.max(0, cards.length - 5);
 
     // v10 AXE 5.3 — `chapter.requiredVerbIds` (optionnel, même logique que
     // `requiredVocabIds`) garantit une carte de découverte pour un verbe précis, même si le
@@ -312,7 +315,7 @@ window.Exercises = {
     let extraVerbCards = 0;
     for (const verb of allVerbs) {
       if (requiredSet.has(verb.id)) continue; // déjà traité ci-dessus
-      if (extraVerbCards >= 2 || cards.length >= 6) break;
+      if (extraVerbCards >= 2 || cards.length - extraWordCards >= 6) break;
       if (known.has(verb.id)) continue;
       makeVerbCard(verb);
       extraVerbCards++;
