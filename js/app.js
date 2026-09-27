@@ -343,6 +343,9 @@ const App = {
     }
   }
 };
+// Un `const` global n'est pas une propriété de window : sans cette ligne, tous les tests
+// `window.App && ...` du reste de l'app sont silencieusement faux dans le navigateur.
+window.App = App;
 
 // Démarrage de l'app au DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {

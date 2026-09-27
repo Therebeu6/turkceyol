@@ -307,3 +307,6 @@ const State = {
     reader.readAsText(file);
   }
 };
+// Un `const` global n'est pas une propriété de window : sans cette ligne, tous les tests
+// `window.State && ...` du reste de l'app sont silencieusement faux dans le navigateur.
+window.State = State;

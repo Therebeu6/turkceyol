@@ -227,6 +227,20 @@
 > tous les verbes du jeu dans `reviewItems` (y compris du contenu d'u18, jamais enseigné à ce
 > stade) : le nombre d'exercices produits est passé de 17 250 à 6 120 sur 30 passes une fois le
 > filtre en place, signe que la faille était réelle et pas seulement théorique.
+>
+> ✅ **Bug bloquant trouvé plus tard (test navigateur de l'AXE 5.5), corrigé** : `State` et `App`
+> étaient déclarés en `const` au niveau racine de leur script — ce qui n'en fait **pas** des
+> propriétés de `window`. Tous les tests `window.State && …` valaient donc `false` dans le vrai
+> navigateur : `completedChapters` lu comme `[]`, chapitre virtuel vide, `reviewItems` entièrement
+> filtré → **la révision SRS ne générait aucun exercice** (écran de révision qui se réaffiche sans
+> rien lancer), depuis ce lot. Même cause, autres effets silencieux : densité de session ignorée,
+> mots déjà maîtrisés jamais sautés dans les cartes de découverte, effets sonores coupés, favoris
+> inopérants, histoires lues/parfaites jamais enregistrées, saisie vocale jamais activée. Les
+> outils Node ne le voyaient pas : leurs sandboxes injectent `State` directement comme global.
+> Corrigé par `window.State = State;` / `window.App = App;`, et verrouillé par un nouvel outil
+> statique, `tools/verify-globals.js` (tout `window.X` lu dans `js/` doit être assigné quelque
+> part) — il échoue sur le code d'avant correctif et passe après. Vérifié en Chrome headless :
+> `window.State` défini, et une révision avec `u1_c2` terminé produit bien 4 exercices (0 avant).
 
 - `generateForReview` tire le temps d'un verbe dans l'intersection « temps présents sur le
   verbe ∩ temps débloqués ». Les temps débloqués sont déduits de
