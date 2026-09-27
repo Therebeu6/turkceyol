@@ -41,7 +41,10 @@ window.AppUnits = [
         xpReward: 50,
         time: 6,
         tags: ['Salutations', 'A1'],
-        vocabIds: ['v_merhaba', 'v_gunaydin', 'v_iyi_aksamlar', 'v_iyi_geceler', 'v_gorusuruz', 'v_hoscakal', 'v_tesekkurler'],
+        // v10 AXE 5.4 : Nasılsın?/İyiyim entrent ici avec le dialogue de salutations (3.3),
+        // qui les utilise déjà — pas juste ajoutés seuls, sans contexte.
+        vocabIds: ['v_merhaba', 'v_gunaydin', 'v_iyi_aksamlar', 'v_iyi_geceler', 'v_gorusuruz', 'v_hoscakal', 'v_tesekkurler', 'v_nasilsin', 'v_iyiyim'],
+        requiredVocabIds: ['v_nasilsin', 'v_iyiyim'],
         verbIds: []
       },
       {
@@ -298,7 +301,10 @@ window.AppUnits = [
         xpReward: 90,
         time: 10,
         tags: ['Directions', 'A1'],
-        vocabIds: ['v_sag', 'v_sol', 'v_duz', 'v_kose', 'v_yakin', 'v_uzak', 'v_karsisinda', 'v_hastane', 'v_okul', 'v_market', 'v_otel'],
+        // v10 AXE 5.4 : v_nerede sert directement le goal « Où est... ? » — le dialogue
+        // d_yol_sorma l'utilise déjà (« market nerede? ») mais il n'était pas rattaché ici.
+        vocabIds: ['v_nerede', 'v_sag', 'v_sol', 'v_duz', 'v_kose', 'v_yakin', 'v_uzak', 'v_karsisinda', 'v_hastane', 'v_okul', 'v_market', 'v_otel'],
+        requiredVocabIds: ['v_nerede'],
         verbIds: ['vb_gitmek', 'vb_gelmek']
       },
       {
@@ -381,7 +387,13 @@ window.AppUnits = [
         // v10 AXE 1.5 : ces 2 chunks portent le canDo ("commander") — toujours enseignés,
         // jamais laissés au tirage aléatoire de l'échantillon.
         requiredVocabIds: ['v_istiyorum_chunk', 'v_alabilir_miyim'],
-        verbIds: ['vb_istemek', 'vb_yemek', 'vb_icmek']
+        // v10 AXE 5.3 : vermek (donner) était orphelin — cohérent ici (un serveur/client
+        // donne/apporte l'addition, l'eau, etc.). requiredVerbIds garantit sa carte de
+        // découverte malgré les 3 autres verbes déjà présents (relecture Codex : un chapitre
+        // à >2 verbIds ne montre que 2 cartes par défaut, un verbe pouvait donc être testé
+        // sans jamais être introduit).
+        requiredVerbIds: ['vb_vermek'],
+        verbIds: ['vb_istemek', 'vb_yemek', 'vb_icmek', 'vb_vermek']
       },
       {
         id: 'u6_c4',
@@ -424,7 +436,10 @@ window.AppUnits = [
         time: 8,
         tags: ['Commerce', 'A1'],
         vocabIds: ['v_para', 'v_fiyat', 'v_hesap', 'v_ucuz', 'v_pahali', 'v_on', 'v_yirmi', 'v_otuz', 'v_elli', 'v_yuz'],
-        verbIds: []
+        // v10 AXE 5.3 : satmak (vendre) était orphelin — cohérent avec le thème des prix
+        // (un vendeur vend, un client demande le prix).
+        requiredVerbIds: ['vb_satmak'],
+        verbIds: ['vb_satmak']
       },
       {
         id: 'u7_c2',
@@ -876,7 +891,11 @@ window.AppUnits = [
         time: 10,
         tags: ['Expressions', 'A2'],
         vocabIds: ['v_cok', 'v_az', 'v_biraz', 'v_elbette', 'v_dogru', 'v_yanlis', 'v_gercekten', 'v_hic', 'v_bazen', 'v_hep'],
-        verbIds: ['vb_sevmek', 'vb_istemek', 'vb_bilmek']
+        // v10 AXE 5.3 : düşünmek (penser) était orphelin — c'est littéralement le verbe
+        // pour exprimer une opinion, thème de ce chapitre. requiredVerbIds garantit sa carte
+        // de découverte (4e verbe du chapitre, sinon jamais montré — relecture Codex).
+        requiredVerbIds: ['vb_dusunmek'],
+        verbIds: ['vb_sevmek', 'vb_istemek', 'vb_bilmek', 'vb_dusunmek']
       },
       {
         id: 'u14_c4',
@@ -926,7 +945,12 @@ window.AppUnits = [
         time: 9,
         tags: ['Maison', 'A2'],
         vocabIds: ['v_koltuk', 'v_dolap', 'v_buzdolabi', 'v_firin', 'v_televizyon', 'v_lamba', 'v_ayna', 'v_hali', 'v_perde', 'v_duvar'],
-        verbIds: ['vb_olmak', 'vb_bakmak']
+        // v10 AXE 5.3 : açmak/kapatmak (ouvrir/fermer) étaient orphelins — cohérents ici,
+        // on les utilise justement avec ces objets (allumer/éteindre la lampe, la télé...).
+        // requiredVerbIds garantit leurs cartes de découverte (3e/4e verbes du chapitre,
+        // sinon jamais montrés — relecture Codex).
+        requiredVerbIds: ['vb_acmak', 'vb_kapatmak'],
+        verbIds: ['vb_olmak', 'vb_bakmak', 'vb_acmak', 'vb_kapatmak']
       },
       {
         id: 'u15_c3',

@@ -243,6 +243,9 @@ window.AppVocabulary = [
   { id: 'v_ayran', tr: 'Ayran', fr: 'Ayran (boisson au yaourt)', topic: 'nourriture', type: 'nom', difficulty: 2, example: { tr: 'Bir ayran, lütfen.', fr: 'Un ayran, s\'il vous plaît.' } },
 
   // ── Chunks & Expressions courantes ──
+  // v10 AXE 5.4 : forme informelle (tutoiement), utilisée dès u1_c2 avec le dialogue
+  // d_selamlama (entre proches) ; v_nasilsiniz (vouvoiement) reste réservée à u14.
+  { id: 'v_nasilsin', tr: 'Nasılsın?', fr: 'Comment vas-tu ?', topic: 'chunks', type: 'expression', difficulty: 1, example: { tr: 'Merhaba! Nasılsın?', fr: 'Bonjour ! Comment vas-tu ?' } },
   { id: 'v_nasilsiniz', tr: 'Nasılsınız?', fr: 'Comment allez-vous ?', topic: 'chunks', type: 'expression', difficulty: 1, example: { tr: 'Merhaba, nasılsınız?', fr: 'Bonjour, comment allez-vous ?' } },
   { id: 'v_iyiyim', tr: 'İyiyim', fr: 'Je vais bien', topic: 'chunks', type: 'expression', difficulty: 1, example: { tr: 'Teşekkürler, iyiyim.', fr: 'Merci, je vais bien.' } },
   { id: 'v_cok_iyi', tr: 'Çok iyi!', fr: 'Très bien !', topic: 'chunks', type: 'expression', difficulty: 1, example: { tr: 'Nasılsın? Çok iyi!', fr: 'Comment vas-tu ? Très bien !' } },

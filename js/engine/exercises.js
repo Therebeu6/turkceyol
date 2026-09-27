@@ -93,7 +93,26 @@ window.Exercises = {
     const produce  = [];  // produire   (niv 3)
 
     // 1) Cartes de découverte (mots non maîtrisés uniquement)
-    discover.push(...this.createIntroCards(vocabSample, verbs));
+    const requiredVerbIds = (chapter && Array.isArray(chapter.requiredVerbIds)) ? chapter.requiredVerbIds : [];
+    const introCardsResult = this.createIntroCards(vocabSample, verbs, requiredVerbIds);
+    discover.push(...introCardsResult.cards);
+
+    // v10 AXE 5.3 — garde-fou général : un verbe ne peut alimenter un exercice de conjugaison
+    // (étape 5 ci-dessous) que s'il a été montré dans une carte de découverte CETTE session, ou
+    // s'il est déjà maîtrisé (reviewQueue, step >= 2). Un verbe présent dans verbIds mais ni
+    // introduit ni connu (ex. 4e verbe d'un chapitre qui plafonne à 2 cartes) est simplement
+    // exclu du tirage, plutôt que testé sans avoir jamais été enseigné.
+    const drillableVerbs = verbs.filter(v =>
+      introCardsResult.introducedVerbIds.has(v.id) || introCardsResult.known.has(v.id)
+    );
+    // createSentenceBuilder et createListeningTranscribe lisent `chapter.verbIds` en interne
+    // (ils prennent le chapitre entier, pas un tableau de verbes) — un clone superficiel avec
+    // `verbIds` restreint à `drillableVerbs` leur applique le même garde-fou sans toucher aux
+    // autres usages de `chapter` (grammaire, dialogue, tips...) ni au chemin de révision
+    // (generateForReview leur passe déjà son propre `virtualChapter`, indépendant).
+    const chapterForProduction = chapter
+      ? { ...chapter, verbIds: drillableVerbs.map(v => v.id) }
+      : chapter;
 
     // 2) Fiche grammaire du chapitre (1 max)
     const gn = this.createGrammarNote(chapter);
@@ -136,11 +155,11 @@ window.Exercises = {
     });
 
     // 5) Conjugaison → rappel (rien à conjuguer si aucun temps n'est encore enseigné)
-    if (verbs.length > 0 && drillTenses.length > 0) {
+    if (drillableVerbs.length > 0 && drillTenses.length > 0) {
       const persons = ['ben', 'sen', 'o', 'biz', 'siz', 'onlar'];
-      const count = !hasExplicitVocab ? Math.min(8, verbs.length * 2 + 1) : Math.min(3, verbs.length + 1);
+      const count = !hasExplicitVocab ? Math.min(8, drillableVerbs.length * 2 + 1) : Math.min(3, drillableVerbs.length + 1);
       for (let i = 0; i < count; i++) {
-        const verb = verbs[i % verbs.length];
+        const verb = drillableVerbs[i % drillableVerbs.length];
         const person = persons[i % persons.length];
         const tense = drillTenses[i % drillTenses.length];
         const ex = this.createVerbFill(verb, person, tense, allowedTenses);
@@ -161,8 +180,8 @@ window.Exercises = {
     }
 
     // 8) Cloze (exemples des verbes du chapitre) → rappel
-    if (verbs.length > 0) {
-      const cz = this.createCloze(verbs, allowedTenses);
+    if (drillableVerbs.length > 0) {
+      const cz = this.createCloze(drillableVerbs, allowedTenses);
       if (cz) recall.push(cz);
     }
 
@@ -175,17 +194,17 @@ window.Exercises = {
 
     // 10) Production (si niveau suffisant)
     if (prodLevel >= 2) {
-      if (verbs.length > 0) {
-        const wo = this.createWordOrder(verbs, null, allowedTenses);
+      if (drillableVerbs.length > 0) {
+        const wo = this.createWordOrder(drillableVerbs, null, allowedTenses);
         if (wo) produce.push(wo);
       }
-      const sb = this.createSentenceBuilder(chapter, allowedTenses);
+      const sb = this.createSentenceBuilder(chapterForProduction, allowedTenses);
       if (sb) produce.push(sb);
-      const lt = this.createListeningTranscribe(chapter, allowedTenses, knownVocabIds);
+      const lt = this.createListeningTranscribe(chapterForProduction, allowedTenses, knownVocabIds);
       if (lt) produce.push(lt);
     } else if (prodLevel === 1) {
       // Écoute d'un mot simple dès u2 (transcription courte)
-      const lt = this.createListeningTranscribe(chapter, allowedTenses, knownVocabIds);
+      const lt = this.createListeningTranscribe(chapterForProduction, allowedTenses, knownVocabIds);
       if (lt && lt.text && lt.text.split(' ').length <= 2) produce.push(lt);
     }
 
@@ -221,7 +240,7 @@ window.Exercises = {
   },
 
   // ── Cartes de découverte : enseigner avant de tester (Pilier A) ──
-  createIntroCards(words, verbs) {
+  createIntroCards(words, verbs, requiredVerbIds) {
     const cards = [];
     const known = new Set(
       ((window.State && State.data && State.data.reviewQueue) || [])
@@ -242,10 +261,14 @@ window.Exercises = {
       });
       if (cards.length >= 5) break;
     }
-    // Verbes nouveaux : 2 cartes max
-    let verbCards = 0;
-    for (const verb of (verbs || [])) {
-      if (known.has(verb.id) || verbCards >= 2 || cards.length >= 6) break;
+
+    // v10 AXE 5.3 — `chapter.requiredVerbIds` (optionnel, même logique que
+    // `requiredVocabIds`) garantit une carte de découverte pour un verbe précis, même si le
+    // chapitre a plus de 2 verbIds : sans ça, un verbe placé en 3e/4e position pouvait
+    // alimenter un exercice de conjugaison (étape 5) sans jamais avoir été montré à
+    // l'apprenant. Priorisés en premier, avant le complément générique.
+    const introducedVerbIds = new Set();
+    const makeVerbCard = (verb) => {
       const ex = (verb.examples && verb.examples[0]) || null;
       cards.push({
         type: 'intro_card',
@@ -258,9 +281,31 @@ window.Exercises = {
         example: ex,
         data: { id: verb.id, tr: verb.infinitive, fr: verb.fr, type: 'verb' }
       });
-      verbCards++;
+      introducedVerbIds.add(verb.id);
+    };
+
+    const allVerbs = verbs || [];
+    const requiredSet = new Set(requiredVerbIds || []);
+    for (const verb of allVerbs) {
+      if (!requiredSet.has(verb.id) || known.has(verb.id)) continue;
+      makeVerbCard(verb);
     }
-    return cards;
+
+    // Verbes non requis : 2 cartes max en plus, comme avant.
+    // v10 AXE 5.3 — correctif (relecture externe, Codex) : un verbe déjà CONNU doit être
+    // ignoré (continue), pas arrêter la boucle (break) — sinon, avec >2 verbIds, un verbe
+    // connu placé avant un verbe nouveau empêchait ce dernier de jamais recevoir sa carte.
+    // `break` reste réservé aux vraies limites (plafond de cartes atteint).
+    let extraVerbCards = 0;
+    for (const verb of allVerbs) {
+      if (requiredSet.has(verb.id)) continue; // déjà traité ci-dessus
+      if (extraVerbCards >= 2 || cards.length >= 6) break;
+      if (known.has(verb.id)) continue;
+      makeVerbCard(verb);
+      extraVerbCards++;
+    }
+
+    return { cards, introducedVerbIds, known };
   },
 
   // Règles verbales → tableau de conjugaison (6 personnes) depuis verbs.js

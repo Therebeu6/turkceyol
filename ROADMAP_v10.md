@@ -581,12 +581,86 @@
   choix assumé, pas un oubli.
 
 ### 5.3 — Verbes jamais utilisés · **S**
+
+> ✅ **Fait.** Les 5 verbes rattachés exactement où prévu, tous avec `conjugations`
+> présent/passé/futur déjà complètes (donc rien à ajouter côté données) :
+> - `vb_vermek` (donner) → `u6_c3` « Au restaurant » : cohérent, un serveur/client
+>   donne/apporte l'addition, l'eau, un plat ;
+> - `vb_satmak` (vendre) → `u7_c1` « Les prix » : cohérent avec le thème (vendeur/acheteur) ;
+> - `vb_acmak` / `vb_kapatmak` (ouvrir/fermer) → `u15_c2` « Meubles & objets » : cohérent, on
+>   allume/éteint justement les objets de ce chapitre (lampe, télé) ;
+> - `vb_dusunmek` (penser) → `u14_c3` « Exprimer l'opinion » : c'est littéralement le verbe
+>   pour ce thème.
+> Aucun de ces chapitres n'a de `tenses` restreignant explicitement — revérifié avec
+> `verify-tense-gating.js` (76 chapitres × 20 passes) : aucun exercice ne teste une forme de
+> ces verbes hors des temps déjà déverrouillés à ce stade de la progression.
+>
+> **Correctif (régression pédagogique trouvée en relecture externe, Codex)** : `createIntroCards`
+> ne montre que 2 cartes de verbe max par leçon, mais l'étape 5 (conjugaison) parcourait ENSUITE
+> tous les `verbIds` du chapitre sans se limiter à ce qui avait été montré — un chapitre à
+> >2 verbIds (les 4 chapitres touchés ici en ont exactement 4) pouvait donc tester le 3e/4e
+> verbe (`vb_vermek`, `vb_acmak`, `vb_kapatmak`, `vb_dusunmek`) sans jamais l'introduire.
+> L'affirmation « aucun verbe testé avant d'être présenté » était donc fausse pour ce lot : les
+> 6 outils existants la garantissaient pour les TEMPS, jamais pour l'ORDRE d'enseignement des
+> verbes eux-mêmes. Deux correctifs, dans `js/engine/exercises.js` :
+> - **`chapter.requiredVerbIds`** (nouveau, optionnel, même logique que `requiredVocabIds`) :
+>   garantit une carte de découverte à un verbe précis, prioritaire sur le plafond générique de
+>   2. Ajouté aux 4 chapitres concernés (`vb_vermek`, `vb_satmak`, `vb_acmak` + `vb_kapatmak`,
+>   `vb_dusunmek`) ;
+> - **garde-fou général** `drillableVerbs` : un verbe n'alimente plus JAMAIS un exercice de
+>   conjugaison/cloze/word_order que s'il a reçu une carte de découverte dans la même
+>   génération, ou est déjà maîtrisé (`reviewQueue`, step ≥ 2) — sinon il est simplement exclu
+>   du tirage. Corrige la même faille latente pour TOUS les chapitres à >2 verbIds, pas
+>   seulement les 4 de ce lot (une quinzaine d'autres en bénéficient, ex. `u18_c5`/`u18_c6`).
+> **2e passe de relecture (Codex) — 2 failles encore ouvertes, maintenant fermées :**
+> 1. `createSentenceBuilder` et `createListeningTranscribe` prennent le `chapter` entier et
+>    lisaient `chapter.verbIds` **en interne**, donc ignoraient totalement `drillableVerbs` —
+>    ils pouvaient encore piocher un verbe jamais introduit. Corrigé en leur passant
+>    `chapterForProduction`, un clone superficiel du chapitre dont `verbIds` est restreint à
+>    `drillableVerbs`, sans toucher aux autres usages de `chapter` (grammaire, dialogue, tips)
+>    ni au chemin de révision (`generateForReview` utilise déjà son propre `virtualChapter`,
+>    indépendant, non concerné).
+> 2. Dans `createIntroCards`, la boucle des verbes non requis faisait `break` dès qu'un verbe
+>    **déjà connu** était rencontré — pas seulement aux vraies limites (plafond de cartes). Avec
+>    >2 verbIds, un verbe connu placé avant un verbe nouveau empêchait ce dernier de jamais
+>    recevoir sa carte. Remplacé par `continue` pour le cas « connu », `break` réservé aux deux
+>    vraies limites (`extraVerbCards >= 2`, `cards.length >= 6`).
+> **Vérifié par un nouvel outil committé**, `tools/verify-verb-intro-order.js`, sur un **profil
+> neuf** (aucun verbe jamais vu) : (1) invariant général sur tous les chapitres à verbIds — un
+> verbe testé (verb_fill/cloze/word_order **et maintenant sentence_builder/
+> listening_transcribe**) doit avoir eu sa carte cette même génération ; (2) preuve positive que
+> les 5 verbes ajoutés reçoivent bien leur carte dans leur chapitre ; (3) **scénario
+> multi-session** : les 2 premiers verbes (non requis) d'un chapitre à 5 verbIds (`u9_c1`) sont
+> simulés déjà maîtrisés (`reviewQueue`, step 3) → les verbes suivants reçoivent quand même leur
+> carte. Testé pour être un vrai test : rejoué avec chacun des 4 correctifs annulé séparément
+> (filtre général, `requiredVerbIds`, `chapterForProduction`, break→continue), il échoue bien
+> dans les 4 cas — la régression annulant le filtre général révèle au passage qu'elle touchait
+> déjà une quinzaine de chapitres préexistants, pas seulement ce lot.
+> Plus les 6 autres outils `tools/` existants, tous verts.
+
 - *vermek* (donner) : u6_c3 « Au restaurant » (*Bana su verir misiniz?*).
 - *açmak / kapatmak* : u15_c2 « Meubles & objets » (lampe, télé, fenêtre).
 - *satmak* : u7_c1 « Les prix ».
 - *düşünmek* : u14_c3 « Exprimer l'opinion ».
 
 ### 5.4 — Mots interrogatifs trop tardifs · **S**
+
+> ✅ **Fait.** Exactement le plan prévu :
+> - `u1_c2` : nouvelle entrée `v_nasilsin` (*Nasılsın?* = Comment vas-tu ?, informel) + `v_iyiyim`
+>   (déjà existant) ajoutés à `vocabIds` **et** `requiredVocabIds` (toujours enseignés, jamais
+>   laissés au tirage aléatoire) — utilisés par le dialogue `d_selamlama` déjà en place depuis
+>   l'AXE 3.3, qui les contient mot pour mot (« İyiyim, teşekkürler. Sen nasılsın? »). Le
+>   tutoiement du dialogue et du vocabulaire est cohérent. `v_nasilsiniz` (vouvoiement) reste
+>   réservé à `u14`, non touché ;
+> - `u5_c2` : `v_nerede` (déjà existant, seulement jamais rattaché avant `u14`) ajouté à
+>   `vocabIds` **et** `requiredVocabIds` — le dialogue `d_yol_sorma`, déjà en place, l'utilise
+>   déjà (« market nerede? ») et le goal du chapitre est littéralement « Où est... ? » ;
+> - `u14_c2`/`u14_c3` : inchangés, conservent `v_nerede`/`v_nasilsiniz`/`v_iyiyim` — u14 devient
+>   bien une consolidation (contrainte « ne rien supprimer » respectée).
+> **Vérifié** : ces 3 ids n'apparaissent nulle part avant leur nouveau point d'entrée dans
+> l'ordre des unités (`u1` < `u5` < `u14`), et les 6 outils `tools/` existants passent tous,
+> confirmant qu'aucun mot/verbe/forme n'est testé avant d'être présenté.
+
 - *Nerede?* et *Nasılsınız?* ne sont enseignés qu'en u14, **après** le Test A1, alors que
   u5_c2 demande « Où est… ? » et que « Comment ça va ? » relève des salutations de base.
 - Sans déplacer u14 (contrainte 2) :
