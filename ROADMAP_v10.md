@@ -46,6 +46,22 @@
 
 ---
 
+## 🏁 CLÔTURE v10
+
+> ✅ **Les axes obligatoires AXE 0 à AXE 6.6 sont finalisés.** Chaque section porte son propre
+> bilan ✅ ci-dessous (implémentation, écarts au plan, bugs trouvés en relecture croisée ou en
+> test navigateur, et l'outil `tools/` qui la verrouille). Les 11 outils (`validate-data`,
+> `smoke-test`, `verify-tense-gating`, `verify-streak`, `verify-verb-detail`,
+> `verify-true-false-homonyms`, `verify-verb-intro-order`, `verify-phrase-coverage`,
+> `verify-globals`, `verify-vocab-intro-order`, `verify-vocab-coverage`) passent tous.
+>
+> **AXE 6.7 (rappels quotidiens) reste optionnel et non implémenté** — cf. sa section : l'état
+> actuel (interrupteur désactivé, « Bientôt disponible », aucune notification promise) satisfait
+> déjà son critère d'acceptation sans qu'une vraie notification locale soit nécessaire pour
+> clore v10.
+
+---
+
 ## ⛔ CONTRAINTES DURES — INCHANGÉES
 
 1. **🔊 TTS INTOUCHABLE.** `App.playTTS()` / `App._playGoogleTTS()` / meta `no-referrer`.
@@ -88,6 +104,16 @@
 ## 🅾️ AXE 0 — Rendre accessible ce qui est déjà codé (priorité technique n°1)
 
 ### 0.1 — Sortir `Settings` et `Daily` de `stats.js` · **S**
+
+> ✅ **Fait.** `window.Settings` n'est plus défini que dans `js/views/settings.js`, `window.Daily`
+> que dans `js/views/daily.js` (chargé dans `index.html`) — une seule commande confirme une seule
+> définition de chacun :
+> ```
+> rg -n "window\.(Settings|Daily)\s*=" js
+> ```
+> Tous les réglages (thème, objectif XP, durée, micro, vibrations, pause du streak, mode discret)
+> sont visibles et persistent.
+
 - Supprimer `window.Settings` de `stats.js` (l.416 → fin). La version de `settings.js`
   contient déjà tout, **y compris** l'export, l'import et la réinitialisation. Rien n'est
   perdu, c'est vérifié.
@@ -102,6 +128,10 @@
   tout `js/`.
 
 ### 0.2 — Note pour v9 AXE 3 (Défi du jour) · —
+
+> ✅ **Fait.** Le Défi du jour de `daily.js` suit `dailyXP`/`dailyGoal`, et l'AXE 6.5 l'a ensuite
+> affiché avec les vrais chiffres (plus de texte figé « 5 questions »).
+
 - La v9 décrit comme « texte identique tous les jours » le contenu de `daily.js`, qui est du
   code mort. Le Défi du jour réellement actif suit l'objectif d'XP quotidien. Si v9 AXE 3 est
   mené, il doit partir de l'implémentation déplacée en 0.1, et non de l'ancien fichier.
@@ -1006,6 +1036,16 @@
   peut pas déclarer « Faux » un sens pourtant correct.
 
 ### 6.7 — Rappels quotidiens : une vraie fonctionnalité ou rien · **M** (optionnel)
+
+> ⏸️ **Non implémenté, volontairement — hors scope de la clôture v10.** L'état déjà conforme à
+> l'accept. ci-dessous n'a pas été touché : l'interrupteur (`js/views/settings.js`) est affiché
+> désactivé (`disabled`, opacité réduite), avec le texte « Bientôt disponible » et un
+> `aria-label` explicite — jamais coché, jamais actionnable. Aucun code n'appelle
+> `Notification.*` nulle part dans `js/` : rien ne laisse croire qu'un rappel est programmé. La
+> clé `State.data.settings.dailyReminder` reste conservée (contrainte 2), simplement sans effet.
+> Faire de vraies notifications locales (permission navigateur + service worker, sans garantie
+> app fermée) reste possible plus tard ; ce n'est pas nécessaire pour clore les axes obligatoires.
+
 - Constat (AXE 0) : le réglage `dailyReminder` était enregistré, mais aucun code ne demandait
   ni ne programmait de notification. En attendant, l'interrupteur est affiché désactivé, avec
   la mention « Bientôt disponible ». La clé `State` est conservée (contrainte 2).
@@ -1053,7 +1093,11 @@
   profil neuf : aucune question, aucun distracteur et aucun exemple ne porte sur un temps
   enseigné après le chapitre courant, ni sur un mot ou une réplique qui n'a été ni présenté
   ni appris.
-- ✅ 100 % des exemples de verbes ont un champ `tense`, relu à la main.
+- ✅ Aucun exercice ne porte sur un temps non enseigné — non pas via un champ `tense` manuel sur
+  chaque exemple (96 relectures, plan initial abandonné, cf. 1.2), mais via une **détection à
+  l'exécution** limitée aux formes propres au verbe testé (`Exercises._detectExampleTense`),
+  qui exclut par prudence tout cas non reconnu plutôt que de risquer une mauvaise classification,
+  vérifiée par `tools/verify-tense-gating.js` sur tous les chapitres.
 - ✅ La révision d'un profil en cours de parcours ne contient que du contenu de chapitres
   terminés.
 - ✅ La copule est enseignée, et plus aucun chapitre ne fait dire « je suis » avec *olmak*.
