@@ -11,7 +11,11 @@ window.Exercises = {
      - Difficulté croissante + anti-répétition de type
      - Gating : pas de production dans les toutes premières unités          */
 
-  generateForChapter(chapterId) {
+  // `avoidDataIds` (tableau, optionnel) : mot(s)/verbe(s) à éviter en tout premier exercice
+  // réel — sert à l'enchaînement direct entre deux leçons (Lesson.startNextChapter), pour ne
+  // pas retester immédiatement ce que la leçon précédente venait de demander en tout dernier
+  // (plusieurs ids si ce dernier exercice était un match_pairs testant 4 mots à la fois).
+  generateForChapter(chapterId, avoidDataIds) {
     let chapter = null, unit = null;
     for (const u of AppUnits) {
       const c = u.chapters.find(ch => ch.id === chapterId);
@@ -240,16 +244,43 @@ window.Exercises = {
     }
 
     // ── Assemblage : découverte fixe, puis phases mélangées SANS répétition de type ──
+    // Chaque phase garde sa place (Pratique → Rappel → Production, contrainte du Pilier B/E
+    // inchangée), mais `_antiRepeat` reçoit désormais le DERNIER exercice de la phase
+    // précédente comme référence, pour que la frontière entre deux phases soit traitée comme
+    // n'importe quelle paire adjacente — sans jamais faire remonter un exercice d'une phase à
+    // l'autre (relecture externe, cas réel u1_c2 : match_pairs "İyiyim" en fin de pratique suivi
+    // d'un QCM "İyiyim" en tout début de rappel, alors qu'un dialogue_fill non conflictuel était
+    // disponible juste après dans le rappel).
     discover.forEach(e => { e.phase = 'discover'; });
     trimmedPractice.forEach(e => { e.phase = 'practice'; });
     trimmedRecall.forEach(e => { e.phase = 'recall'; });
     trimmedProduce.forEach(e => { e.phase = 'produce'; });
-    return [
-      ...discover,
-      ...this._antiRepeat(this._shuffle(trimmedPractice)),
-      ...this._antiRepeat(this._shuffle(trimmedRecall)),
-      ...this._antiRepeat(this._shuffle(trimmedProduce))
-    ];
+    const antiPractice = this._antiRepeat(this._shuffle(trimmedPractice));
+    const antiRecall = this._antiRepeat(this._shuffle(trimmedRecall), antiPractice[antiPractice.length - 1]);
+    const antiProduce = this._antiRepeat(
+      this._shuffle(trimmedProduce),
+      antiRecall[antiRecall.length - 1] || antiPractice[antiPractice.length - 1]
+    );
+    const finalList = [...discover, ...antiPractice, ...antiRecall, ...antiProduce];
+
+    // `avoidDataIds` (tableau, optionnel) : si le tout premier exercice réel porte sur l'un de
+    // ces mots/verbes, on le repousse derrière le premier exercice suivant qui n'y touche pas
+    // (simple réordonnancement, aucun exercice supprimé ni ajouté). Un tableau plutôt qu'un
+    // seul id : un `match_pairs` final teste 4 mots à la fois — n'en protéger qu'un seul
+    // laisserait les 3 autres réapparaître immédiatement dans la leçon suivante.
+    if (avoidDataIds && avoidDataIds.length > 0) {
+      const firstRealIdx = finalList.findIndex(e => !e.isTeaching);
+      if (firstRealIdx !== -1 && this._contentIds(finalList[firstRealIdx]).some(id => avoidDataIds.includes(id))) {
+        for (let j = firstRealIdx + 1; j < finalList.length; j++) {
+          if (!this._contentIds(finalList[j]).some(id => avoidDataIds.includes(id))) {
+            [finalList[firstRealIdx], finalList[j]] = [finalList[j], finalList[firstRealIdx]];
+            break;
+          }
+        }
+      }
+    }
+
+    return finalList;
   },
 
   // ── Cartes de découverte : enseigner avant de tester (Pilier A) ──
@@ -372,13 +403,41 @@ window.Exercises = {
     };
   },
 
-  // ── Anti-répétition : jamais 2 fois le même type d'affilée (Pilier E) ──
-  _antiRepeat(list) {
+  // Le(s) mot(s)/verbe(s) réellement testé(s) par un exercice — `match_pairs` en teste 4 à la
+  // fois (une carte parmi elles suffit à faire "le même mot qu'avant").
+  _contentIds(e) {
+    if (e.type === 'match_pairs') return (e.pairs || []).map(p => p.id).filter(Boolean);
+    return (e.data && e.data.id) ? [e.data.id] : [];
+  },
+
+  // Deux exercices "se gênent" s'ils sont du même type, OU s'ils portent sur le même mot/verbe
+  // (même avec des types différents — ex. un QCM puis un Vrai/Faux sur "Dün" juste après).
+  _clashes(a, b) {
+    if (a.type === b.type) return true;
+    const idsA = this._contentIds(a);
+    if (idsA.length === 0) return false;
+    return this._contentIds(b).some(id => idsA.includes(id));
+  },
+
+  // ── Anti-répétition : jamais 2 fois le même type NI le même mot/verbe d'affilée (Pilier E) ──
+  // `precedingRef` (optionnel) : dernier exercice de la phase PRÉCÉDENTE (ex. le dernier de
+  // Pratique, passé à Rappel) — permet de traiter la frontière entre deux phases comme
+  // n'importe quelle paire adjacente, sans jamais déplacer un exercice hors de sa propre phase
+  // (seul le premier élément de `list` peut être échangé avec un autre élément de `list`).
+  _antiRepeat(list, precedingRef) {
     const result = [...list];
+    if (precedingRef && result.length > 0 && this._clashes(result[0], precedingRef)) {
+      for (let j = 1; j < result.length; j++) {
+        if (!this._clashes(result[j], precedingRef)) {
+          [result[0], result[j]] = [result[j], result[0]];
+          break;
+        }
+      }
+    }
     for (let i = 1; i < result.length; i++) {
-      if (result[i].type === result[i - 1].type) {
+      if (this._clashes(result[i], result[i - 1])) {
         for (let j = i + 1; j < result.length; j++) {
-          if (result[j].type !== result[i - 1].type) {
+          if (!this._clashes(result[j], result[i - 1])) {
             [result[i], result[j]] = [result[j], result[i]];
             break;
           }

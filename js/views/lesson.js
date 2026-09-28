@@ -34,9 +34,16 @@ window.Lesson = {
       if (c) { this._canDo = c.canDo || null; break; }
     }
 
+    // Enchaînement direct entre deux leçons (startNextChapter) : évite de retester tout de
+    // suite le(s) mot(s)/verbe(s) qui viennent d'être demandés en tout dernier dans la leçon
+    // précédente (ex. "Dün" en fin d'u11_c1 puis à nouveau en tout début d'u11_c2 ; un tableau
+    // car un dernier exercice match_pairs teste 4 mots à la fois, pas un seul). Ne sert qu'une fois.
+    const avoidIds = this._lastFinishedDataIds;
+    this._lastFinishedDataIds = null;
+
     // Garde-fou (AXE 6.4) : une donnée cassée ne doit jamais bloquer l'écran
     try {
-      this.exercises = Exercises.generateForChapter(this.chapterId);
+      this.exercises = Exercises.generateForChapter(this.chapterId, avoidIds);
     } catch (e) {
       console.error('generateForChapter a échoué pour', this.chapterId, e);
       this.exercises = [];
@@ -902,6 +909,13 @@ window.Lesson = {
     const realExos = this.exercises.filter(e => !e.isTeaching);
     const accuracy = realExos.length > 0
       ? Math.round((this.correctCount / realExos.length) * 100) : 0;
+
+    // Mémorise le(s) tout dernier(s) mot(s)/verbe(s) testé(s), pour les éviter en tête de la
+    // prochaine leçon en cas d'enchaînement direct (cf. render()). Exercises._contentIds — pas
+    // juste `lastReal.data.id` — car un dernier exercice match_pairs teste 4 mots à la fois ;
+    // ne protéger que le premier laisserait les 3 autres réapparaître immédiatement après.
+    const lastReal = realExos[realExos.length - 1];
+    this._lastFinishedDataIds = lastReal && window.Exercises ? Exercises._contentIds(lastReal) : [];
 
     let finalXp = this.currentXp;
     if (accuracy >= 80) finalXp += 20;
