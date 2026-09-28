@@ -136,6 +136,20 @@ window.Units = {
     // Sous-titre — nombre d'unités réel, jamais figé en dur (v10 AXE 6.5, relecture Codex)
     const subEl = document.getElementById('units-sub');
     if (subEl) subEl.textContent = `${AppUnits.length} unités · du zéro à A2`;
+
+    // Défiler automatiquement jusqu'à « Tu es ici » — sinon l'écran s'ouvre toujours tout en
+    // haut (unité 1), même après avoir déjà progressé loin dans le parcours.
+    this._scrollToCurrent();
+  },
+
+  _scrollToCurrent() {
+    const target = document.querySelector('#units-list .ch-next')
+      || document.querySelector('#units-list .unit-active');
+    if (!target) return;
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    requestAnimationFrame(() => {
+      target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+    });
   },
 
   startChapter(unitId, chapterId) {

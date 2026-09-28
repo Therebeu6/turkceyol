@@ -911,7 +911,7 @@ window.Lesson = {
     if (window.Gamification) Gamification.addXP(finalXp);
     else State.addXP(finalXp);
     State.completeChapter(this.chapterId);
-    this._advanceCurrentChapter();
+    this._nextChapterId = this._advanceCurrentChapter();
 
     // Track perfect lessons (100%)
     if (accuracy === 100) {
@@ -973,6 +973,17 @@ window.Lesson = {
       ? `<button class="btn btn-outline btn-full" style="margin-bottom:8px" onclick="Lesson.retryMistakes()">Revoir les erreurs (${this._mistakes.length})</button>`
       : '';
 
+    // Enchaîner directement sur la leçon suivante (sans repasser par la liste des unités).
+    let nextBtn = '';
+    if (this._nextChapterId) {
+      let nextTitle = '';
+      for (const u of AppUnits) {
+        const nc = u.chapters.find(c => c.id === this._nextChapterId);
+        if (nc) { nextTitle = nc.title; break; }
+      }
+      nextBtn = `<button class="btn btn-primary btn-full" style="margin-top:8px" onclick="Lesson.startNextChapter()">Leçon suivante${nextTitle ? ` — ${nextTitle}` : ''} →</button>`;
+    }
+
     // 4e tuile : meilleur combo de la session (AXE 3.4)
     const comboTile = (this._sessionMaxCombo || 0) >= 2
       ? `<div class="sm-stat"><div class="sm-val">🔥${this._sessionMaxCombo}</div><div class="sm-lbl">Combo max</div></div>`
@@ -998,7 +1009,8 @@ window.Lesson = {
       </div>
       ${wordsHtml}
       ${retryBtn}
-      <button class="btn btn-primary btn-full" onclick="App.navigate('#units')">Continuer le parcours</button>
+      ${nextBtn}
+      <button class="btn ${this._nextChapterId ? 'btn-outline' : 'btn-primary'} btn-full" style="margin-top:8px" onclick="App.navigate('#units')">Voir le parcours</button>
       <button class="btn btn-ghost btn-full" style="margin-top:8px" onclick="App.navigate('#dashboard')">Accueil</button>
     `;
 
@@ -1027,6 +1039,8 @@ window.Lesson = {
     this.showNextExercise();
   },
 
+  // Renvoie l'id du chapitre suivant dans l'ordre du parcours (ou null si c'était le dernier),
+  // et pointe State.data.currentChapter dessus au passage (comportement inchangé).
   _advanceCurrentChapter() {
     const currentId = this.chapterId;
     for (let ui = 0; ui < AppUnits.length; ui++) {
@@ -1034,15 +1048,26 @@ window.Lesson = {
       for (let ci = 0; ci < unit.chapters.length; ci++) {
         if (unit.chapters[ci].id === currentId) {
           if (ci + 1 < unit.chapters.length) {
-            State.setCurrentChapter(unit.id, unit.chapters[ci + 1].id);
+            const next = unit.chapters[ci + 1];
+            State.setCurrentChapter(unit.id, next.id);
+            return next.id;
           } else if (ui + 1 < AppUnits.length) {
-            const next = AppUnits[ui + 1];
-            State.setCurrentChapter(next.id, next.chapters[0].id);
+            const nextUnit = AppUnits[ui + 1];
+            const next = nextUnit.chapters[0];
+            State.setCurrentChapter(nextUnit.id, next.id);
+            return next.id;
           }
-          return;
+          return null;
         }
       }
     }
+    return null;
+  },
+
+  startNextChapter() {
+    document.getElementById('session-modal').classList.add('hidden');
+    if (this._nextChapterId) App.navigate(`#lesson/${this._nextChapterId}`);
+    else App.navigate('#units');
   },
 
   _woClickBank(btn) {
