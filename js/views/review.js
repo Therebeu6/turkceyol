@@ -268,7 +268,7 @@ window.Review = {
       `;
     } else if (exo.type === 'word_order') {
       const wordsHtml = exo.words.map(w =>
-        `<button class="word-chip" data-word="${this._escape(w)}" onclick="Review._woClickBank(this)">${w}</button>`
+        `<button class="word-chip" data-word="${this._escapeAttr(w)}" onclick="Review._woClickBank(this)">${w}</button>`
       ).join('');
       exoHtml = `
         <div class="exercise-container animate-fade-in">
@@ -290,7 +290,7 @@ window.Review = {
       `;
     } else if (exo.type === 'sentence_builder') {
       const blocksHtml = exo.blocks.map(w =>
-        `<button class="word-chip" data-word="${this._escape(w)}" onclick="Review._sbClickBank(this)">${w}</button>`
+        `<button class="word-chip" data-word="${this._escapeAttr(w)}" onclick="Review._sbClickBank(this)">${w}</button>`
       ).join('');
       exoHtml = `
         <div class="exercise-container animate-fade-in">
@@ -684,5 +684,14 @@ window.Review = {
 
   _escape(s) {
     return String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  },
+
+  // Pour une valeur d'attribut HTML délimité par des guillemets doubles (ex. `data-word="…"`) —
+  // jamais `_escape()`, qui échappe pour un LITTÉRAL DE CHAÎNE JS (onclick="…('…')"), pas pour du
+  // HTML : un mot comme "İstanbul'u" y devenait littéralement `İstanbul\'u` (le antislash reste
+  // dans l'attribut), et `dataset.word` renvoyait ce antislash — cassant la comparaison de
+  // _checkAnswer sur tout mot turc avec apostrophe (suffixes de cas : Türkiye'de, Ali'nin…).
+  _escapeAttr(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 };
